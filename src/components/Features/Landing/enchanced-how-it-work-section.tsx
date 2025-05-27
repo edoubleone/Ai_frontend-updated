@@ -58,19 +58,6 @@ export function EnhancedHowItWorksSection() {
           <div
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
-            <div className="relative">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%201618869099%20%281%29-t4XXbSG2E4RhcvjA0VbaJQPKcY0qvm.png"
-                alt="AI Robot working with various communication channels"
-                className="w-full h-auto max-w-lg mx-auto"
-              />
-            </div>
-          </div>
-
-          {/* Right Side - Content */}
-          <div
-            className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-          >
             <div className="mb-8">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">How it works</h2>
               <p className="text-lg text-gray-600 leading-relaxed">
@@ -78,6 +65,23 @@ export function EnhancedHowItWorksSection() {
                 clients to understand their goals and challenges.
               </p>
             </div>
+
+            
+            <div className="relative">
+              {/* <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%201618869099%20%281%29-t4XXbSG2E4RhcvjA0VbaJQPKcY0qvm.png"
+                alt="AI Robot working with various communication channels"
+                className="w-full h-auto max-w-lg mx-auto"
+              /> */}
+               <img src="/images/agentic.png" alt="CTA Banner Background" className="w-full h-auto max-w-lg mx-auto" />
+            </div>
+          </div>
+
+          {/* Right Side - Content */}
+          <div
+            className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+          >
+
 
             {/* Steps */}
             <div className="space-y-6">

@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DeleteBotModal } from "@/components/bot/delete-bot-modal"
+import { DeleteBotModal } from "@/components/Features/bot/delete-bot-modal"
 import { useToast } from "@/hooks/use-toast"
 
 interface Bot {

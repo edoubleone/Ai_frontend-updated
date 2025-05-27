@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Phone, Mail } 
 
 export default function Footer() {
   return (
-    <footer className="w-full">
+    <footer className="bg-white w-full py-8">
       {/* CTA Banner Section using the imported image */}
       <div className="relative mx-4 mb-8 lg:mx-8">
         <div className="relative overflow-hidden rounded-3xl">
@@ -22,7 +22,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Section */}
-      <div className="bg-white px-4 py-12 lg:px-8">
+      <div className=" px-4 py-12 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
             {/* Company Section */}

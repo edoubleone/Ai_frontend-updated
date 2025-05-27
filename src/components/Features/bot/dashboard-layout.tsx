@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/bot/app-siderbar" // Fix the typo here
-import { DashboardHeader } from "@/components/bot/dashboard-header"
-import { BotsContent } from "@/components/bot/bots-content"
-import { BotEditPage } from "@/components/bot/bot-edit-page"
-import { BotTestPage } from "@/components/bot/bot-test-page"
+import { AppSidebar } from "@/components/Features/bot/app-siderbar" // Fix the typo here
+import { DashboardHeader } from "@/components/Features/bot/dashboard-header"
+import { BotsContent } from "@/components/Features/bot/bots-content"
+import { BotEditPage } from "@/components/Features/bot/bot-edit-page"
+import { BotTestPage } from "@/components/Features/bot/bot-test-page"
 
 type ViewType = "dashboard" | "edit-bot" | "test-bot"
 

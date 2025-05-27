@@ -4,7 +4,7 @@ import { ArrowRight, Star, TrendingUp, Users, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 const stats = [
@@ -75,7 +75,7 @@ export function EnhancedTestimonialsSection() {
   }, [])
 
   return (
-    <section id="testimonials" className="py-20 sm:py-32 bg-gray-50">
+    <section id="testimonials" className="py-4 sm:py-12 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Side - Trust Indicators & Stats */}
@@ -87,7 +87,7 @@ export function EnhancedTestimonialsSection() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-8">Trusted by many across the world</h2>
 
               {/* Reviews Section */}
-              <div className="flex items-center gap-4 mb-8 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="flex items-center gap-4 mb-8 p-4 bg-white ">
                 <div className="flex -space-x-2">
                   {userAvatars.map((user, index) => (
                     <Avatar
@@ -102,18 +102,19 @@ export function EnhancedTestimonialsSection() {
                     </Avatar>
                   ))}
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
+                <div className="p-0 m-0 ">
+                    <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                        </div>
+                        <span className="text-2xl font-bold text-blue-600">4.8k</span>
+                        <span className="text-blue-600 font-medium">Reviews</span>
                     </div>
-                    <span className="text-2xl font-bold text-blue-600">4.8k</span>
-                    <span className="text-blue-600 font-medium">Reviews</span>
-                  </div>
-                  <p className="text-sm text-gray-600">Join Our digital community</p>
-                </div>
+                    <p className="text-sm text-gray-600">Join our digital community</p>
+                    </div>
+
               </div>
             </div>
 
@@ -121,15 +122,15 @@ export function EnhancedTestimonialsSection() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {stats.map((stat, index) => (
                 <div
-                  key={index}
-                  className={`bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: `${index * 200}ms` }}
-                >
+              key={index}
+              className={`transition-all duration-500 transform ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${index * 200}ms` }}
+            >
                   <div className="flex items-center gap-3 mb-3">
                     <div className={`p-2 rounded-lg bg-gray-50 ${stat.color}`}>
-                      <stat.icon className="w-5 h-5" />
+                      {/* <stat.icon className="w-5 h-5" /> */}
                     </div>
                   </div>
                   <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">{stat.value}</div>
@@ -144,9 +145,7 @@ export function EnhancedTestimonialsSection() {
             className={`space-y-8 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
           >
             <div>
-              <Badge variant="secondary" className="mb-6 bg-blue-50 text-blue-700 hover:bg-blue-100">
-                Why Choose Us
-              </Badge>
+              
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 Why Choose <span className="text-blue-600">Agentic AI</span>?
@@ -157,33 +156,13 @@ export function EnhancedTestimonialsSection() {
                 forgets to follow up, and always keeps your sales moving.
               </p>
 
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-green-600 text-sm">✓</span>
-                  </div>
-                  <p className="text-gray-700">24/7 automated customer engagement</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-green-600 text-sm">✓</span>
-                  </div>
-                  <p className="text-gray-700">Never miss a lead or follow-up opportunity</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-green-600 text-sm">✓</span>
-                  </div>
-                  <p className="text-gray-700">Seamless integration with your existing workflow</p>
-                </div>
-              </div>
 
               <Button
                 asChild
                 variant="link"
                 className="text-blue-600 hover:text-blue-700 p-0 h-auto font-medium text-lg group"
               >
-                <Link href="/about" className="flex items-center gap-2">
+                <Link to="/about" className="flex items-center gap-2">
                   Learn More
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>

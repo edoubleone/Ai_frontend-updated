@@ -1,15 +1,16 @@
-
 import { Routes, Route } from 'react-router-dom';
+import Layout from '@/components/common/Layout';
 import Bot from './Pages/Bot';
 
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <Layout>
       <Routes>
-        <Route path="/" element={<Bot/>} />
+        <Route path="/" element={<Bot />} />
+        {/* Add other routes here */}
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
