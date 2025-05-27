@@ -20,7 +20,7 @@ export default function Landing() {
       <EnhancedTestimonialsCarousel />
       <PricingSection />
       <EnhancedFAQSection />
-      <Footer />
+
 
     </div>
   )

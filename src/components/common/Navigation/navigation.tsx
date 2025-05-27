@@ -1,17 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Bot, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
+import logo from "@/assets/images/logo.png"
 
 const navigationItems = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Features", href: "#features" },
-  { name: "Testimonials", href: "#testimonials" },
+  { name: "Contact", href: "#contact" },
   { name: "Pricing", href: "#pricing" },
 ]
 
@@ -54,11 +53,15 @@ export function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
-              <Bot className="h-5 w-5 text-white" />
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg"> {/* Increased from h-8 w-8 to h-12 w-12 */}
+              <img 
+                src={logo} 
+                alt="Kool AI Logo" 
+                className="h-full w-full object-contain p-1" /* Changed classes for better scaling */
+              />
             </div>
-            <span className="text-xl font-bold text-gray-900">Kool AI</span>
+
           </Link>
 
           {/* Desktop Navigation */}
@@ -81,13 +84,13 @@ export function Navigation() {
           {/* Desktop CTA Buttons */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <Link
-              href="/login"
+              to="/login"
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
             >
               Login
             </Link>
             <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
-              <Link href="/dashboard">Get Started</Link>
+              <Link to="/dashboard">Get Started</Link>
             </Button>
           </div>
 
@@ -115,14 +118,14 @@ export function Navigation() {
                   ))}
                   <div className="border-t pt-6 space-y-4">
                     <Link
-                      href="/login"
+                      to="/login"
                       className="block text-lg font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
                       onClick={() => setIsOpen(false)}
                     >
                       Login
                     </Link>
                     <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                      <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>
                         Get Started
                       </Link>
                     </Button>
