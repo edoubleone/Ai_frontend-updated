@@ -7,6 +7,7 @@ import { EnhancedFAQSection } from "@/components/Features/Landing/enchanced-faq-
 import { EnhancedHowItWorksSection } from "@/components/Features/Landing/enchanced-how-it-work-section"
 import {EnhancedTestimonialsSection} from "@/components/Features/Landing/enchanced-testimonial-section"
 import HeroSection from "@/components/Features/Landing/hero-section"
+import Footer from "@/components/common/Footer/footer"
 
 
 export default function Landing() {
