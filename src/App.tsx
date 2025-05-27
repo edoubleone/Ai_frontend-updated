@@ -1,12 +1,13 @@
-// src/App.tsx
+
 import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
+import Bot from './Pages/Bot';
+
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Bot/>} />
       </Routes>
     </div>
   );
