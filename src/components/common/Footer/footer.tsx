@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Phone, Mail } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export default function Footer() {
   return (
@@ -127,15 +128,15 @@ export default function Footer() {
 
               <div className="flex items-center gap-8">
                 <div className="flex items-center gap-6 text-sm text-gray-500">
-                  <a href="/terms" className="hover:text-gray-700 transition-colors">
+                  <Link to="/terms" className="hover:text-gray-700 transition-colors">
                     Terms
-                  </a>
-                  <a href="/privacy" className="hover:text-gray-700 transition-colors">
+                  </Link>
+                  <Link to="/privacy" className="hover:text-gray-700 transition-colors">
                     Privacy
-                  </a>
-                  <a href="/contact" className="hover:text-gray-700 transition-colors">
+                  </Link>
+                  <Link to="/contact" className="hover:text-gray-700 transition-colors">
                     Contact
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="flex items-center gap-4">

@@ -87,7 +87,7 @@ export function Navigation() {
               to="/login"
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
             >
-              Login
+              My Bot
             </Link>
             <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
               <Link to="/dashboard">Get Started</Link>
