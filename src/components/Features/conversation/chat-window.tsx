@@ -120,7 +120,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <div className="flex items-start border-b pb-5 border-[#B1B1B133] justify-between">
         <div className="flex gap-2">
           <AvatarComponent fallback="SK" />
@@ -173,7 +173,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
         </div>
       </div>
 
-      <div className="p-4 border-t border-[#B1B1B133]">
+      <div className="p-4">
         <form
           onSubmit={handleSendMessage}
           className="relative flex items-center"
