@@ -8,8 +8,7 @@ import { useState } from "react";
 
 export const BASE_URL = "https://web-production-51907.up.railway.app";
 
-export const token =
-  "";
+export const token = "";
 
 async function getAssistants(): Promise<IAssistant[]> {
   const response = await axios.get<IAssistant[]>(`${BASE_URL}/assistants/`, {
@@ -41,8 +40,12 @@ const Conversations = () => {
     <div className="bg-[#E7E7E7] flex flex-col gap-5 px-[50px] py-6 h-screen">
       <h1 className="text-dark text-2xl font-bold">Conversations</h1>
 
-      <div className="flex rounded-lg gap-12 border py-6 px-9 bg-white">
-        <div className={assistant ? "w-full max-w-96" : "w-full"}>
+      <div className="flex rounded-lg gap-12 border py-6 px-9 bg-white h-full">
+        <div
+          className={`${
+            assistant ? "w-full max-w-96" : "w-full"
+          } flex flex-col h-full`}
+        >
           <div className="flex items-center border-b-[0.25px] border-[#AFB8CF] py-4 px-5 relative">
             <SearchIcon className="text-[#737373] mx-4 absolute size-6" />
             <input
@@ -52,7 +55,7 @@ const Conversations = () => {
             />
           </div>
 
-          <div>
+          <div className="overflow-y-auto flex-1">
             {assistants &&
               assistants?.map((assistantItem) => (
                 <div
