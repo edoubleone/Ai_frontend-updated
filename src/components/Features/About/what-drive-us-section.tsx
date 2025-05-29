@@ -46,8 +46,8 @@ export default function WhatDrivesUsSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">What drives us</h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="font-medium text-xl md:text-5xl lg:text-6xl text-gray-900 mb-4">What drives us</h2>
+          <p className="font-light text-sm md:text-sm  max-w-3xl mx-auto">
             We're building a future where your customers don't have to wait
           </p>
         </div>
@@ -66,9 +66,9 @@ export default function WhatDrivesUsSection() {
                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                       <IconComponent className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                    <h3 className="font-light text-xl text-gray-900 mb-4">{feature.title}</h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed text-sm">{feature.description}</p>
+                  <p className="text-gray-600 leading-relaxed font-light text-sm">{feature.description}</p>
                 </CardContent>
               </Card>
             )

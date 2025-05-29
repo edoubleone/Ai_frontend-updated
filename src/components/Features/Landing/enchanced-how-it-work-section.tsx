@@ -51,7 +51,7 @@ export function EnhancedHowItWorksSection() {
   }, [])
 
   return (
-    <section id="how-it-works" className="py-20 sm:py-32 bg-white">
+    <section id="how-it-works" className="py-24 sm:py-32 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Side - Illustration */}
@@ -59,8 +59,8 @@ export function EnhancedHowItWorksSection() {
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
             <div className="mb-8">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">How it works</h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-xl text-gray-900 mb-6">How it works</h2>
+              <p className="font-light text-sm leading-relaxed">
                 We believe that the best way to create successful marketing campaigns is to work closely with our
                 clients to understand their goals and challenges.
               </p>
@@ -96,8 +96,8 @@ export function EnhancedHowItWorksSection() {
 
                   {/* Step Content */}
                   <div className="flex-1 pt-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                    <h3 className="font-semibold text-xl  mb-2">{step.title}</h3>
+                    <p className="font-light text-sm leading-relaxed">{step.description}</p>
                   </div>
                 </div>
               ))}

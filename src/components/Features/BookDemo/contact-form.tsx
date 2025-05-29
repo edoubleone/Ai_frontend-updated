@@ -155,23 +155,7 @@ export function ContactForm() {
           <FormMessage className="text-red-600">{form.formState.errors.phoneNumber?.message}</FormMessage>
         </FormItem>
 
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-gray-900">Message</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us how we can help..."
-                  className="min-h-[120px] bg-white border-gray-300 text-gray-900"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-red-600" />
-            </FormItem>
-          )}
-        />
+       
 
         <FormField
           control={form.control}
