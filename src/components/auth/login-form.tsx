@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
 import { Link } from "react-router-dom"
+import logo from "@/assets/images/logo.png"
 // import { KoolAiLogo } from "./kool-ai-logo"
 
 export function LoginFormComponent() {
@@ -19,7 +20,13 @@ export function LoginFormComponent() {
       <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center px-8 lg:px-16">
         <div className="w-full max-w-md mx-auto">
           {/* Logo */}
-          {/* <KoolAiLogo /> */}
+          <Link to="/" className="inline-block mb-8">
+            <img
+              src={logo}
+              alt="Kool AI Logo"
+              className="h-10 w-auto hover:opacity-80 transition-opacity"
+            />
+          </Link>
 
           {/* Header */}
           <div className="mb-8">
