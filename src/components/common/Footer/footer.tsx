@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export default function Footer() {
   return (
-    <footer className="bg-white w-full py-8">
+    <footer className="bg-white hidden w-full py-8">
       {/* CTA Banner Section using the imported image */}
       <div className="relative mx-4 mb-8 lg:mx-8">
         <div className="relative overflow-hidden rounded-3xl">
