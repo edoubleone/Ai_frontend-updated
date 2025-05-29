@@ -121,7 +121,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-start border-b pb-5 border-[#B1B1B133] justify-between">
+      <div className="flex items-start flex-wrap gap-3 border-b pb-5 border-[#B1B1B133] justify-between">
         <div className="flex gap-2">
           <AvatarComponent fallback="SK" />
           <div className="flex flex-col">
