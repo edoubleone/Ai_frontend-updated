@@ -1,11 +1,12 @@
 import ChatItemComponent from "@/components/Features/conversation/chat-item";
 import ChatWindow from "@/components/Features/conversation/chat-window";
 import { SearchIcon } from "lucide-react";
-import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
+import { GetAssistants } from "@/services/api/conversation";
 
+<<<<<<< HEAD
 export const BASE_URL = "https://web-production-51907.up.railway.app";
 
 export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZW5saWdodHN3aWZ0QGdtYWlsLmNvbSIsImV4cCI6MTc0ODYzMzQxNX0.kIYk6hyj8bLp6Ww3SSTwGn6Jtvi7URpg0vzvAGIDmqI";
@@ -18,6 +19,8 @@ async function getAssistants(): Promise<IAssistant[]> {
   });
   return response.data;
 }
+=======
+>>>>>>> c50a8984c12a74cd9e13b3f2332db614281fbc0a
 
 const Conversations = () => {
   const queryClient = useQueryClient();
@@ -25,7 +28,7 @@ const Conversations = () => {
   const [assistant, setAssistant] = useState<IAssistant | null>(null);
 
   const { data: assistants = [] } = useQuery({
-    queryFn: getAssistants,
+    queryFn: GetAssistants,
     queryKey: ["assistants"],
   });
 
