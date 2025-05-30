@@ -1,40 +1,43 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/Features/bot/app-siderbar"
-import { BotsContent } from "@/components/Features/bot/bots-content"
-import { BotEditPage } from "@/components/Features/bot/bot-edit-page"
-import { BotTestPage } from "@/components/Features/bot/bot-test-page"
-import CreateBot from "./create-bot/CreateBot"
+import { useState } from "react";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/Features/bot/app-siderbar";
+import { BotsContent } from "@/components/Features/bot/bots-content";
+import { BotEditPage } from "@/components/Features/bot/bot-edit-page";
+import { BotTestPage } from "@/components/Features/bot/bot-test-page";
+import CreateBot from "./create-bot/CreateBot";
 import { DashboardHeader } from "./dashboard-header";
+import { Outlet } from "react-router-dom";
 
-type ViewType = "dashboard" | "edit-bot" | "test-bot" | "create-bot"
+type ViewType = "dashboard" | "edit-bot" | "test-bot" | "create-bot";
 
 export function DashboardLayout() {
-  const [currentView, setCurrentView] = useState<ViewType>("dashboard")
+  const [currentView, setCurrentView] = useState<ViewType>("dashboard");
   const handleEditBot = () => {
-    setCurrentView("edit-bot")
-  }
+    setCurrentView("edit-bot");
+  };
 
   const handleDuplicateBot = () => {
-    setCurrentView("test-bot")
-  }
+    setCurrentView("test-bot");
+  };
 
   const handleBackToDashboard = () => {
-    setCurrentView("dashboard")
-  }
+    setCurrentView("dashboard");
+  };
 
   const handleEditFromTest = () => {
-    setCurrentView("edit-bot")
-  }
+    setCurrentView("edit-bot");
+  };
 
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex w-full min-h-screen">
         <AppSidebar />
         <SidebarInset className="flex-1">
-          {currentView === "dashboard" ? (
+          <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
+          <Outlet />
+          {/* {currentView === "dashboard" ? (
             <>
               <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
               <BotsContent onCreateBot={() => setCurrentView("create-bot")} onEditBot={handleEditBot} onDuplicateBot={handleDuplicateBot} />
@@ -51,9 +54,9 @@ export function DashboardLayout() {
               <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
               <BotTestPage onBack={handleBackToDashboard} onEditBot={handleEditFromTest} />
             </>
-          )}
+          )} */}
         </SidebarInset>
       </div>
     </SidebarProvider>
-  )
+  );
 }

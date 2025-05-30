@@ -15,13 +15,18 @@ import { TestFont } from "@/components/common/TestFont";
 import NotFound from "./Pages/NotFound";
 import { DashboardLayout } from "./components/Features/bot/dashboard-layout";
 import PrivateRoute from "./utils/protected-routes";
+import Integrations from "./Pages/integrations";
+import Conversations from "./Pages/conversations";
 
 function App() {
   return (
     <Routes>
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
-        <Route path="/dashboard/*" element={<DashboardLayout />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="conversations" element={<Conversations />} />
+          <Route path="integrations" element={<Integrations />} />
+        </Route>
       </Route>
 
       {/* Public Routes with Main Layout */}
