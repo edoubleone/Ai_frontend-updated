@@ -7,7 +7,7 @@ import { BotsContent } from "@/components/Features/bot/bots-content"
 import { BotEditPage } from "@/components/Features/bot/bot-edit-page"
 import { BotTestPage } from "@/components/Features/bot/bot-test-page"
 import CreateBot from "./create-bot/CreateBot"
-import DashboardHeader from "./dashboard-header"
+import { DashboardHeader } from "./dashboard-header";
 
 type ViewType = "dashboard" | "edit-bot" | "test-bot" | "create-bot"
 
@@ -31,7 +31,7 @@ export function DashboardLayout() {
 
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="flex min-h-screen w-full">
+      <div className="flex w-full min-h-screen">
         <AppSidebar />
         <SidebarInset className="flex-1">
           {currentView === "dashboard" ? (
