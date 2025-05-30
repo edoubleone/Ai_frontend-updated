@@ -92,27 +92,27 @@ export function SignupFormComponent() {
     <>
       <div className="flex min-h-screen">
         {/* Left Panel - Form (50% width) */}
-        <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center px-8 lg:px-16">
+        <div className="flex flex-col justify-center w-full px-8 bg-white lg:w-1/2 lg:px-16">
           <div className="w-full max-w-md mx-auto">
             {/* Logo */}
             <Link to="/" className="inline-block mb-8">
               <img
                 src={logo}
                 alt="Kool AI Logo"
-                className="h-10 w-auto hover:opacity-80 transition-opacity"
+                className="w-auto h-10 transition-opacity hover:opacity-80"
               />
             </Link>
 
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+              <h1 className="mb-3 text-3xl font-bold text-gray-900">
                 Sign up with us
               </h1>
               <p className="text-gray-600">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-blue-600 hover:underline font-medium"
+                  className="font-medium text-blue-600 hover:underline"
                 >
                   Login
                 </Link>
@@ -126,7 +126,7 @@ export function SignupFormComponent() {
                 <div>
                   <Label
                     htmlFor="firstName"
-                    className="text-sm font-medium text-gray-700 mb-2 block"
+                    className="block mb-2 text-sm font-medium text-gray-700"
                   >
                     First Name
                   </Label>
@@ -134,14 +134,14 @@ export function SignupFormComponent() {
                     id="firstName"
                     type="text"
                     {...register("firstName")}
-                    className="w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    className="w-full px-4 py-3 text-gray-900 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   {errors.firstName && <p>{errors.firstName.message}</p>}
                 </div>
                 <div>
                   <Label
                     htmlFor="lastName"
-                    className="text-sm font-medium text-gray-700 mb-2 block"
+                    className="block mb-2 text-sm font-medium text-gray-700"
                   >
                     Last Name
                   </Label>
@@ -149,7 +149,7 @@ export function SignupFormComponent() {
                     id="lastName"
                     type="text"
                     {...register("lastName")}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    className="w-full px-4 py-3 text-gray-900 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   {errors.lastName && <p>{errors.lastName.message}</p>}
                 </div>
@@ -159,7 +159,7 @@ export function SignupFormComponent() {
               <div>
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 mb-2 block"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
                   Email Address
                 </Label>
@@ -177,7 +177,7 @@ export function SignupFormComponent() {
               <div>
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 mb-2 block"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
                   Password*
                 </Label>
@@ -192,7 +192,7 @@ export function SignupFormComponent() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute text-gray-400 transform -translate-y-1/2 right-4 top-1/2 hover:text-gray-600"
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -207,11 +207,11 @@ export function SignupFormComponent() {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   {hasSpecialChar ? (
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                    <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                   ) : (
-                    <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+                    <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
                   )}
                   <span
                     className={
@@ -223,11 +223,11 @@ export function SignupFormComponent() {
                 </div>
                 <div className="flex items-center gap-2">
                   {hasLetter ? (
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                    <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                   ) : (
-                    <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+                    <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
                   )}
                   <span
                     className={hasLetter ? "text-green-600" : "text-gray-500"}
@@ -237,11 +237,11 @@ export function SignupFormComponent() {
                 </div>
                 <div className="flex items-center gap-2">
                   {hasNumber ? (
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                    <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                   ) : (
-                    <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+                    <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
                   )}
                   <span
                     className={hasNumber ? "text-green-600" : "text-gray-500"}
@@ -251,11 +251,11 @@ export function SignupFormComponent() {
                 </div>
                 <div className="flex items-center gap-2">
                   {hasMinLength ? (
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                    <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                   ) : (
-                    <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+                    <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
                   )}
                   <span
                     className={
@@ -272,7 +272,7 @@ export function SignupFormComponent() {
                 loading={isPending}
                 disabled={!isValid}
                 type="submit"
-                className=" mt-8"
+                className="mt-8 "
               >
                 Sign up
               </Button>
@@ -283,7 +283,7 @@ export function SignupFormComponent() {
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">Or</span>
+                  <span className="px-4 text-gray-500 bg-white">Or</span>
                 </div>
               </div>
 
@@ -312,7 +312,7 @@ export function SignupFormComponent() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  <span className="text-gray-700 font-medium">
+                  <span className="font-medium text-gray-700">
                     Sign up with Google
                   </span>
                 </CustomButton>
@@ -325,14 +325,14 @@ export function SignupFormComponent() {
                   <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
-                  <span className="text-gray-700 font-medium">
+                  <span className="font-medium text-gray-700">
                     Sign up with Facebook
                   </span>
                 </CustomButton>
               </div>
 
               {/* Terms */}
-              <p className="text-sm text-gray-500 mt-6 leading-relaxed">
+              <p className="mt-6 text-sm leading-relaxed text-gray-500">
                 By continuing, you agree to the{" "}
                 <Link to="/terms" className="text-gray-700 hover:underline">
                   Terms of Service
@@ -347,9 +347,9 @@ export function SignupFormComponent() {
         </div>
 
         {/* Right Panel - Background Image (50% width) */}
-        <div className="hidden lg:block w-1/2 relative">
+        <div className="relative hidden w-1/2 lg:block">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-center bg-no-repeat bg-cover"
             style={{
               backgroundImage: "url('/images/background.png')",
             }}
