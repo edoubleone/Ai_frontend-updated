@@ -2,31 +2,27 @@
 
 import { useState } from "react"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/Features/bot/app-siderbar" // Fix the typo here
-import { DashboardHeader } from "@/components/Features/bot/dashboard-header"
+import { AppSidebar } from "@/components/Features/bot/app-siderbar"
 import { BotsContent } from "@/components/Features/bot/bots-content"
 import { BotEditPage } from "@/components/Features/bot/bot-edit-page"
 import { BotTestPage } from "@/components/Features/bot/bot-test-page"
+import CreateBot from "./create-bot/CreateBot"
+import DashboardHeader from "./dashboard-header"
 
-type ViewType = "dashboard" | "edit-bot" | "test-bot"
+type ViewType = "dashboard" | "edit-bot" | "test-bot" | "create-bot"
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState<ViewType>("dashboard")
-  const [selectedBotId, setSelectedBotId] = useState<string | null>(null)
-
-  const handleEditBot = (botId: string) => {
-    setSelectedBotId(botId)
+  const handleEditBot = () => {
     setCurrentView("edit-bot")
   }
 
-  const handleDuplicateBot = (botId: string) => {
-    setSelectedBotId(botId)
+  const handleDuplicateBot = () => {
     setCurrentView("test-bot")
   }
 
   const handleBackToDashboard = () => {
     setCurrentView("dashboard")
-    setSelectedBotId(null)
   }
 
   const handleEditFromTest = () => {
@@ -40,14 +36,19 @@ export function DashboardLayout() {
         <SidebarInset className="flex-1">
           {currentView === "dashboard" ? (
             <>
-              <DashboardHeader />
-              <BotsContent onEditBot={handleEditBot} onDuplicateBot={handleDuplicateBot} />
+              <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
+              <BotsContent onCreateBot={() => setCurrentView("create-bot")} onEditBot={handleEditBot} onDuplicateBot={handleDuplicateBot} />
             </>
           ) : currentView === "edit-bot" ? (
-            <BotEditPage onBack={handleBackToDashboard} />
+              <BotEditPage onBack={handleBackToDashboard} />
+          ) : currentView === "create-bot" ? (
+            <>
+              <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
+              <CreateBot onBack={handleBackToDashboard} />
+            </>
           ) : (
             <>
-              <DashboardHeader />
+              <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
               <BotTestPage onBack={handleBackToDashboard} onEditBot={handleEditFromTest} />
             </>
           )}

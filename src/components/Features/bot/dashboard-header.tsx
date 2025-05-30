@@ -4,11 +4,16 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  onCreateBot: () => void
+}
+
+const DashboardHeader:React.FC<DashboardHeaderProps> = ({onCreateBot}) => {
+
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
+    <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 sticky z-10 top-0">
       <div className="flex items-center">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg" onClick={onCreateBot}>
           Build a Bot
           <ChevronRight className="w-4 h-4 ml-2" />
         </Button>
@@ -40,3 +45,5 @@ export function DashboardHeader() {
     </header>
   )
 }
+
+export default DashboardHeader;

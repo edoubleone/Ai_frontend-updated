@@ -73,6 +73,7 @@ export function PricingSection() {
 					</div>
 				</div>
 
+<<<<<<< HEAD
 				{/* Pricing Cards */}
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto pb-8 md:pb-12"> {/* Added bottom padding */}
 					{reorderedPlans.map((plan) => (
@@ -90,6 +91,25 @@ export function PricingSection() {
 									<Badge className="bg-white text-blue-600 px-4 py-1 text-sm font-medium shadow-lg">Popular</Badge>
 								</div>
 							)}
+=======
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {pricingPlans.map((plan, index) => (
+            <div
+              key={index}
+              className={`relative rounded-3xl p-8 transition-all duration-300 ${
+                plan.popular
+                  ? "bg-blue-600 text-white shadow-2xl scale-105 lg:scale-110 transform lg:-translate-y-4"
+                  : "bg-white border border-gray-200 hover:shadow-lg"
+              }`}
+            >
+              {/* Popular Badge */}
+              {plan.popular && (
+                <div className="absolute -top-4 right-6">
+                  <Badge className="bg-white text-blue-600 px-4 py-1 text-sm font-medium shadow-lg">Popular</Badge>
+                </div>
+              )}
+>>>>>>> ed0ed42b2d96a26fa7960617253cbaa15c183b95
 
 							{/* Plan Header */}
 							<div className="mb-8">
