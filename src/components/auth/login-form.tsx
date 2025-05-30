@@ -14,6 +14,8 @@ import { useMutation } from "@tanstack/react-query";
 import { UserLogin } from "@/services/api/auth";
 import Button from "../shared/button";
 import { useAuth } from "@/context/auth-provider";
+import type { ErrorResponse } from "@/services/config/api";
+import { toast } from "sonner";
 // import { KoolAiLogo } from "./kool-ai-logo"
 
 export function LoginFormComponent() {
@@ -28,8 +30,8 @@ export function LoginFormComponent() {
       setAuthenticated(data.access_token);
       navigate("/dashboard");
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: ErrorResponse) => {
+      toast.error(error?.response?.data?.detail);
     },
   });
 

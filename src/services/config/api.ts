@@ -1,6 +1,14 @@
 import { BASE_URL } from "@/utils";
 import axios from "axios";
 
+export interface ErrorResponse {
+  response: {
+    data: {
+      detail: string;
+    };
+  };
+}
+
 const apiClient = axios.create({
   baseURL: BASE_URL,
 });

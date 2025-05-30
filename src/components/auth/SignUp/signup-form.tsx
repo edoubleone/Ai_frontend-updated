@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { RegisterUser } from "@/services/api/auth";
+import type { ErrorResponse } from "@/services/config/api";
+import { toast } from "sonner";
 
 type FormData = z.infer<typeof signUpSchema>;
 
@@ -29,8 +31,8 @@ export function SignupFormComponent() {
     onSuccess: () => {
       handleSuccess();
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: ErrorResponse) => {
+      toast.error(error?.response?.data?.detail);
     },
   });
 
