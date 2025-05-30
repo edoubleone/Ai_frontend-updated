@@ -58,12 +58,12 @@ export function PricingSection() {
 	const [isAnnual, setIsAnnual] = useState(true)
 
 	return (
-		<section id="pricing" className="py-6 sm:py-16 md:py-20 bg-white"> {/* Increased padding */}
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-16"> {/* Added space between container elements */}
+		<section id="pricing" className="py-6 bg-white sm:py-16 md:py-20"> {/* Increased padding */}
+			<div className="container px-4 mx-auto space-y-16 sm:px-6 lg:px-8"> {/* Added space between container elements */}
 				{/* Header */}
-				<div className="text-center py-8 md:py-12 mb-16"> {/* Increased header spacing */}
-					<h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Choose your plan</h2>
-					<p className="font-light text-sm text-gray-600 mb-12">Flexible Plans for Every Business</p>
+				<div className="py-8 mb-16 text-center md:py-12"> {/* Increased header spacing */}
+					<h2 className="mb-6 text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">Choose your plan</h2>
+					<p className="mb-12 text-sm font-light text-gray-600">Flexible Plans for Every Business</p>
 
 					{/* Billing Toggle */}
 					<div className="flex items-center justify-center gap-4 mb-12">
@@ -73,9 +73,8 @@ export function PricingSection() {
 					</div>
 				</div>
 
-<<<<<<< HEAD
 				{/* Pricing Cards */}
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto pb-8 md:pb-12"> {/* Added bottom padding */}
+				<div className="grid max-w-6xl grid-cols-1 gap-8 pb-8 mx-auto lg:grid-cols-3 md:pb-12"> {/* Added bottom padding */}
 					{reorderedPlans.map((plan) => (
 						<div
 							key={plan.name}
@@ -88,28 +87,9 @@ export function PricingSection() {
 							{/* Popular Badge */}
 							{plan.popular && (
 								<div className="absolute -top-4 right-6">
-									<Badge className="bg-white text-blue-600 px-4 py-1 text-sm font-medium shadow-lg">Popular</Badge>
+									<Badge className="px-4 py-1 text-sm font-medium text-blue-600 bg-white shadow-lg">Popular</Badge>
 								</div>
 							)}
-=======
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {pricingPlans.map((plan, index) => (
-            <div
-              key={index}
-              className={`relative rounded-3xl p-8 transition-all duration-300 ${
-                plan.popular
-                  ? "bg-blue-600 text-white shadow-2xl scale-105 lg:scale-110 transform lg:-translate-y-4"
-                  : "bg-white border border-gray-200 hover:shadow-lg"
-              }`}
-            >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 right-6">
-                  <Badge className="bg-white text-blue-600 px-4 py-1 text-sm font-medium shadow-lg">Popular</Badge>
-                </div>
-              )}
->>>>>>> ed0ed42b2d96a26fa7960617253cbaa15c183b95
 
 							{/* Plan Header */}
 							<div className="mb-8">
@@ -122,7 +102,7 @@ export function PricingSection() {
 										 <img 
 												src={plan.icon} 
 												alt={`${plan.name} icon`}
-												className="w-8 h-8 object-contain"
+												className="object-contain w-8 h-8"
 											/>
 									</div>
 									<div>
