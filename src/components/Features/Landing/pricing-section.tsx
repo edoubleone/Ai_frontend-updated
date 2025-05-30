@@ -67,7 +67,7 @@ export function PricingSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <div
-              key={plan.name}
+              key={index}
               className={`relative rounded-3xl p-8 transition-all duration-300 ${
                 plan.popular
                   ? "bg-blue-600 text-white shadow-2xl scale-105 lg:scale-110 transform lg:-translate-y-4"

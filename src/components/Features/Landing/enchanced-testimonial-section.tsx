@@ -3,7 +3,6 @@
 import { ArrowRight, Star, TrendingUp, Users, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
