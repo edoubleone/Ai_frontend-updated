@@ -18,7 +18,7 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
-  // Remove scroll handling since we're using page navigation now
+  // Close mobile drawer
   const handleNavigation = () => {
     setIsOpen(false)
   }
@@ -29,14 +29,13 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <div className="flex items-center justify-center w-12 h-12 rounded-lg"> {/* Increased from h-8 w-8 to h-12 w-12 */}
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg">
               <img 
                 src={logo} 
                 alt="Kool AI Logo" 
-                className="object-contain w-full h-full p-1" /* Changed classes for better scaling */
+                className="object-contain w-full h-full p-1"
               />
             </div>
-
           </Link>
 
           {/* Desktop Navigation */}
@@ -45,8 +44,8 @@ export function Navigation() {
               <Link
                 key={item.name}
                 to={item.href}
-                onClick={() => handleNavigation(item.href)}
-                className={`font-medium text-sm  transition-colors duration-200 hover:text-blue-600 ${
+                onClick={handleNavigation}
+                className={`font-medium text-sm transition-colors duration-200 hover:text-blue-600 ${
                   location.pathname === item.href
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
                     : "text-gray-700"
@@ -87,7 +86,7 @@ export function Navigation() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      onClick={() => handleNavigation(item.href)}
+                      onClick={handleNavigation}
                       className={`text-left text-lg font-medium transition-colors duration-200 ${
                         location.pathname === item.href ? "text-blue-600" : "text-gray-700 hover:text-gray-900"
                       }`}
@@ -99,11 +98,11 @@ export function Navigation() {
                     <Link
                       to="/login"
                       className="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600"
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleNavigation}
                     >
                       Login
                     </Link>
-                    <Link to="/signup" onClick={() => setIsOpen(false)}>
+                    <Link to="/signup" onClick={handleNavigation}>
                       <Button className="w-full text-white bg-blue-600 hover:bg-blue-700">
                         Get Started
                       </Button>

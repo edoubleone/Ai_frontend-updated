@@ -188,6 +188,8 @@ export function SignupFormComponent() {
               {/* Add more social logins if needed */}
             </div>
           </form>
+
+          
         </div>
       </div>
     </div>
