@@ -1,4 +1,3 @@
-import type React from "react";
 import { useState } from "react";
 import { Button as CustomButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
@@ -15,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { RegisterUser } from "@/services/api/auth";
+import type { ErrorResponse } from "@/services/config/api";
+import { toast } from "sonner";
 
 // Type for form data inferred from Zod schema
 type FormData = z.infer<typeof signUpSchema>;

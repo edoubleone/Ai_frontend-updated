@@ -6,19 +6,6 @@ import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
 
-export const BASE_URL = "https://web-production-51907.up.railway.app";
-
-export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZW5saWdodHN3aWZ0QGdtYWlsLmNvbSIsImV4cCI6MTc0ODYzMzQxNX0.kIYk6hyj8bLp6Ww3SSTwGn6Jtvi7URpg0vzvAGIDmqI";
-
-async function getAssistants(): Promise<IAssistant[]> {
-  const response = await axios.get<IAssistant[]>(`${BASE_URL}/assistants/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
-}
-
 const Conversations = () => {
   const queryClient = useQueryClient();
 
