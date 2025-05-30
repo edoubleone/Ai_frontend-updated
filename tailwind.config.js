@@ -86,8 +86,19 @@ export default {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+      fontFamily: {
+        sans: ['Avenir LT Std', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      fontWeight: {
+        light: 300,      // Avenir LT Std 35 Light
+        normal: 400,     // Avenir LT Std 45 Book
+        medium: 500,     // Avenir LT Std 55 Roman
+        semibold: 600, 
+		bold: 700,    // Avenir LT Std 65 Medium
+      },
   	}
   },
   plugins: [require("tailwindcss-animate")],
 }
+

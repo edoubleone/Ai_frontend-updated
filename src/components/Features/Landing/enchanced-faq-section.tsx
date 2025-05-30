@@ -59,8 +59,8 @@ export function EnhancedFAQSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl mb-6">FAQs</h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600">
+          <h2 className="font-bold text-xl text-gray-900 sm:text-4xl text-xl mb-6">FAQs</h2>
+          <p className="font-light text-sm mx-auto max-w-3xl text-lg text-gray-600">
             Find answers to common questions about our platform, bot creation, and our pay-for-results pricing model.
           </p>
         </div>
@@ -74,10 +74,10 @@ export function EnhancedFAQSection() {
                 value={faq.id}
                 className="bg-white rounded-lg border border-gray-200 px-6 shadow-sm"
               >
-                <AccordionTrigger className="text-left text-lg font-medium text-gray-900 hover:text-blue-600 py-6">
+                <AccordionTrigger className="text-left font-normal text-xl text-gray-900 hover:text-blue-600 py-6">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 pb-6 text-base leading-relaxed">
+                <AccordionContent className="font-normal text-sm pb-6  leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

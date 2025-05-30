@@ -94,11 +94,11 @@ export function EnhancedBenefitsSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl mb-6">
+          <h2 className=" font-light  text-xl sm:text-4xl lg:text-5xl mb-6">
             Benefits of subscribing to{" "}
             <span className="text-blue-600">ArgenticAI</span>.
           </h2>
-          <p className="mx-auto max-w-4xl text-lg text-gray-600 leading-relaxed">
+          <p className="mx-auto max-w-4xl font-light text-sm text-gray-600 leading-relaxed">
             Subscribe to ArgenticAI and unlock advanced AI-powered insights,
             streamline your workflow, save valuable time, and enhance
             decision-making. Enjoy personalized support and continuous updates
@@ -142,7 +142,7 @@ export function EnhancedBenefitsSection() {
                   </div>
 
                   <h3
-                    className={`text-lg font-semibold mb-3 transition-colors duration-300 ${
+                    className={`font-semibold text-xl  mb-3 transition-colors duration-300 ${
                       isActive ? "text-white" : "text-gray-900"
                     }`}
                   >
@@ -150,7 +150,7 @@ export function EnhancedBenefitsSection() {
                   </h3>
 
                   <p
-                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                    className={`font-normal text-sm leading-relaxed transition-colors duration-300 ${
                       isActive ? "text-blue-100" : "text-gray-600"
                     }`}
                   >
@@ -159,20 +159,7 @@ export function EnhancedBenefitsSection() {
 
                   {isActive && (
                     <div className="mt-4 flex items-center text-white text-sm font-medium animate-in slide-in-from-left-2 duration-300">
-                      <span>Learn more</span>
-                      <svg
-                        className="w-4 h-4 ml-1 transition-transform translate-x-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                     
                     </div>
                   )}
                 </div>

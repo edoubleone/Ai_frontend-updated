@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 
+
+
+
 const pricingPlans = [
 	{
 		name: "Starter",
@@ -13,7 +16,7 @@ const pricingPlans = [
 		description: "Great for small team basic chat, CRM sync, & web/WhatsApp support.",
 		monthlyPrice: 99,
 		annualPrice: 79,
-		icon: "🌙",
+		icon: "/icon/stater.png",
 		features: ["All analytics features", "Up to 250,000 tracked visits", "Normal support", "Up to 3 team members"],
 		popular: false,
 	},
@@ -23,7 +26,7 @@ const pricingPlans = [
 		description: "For growing brands Instagram, upsell flows, and better analytics.",
 		monthlyPrice: 199,
 		annualPrice: 159,
-		icon: "📱",
+		icon: "/icon/pro.png",
 		features: ["All analytics features", "Up to 1,000,000 tracked visits", "Premium support", "Up to 10 team members"],
 		popular: true,
 	},
@@ -33,7 +36,7 @@ const pricingPlans = [
 		description: "Full power voice calls, smart routing, and custom integrations.",
 		monthlyPrice: 399,
 		annualPrice: 319,
-		icon: "🏢",
+		icon: "/icon/enterprise.png",
 		features: [
 			"All analytics features",
 			"Up to 5,000,000 tracked visits",
@@ -55,12 +58,12 @@ export function PricingSection() {
 	const [isAnnual, setIsAnnual] = useState(true)
 
 	return (
-		<section id="pricing" className="py-24 sm:py-32 md:py-40 bg-white"> {/* Increased padding */}
+		<section id="pricing" className="py-6 sm:py-16 md:py-20 bg-white"> {/* Increased padding */}
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-16"> {/* Added space between container elements */}
 				{/* Header */}
 				<div className="text-center py-8 md:py-12 mb-16"> {/* Increased header spacing */}
 					<h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Choose your plan</h2>
-					<p className="text-lg text-gray-600 mb-12">Flexible Plans for Every Business</p>
+					<p className="font-light text-sm text-gray-600 mb-12">Flexible Plans for Every Business</p>
 
 					{/* Billing Toggle */}
 					<div className="flex items-center justify-center gap-4 mb-12">
@@ -96,7 +99,11 @@ export function PricingSection() {
 											plan.popular ? "bg-white/20" : "bg-blue-50"
 										}`}
 									>
-										{plan.icon}
+										 <img 
+												src={plan.icon} 
+												alt={`${plan.name} icon`}
+												className="w-8 h-8 object-contain"
+											/>
 									</div>
 									<div>
 										<div className={`text-sm ${plan.popular ? "text-blue-100" : "text-gray-500"}`}>{plan.target}</div>

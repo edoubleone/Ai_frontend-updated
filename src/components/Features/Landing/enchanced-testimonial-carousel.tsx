@@ -68,7 +68,7 @@ export function EnhancedTestimonialsCarousel() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">What Our Client Said about us</h2>
+          <h2 className=" font-semibold text-3xl sm:text-4xl   text-xl  ">What Our Client Said about us</h2>
 
           {/* Navigation Arrows */}
           <div className="flex items-center gap-3">
@@ -103,7 +103,7 @@ export function EnhancedTestimonialsCarousel() {
             >
               {/* Testimonial Content */}
               <div className="mb-6">
-                <p className={`text-sm leading-relaxed ${index === 0 ? "text-blue-100" : "text-gray-600"}`}>
+                <p className={`font-light text-sm leading-relaxed ${index === 0 ? "text-blue-100" : "text-gray-600"}`}>
                   {testimonial.content}
                 </p>
               </div>

@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/common/Layout";
 // import Bot from './Pages/Bot';
 import Landing from "./Pages/Landing";
@@ -12,10 +11,18 @@ import Login from "./Pages/Login";
 import Forgot from "./Pages/ForgotPassword";
 import { TempDashboardLayout } from "./components/Features/bot/temp-dashboard-layout";
 import Conversations from "./Pages/conversations";
+import { Routes, Route } from 'react-router-dom';
+import ScrollToTop from '@/components/common/ScrollToTop';
+
+import Demo from './Pages/BookDemo';
+import { TestFont } from '@/components/common/TestFont';
+import NotFound from './Pages/NotFound';
+// import NotFound from './Pages/NotFound';
 
 function App() {
   return (
     <Layout>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
@@ -28,10 +35,17 @@ function App() {
         <Route path="dashboard" element={<TempDashboardLayout />}>
           <Route path="conversations" element={<Conversations />} />
         </Route>
+
+          {/* <Bot /> */}
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/test-font" element={<TestFont />} />
+        <Route path="/demo" element={<Demo />} />
+        {/* Catch-all route for 404 Not Found */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
-
-    // <Bot />
   );
 }
 

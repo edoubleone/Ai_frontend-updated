@@ -1,8 +1,41 @@
+@font-face {
+  font-family: 'Avenir LT Std';
+  src: url('/fonts/Avenir LT Std 35 Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std';
+  src: url('/fonts/Avenir LT Std 45 Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std';
+  src: url('/fonts/Avenir LT Std 55 Roman.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std';
+  src: url('/fonts/Avenir LT Std 65 Medium.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-family: 'Avenir LT Std', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
