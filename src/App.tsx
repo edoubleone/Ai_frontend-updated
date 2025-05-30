@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Layout from '@/components/common/Layout';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import Landing from './Pages/Landing';
@@ -18,28 +18,27 @@ import { DashboardLayout } from './components/Features/bot/dashboard-layout';
 function App() {
   return (
     <Routes>
-      {/* Dashboard Layout - Separate route without main Layout */}
+      {/* Dashboard Layout Route */}
       <Route path="/bot/*" element={<DashboardLayout />} />
 
-      {/* Public routes wrapped in main Layout */}
-      <Route
-        element={
-          <Layout>
-            <ScrollToTop />
-          </Layout>
-        }
-      >
-        <Route path="/" element={<Landing />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/terms" element={<TermOfUse />} />
-        <Route path="/privacy" element={<Policy />} />
-        <Route path="/forgot" element={<Forgot />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/test-font" element={<TestFont />} />
-        <Route path="/demo" element={<Demo />} />
+      {/* Public Routes with Main Layout */}
+      <Route path="/" element={
+        <Layout>
+          <ScrollToTop />
+          <Outlet />
+        </Layout>
+      }>
+        <Route index element={<Landing />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="terms" element={<TermOfUse />} />
+        <Route path="privacy" element={<Policy />} />
+        <Route path="forgot" element={<Forgot />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="test-font" element={<TestFont />} />
+        <Route path="demo" element={<Demo />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
