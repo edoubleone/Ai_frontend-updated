@@ -105,40 +105,42 @@ export function VerificationModal({ isOpen, onClose, onVerify, onSuccess, email,
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 w-full max-w-md relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+      <div className="relative w-full max-w-md p-8 bg-white rounded-2xl">
         {/* Close Button */}
-        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+        <button onClick={onClose} className="absolute text-gray-400 top-4 right-4 hover:text-gray-600">
           <X className="w-6 h-6" />
         </button>
 
         {/* Title */}
-        <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">Verification</h2>
+        <h2 className="mb-8 text-2xl font-bold text-center text-gray-900">Verification</h2>
 
         {/* Code Input */}
         <div className="flex justify-center gap-3 mb-4">
           {code.map((digit, index) => (
             <Input
               key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
+              ref={(el) => {
+                inputRefs.current[index] = el;
+              }}
               type="text"
               inputMode="numeric"
               maxLength={1}
               value={digit}
               onChange={(e) => handleInputChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-12 h-12 text-lg font-semibold text-center border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             />
           ))}
         </div>
 
         {/* Timer */}
-        <div className="text-center mb-6">
-          <span className="text-blue-600 font-medium">{formatTime(timeLeft)}</span>
+        <div className="mb-6 text-center">
+          <span className="font-medium text-blue-600">{formatTime(timeLeft)}</span>
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 text-center mb-8 leading-relaxed">
+        <p className="mb-8 leading-relaxed text-center text-gray-600">
           We have sent a 6-digit verification pin to your {email ? "mail" : "phone number"}
           {email && (
             <>
@@ -159,7 +161,7 @@ export function VerificationModal({ isOpen, onClose, onVerify, onSuccess, email,
         <Button
           onClick={handleConfirm}
           disabled={code.join("").length !== 6 || isLoading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg mb-6"
+          className="w-full py-3 mb-6 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
         >
           {isLoading ? (
             <div className="flex items-center justify-center gap-2">
@@ -172,10 +174,10 @@ export function VerificationModal({ isOpen, onClose, onVerify, onSuccess, email,
         </Button>
 
         {/* Resend Link */}
-        <div className="text-center mb-4">
+        <div className="mb-4 text-center">
           <span className="text-gray-600">Didn't get pin? </span>
           {canResend ? (
-            <button onClick={handleResend} className="text-blue-600 hover:underline font-medium">
+            <button onClick={handleResend} className="font-medium text-blue-600 hover:underline">
               Resend
             </button>
           ) : (
@@ -186,7 +188,7 @@ export function VerificationModal({ isOpen, onClose, onVerify, onSuccess, email,
         {/* Login Link */}
         <div className="text-center">
           <span className="text-gray-600">Already have an account? </span>
-          <Link to="/login" className="text-blue-600 hover:underline font-medium">
+          <Link to="/login" className="font-medium text-blue-600 hover:underline">
             Log in
           </Link>
         </div>
@@ -194,7 +196,7 @@ export function VerificationModal({ isOpen, onClose, onVerify, onSuccess, email,
         {/* Loading Spinner */}
         {isLoading && (
           <div className="flex justify-center mt-6">
-            <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+            <Loader2 className="w-6 h-6 text-gray-400 animate-spin" />
           </div>
         )}
       </div>
