@@ -1,38 +1,43 @@
 "use client"
 
 import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const formSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  countryCode: z.string().default("NGN"),
-  phoneNumber: z.string().min(6, {
-    message: "Phone number must be at least 6 characters.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
+  firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
+  lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  countryCode: z.string().min(1, { message: "Country code is required" }),
+  phoneNumber: z.string().min(6, { message: "Phone number must be at least 6 characters." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
   agreeToPrivacy: z.boolean().refine((val) => val === true, {
     message: "You must agree to our privacy policy.",
   }),
 })
+
+type ContactFormData = z.infer<typeof formSchema>
 
 const countryCodes = [
   { value: "NGN", label: "NGN", flag: "🇳🇬" },
@@ -46,7 +51,7 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ContactFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
@@ -59,17 +64,15 @@ export function ContactForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: ContactFormData) {
     setIsSubmitting(true)
 
-    // Simulate API call
     setTimeout(() => {
-      console.log(values)
+      console.log("Form submitted:", values)
       setIsSubmitting(false)
       setIsSuccess(true)
       form.reset()
 
-      // Reset success message after 3 seconds
       setTimeout(() => setIsSuccess(false), 3000)
     }, 1000)
   }
@@ -77,15 +80,15 @@ export function ContactForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-light text-sm">First name</FormLabel>
+                <FormLabel className="text-sm font-light">First name</FormLabel>
                 <FormControl>
-                  <Input placeholder="First name" {...field} className="bg-white border-gray-300 text-gray-900" />
+                  <Input placeholder="First name" {...field} className="text-gray-900 bg-white border-gray-300" />
                 </FormControl>
                 <FormMessage className="text-red-600" />
               </FormItem>
@@ -96,9 +99,9 @@ export function ContactForm() {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-light text-sm">Last name</FormLabel>
+                <FormLabel className="text-sm font-light">Last name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Last name" {...field} className="bg-white border-gray-300 text-gray-900" />
+                  <Input placeholder="Last name" {...field} className="text-gray-900 bg-white border-gray-300" />
                 </FormControl>
                 <FormMessage className="text-red-600" />
               </FormItem>
@@ -113,7 +116,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-gray-900">Email</FormLabel>
               <FormControl>
-                <Input placeholder="you@company.com" {...field} className="bg-white border-gray-300 text-gray-900" />
+                <Input placeholder="you@company.com" {...field} className="text-gray-900 bg-white border-gray-300" />
               </FormControl>
               <FormMessage className="text-red-600" />
             </FormItem>
@@ -123,9 +126,12 @@ export function ContactForm() {
         <FormItem>
           <FormLabel className="text-gray-900">Phone number</FormLabel>
           <div className="flex gap-2">
-            <Select defaultValue="NGN" onValueChange={(value) => form.setValue("countryCode", value)}>
+            <Select
+              value={form.getValues("countryCode")}
+              onValueChange={(value) => form.setValue("countryCode", value)}
+            >
               <SelectTrigger className="w-[100px] bg-white border-gray-300 text-gray-900">
-                <SelectValue placeholder="NGN" />
+                <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {countryCodes.map((country) => (
@@ -138,6 +144,7 @@ export function ContactForm() {
                 ))}
               </SelectContent>
             </Select>
+
             <FormField
               control={form.control}
               name="phoneNumber"
@@ -146,7 +153,7 @@ export function ContactForm() {
                   <Input
                     placeholder="+234 810 000 000"
                     {...field}
-                    className="flex-1 bg-white border-gray-300 text-gray-900"
+                    className="flex-1 text-gray-900 bg-white border-gray-300"
                   />
                 </FormControl>
               )}
@@ -195,7 +202,7 @@ export function ContactForm() {
           )}
         />
 
-        <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isSubmitting}>
+        <Button type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-700" disabled={isSubmitting}>
           {isSubmitting ? "Sending..." : isSuccess ? "Message Sent!" : "Send Message"}
         </Button>
       </form>

@@ -5,8 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Check } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { SuccessModal } from "@/components/auth/SignUp/success-modal";
-import { VerificationModal } from "@/components/auth/SignUp/verification-modal";
 import logo from "@/assets/images/logo.png";
 import type { z } from "zod";
 import { signUpSchema } from "@/services/models/auth.model";
@@ -14,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { RegisterUser } from "@/services/api/auth";
-import type { ErrorResponse } from "@/services/config/api";
 import { toast } from "sonner";
 
 // Type for form data inferred from Zod schema
@@ -24,8 +21,6 @@ export function SignupFormComponent() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const {
     register,
@@ -43,27 +38,24 @@ export function SignupFormComponent() {
   });
 
   const password = watch("password");
-  const email = watch("email");
 
   const { mutate, isPending } = useMutation({
     mutationFn: RegisterUser,
-    onSuccess: () => handleSuccess(),
-    onError: (error) => console.error(error),
+    onSuccess: () => {
+      toast.success("Registration successful!");
+      navigate("/login");
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Registration failed");
+    },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     const payload = {
       ...data,
       full_name: `${data.firstName} ${data.lastName}`,
     };
     mutate(payload);
-  };
-
-  const handleSuccess = () => setShowSuccess(true);
-
-  const handleSuccessClose = () => {
-    setShowSuccess(false);
-    navigate("/login");
   };
 
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
@@ -91,26 +83,36 @@ export function SignupFormComponent() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="firstName">First Name</Label>
-                <Input id="firstName" type="text" {...register("firstName")}
+                <Input
+                  id="firstName"
+                  type="text"
+                  {...register("firstName")}
                   className="w-full px-4 py-3 text-gray-900 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
-                {errors.firstName && <p>{errors.firstName.message}</p>}
+                {errors.firstName && <p className="text-red-600">{errors.firstName.message}</p>}
               </div>
               <div>
                 <Label htmlFor="lastName">Last Name</Label>
-                <Input id="lastName" type="text" {...register("lastName")}
+                <Input
+                  id="lastName"
+                  type="text"
+                  {...register("lastName")}
                   className="w-full px-4 py-3 text-gray-900 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
-                {errors.lastName && <p>{errors.lastName.message}</p>}
+                {errors.lastName && <p className="text-red-600">{errors.lastName.message}</p>}
               </div>
             </div>
 
             <div>
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="Enter your email address" {...register("email")}
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email address"
+                {...register("email")}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
               />
-              {errors.email && <p>{errors.email.message}</p>}
+              {errors.email && <p className="text-red-600">{errors.email.message}</p>}
             </div>
 
             <div>
@@ -127,6 +129,7 @@ export function SignupFormComponent() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute text-gray-400 transform -translate-y-1/2 right-4 top-1/2 hover:text-gray-600"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -174,7 +177,9 @@ export function SignupFormComponent() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <CustomButton type="button" variant="outline"
+              <CustomButton
+                type="button"
+                variant="outline"
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">{/* Social SVG */}</svg>
