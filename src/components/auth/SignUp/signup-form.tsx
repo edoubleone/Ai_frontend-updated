@@ -1,4 +1,3 @@
-import type React from "react";
 import { useState } from "react";
 import { Button as CustomButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
@@ -67,12 +66,6 @@ export function SignupFormComponent() {
   const hasNumber = /\d/.test(password);
   const hasLetter = /[a-zA-Z]/.test(password);
   const hasMinLength = password.length >= 6;
-
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Show verification modal after signup
-    setShowVerification(true);
-  };
 
   const handleVerification = (code: string) => {
     console.log("Verification code:", code);
