@@ -18,6 +18,7 @@ import Demo from "./Pages/BookDemo";
 import { TestFont } from "@/components/common/TestFont";
 import NotFound from "./Pages/NotFound";
 import PrivateRoute from "./utils/protected-routes";
+import Integrations from "./Pages/integrations";
 // import NotFound from './Pages/NotFound';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="dashboard" element={<TempDashboardLayout />}>
             <Route path="conversations" element={<Conversations />} />
+            <Route path="integrations" element={<Integrations />} />
           </Route>
         </Route>
 
