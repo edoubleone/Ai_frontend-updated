@@ -37,7 +37,7 @@ const navigationItems = [
   },
   {
     title: "Conversations",
-    url: "/conversations",
+    url: "/dashboard/conversations",
     icon: MessageSquare,
   },
   {
@@ -47,7 +47,7 @@ const navigationItems = [
   },
   {
     title: "Integrations",
-    url: "/integrations",
+    url: "/dashboard/integrations",
     icon: Puzzle,
   },
   {

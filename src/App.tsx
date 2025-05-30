@@ -1,33 +1,39 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
-import Layout from '@/components/common/Layout';
-import ScrollToTop from '@/components/common/ScrollToTop';
-import Landing from './Pages/Landing';
-import Pricing from './Pages/Pricing';
-import About from './Pages/About';
-import Contact from './Pages/Contact';
-import TermOfUse from './Pages/TermAndCondition';
-import Policy from './Pages/Policy';
-import SignUp from './Pages/SignUp';
-import Login from './Pages/Login';
-import Forgot from './Pages/ForgotPassword';
-import Demo from './Pages/BookDemo';
-import { TestFont } from '@/components/common/TestFont';
-import NotFound from './Pages/NotFound';
-import { DashboardLayout } from './components/Features/bot/dashboard-layout';
+import { Routes, Route, Outlet } from "react-router-dom";
+import Layout from "@/components/common/Layout";
+import ScrollToTop from "@/components/common/ScrollToTop";
+import Landing from "./Pages/Landing";
+import Pricing from "./Pages/Pricing";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import TermOfUse from "./Pages/TermAndCondition";
+import Policy from "./Pages/Policy";
+import SignUp from "./Pages/SignUp";
+import Login from "./Pages/Login";
+import Forgot from "./Pages/ForgotPassword";
+import Demo from "./Pages/BookDemo";
+import { TestFont } from "@/components/common/TestFont";
+import NotFound from "./Pages/NotFound";
+import { DashboardLayout } from "./components/Features/bot/dashboard-layout";
+import PrivateRoute from "./utils/protected-routes";
 
 function App() {
   return (
     <Routes>
       {/* Dashboard Layout Route */}
-      <Route path="/dashboard/*" element={<DashboardLayout />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/dashboard/*" element={<DashboardLayout />} />
+      </Route>
 
       {/* Public Routes with Main Layout */}
-      <Route path="/" element={
-        <Layout>
-          <ScrollToTop />
-          <Outlet />
-        </Layout>
-      }>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <ScrollToTop />
+            <Outlet />
+          </Layout>
+        }
+      >
         <Route index element={<Landing />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
