@@ -25,6 +25,7 @@ interface Bot {
 interface BotsContentProps {
   onEditBot?: (botId: string) => void
   onDuplicateBot?: (botId: string) => void
+  onCreateBot: () => void
 }
 
 const initialBotsData: Bot[] = [
@@ -40,10 +41,10 @@ const initialBotsData: Bot[] = [
   { id: "10", name: "Elizabeth", type: "Text", language: "English", status: "Bot created", avatar: "🤖" },
 ]
 
-export function BotsContent({ onEditBot, onDuplicateBot }: BotsContentProps) {
+export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsContentProps) {
   const [botsData, setBotsData] = useState<Bot[]>(initialBotsData)
   const [selectedBots, setSelectedBots] = useState<string[]>([])
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [botToDelete, setBotToDelete] = useState<Bot | null>(null)
   const { toast } = useToast()
@@ -97,15 +98,15 @@ export function BotsContent({ onEditBot, onDuplicateBot }: BotsContentProps) {
   return (
     <div className="p-6 space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">My Bots</h1>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg" onClick={onCreateBot}>
           Build a Bot
           <ChevronRightIcon className="w-4 h-4 ml-2" />
         </Button>
-      </div>
+      </header>
 
       {/* Analytics Cards */}
       <div className="mb-6">

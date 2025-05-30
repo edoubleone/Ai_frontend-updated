@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isAuth = isAuthRoute(pathname)
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       {!isAuth && <Navigation />}
       <main className="flex-grow">
         {children}

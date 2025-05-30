@@ -6,6 +6,18 @@ import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
 
+export const BASE_URL = "https://web-production-51907.up.railway.app";
+
+export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZW5saWdodHN3aWZ0QGdtYWlsLmNvbSIsImV4cCI6MTc0ODYzMzQxNX0.kIYk6hyj8bLp6Ww3SSTwGn6Jtvi7URpg0vzvAGIDmqI";
+
+async function getAssistants(): Promise<IAssistant[]> {
+  const response = await axios.get<IAssistant[]>(`${BASE_URL}/assistants/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
 
 const Conversations = () => {
   const queryClient = useQueryClient();
@@ -26,9 +38,9 @@ const Conversations = () => {
 
   return (
     <div className="bg-[#E7E7E7] flex flex-col gap-5 px-[50px] py-6 h-screen">
-      <h1 className="text-dark text-2xl font-bold">Conversations</h1>
+      <h1 className="text-2xl font-bold text-dark">Conversations</h1>
 
-      <div className="flex rounded-lg gap-12 border py-6 px-9 bg-white h-full">
+      <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-9">
         <div
           className={`${
             assistant ? "w-full max-w-96" : "w-full"
@@ -43,7 +55,7 @@ const Conversations = () => {
             />
           </div>
 
-          <div className="overflow-y-auto flex-1">
+          <div className="flex-1 overflow-y-auto">
             {assistants &&
               assistants?.map((assistantItem) => (
                 <div
