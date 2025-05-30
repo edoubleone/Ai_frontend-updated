@@ -1,51 +1,92 @@
-"use client"
+import type React from "react";
+import { useState } from "react";
+import { Button as CustomButton } from "@/components/ui/button";
+import Button from "@/components/shared/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff, Check } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { SuccessModal } from "@/components/auth/SignUp/success-modal";
+import { VerificationModal } from "@/components/auth/SignUp/verification-modal";
+import logo from "@/assets/images/logo.png";
+import type { z } from "zod";
+import { signUpSchema } from "@/services/models/auth.model";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { RegisterUser } from "@/services/api/auth";
 
-import type React from "react"
+type FormData = z.infer<typeof signUpSchema>;
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Eye, EyeOff, Check } from "lucide-react"
-import { Link } from "react-router-dom"
-import { SuccessModal } from "@/components/auth/SignUp/success-modal"
-import { VerificationModal } from "@/components/auth/SignUp/verification-modal"
-import logo from "@/assets/images/logo.png"
 export function SignupFormComponent() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState("")
-  const [firstName, setFirstName] = useState("Elizabeth")
-  const [lastName, setLastName] = useState("Kafaru")
-  const [email, setEmail] = useState("")
-  const [showVerification, setShowVerification] = useState(false)
-  const [showSuccess, setShowSuccess] = useState(false)
+  const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: RegisterUser,
+    onSuccess: () => {
+      handleSuccess();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const password = watch("password");
+  const email = watch("email");
+
+  const onSubmit = async (data: FormData) => {
+    // Handle form submission here
+    const payload = {
+      ...data,
+      full_name: `${data.firstName} ${data.lastName}`,
+    };
+    mutate(payload);
+  };
 
   // Password validation
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
-  const hasNumber = /\d/.test(password)
-  const hasLetter = /[a-zA-Z]/.test(password)
-  const hasMinLength = password.length >= 6
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasMinLength = password.length >= 6;
 
   const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Show verification modal after signup
-    setShowVerification(true)
-  }
+    setShowVerification(true);
+  };
 
   const handleVerification = (code: string) => {
-    console.log("Verification code:", code)
+    console.log("Verification code:", code);
     // Handle verification logic here
-  }
+  };
 
   const handleSuccess = () => {
-    setShowSuccess(true)
-  }
+    setShowSuccess(true);
+  };
 
   const handleSuccessClose = () => {
-    setShowSuccess(false)
-    // Redirect to dashboard or login page
-    window.location.href = "/dashboard" // or use router.push if using Next.js router
-  }
+    setShowSuccess(false);
+    navigate("/login");
+  };
 
   return (
     <>
@@ -55,80 +96,96 @@ export function SignupFormComponent() {
           <div className="w-full max-w-md mx-auto">
             {/* Logo */}
             <Link to="/" className="inline-block mb-8">
-            <img
-              src={logo}
-              alt="Kool AI Logo"
-              className="h-10 w-auto hover:opacity-80 transition-opacity"
-            />
-          </Link>
+              <img
+                src={logo}
+                alt="Kool AI Logo"
+                className="h-10 w-auto hover:opacity-80 transition-opacity"
+              />
+            </Link>
 
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-3">Sign up with us</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                Sign up with us
+              </h1>
               <p className="text-gray-600">
                 Already have an account?{" "}
-                <Link to="/login" className="text-blue-600 hover:underline font-medium">
+                <Link
+                  to="/login"
+                  className="text-blue-600 hover:underline font-medium"
+                >
                   Login
                 </Link>
               </p>
             </div>
 
             {/* Form */}
-            <form className="space-y-6" onSubmit={handleSignup}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               {/* Name Fields */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="firstName" className="text-sm font-medium text-gray-700 mb-2 block">
+                  <Label
+                    htmlFor="firstName"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
                     First Name
                   </Label>
                   <Input
                     id="firstName"
                     type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    {...register("firstName")}
                     className="w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   />
+                  {errors.firstName && <p>{errors.firstName.message}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="lastName" className="text-sm font-medium text-gray-700 mb-2 block">
+                  <Label
+                    htmlFor="lastName"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
                     Last Name
                   </Label>
                   <Input
                     id="lastName"
                     type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    {...register("lastName")}
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   />
+                  {errors.lastName && <p>{errors.lastName.message}</p>}
                 </div>
               </div>
 
               {/* Email */}
               <div>
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700 mb-2 block"
+                >
                   Email Address
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
                 />
+                {errors.email && <p>{errors.email.message}</p>}
               </div>
 
               {/* Password */}
               <div>
-                <Label htmlFor="password" className="text-sm font-medium text-gray-700 mb-2 block">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-gray-700 mb-2 block"
+                >
                   Password*
                 </Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password")}
                     className="w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="******"
                   />
@@ -137,7 +194,11 @@ export function SignupFormComponent() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -152,7 +213,13 @@ export function SignupFormComponent() {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-gray-300"></div>
                   )}
-                  <span className={hasSpecialChar ? "text-green-600" : "text-gray-500"}>One special character</span>
+                  <span
+                    className={
+                      hasSpecialChar ? "text-green-600" : "text-gray-500"
+                    }
+                  >
+                    One special character
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {hasLetter ? (
@@ -162,7 +229,11 @@ export function SignupFormComponent() {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-gray-300"></div>
                   )}
-                  <span className={hasLetter ? "text-green-600" : "text-gray-500"}>One letter</span>
+                  <span
+                    className={hasLetter ? "text-green-600" : "text-gray-500"}
+                  >
+                    One letter
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {hasNumber ? (
@@ -172,7 +243,11 @@ export function SignupFormComponent() {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-gray-300"></div>
                   )}
-                  <span className={hasNumber ? "text-green-600" : "text-gray-500"}>One number</span>
+                  <span
+                    className={hasNumber ? "text-green-600" : "text-gray-500"}
+                  >
+                    One number
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {hasMinLength ? (
@@ -182,14 +257,22 @@ export function SignupFormComponent() {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-gray-300"></div>
                   )}
-                  <span className={hasMinLength ? "text-green-600" : "text-gray-500"}>6 characters</span>
+                  <span
+                    className={
+                      hasMinLength ? "text-green-600" : "text-gray-500"
+                    }
+                  >
+                    6 characters
+                  </span>
                 </div>
               </div>
 
               {/* Sign Up Button */}
               <Button
+                loading={isPending}
+                disabled={!isValid}
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg mt-8"
+                className=" mt-8"
               >
                 Sign up
               </Button>
@@ -206,7 +289,7 @@ export function SignupFormComponent() {
 
               {/* Social Login Buttons */}
               <div className="grid grid-cols-2 gap-4">
-                <Button
+                <CustomButton
                   type="button"
                   variant="outline"
                   className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
@@ -229,10 +312,12 @@ export function SignupFormComponent() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  <span className="text-gray-700 font-medium">Sign up with Google</span>
-                </Button>
+                  <span className="text-gray-700 font-medium">
+                    Sign up with Google
+                  </span>
+                </CustomButton>
 
-                <Button
+                <CustomButton
                   type="button"
                   variant="outline"
                   className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
@@ -240,18 +325,20 @@ export function SignupFormComponent() {
                   <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
-                  <span className="text-gray-700 font-medium">Sign up with Facebook</span>
-                </Button>
+                  <span className="text-gray-700 font-medium">
+                    Sign up with Facebook
+                  </span>
+                </CustomButton>
               </div>
 
               {/* Terms */}
               <p className="text-sm text-gray-500 mt-6 leading-relaxed">
                 By continuing, you agree to the{" "}
-                <Link href="/terms" className="text-gray-700 hover:underline">
+                <Link to="/terms" className="text-gray-700 hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and acknowledge you've read our{" "}
-                <Link href="/privacy" className="text-gray-700 hover:underline">
+                <Link to="/privacy" className="text-gray-700 hover:underline">
                   Privacy Policy.
                 </Link>
               </p>
@@ -288,5 +375,5 @@ export function SignupFormComponent() {
         buttonText="Okay"
       />
     </>
-  )
+  );
 }

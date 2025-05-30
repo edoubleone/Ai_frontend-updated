@@ -11,12 +11,13 @@ import Login from "./Pages/Login";
 import Forgot from "./Pages/ForgotPassword";
 import { TempDashboardLayout } from "./components/Features/bot/temp-dashboard-layout";
 import Conversations from "./Pages/conversations";
-import { Routes, Route } from 'react-router-dom';
-import ScrollToTop from '@/components/common/ScrollToTop';
+import { Routes, Route } from "react-router-dom";
+import ScrollToTop from "@/components/common/ScrollToTop";
 
-import Demo from './Pages/BookDemo';
-import { TestFont } from '@/components/common/TestFont';
-import NotFound from './Pages/NotFound';
+import Demo from "./Pages/BookDemo";
+import { TestFont } from "@/components/common/TestFont";
+import NotFound from "./Pages/NotFound";
+import PrivateRoute from "./utils/protected-routes";
 // import NotFound from './Pages/NotFound';
 
 function App() {
@@ -30,13 +31,15 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/terms" element={<TermOfUse />} />
         <Route path="/privacy" element={<Policy />} />
-        <Route path="/signup" element={<Forgot />} />
+        <Route path="/signup" element={<SignUp />} />
         {/* Add other routes here */}
-        <Route path="dashboard" element={<TempDashboardLayout />}>
-          <Route path="conversations" element={<Conversations />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="dashboard" element={<TempDashboardLayout />}>
+            <Route path="conversations" element={<Conversations />} />
+          </Route>
         </Route>
 
-          {/* <Bot /> */}
+        {/* <Bot /> */}
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

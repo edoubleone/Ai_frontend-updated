@@ -1,18 +1,55 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Eye, EyeOff } from "lucide-react"
-import { Link } from "react-router-dom"
-import logo from "@/assets/images/logo.png"
+import { useState } from "react";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "@/assets/images/logo.png";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { UserLogin } from "@/services/api/auth";
+import Button from "../shared/button";
+import { useAuth } from "@/context/auth-provider";
 // import { KoolAiLogo } from "./kool-ai-logo"
 
 export function LoginFormComponent() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { setAuthenticated } = useAuth();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: UserLogin,
+    onSuccess: (data) => {
+      setAuthenticated(data.access_token);
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    mode: "onChange",
+    resolver: zodResolver(
+      z.object({
+        username: z.string().email().min(1, { message: "Email is required" }),
+        password: z.string().min(8).max(20),
+      })
+    ),
+  });
 
   return (
     <div className="flex min-h-screen">
@@ -33,40 +70,50 @@ export function LoginFormComponent() {
             <h1 className="text-3xl font-bold text-gray-900 mb-3">Login</h1>
             <p className="text-gray-600">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+              <Link
+                to="/signup"
+                className="text-blue-600 hover:underline font-medium"
+              >
                 Sign Up
               </Link>
             </p>
           </div>
 
           {/* Form */}
-          <form className="space-y-6">
+          <form
+            onSubmit={handleSubmit((data) => mutate(data))}
+            className="space-y-6"
+          >
             {/* Email */}
             <div>
-              <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700 mb-2 block"
+              >
                 Email Address
               </Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("username", { required: true })}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
               />
             </div>
 
             {/* Password */}
             <div>
-              <Label htmlFor="password" className="text-sm font-medium text-gray-700 mb-2 block">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700 mb-2 block"
+              >
                 Password*
               </Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password", { required: true })}
                   className="w-full px-4 py-3 pr-12 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="******"
                 />
@@ -75,20 +122,27 @@ export function LoginFormComponent() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Forgot Password */}
             <div className="text-right">
-              <Link to="/forgot-password" className="text-blue-600 hover:underline text-sm font-medium">
+              <Link
+                to="/forgot-password"
+                className="text-blue-600 hover:underline text-sm font-medium"
+              >
                 Forgot password?
               </Link>
             </div>
 
             {/* Login Button */}
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg mt-8">
+            <Button loading={isPending} disabled={!isValid} type="submit">
               Login
             </Button>
 
@@ -126,7 +180,9 @@ export function LoginFormComponent() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                <span className="text-gray-700 font-medium">Login with Google</span>
+                <span className="text-gray-700 font-medium">
+                  Login with Google
+                </span>
               </Button>
 
               <Button
@@ -136,7 +192,9 @@ export function LoginFormComponent() {
                 <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
-                <span className="text-gray-700 font-medium">Login with Facebook</span>
+                <span className="text-gray-700 font-medium">
+                  Login with Facebook
+                </span>
               </Button>
             </div>
           </form>
@@ -153,5 +211,5 @@ export function LoginFormComponent() {
         />
       </div>
     </div>
-  )
+  );
 }

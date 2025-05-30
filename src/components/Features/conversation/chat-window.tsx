@@ -16,43 +16,14 @@ import type {
   IAssistant,
   IAssistantMessage,
 } from "@/services/models/conversation.model";
-import axios from "axios";
-import { BASE_URL, token } from "@/Pages/conversations";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ChatBubble from "./chat-bubble";
 import { toast } from "@/hooks/use-toast";
-
-function ChatWithAssistant({
-  message,
-  assistant_id,
-}: {
-  message: string;
-  assistant_id: number;
-}) {
-  return axios.post(
-    `${BASE_URL}/assistants/${assistant_id}/chat`,
-    { message },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-}
-
-async function getAssistantChatHistory(
-  assistant_id: number
-): Promise<IAssistantMessage[]> {
-  const response = await axios.get<IAssistantMessage[]>(
-    `${BASE_URL}/assistants/${assistant_id}/history`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response.data;
-}
+import {
+  ChatWithAssistant,
+  GetAssistantChatHistory,
+} from "@/services/api/conversation";
 
 const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   const queryClient = useQueryClient();
@@ -63,7 +34,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   const [message, setMessage] = useState("");
 
   const { data: assistantChatHistory = [] } = useQuery({
-    queryFn: () => getAssistantChatHistory(assistant?.id!),
+    queryFn: () => GetAssistantChatHistory(assistant?.id!),
     queryKey: ["assistant-chat-history", assistant?.id],
     enabled: assistant !== null,
   });
@@ -116,7 +87,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate({ assistant_id: assistant.id, message });
-    setMessage("")
+    setMessage("");
   };
 
   return (
@@ -131,7 +102,9 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
             <p className="text-sm text-[#454545]">Ijetechemmaule@gmail.com</p>
             <span className="mt-1.5 flex items-center gap-1.5 text-[#8B8B8B]">
               <MessageSquare className="size-[18px]" />
-              <p className="text-xs">{assistantChatHistory?.length || 0} Conversations</p>
+              <p className="text-xs">
+                {assistantChatHistory?.length || 0} Conversations
+              </p>
             </span>
           </div>
         </div>
