@@ -13,7 +13,7 @@ interface VerificationModalProps {
   onVerificationComplete: (code: string) => void
 }
 
-export function VerificationModal({ isOpen, onClose, email, onVerificationComplete }: VerificationModalProps) {
+export function VerificationModal({ isOpen, onClose, onVerificationComplete }: VerificationModalProps) {
   const [code, setCode] = useState(["", "", "", "", "", ""])
   const [timeLeft, setTimeLeft] = useState(18)
   const [isResending, setIsResending] = useState(false)
@@ -104,18 +104,18 @@ export function VerificationModal({ isOpen, onClose, email, onVerificationComple
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+      <div className="relative w-full max-w-md p-8 bg-white shadow-xl rounded-2xl">
         {/* Close Button */}
         <button 
           onClick={onClose} 
-          className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute text-gray-400 transition-colors top-6 right-6 hover:text-gray-600"
         >
           <X className="w-6 h-6" />
         </button>
 
         {/* Header */}
-        <div className="text-center mb-8 pt-4">
+        <div className="pt-4 mb-8 text-center">
           <h2 className="text-2xl font-bold text-gray-900">Forgot Password Verification</h2>
         </div>
 
@@ -124,7 +124,7 @@ export function VerificationModal({ isOpen, onClose, email, onVerificationComple
           {code.map((digit, index) => (
             <input
               key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
+              ref={(el) => {inputRefs.current[index] = el;}}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -132,18 +132,18 @@ export function VerificationModal({ isOpen, onClose, email, onVerificationComple
               onChange={(e) => handleInputChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste}
-              className="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors bg-gray-50"
+              className="w-12 h-12 text-lg font-semibold text-center transition-colors border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none bg-gray-50"
             />
           ))}
         </div>
 
         {/* Timer */}
-        <div className="text-center mb-8">
-          <span className="text-blue-500 font-semibold text-lg">{formatTime(timeLeft)}</span>
+        <div className="mb-8 text-center">
+          <span className="text-lg font-semibold text-blue-500">{formatTime(timeLeft)}</span>
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 text-center mb-8 leading-relaxed">
+        <p className="mb-8 leading-relaxed text-center text-gray-600">
           We have sent a 6- digit verification pin to your mail/
           <br />
           Phone number. Please, provide the digits to continue!
@@ -154,19 +154,19 @@ export function VerificationModal({ isOpen, onClose, email, onVerificationComple
           <Button
             onClick={handleConfirm}
             disabled={code.join("").length !== 6 || isVerifying}
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 rounded-xl font-semibold text-lg shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-4 text-lg font-semibold text-white transition-all duration-200 shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isVerifying ? "Verifying..." : "Confirm"}
           </Button>
         </div>
 
         {/* Resend Link */}
-        <div className="text-center mb-6">
+        <div className="mb-6 text-center">
           <span className="text-gray-600">{"Didn't get pin? "}</span>
           <button
             onClick={handleResend}
             disabled={timeLeft > 0 || isResending}
-            className="text-blue-500 hover:text-blue-600 font-semibold disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
+            className="font-semibold text-blue-500 transition-colors hover:text-blue-600 disabled:text-gray-400 disabled:cursor-not-allowed"
           >
             {isResending ? "Sending..." : "Resend"}
           </button>
