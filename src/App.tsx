@@ -13,13 +13,22 @@ import Forgot from './Pages/ForgotPassword';
 import Demo from './Pages/BookDemo';
 import { TestFont } from '@/components/common/TestFont';
 import NotFound from './Pages/NotFound';
-// import NotFound from './Pages/NotFound';
+import { DashboardLayout } from './components/Features/bot/dashboard-layout';
 
 function App() {
   return (
-    <Layout>
-      <ScrollToTop />
-      <Routes>
+    <Routes>
+      {/* Dashboard Layout - Separate route without main Layout */}
+      <Route path="/bot/*" element={<DashboardLayout />} />
+
+      {/* Public routes wrapped in main Layout */}
+      <Route
+        element={
+          <Layout>
+            <ScrollToTop />
+          </Layout>
+        }
+      >
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -31,10 +40,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/test-font" element={<TestFont />} />
         <Route path="/demo" element={<Demo />} />
-        {/* Catch-all route for 404 Not Found */}
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 }
 
