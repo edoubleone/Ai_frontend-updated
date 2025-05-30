@@ -19,7 +19,7 @@ function App() {
   return (
     <Routes>
       {/* Dashboard Layout Route */}
-      <Route path="/bot/*" element={<DashboardLayout />} />
+      <Route path="/dashboard/*" element={<DashboardLayout />} />
 
       {/* Public Routes with Main Layout */}
       <Route path="/" element={
