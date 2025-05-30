@@ -6,8 +6,8 @@ export default function VisionMissionSection() {
       <div className="container px-4 md:px-6 mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center text-center space-y-4 mb-12 md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Our Vision and Mission</h2>
-          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
+          <h2 className=" font-heavy text-xl tracking-tighter sm:text-4xl md:text-5xl">Our Vision and Mission</h2>
+          <p className="mx-auto max-w-[700px]  md:text-x font-light text-sm">
             We aim to help businesses of all sizes use technology to solve problems, take advantage of opportunities,
             and build a better future.
           </p>
@@ -33,15 +33,15 @@ export default function VisionMissionSection() {
           {/* Text Column */}
           <div className="space-y-8">
             <div className="space-y-3">
-              <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">Mission</h3>
-              <p className="text-gray-600">
+              <h3 className=" font-heavy text-xl tracking-tighter sm:text-3xl">Mission</h3>
+              <p className="font-light text-sm">
                 To help businesses sell better, faster, and smarter using real, working AI.
               </p>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">Vision</h3>
-              <p className="text-gray-600">
+              <h3 className="font-heavy text-xl tracking-tighter sm:text-3xl">Vision</h3>
+              <p className="font-light text-sm">
                 To change how companies connect with their customers by making intelligent sales automation the new
                 normal. Bringing minimal delays and missed opportunities.
               </p>

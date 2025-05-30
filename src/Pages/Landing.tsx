@@ -5,7 +5,7 @@ import {DeviceShowcaseSection} from "@/components/Features/Landing/device-showca
 import { PricingSection } from "@/components/Features/Landing/pricing-section"
 import { EnhancedFAQSection } from "@/components/Features/Landing/enchanced-faq-section"
 import { EnhancedHowItWorksSection } from "@/components/Features/Landing/enchanced-how-it-work-section"
-import {EnhancedTestimonialsSection} from "@/components/Features/Landing/enchanced-testimonial-section"
+
 import HeroSection from "@/components/Features/Landing/hero-section"
 import Footer from "@/components/common/Footer/footer"
 
@@ -14,7 +14,7 @@ export default function Landing() {
   return (
     <div>
       <HeroSection />
-      <EnhancedTestimonialsSection/>
+  
       <EnhancedHowItWorksSection/>
        <EnhancedBenefitsSection/>
       <DeviceShowcaseSection />
