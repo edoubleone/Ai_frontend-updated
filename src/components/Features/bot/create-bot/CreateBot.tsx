@@ -2,10 +2,10 @@ import { Button } from '@/components/ui/button'
 import { ChevronLeft } from 'lucide-react'
 import { BasicSetup, Preview, CompanyDetails, Customize, Settings, FAQs, RoleAndAudience } from './forms'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Formik, useFormikContext } from 'formik'
+import { Formik } from 'formik'
 import type { BotEditPageProps } from '../bot-edit-page'
 import { stepSchemas } from './Types'
+import apiClient from '@/services/config/api'
 
   const steps = [
     {heading: 'Basic Setup', desc: "Give a name to your new assistant. This name will be used when it introduces itself to your clients. Select the languages your assistant will communicate in and choose its type: voice or text.", component: <BasicSetup /> },
@@ -64,6 +64,8 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
       event.preventDefault(); // Prevent default form submission
     }
 
+    // console.log('data :', validateForm.data);
+
     // Validate the current step's form
     const formErrors = await handleValidation(validateForm, setTouched, errors);
 
@@ -74,40 +76,69 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
     }
   }
 
-  const handleSubmit = async (values:any) => {
-    // Handle form submission logic here
-    console.log('Form data: ', values);
-    // Validate the entire form before submission
-    const { validateForm, setTouched, errors } = useFormikContext();
-    // Validate the form
-    setTouched({}); // Reset touched state
-    // Get the form errors
+  const handleSubmit = async (values: any) => {
+  try {
+    setIsSubmitting(true);
 
-    const formErrors = handleValidation(validateForm, setTouched, errors);
+    const payload = {
+      name: values.name,
+      business_name: values.companyName,
+      industry: values.IndustryAndDescription,
+      description: values.description || "",
+      greeting: values.greeting || "",
+      persona: values.setRole || "",
+      tone: values.toneOfCommunication || "",
+      small_talk_level: values.talkLevel || "none",
+      jokes_level: values.jokeLevel || "none",
+      emoji_level: values.emodzy || "none",
+      additional_instructions: values.additionalInstruction || "",
+      config: {},
+    };
 
-    try {
-      setIsSubmitting(true);
-      const response = await axios.post('/api/billing', values); 
-      console.log("This is the response: ", response.config.data);
-      alert('Form submitted successfully');
-      // setAlertVisible(true);
-      setIsSubmitting(false);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Error submitting form. Please try again.');
-      setIsSubmitting(false);
+    console.log('Creating assistant with payload:', payload);
+
+    // Step 1: Create Assistant
+    const assistantRes = await apiClient.post(`/assistants`, payload);
+    const assistantId = assistantRes?.data?.id;
+
+    if (!assistantId) {
+      throw new Error("Assistant creation failed. No ID returned.");
     }
 
-    if (Object.keys(formErrors).length === 0) {
-      console.log('Form submitted with this values: ', values);
+    console.log("Assistant created with ID:", assistantId);
 
-      if (onBack) {
-        onBack();
-      }
+    // Step 2: Upload Document (conditionally)
+    const filledForm = values.filledForm; // this should be passed or available via Formik context or props
+    const document = values.companyDocument;
+
+    if (!filledForm && document) {
+      const formData = new FormData();
+      formData.append("assistant_id", assistantId); // adjust key name if needed
+      formData.append("document", document);
+
+      console.log("Uploading document...");
+
+      const uploadRes = await apiClient.post(`/assistants/${assistantId}/documents`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Document uploaded:", uploadRes.data);
     }
-    
-  
+
+    alert("Assistant created successfully!");
+
+    return assistantId;
+  } catch (error) {
+    console.error("Error during assistant creation or document upload:", error);
+    alert("Submission failed. Please try again.");
+    throw error;
+  } finally {
+    setIsSubmitting(false);
   }
+};
+
 
   const handlePreviousStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
@@ -119,7 +150,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
   const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
 
   return (
-    <div className='flex flex-col h-full bg-secondary p-6'>
+    <div className='flex flex-col bg-secondary p-6'>
       <header className='mb-4'>
         <Button onClick={onBack} className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg' variant="ghost">
           <ChevronLeft className="w-4 h-4 ml-2" />
@@ -127,7 +158,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
         </Button>
       </header>
 
-      <main className='flex flex-col h-full bg-background rounded-lg p-8'>
+      <main className='flex flex-col bg-background rounded-lg p-8'>
         <header>
           <h1 className='text-2xl font-semibold mb-4'>Let&apos;s set up your Bot Assistant</h1>
           <p className='text-gray-600 mb-6'>Customize and fine-tune the way your assistant communicates and interacts with customers to ensure it delivers consistent, engaging, and brand-aligned conversations across every touchpoint.</p>
@@ -151,7 +182,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
           onSubmit={handleSubmit}
         >{({ validateForm, setTouched, errors, values }) => (
           <div>
-            <main className={`flex flex-col gap-y-3 transition-all w-full h-full duration-500 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+            <main className={`flex flex-col gap-y-3 w-full`}>
               <section className={`flex flex-col gap-y-3 transition-all duration-500 delay-300 ${animate ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-10 opacity-0 scale-95'}`}>
                 <h2 className='font-semibold text-lg'>{steps[currentStep].heading}</h2>
                 <p className='text-gray-600 mb-4'>{steps[currentStep].desc}</p>
@@ -163,17 +194,16 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
             </main>
 
 
-            <footer className={`w-full flex-1 flex items-center ${currentStep > 0 ?"justify-between" : "justify-end"}`}>
-            {currentStep > 0 && <button
+          <footer className={`flex justify-between items-center`}>
+            <button
               type='button'
               className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium'
-              disabled={currentStep === 0}
               onClick={handlePreviousStep}
             >
               Previous
-            </button>}
+            </button>
 
-            <div className='flex justify-end items-center gap-x-5'>
+            <div className=''>
               {currentStep < totalSteps-1 && <button
                 type='button'
                 className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium'
@@ -185,12 +215,13 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
               {!isLastStep ? (<button
                 type='button'
                 className='px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium'
+                // onClick={currentStep === 0 ? () => handleSubmit(values) : () => handleNextStep(validateForm, setTouched, errors)}
                 onClick={() => handleNextStep(validateForm, setTouched, errors)}
               >
                 Proceed</button>) : (<button
                 type='button'
                 className='px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium'
-                onClick={() => handleNextStep(validateForm, setTouched, errors)}
+                onClick={() => handleSubmit(values)}
               >
                 {isSubmitting ? "Submitting..." : "Finish"}
               </button>)}
@@ -201,7 +232,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
         </Formik>
       </main>
     </div>
-  )
+  );
 }
 
 export default CreateBot

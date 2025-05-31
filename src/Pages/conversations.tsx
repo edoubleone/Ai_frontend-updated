@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
+import axios from "axios";
 
 const Conversations = () => {
   const queryClient = useQueryClient();

@@ -8,41 +8,15 @@ import { type CompanyDetailsFormValues } from '../Types'
 const CompanyDetails = () => {
     const { values, errors, touched, handleChange, handleBlur, setFieldValue } = useFormikContext<CompanyDetailsFormValues>();
 
-    const [isExtraServices, setIsExtraServices] = React.useState(false);
+
     const [isVatIncluded, setIsVatIncluded] = React.useState(false);
-    const [isCustomizable, setIsCustomizable] = React.useState(false);
-    const [isAIAssistant, setIsAIAssistant] = React.useState(false);
+    const [upLoadTeamMember, setUpLoadTeamMember] = React.useState(false);
     const [isToFillForm, setIsToFillForm] = React.useState(false);
 
     const fileInputRef = React.useRef(null);
 
-    // const formik = useFormik<CompanyDetailsFormValues>({
-    //     initialValues: {
-    //         companyName: !isToFillForm ? '' : "Find information in the company document",
-    //         TypeOfAssistant: 'Text',
-    //         IndustryAndDescription: !isToFillForm ? '' : "Find information in the company document",
-    //         CompanyMission: !isToFillForm ? '' : "Find information in the company document",
-    //         service: !isToFillForm ? '' : "Find information in the company document",
-    //         Amount: !isToFillForm ? undefined : 0,
-    //         description: !isToFillForm ? '' : "Find information in the company document",
-    //         country: !isToFillForm ? '' : "Find information in the company document",
-    //         city: !isToFillForm ? '' : "Find information in the company document",
-    //         ZIPCode: !isToFillForm ? '' : "Find information in the company document",
-    //         state: !isToFillForm ? '' : "Find information in the company document",
-    //         address1: !isToFillForm ? '' : "Find information in the company document",
-    //         address2: !isToFillForm ? '' : "Find information in the company document",
-    //         teamMemberName: !isToFillForm ? '' : "Find information in the company document",
-    //         teamMemberPosition: !isToFillForm ? '' : "Find information in the company document",
-    //         description_team: !isToFillForm ? '' : "Find information in the company document",
-    //     },
-    //     validationSchema: companyDetailsSchema,
-    //     validateOnChange: true,
-    //     validateOnBlur: true,
-    //     onSubmit: (values: CompanyDetailsFormValues) => {
-    //         // Handle form submission
-    //         console.log('Form submitted:', values);
-    //     },
-    // });
+    values.filledForm = isToFillForm;
+    values.uploadTeamInfo = upLoadTeamMember;
 
   return (
     <div className='mb-10'>
@@ -161,8 +135,8 @@ const CompanyDetails = () => {
                     <div>
                         <h2 className='text-lg font-semibold mb-2'>Company Products</h2>
                         <div className='flex items-center w-full justify-between gap-[30px]'>
-                            <span className={`${isExtraServices ? "text-gray-900" : "text-gray-500"}`}>You can add up to 40 services of your company, which can be digital services, services, courses, training, or products</span>
-                            <Switch checked={isExtraServices} onCheckedChange={setIsExtraServices} className="data-[state=checked]:bg-blue-600" />
+                            <span className={`${"text-gray-500"}`}>You can add up to 40 services of your company, which can be digital services, services, courses, training, or products</span>
+                            {/* <Switch checked={isExtraServices} onCheckedChange={setIsExtraServices} className="data-[state=checked]:bg-blue-600" /> */}
                         </div>
                     </div>
 
@@ -232,8 +206,8 @@ const CompanyDetails = () => {
                     <fieldset className="flex items-center gap-x-3">
                         <input
                             type='checkbox'
-                            id="description"
-                            name="description"
+                            id="addProduct"
+                            name="addProduct"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             // value={values.description}
@@ -241,7 +215,7 @@ const CompanyDetails = () => {
                             className="h-5 w-5 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         {/* <p className={`${error} ${errors.name ? "opacity-1" : "opacity-0"}`}>{errors.name ? (errors.name) : ""}</p> */}
-                        <label htmlFor="description" className='flex items-center gap-x-3'>Add Product/ Service</label>
+                        <label htmlFor="addProduct" className='flex items-center gap-x-3'>Add Product/ Service</label>
                     </fieldset>
                 </section>
 
@@ -249,10 +223,10 @@ const CompanyDetails = () => {
 
                 <section className={sectionStyles}>
                     <div>
-                        <h2 className='text-lg font-semibold mb-2'>Address <span className='text-[#737373]'>(Optional)</span></h2>
+                        <h2 className='text-lg font-semibold mb-2'>Address</h2>
                         <div className='flex items-center w-full justify-between gap-[30px]'>
-                            <span className={`${isCustomizable ? "text-gray-900" : "text-gray-500"}`}>Add addresses to customize responses and improve location-based assistance.</span>
-                            <Switch checked={isCustomizable} onCheckedChange={setIsCustomizable} className="data-[state=checked]:bg-blue-600" />
+                            <span className={`${"text-gray-500"}`}>Add addresses to customize responses and improve location-based assistance.</span>
+                            {/* <Switch checked={isCustomizable} onCheckedChange={setIsCustomizable} className="data-[state=checked]:bg-blue-600" /> */}
                         </div>
                     </div>
 
@@ -349,16 +323,15 @@ const CompanyDetails = () => {
                     <fieldset className="flex items-center gap-x-3">
                         <input
                             type='checkbox'
-                            id="description"
-                            name="description"
+                            id="addAddress"
+                            name="addAddress"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            // value={values.description}
+                            // value={values.addAddress}
                             placeholder="For example, we create website that convert for start up"
                             className="h-5 w-5 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        {/* <p className={`${error} ${errors.name ? "opacity-1" : "opacity-0"}`}>{errors.name ? (errors.name) : ""}</p> */}
-                        <label htmlFor="description" className='flex items-center gap-x-3'>Add Address</label>
+                        <label htmlFor="addAddress" className='flex items-center gap-x-3'>Add Address</label>
                     </fieldset>
                 </section>
 
@@ -368,71 +341,73 @@ const CompanyDetails = () => {
                     <div>
                         <h2 className='text-lg font-semibold mb-2'>Team Members <span className='text-[#737373]'>(Optional)</span></h2>
                         <div className='flex items-center w-full justify-between gap-[30px]'>
-                            <span className={`${isAIAssistant ? "text-gray-900" : "text-gray-500"}`}>Add team members to streamline communication and enhance personalized interactions with our AI assistant.</span>
-                            <Switch checked={isAIAssistant} onCheckedChange={setIsAIAssistant} className="data-[state=checked]:bg-blue-600" />
+                            <span className={`${upLoadTeamMember ? "text-gray-900" : "text-gray-500"}`}>Add team members to streamline communication and enhance personalized interactions with our AI assistant.</span>
+                            <Switch checked={upLoadTeamMember} onCheckedChange={setUpLoadTeamMember} className="data-[state=checked]:bg-blue-600" />
                         </div>
                     </div>
 
-                    <div className='flex justify-between gap-10'>
-                        <fieldset className={fieldsetStyles}>
-                            <label htmlFor="teamMemberName">Team Member&apos;s Name</label>
-                            <input
-                                type="text"
-                                id="teamMemberName"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.teamMemberName}
-                                name="teamMemberName"
-                                className={`${inputStyles} ${touched && errors.teamMemberName ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.teamMemberName != "" && !errors.teamMemberName &&"ring-green-300"}`}
-                            />
-                            <p className={`${error} ${errors.teamMemberName ? "opacity-1" : "opacity-0"}`}>{errors.teamMemberName ? (errors.teamMemberName) : ""}</p>
-                        </fieldset>
+                    <div className={`flex-col gap-10 ${upLoadTeamMember ? "flex" : "hidden"}`}>
+                        <div className={`flex justify-between gap-10`}>
+                            <fieldset className={fieldsetStyles}>
+                                <label htmlFor="teamMemberName">Team Member&apos;s Name</label>
+                                <input
+                                    type="text"
+                                    id="teamMemberName"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.teamMemberName}
+                                    name="teamMemberName"
+                                    className={`${inputStyles} ${touched && errors.teamMemberName ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.teamMemberName != "" && !errors.teamMemberName &&"ring-green-300"}`}
+                                />
+                                <p className={`${error} ${errors.teamMemberName ? "opacity-1" : "opacity-0"}`}>{errors.teamMemberName ? (errors.teamMemberName) : ""}</p>
+                            </fieldset>
+
+                            <fieldset className={fieldsetStyles}>
+                                <label htmlFor="teamMemberPosition">Team Member&apos;s Position</label>
+                                <input
+                                    type="text"
+                                    id="teamMemberPosition"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.teamMemberPosition}
+                                    name="teamMemberPosition"
+                                    className={`${inputStyles} ${touched && errors.teamMemberPosition ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.teamMemberPosition != "" && !errors.teamMemberPosition &&"ring-green-300"}`}
+                                />
+                                <p className={`${error} ${errors.teamMemberPosition ? "opacity-1" : "opacity-0"}`}>{errors.teamMemberPosition ? (errors.teamMemberPosition) : ""}</p>
+                            </fieldset>
+                        </div>
 
                         <fieldset className={fieldsetStyles}>
-                            <label htmlFor="teamMemberPosition">Team Member&apos;s Position</label>
-                            <input
-                                type="text"
-                                id="teamMemberPosition"
+                            <label htmlFor="description_team" className='flex items-center gap-x-3'>Description (Optional) <CircleAlert size={18} strokeWidth={1.25} className='text-sm' /></label>
+                            <textarea
+                                id="description_team"
+                                rows={5}
+                                name="description_team"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.teamMemberPosition}
-                                name="teamMemberPosition"
-                                className={`${inputStyles} ${touched && errors.teamMemberPosition ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.teamMemberPosition != "" && !errors.teamMemberPosition &&"ring-green-300"}`}
+                                value={values.description_team}
+                                placeholder="For example, we create website that convert for start up"
+                                className={`${inputStyles} ${touched && errors.description_team ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.description_team != "" && !errors.description_team &&"ring-green-300"}`}
                             />
-                            <p className={`${error} ${errors.teamMemberPosition ? "opacity-1" : "opacity-0"}`}>{errors.teamMemberPosition ? (errors.teamMemberPosition) : ""}</p>
+                            <p className={`${error} ${errors.description_team ? "opacity-1" : "opacity-0"}`}>{errors.description_team ? (errors.description_team) : ""}</p>
+                            <p className='flex justify-end'>Max of 50 words</p>
+                        </fieldset>
+
+                        <fieldset className="flex items-center gap-x-3">
+                            <input
+                                type='checkbox'
+                                id="addTeamMember"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                // value={values.description}
+                                name="addTeamMember"
+                                placeholder="For example, we create website that convert for start up"
+                                className="h-5 w-5 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <label htmlFor="addTeamMember" className='flex items-center gap-x-3'>Add Team Member</label>
+                            {/* <p className={`${error} ${errors.name ? "opacity-1" : "opacity-0"}`}>{errors.name ? (errors.name) : ""}</p> */}
                         </fieldset>
                     </div>
-
-                    <fieldset className={fieldsetStyles}>
-                        <label htmlFor="description" className='flex items-center gap-x-3'>Description (Optional) <CircleAlert size={18} strokeWidth={1.25} className='text-sm' /></label>
-                        <textarea
-                            id="description"
-                            rows={5}
-                            name="description"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.description_team}
-                            placeholder="For example, we create website that convert for start up"
-                            className={`${inputStyles} ${touched && errors.description_team ? " bg-red-50 ring-red-300" : " bg-white ring-gray-200"} ${values.description_team != "" && !errors.description_team &&"ring-green-300"}`}
-                        />
-                        <p className={`${error} ${errors.description_team ? "opacity-1" : "opacity-0"}`}>{errors.description_team ? (errors.description_team) : ""}</p>
-                        <p className='flex justify-end'>Max of 50 words</p>
-                    </fieldset>
-
-                    <fieldset className="flex items-center gap-x-3">
-                        <input
-                            type='checkbox'
-                            id="description"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            // value={values.description}
-                            name="description"
-                            placeholder="For example, we create website that convert for start up"
-                            className="h-5 w-5 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        <label htmlFor="description" className='flex items-center gap-x-3'>Add Team Member</label>
-                        {/* <p className={`${error} ${errors.name ? "opacity-1" : "opacity-0"}`}>{errors.name ? (errors.name) : ""}</p> */}
-                    </fieldset>
                 </section>
             </main>
         </form>
