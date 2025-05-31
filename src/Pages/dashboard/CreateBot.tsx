@@ -1,11 +1,26 @@
 import { Button } from '@/components/ui/button'
 import { ChevronLeft } from 'lucide-react'
-import { BasicSetup, Preview, CompanyDetails, Customize, Settings, FAQs, RoleAndAudience } from './forms'
+import { BasicSetup, Preview, CompanyDetails, Customize, Settings, FAQs, RoleAndAudience } from '../../components/Features/bot/create-bot/forms'
 import { useEffect, useState } from 'react'
 import { Formik } from 'formik'
-import type { BotEditPageProps } from '../bot-edit-page'
-import { stepSchemas } from './Types'
+import type { BotEditPageProps } from '../../components/Features/bot/bot-edit-page'
+import { stepSchemas } from '../../components/Features/bot/create-bot/Types'
 import apiClient from '@/services/config/api'
+import { useMutation } from '@tanstack/react-query'
+import { BASE_URL } from '@/utils'
+
+export function ChatWithAssistant(payload: any) {
+  return apiClient.post(`${BASE_URL}/assistants`,  payload, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0'
+    },
+  });
+}
+
+// return apiClient.post(`${BASE_URL}/assistants/${assistant_id}/knowledge`, {
+//     message,
+//   });
 
   const steps = [
     {heading: 'Basic Setup', desc: "Give a name to your new assistant. This name will be used when it introduces itself to your clients. Select the languages your assistant will communicate in and choose its type: voice or text.", component: <BasicSetup /> },
@@ -76,6 +91,21 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
     }
   }
 
+  
+
+    const { mutate } = useMutation({
+    mutationFn: ChatWithAssistant,
+    onError: (err, _newMessage, context) => {
+      console.log("Error creating assistant:", err);
+    },
+    onSuccess: (data) => {
+      console.log("Assistant created successfully:", data);
+      alert("Assistant created successfully!");
+      setIsSubmitting(false);
+      // Optionally, you can redirect or reset the form here
+    }
+  });
+
   const handleSubmit = async (values: any) => {
   try {
     setIsSubmitting(true);
@@ -95,43 +125,47 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
       config: {},
     };
 
+    // Bearer : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0
+
+    mutate(payload);
+
     console.log('Creating assistant with payload:', payload);
 
     // Step 1: Create Assistant
-    const assistantRes = await apiClient.post(`/assistants`, payload);
-    const assistantId = assistantRes?.data?.id;
+    // const assistantRes = await apiClient.post(`/assistants`, payload);
+    // const assistantId = assistantRes?.data?.id;
 
-    console.log("Assistant creation response:", assistantRes.data);
+    // console.log("Assistant creation response:", assistantRes.data);
 
-    if (!assistantId) {
-      throw new Error("Assistant creation failed. No ID returned.");
-    }
+    // if (!assistantId) {
+    //   throw new Error("Assistant creation failed. No ID returned.");
+    // }
 
-    console.log("Assistant created with ID:", assistantId);
+    // console.log("Assistant created with ID:", assistantId);
 
-    // Step 2: Upload Document (conditionally)
-    const filledForm = values.filledForm; // this should be passed or available via Formik context or props
-    const document = values.companyDocument;
+    // // Step 2: Upload Document (conditionally)
+    // const filledForm = values.filledForm; // this should be passed or available via Formik context or props
+    // const document = values.companyDocument;
 
-    if (!filledForm && document) {
-      const formData = new FormData();
-      formData.append("assistant_id", assistantId); // adjust key name if needed
-      formData.append("document", document);
+    // if (!filledForm && document) {
+    //   const formData = new FormData();
+    //   formData.append("assistant_id", assistantId); // adjust key name if needed
+    //   formData.append("document", document);
 
-      console.log("Uploading document...");
+    //   console.log("Uploading document...");
 
-      const uploadRes = await apiClient.post(`/knowledge/${assistantId}/knowledge`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    //   const uploadRes = await apiClient.post(`/knowledge/${assistantId}/knowledge`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
 
-      console.log("Document uploaded:", uploadRes.data);
-    }
+    //   console.log("Document uploaded:", uploadRes.data);
+    // }
 
-    alert("Assistant created successfully!");
+    // alert("Assistant created successfully!");
 
-    return assistantId;
+    // return assistantId;
   } catch (error) {
     console.error("Error during assistant creation or document upload:", error);
     alert("Submission failed. Please try again.");
@@ -139,6 +173,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
   } finally {
     setIsSubmitting(false);
   }
+
 };
 
 
