@@ -8,13 +8,13 @@ import { useEffect, useState } from "react"
 
 const stats = [
 	{
-		value: "150k",
+		value: "1k",
 		label: "Active users",
 		icon: Users,
 		color: "text-blue-600",
 	},
 	{
-		value: "50k",
+		value: "500",
 		label: "New users per month",
 		icon: TrendingUp,
 		color: "text-green-600",
@@ -74,9 +74,9 @@ export function EnhancedTestimonialsSection() {
 	}, [])
 
 	return (
-		<section id="testimonials" className="py-4 sm:py-12 bg-white">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+		<section id="testimonials" className="py-4 bg-white sm:py-12">
+			<div className="container px-4 mx-auto sm:px-6 lg:px-8">
+				<div className="grid items-center grid-cols-1 gap-16 lg:grid-cols-2">
 					{/* Left Side - Trust Indicators & Stats */}
 					<div
 						className={`space-y-12 transition-all duration-1000 ${
@@ -85,19 +85,19 @@ export function EnhancedTestimonialsSection() {
 					>
 						{/* Trust Header */}
 						<div>
-							<h2 className="font-light text-xl mb-8">Trusted by many across the world</h2>
+							<h2 className="mb-8 text-xl font-light">Trusted by many across the world</h2>
 
 							{/* Reviews Section */}
-							<div className="flex items-center gap-4 mb-8 p-4 bg-white ">
+							<div className="flex items-center gap-4 p-4 mb-8 bg-white ">
 								<div className="flex -space-x-2">
 									{userAvatars.map((user, index) => (
 										<Avatar
 											key={index}
-											className="w-10 h-10 border-2 border-white hover:scale-110 transition-transform cursor-pointer"
+											className="w-10 h-10 transition-transform border-2 border-white cursor-pointer hover:scale-110"
 											title={user.name}
 										>
 											<AvatarImage src={user.src || "/placeholder.svg"} alt={user.alt} />
-											<AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-light text-xl">
+											<AvatarFallback className="text-xl font-light text-white bg-gradient-to-br from-blue-500 to-purple-600">
 												{user.fallback}
 											</AvatarFallback>
 										</Avatar>
@@ -107,11 +107,11 @@ export function EnhancedTestimonialsSection() {
 									<div className="flex items-center gap-2 mb-1">
 										<div className="flex items-center gap-1">
 											{[...Array(5)].map((_, i) => (
-												<Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+												<Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
 											))}
 										</div>
 										<span className="text-2xl font-bold text-blue-600">4.8k</span>
-										<span className="text-blue-600 font-medium">Reviews</span>
+										<span className="font-medium text-blue-600">Reviews</span>
 									</div>
 									<p className="text-sm text-gray-600">Join our digital community</p>
 								</div>
@@ -119,7 +119,7 @@ export function EnhancedTestimonialsSection() {
 						</div>
 
 						{/* Statistics */}
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
 							{stats.map((stat, index) => (
 								<div
 									key={index}
@@ -133,8 +133,8 @@ export function EnhancedTestimonialsSection() {
 											{/* <stat.icon className="w-5 h-5" /> */}
 										</div>
 									</div>
-									<div className="text-3xl sm:text-4xl font-bold text-xl mb-2">{stat.value}</div>
-									<p className=" font-light text-sm">{stat.label}</p>
+									<div className="mb-2 text-xl text-3xl font-bold sm:text-4xl">{stat.value}</div>
+									<p className="text-sm font-light ">{stat.label}</p>
 								</div>
 							))}
 						</div>
@@ -147,11 +147,11 @@ export function EnhancedTestimonialsSection() {
 						}`}
 					>
 						<div>
-							<h2 className=" sm:text-4xl lg:text-5xl font-medium text-xl mb-6 leading-tight">
+							<h2 className="mb-6 text-xl font-medium leading-tight  sm:text-4xl lg:text-5xl">
 								Why Choose Agentic AI ?
 							</h2>
 
-							<p className="font-light text-sm leading-relaxed mb-8">
+							<p className="mb-8 text-sm font-light leading-relaxed">
 								Because it works. Because it saves time. It feels like having another teammate who never sleeps,
 								never forgets to follow up, and always keeps your sales moving.
 							</p>
@@ -159,11 +159,11 @@ export function EnhancedTestimonialsSection() {
 							<Button
 								asChild
 								variant="link"
-								className="text-blue-600 hover:text-blue-700 p-0 h-auto font-light text-sm group"
+								className="h-auto p-0 text-sm font-light text-blue-600 hover:text-blue-700 group"
 							>
-								<Link to="/about" className="flex items-center gap-2 font-light text-sm">
+								<Link to="/about" className="flex items-center gap-2 text-sm font-light">
 									Learn More
-									<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+									<ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
 								</Link>
 							</Button>
 						</div>

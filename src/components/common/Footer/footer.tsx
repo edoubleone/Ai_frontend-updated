@@ -253,11 +253,9 @@ export default function Footer() {
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
                   <span className="text-base leading-relaxed text-gray-600">
-                    Jl Codelaras Selatan No 26
+                  7404 Executive place, Lanham MD, 
                     <br />
-                    Kediri, Jawa Timur, ID
-                    <br />
-                    64213
+                    United States
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -266,7 +264,7 @@ export default function Footer() {
                     href="tel:+6281234567890"
                     className="text-base text-gray-600 transition-colors hover:text-gray-900"
                   >
-                    +62 812 3456 7890
+                    +12029710392
                   </a>
                 </li>
               </ul>
