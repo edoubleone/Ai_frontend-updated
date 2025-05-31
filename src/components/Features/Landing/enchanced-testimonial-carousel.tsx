@@ -9,31 +9,31 @@ const testimonials = [
   {
     id: 1,
     content:
-      "Lorem ipsum dolor sit amet consectetur. Risus dolor orci amet condimentum nisl bibendum viverra pretium. Enim amet a facilisis aliquet fringilla suspendisse. Cursus arcu id et risus aliquet ac.",
-    author: "Elizabeth Kafaru",
-    role: "UI/UX Designer",
+      "Kool AI has made workflow and interaction with cient really flexible for me. So flexible",
+    author: "Adewale James",
+    role: "CEO Havid Solutions",
     avatar: "/placeholder.svg?height=60&width=60",
   },
   {
     id: 2,
     content:
-      "Lorem ipsum dolor sit amet consectetur. Morbi vitae ut nullam molestie arcu. Tincidunt et suscipit bibendum fermentum sodales nunc. Lacinia lorem eu arcu nec cursus adipiscing quis.",
-    author: "Elizabeth Kafaru",
-    role: "UI/UX Designer",
+      "My business have scaled up 10% since i started using KoolAI. koolAI help me to keep up with my client.",
+    author: "Rotimi Philips",
+    role: "Business Analyst",
     avatar: "/placeholder.svg?height=60&width=60",
   },
   {
     id: 3,
     content:
-      "Lorem ipsum dolor sit amet consectetur. Morbi vitae ut nullam molestie arcu. Tincidunt et suscipit bibendum fermentum sodales nunc. Lacinia lorem eu arcu nec cursus adipiscing quis.",
-    author: "Elizabeth Kafaru",
-    role: "UI/UX Designer",
+      "I need your facebook features too also instagram, twitter. Every integration that you have.",
+    author: "Ruth Ene",
+    role: "Adrova Autos",
     avatar: "/placeholder.svg?height=60&width=60",
   },
   {
     id: 4,
     content:
-      "Lorem ipsum dolor sit amet consectetur. Morbi vitae ut nullam molestie arcu. Tincidunt et suscipit bibendum fermentum sodales nunc. Lacinia lorem eu arcu nec cursus adipiscing quis.",
+      "A great App. Easy to you and very flexible",
     author: "Elizabeth Kafaru",
     role: "UI/UX Designer",
     avatar: "/placeholder.svg?height=60&width=60",
@@ -41,9 +41,9 @@ const testimonials = [
   {
     id: 5,
     content:
-      "Lorem ipsum dolor sit amet consectetur. Morbi vitae ut nullam molestie arcu. Tincidunt et suscipit bibendum fermentum sodales nunc. Lacinia lorem eu arcu nec cursus adipiscing quis.",
-    author: "Elizabeth Kafaru",
-    role: "UI/UX Designer",
+      "Great. Are you available in Ghana?.",
+    author: "Amah Koffi",
+    role: "Trade Specialise at Aptah Logistics",
     avatar: "/placeholder.svg?height=60&width=60",
   },
 ]
@@ -64,11 +64,11 @@ export function EnhancedTestimonialsCarousel() {
   }
 
   return (
-    <section id="testimonials-carousel" className="py-4 sm:py-12 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials-carousel" className="py-4 bg-white sm:py-12">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
-          <h2 className=" font-semibold text-3xl sm:text-4xl   text-xl  ">What Our Client Said about us</h2>
+          <h2 className="text-xl text-3xl font-semibold sm:text-4xl">What Our Client Said about us</h2>
 
           {/* Navigation Arrows */}
           <div className="flex items-center gap-3">
@@ -77,7 +77,7 @@ export function EnhancedTestimonialsCarousel() {
               size="icon"
               onClick={prevSlide}
               disabled={currentIndex === 0}
-              className="w-12 h-12 rounded-full border-gray-300 hover:bg-gray-100 disabled:opacity-50"
+              className="w-12 h-12 border-gray-300 rounded-full hover:bg-gray-100 disabled:opacity-50"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
             </Button>
@@ -85,7 +85,7 @@ export function EnhancedTestimonialsCarousel() {
               size="icon"
               onClick={nextSlide}
               disabled={currentIndex >= testimonials.length - 4}
-              className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+              className="w-12 h-12 text-white bg-blue-600 rounded-full hover:bg-blue-700 disabled:opacity-50"
             >
               <ChevronRight className="w-5 h-5" />
             </Button>
@@ -93,7 +93,7 @@ export function EnhancedTestimonialsCarousel() {
         </div>
 
         {/* Testimonials Grid - 4 cards in a row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {getVisibleTestimonials().map((testimonial, index) => (
             <div
               key={`${testimonial.id}-${currentIndex}`}
@@ -112,7 +112,7 @@ export function EnhancedTestimonialsCarousel() {
               <div className="flex items-center gap-3">
                 <Avatar className="w-12 h-12">
                   <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
-                  <AvatarFallback className="bg-orange-500 text-white font-medium">
+                  <AvatarFallback className="font-medium text-white bg-orange-500">
                     {testimonial.author
                       .split(" ")
                       .map((n) => n[0])
