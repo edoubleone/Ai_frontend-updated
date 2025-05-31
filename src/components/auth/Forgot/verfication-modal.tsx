@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { X, Loader2 } from 'lucide-react'
