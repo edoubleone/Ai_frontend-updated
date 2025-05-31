@@ -82,8 +82,8 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
 
     const payload = {
       name: values.name,
-      business_name: values.companyName,
-      industry: values.IndustryAndDescription,
+      business_name: values.companyName || "",
+      industry: values.IndustryAndDescription || "",
       description: values.description || "",
       greeting: values.greeting || "",
       persona: values.setRole || "",
@@ -100,6 +100,8 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
     // Step 1: Create Assistant
     const assistantRes = await apiClient.post(`/assistants`, payload);
     const assistantId = assistantRes?.data?.id;
+
+    console.log("Assistant creation response:", assistantRes.data);
 
     if (!assistantId) {
       throw new Error("Assistant creation failed. No ID returned.");
@@ -118,7 +120,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
 
       console.log("Uploading document...");
 
-      const uploadRes = await apiClient.post(`/knowledge/{assistant_id}/knowledge`, formData, {
+      const uploadRes = await apiClient.post(`/knowledge/${assistant_id}/knowledge`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
