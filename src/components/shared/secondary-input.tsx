@@ -38,15 +38,15 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
         )}
         <div className={`flex items-center relative `}>
           {icon && iconposition === "left" && (
-            <span className="absolute left-3">{icon}</span>
+            <span className="absolute top-4 left-3">{icon}</span>
           )}
           <input
             ref={ref}
-            className="flex-1 text-sm flex placeholder:text-[#454545] items-center px-4 rounded-md border border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white"
+            className="flex-1 text-sm flex placeholder:text-[#454545] focus:ring-[3px] ring-[#343CED] items-center px-4 rounded-md border border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white"
             {...restProps}
           />
           {icon && iconposition === "right" && (
-            <span className="absolute right-3">{icon}</span>
+            <span className="absolute top-4 right-3">{icon}</span>
           )}
         </div>
         {error && <p className="text-[#DC2626] text-sm">{errorText}</p>}
