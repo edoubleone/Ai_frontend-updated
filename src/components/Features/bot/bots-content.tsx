@@ -102,7 +102,7 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">My Bots</h1>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg" onClick={onCreateBot}>
+        <Button className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700" onClick={onCreateBot}>
           Build a Bot
           <ChevronRightIcon className="w-4 h-4 ml-2" />
         </Button>
@@ -110,32 +110,32 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
 
       {/* Analytics Cards */}
       <div className="mb-6">
-        <h2 className="text-lg font-medium text-gray-700 mb-4">Analytics</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-blue-50 border-blue-100">
+        <h2 className="mb-4 text-lg font-medium text-gray-700">Analytics</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card className="border-blue-100 bg-blue-50">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
                   <span className="text-blue-600">🤖</span>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <CardTitle className="text-gray-700 text-base font-medium mb-2">Total Bots created</CardTitle>
+              <CardTitle className="mb-2 text-base font-medium text-gray-700">Total Bots created</CardTitle>
               <p className="text-3xl font-bold text-blue-600">{botsData.length}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-purple-50 border-purple-100">
+          <Card className="border-purple-100 bg-purple-50">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="flex items-center justify-center w-8 h-8 bg-purple-100 rounded-lg">
                   <span className="text-purple-600">🗑️</span>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <CardTitle className="text-gray-700 text-base font-medium mb-2">Total Bots Deleted</CardTitle>
+              <CardTitle className="mb-2 text-base font-medium text-gray-700">Total Bots Deleted</CardTitle>
               <p className="text-3xl font-bold text-purple-600">{initialBotsData.length - botsData.length}</p>
             </CardContent>
           </Card>
@@ -145,8 +145,8 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
       {/* Search and Filters */}
       <div className="flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Input placeholder="Search bot" className="pl-10 pr-4 py-2 bg-gray-50 border-gray-200 rounded-lg" />
+          <Search className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+          <Input placeholder="Search bot" className="py-2 pl-10 pr-4 border-gray-200 rounded-lg bg-gray-50" />
         </div>
 
         <div className="flex items-center gap-3">
@@ -202,7 +202,7 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
                   />
                 </TableCell>
                 <TableCell>
-                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm">
+                  <div className="flex items-center justify-center w-8 h-8 text-sm bg-gray-100 rounded-full">
                     {bot.avatar}
                   </div>
                 </TableCell>
@@ -249,7 +249,7 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
           <Button variant="outline" size="sm" disabled>
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <Button variant="default" size="sm" className="bg-blue-600 text-white">
+          <Button variant="default" size="sm" className="text-white bg-blue-600">
             1
           </Button>
           <Button variant="outline" size="sm">
