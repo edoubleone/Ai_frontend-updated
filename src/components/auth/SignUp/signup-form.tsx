@@ -187,11 +187,31 @@ export function SignupFormComponent() {
               </CustomButton>
               {/* Add more social logins if needed */}
             </div>
-          </form>
-
-          
+          </form>  
         </div>
       </div>
+      <div className="relative hidden w-1/2 lg:block">
+          <div
+            className="absolute inset-0 bg-center bg-no-repeat bg-cover"
+            style={{
+              backgroundImage: "url('/images/background.png')",
+            }}
+          />
+        </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
