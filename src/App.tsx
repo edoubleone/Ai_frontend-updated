@@ -17,6 +17,8 @@ import { DashboardLayout } from "./components/Features/bot/dashboard-layout";
 import PrivateRoute from "./utils/protected-routes";
 import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
+import { BotsContent } from "./components/Features/bot/bots-content";
+
 
 function App() {
   return (
@@ -24,7 +26,8 @@ function App() {
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="conversations" element={<Conversations />} />
+          <Route path="conversations" element={<Conversations />} />   
+          <Route path="" element={<BotsContent />} />
           <Route path="integrations" element={<Integrations />} />
         </Route>
       </Route>

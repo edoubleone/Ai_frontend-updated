@@ -25,7 +25,7 @@ interface Bot {
 interface BotsContentProps {
   onEditBot?: (botId: string) => void
   onDuplicateBot?: (botId: string) => void
-  onCreateBot: () => void
+  onCreateBot?: () => void
 }
 
 const initialBotsData: Bot[] = [

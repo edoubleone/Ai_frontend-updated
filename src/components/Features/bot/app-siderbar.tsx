@@ -26,13 +26,13 @@ import {
 const navigationItems = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: LayoutDashboard,
     isActive: true,
   },
   {
     title: "My Bots",
-    url: "/bots",
+    url: "/dashboard",
     icon: Bot,
   },
   {
@@ -42,7 +42,7 @@ const navigationItems = [
   },
   {
     title: "Test and share bots",
-    url: "/test-share",
+    url: "/dashboard",
     icon: Share2,
   },
   {
@@ -52,12 +52,12 @@ const navigationItems = [
   },
   {
     title: "Payments",
-    url: "/payments",
+    url: "/dashboard",
     icon: CreditCard,
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "/dashboard",
     icon: Settings,
   },
 ]
@@ -80,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader className="p-6">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-lg">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-semibold text-gray-900">Kool AI</span>

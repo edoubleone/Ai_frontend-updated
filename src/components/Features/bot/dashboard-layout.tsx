@@ -5,7 +5,6 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Features/bot/app-siderbar";
 import { DashboardHeader } from "./dashboard-header";
 import { Outlet } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 type ViewType = "dashboard" | "edit-bot" | "test-bot" | "create-bot";
 
