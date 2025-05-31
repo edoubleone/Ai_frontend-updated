@@ -9,4 +9,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  // vite.config.ts
+  server: {
+    proxy: {
+      '/assistants': {
+        target: 'https://web-production-51907.up.railway.app',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/assistants/, '/assistants'),
+      },
+    },
+  },
 });
+
