@@ -120,7 +120,7 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
 
       console.log("Uploading document...");
 
-      const uploadRes = await apiClient.post(`/knowledge/${assistant_id}/knowledge`, formData, {
+      const uploadRes = await apiClient.post(`/knowledge/${assistantId}/knowledge`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
