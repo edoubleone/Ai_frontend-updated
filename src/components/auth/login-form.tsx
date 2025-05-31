@@ -1,10 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { useForm } from "react-hook-form";
@@ -16,11 +9,12 @@ import Button from "../shared/button";
 import { useAuth } from "@/context/auth-provider";
 import type { ErrorResponse } from "@/services/config/api";
 import { toast } from "sonner";
+import SecondaryInput from "../shared/secondary-input";
+import PasswordInput from "../shared/password-input";
 // import { KoolAiLogo } from "./kool-ai-logo"
 
 export function LoginFormComponent() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   const { setAuthenticated } = useAuth();
 
@@ -28,6 +22,7 @@ export function LoginFormComponent() {
     mutationFn: UserLogin,
     onSuccess: (data) => {
       setAuthenticated(data.access_token);
+      toast.success("Logged in successfully!");
       navigate("/dashboard");
     },
     onError: (error: ErrorResponse) => {
@@ -87,51 +82,18 @@ export function LoginFormComponent() {
             className="space-y-6"
           >
             {/* Email */}
-            <div>
-              <Label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-700"
-              >
-                Email Address
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email address"
-                {...register("username", { required: true })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
-              />
-            </div>
+            <SecondaryInput
+              label="Email"
+              type="email"
+              placeholder="Enter your email address"
+              {...register("username")}
+            />
 
-            {/* Password */}
-            <div>
-              <Label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-700"
-              >
-                Password*
-              </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("password", { required: true })}
-                  className="w-full px-4 py-3 pr-12 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="******"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute text-gray-400 transform -translate-y-1/2 right-4 top-1/2 hover:text-gray-600"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-            </div>
+            <PasswordInput
+              label="Password*"
+              placeholder="******"
+              {...register("password")}
+            />
 
             {/* Forgot Password */}
             <div className="text-right">
