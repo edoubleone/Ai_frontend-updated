@@ -19,15 +19,14 @@ import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
 import { BotsContent } from "./components/Features/bot/bots-content";
 
-
 function App() {
   return (
     <Routes>
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="conversations" element={<Conversations />} />   
-          <Route path="" element={<BotsContent />} />
+        <Route path="" element={<BotsContent />} />
+          <Route path="conversations" element={<Conversations />} />
           <Route path="integrations" element={<Integrations />} />
         </Route>
       </Route>
