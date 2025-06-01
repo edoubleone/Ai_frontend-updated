@@ -11,7 +11,7 @@ const Settings = () => {
 
     // const [addistionalInfo, setAdditionalInfo] = React.useState<boolean>(false);
 
-    const Options = ["None", "Low", "Moderate"];
+    const Options = ["none", "low", "moderate"];
 
     const [talkLevel, setTalkLevel] = React.useState<string>(Options[0]);
     const [jokeLevel, setJokeLevel] = React.useState<string>(Options[0]);

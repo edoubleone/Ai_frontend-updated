@@ -210,9 +210,9 @@ export const roleAndAudienceSchema = Yup.object({
 
 // Step 3: Settings
 export const settingsSchema = Yup.object({
-  talkLevel: Yup.string().required().oneOf(["None", "Low", "Moderate"]),
-  jokeLevel: Yup.string().required().oneOf(["None", "Low", "Moderate"]),
-  emodzy: Yup.string().required().oneOf(["None", "Low", "Moderate"]),
+  talkLevel: Yup.string().required().oneOf(["none", "low", "moderate"]),
+  jokeLevel: Yup.string().required().oneOf(["none", "low", "moderate"]),
+  emodzy: Yup.string().required().oneOf(["none", "low", "moderate"]),
   additionalInstruction: Yup.string().required("Additional instructions are neccessary").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
   addInstructionCheckbox: Yup.boolean(),
   additionalInstructionExtra: Yup.string().when('addInstructionCheckbox', {
