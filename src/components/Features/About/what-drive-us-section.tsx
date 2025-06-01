@@ -43,7 +43,7 @@ const features = [
 export default function WhatDrivesUsSection() {
   return (
     <section className="w-full py-16 bg-white">
-      <div className="max-w-screen-2xl px-5 md:px-6 lg:px-12 mx-auto">
+      <div className="max-w-screen-2xl px-5 md:px-6 lg:px-16 mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4">What drives us</h2>

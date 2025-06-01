@@ -176,7 +176,7 @@ export default function Footer() {
   return (
     <footer className="w-full py-8 bg-white">
       {/* CTA Banner Section using the imported image */}
-      <div className="px-5 lg:px-16">
+      <div className="px-5 md:px-10 lg:px-16">
         <main className="mx-auto max-w-7xl md:h-[371px] bg-[#343CED] flex flex-col md:flex-row items-center justify-evenly gap-y-10 p-10 lg:px-20 bg-[url('/images/footer-banner.png')] bg-contain bg-top md:bg-left bg-no-repeat rounded-3xl">
           <div className="w-full md:w-[40%]">
             <h2 className="text-4xl text-white font-bold lg:text-6xl leading-normal md:leading-loose">Elevate your brand Today!</h2>
@@ -190,9 +190,9 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Section */}
-      <div className="pt-12 px-5 lg:px-16">
+      <div className="pt-12 px-5 md:px-10 lg:px-16">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-y-12 mb-12 md:grid-cols-2 lg:grid-cols-4 md:gap-5 lg:gap-12">
+          <div className="grid grid-cols-1 gap-y-12 mb-12 md:grid-cols-2 lg:grid-cols-4 md:gap-10 lg:gap-12">
             {/* Company Section */}
             <div>
               <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Company</h3>

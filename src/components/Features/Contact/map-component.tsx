@@ -18,7 +18,7 @@ export function MapComponent({ address, coordinates }: MapComponentProps) {
   // This is a simplified version for demonstration purposes
 
   return (
-    <div className="relative w-full h-full min-h-[500px] rounded-lg overflow-hidden">
+    <div className="relative w-full h-[250px] lg:min-h-[500px] rounded-lg overflow-hidden">
       {/* Map placeholder - in a real app, replace with actual map component */}
       <div
         className="absolute inset-0 bg-gray-200"
@@ -38,7 +38,7 @@ export function MapComponent({ address, coordinates }: MapComponentProps) {
         onMouseLeave={() => setShowTooltip(false)}
       >
         <div className="relative">
-          <MapPin className="h-8 w-8 text-blue-600 fill-blue-600" />
+          <MapPin className="h-8 w-grid grid-cols-1 flex-col-reverse lg:grid-cols-28 text-blue-600 fill-blue-600" />
 
           {/* Address tooltip */}
           {showTooltip && (
