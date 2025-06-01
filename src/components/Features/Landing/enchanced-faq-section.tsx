@@ -55,12 +55,12 @@ const faqs = [
 
 export function EnhancedFAQSection() {
   return (
-    <section id="faq" className="py-20 sm:py-32 bg-gray-50">
+    <section id="faq" className="py-10 sm:py-20 bg-[#EEEEFD]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-bold text-xl text-gray-900 sm:text-4xl text-xl mb-6">FAQs</h2>
-          <p className="font-light text-sm mx-auto max-w-3xl text-lg text-gray-600">
+          <h2 className="font-bold text-3xl text-gray-900 md:text-4xl lg:text-5xl mb-6">FAQs</h2>
+          <p className="font-light mx-auto max-w-3xl text-lg text-gray-600">
             Find answers to common questions about our platform, bot creation, and our pay-for-results pricing model.
           </p>
         </div>

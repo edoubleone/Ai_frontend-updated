@@ -52,7 +52,7 @@ export function LoginFormComponent() {
     <div className="flex min-h-screen">
       {/* Left Panel - Form (50% width) */}
       <div className="flex flex-col justify-center w-full px-8 bg-white lg:w-1/2 lg:px-16">
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto py-10">
           {/* Logo */}
           <Link to="/" className="inline-block mb-8">
             <img

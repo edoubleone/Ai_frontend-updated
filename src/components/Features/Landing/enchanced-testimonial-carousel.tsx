@@ -64,11 +64,11 @@ export function EnhancedTestimonialsCarousel() {
   }
 
   return (
-    <section id="testimonials-carousel" className="py-4 bg-white sm:py-12">
+    <section id="testimonials-carousel" className="bg-white sm:py-12">
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
-          <h2 className="text-xl text-3xl font-semibold sm:text-4xl">What Our Client Said about us</h2>
+          <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl">What Our Client Said about us</h2>
 
           {/* Navigation Arrows */}
           <div className="flex items-center gap-3">
@@ -97,12 +97,12 @@ export function EnhancedTestimonialsCarousel() {
           {getVisibleTestimonials().map((testimonial, index) => (
             <div
               key={`${testimonial.id}-${currentIndex}`}
-              className={`p-6 rounded-2xl transition-all duration-300 ${
+              className={`p-6 rounded-2xl flex flex-col gap-y-7 justify-between transition-all duration-300 ${
                 index === 0 ? "bg-blue-600 text-white" : "bg-white border border-gray-200 hover:shadow-md"
               }`}
             >
               {/* Testimonial Content */}
-              <div className="mb-6">
+              <div className=" ">
                 <p className={`font-light text-sm leading-relaxed ${index === 0 ? "text-blue-100" : "text-gray-600"}`}>
                   {testimonial.content}
                 </p>
@@ -110,7 +110,7 @@ export function EnhancedTestimonialsCarousel() {
 
               {/* Author Info */}
               <div className="flex items-center gap-3">
-                <Avatar className="w-12 h-12">
+                <Avatar className="w-10 h-10">
                   <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
                   <AvatarFallback className="font-medium text-white bg-orange-500">
                     {testimonial.author
@@ -119,11 +119,11 @@ export function EnhancedTestimonialsCarousel() {
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <div>
-                  <h4 className={`font-medium ${index === 0 ? "text-white" : "text-gray-900"}`}>
+                <div className="flex flex-col gap-y-1">
+                  <h4 className={`font-medium leading-none ${index === 0 ? "text-white" : "text-gray-900"}`}>
                     {testimonial.author}
                   </h4>
-                  <p className={`text-sm ${index === 0 ? "text-blue-200" : "text-gray-500"}`}>{testimonial.role}</p>
+                  <p className={`text-sm leading-none ${index === 0 ? "text-blue-200" : "text-gray-500"}`}>{testimonial.role}</p>
                 </div>
               </div>
             </div>
