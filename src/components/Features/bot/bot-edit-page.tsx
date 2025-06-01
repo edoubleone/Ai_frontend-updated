@@ -5,12 +5,16 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import BotChatPreview, { type BotChatPreviewProps } from "./BotChatPreview"
+import { useFormikContext } from "formik"
+import { type CustomizeFormValues } from "./create-bot/Types"
 
 export interface BotEditPageProps extends BotChatPreviewProps {
   onBack?: () => void
 }
 
 export function BotEditPage({ onBack, switchColor }: BotEditPageProps) {
+  const {values} = useFormikContext<CustomizeFormValues>()
+
   const [settings, setSettings] = useState({
     general: true,
     colorsAndStyle: true,
@@ -24,6 +28,11 @@ export function BotEditPage({ onBack, switchColor }: BotEditPageProps) {
       [setting]: !prev[setting],
     }))
   }
+
+  values.general = settings.general;
+  values.colorsAndStyle = settings.colorsAndStyle;
+  values.chatButton = settings.chatButton;
+  values.additionalSettings = settings.additionalSettings;
 
 
   return (

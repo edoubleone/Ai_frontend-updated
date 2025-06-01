@@ -82,7 +82,7 @@ const BasicSetup = () => {
                     required={values.typeOfAssistant === "image"}
                     ref={fileInputRef}
                     className='outline-none border-none cursor-pointer opacity-0 z-[2] h-[150px]'
-                    accept=".jpeg, .png, .svg"
+                    accept=".pdf"
                 />
                 <div className='flex flex-col items-center gap-y-4 absolute z-0'>
                     <Download size={30} className='text-blue-600 mt-5' />

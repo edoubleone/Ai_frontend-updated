@@ -24,7 +24,7 @@ const Conversations = () => {
   };
 
   return (
-    <div className="bg-[#E7E7E7] flex flex-col gap-5 px-[50px] py-6 h-screen">
+    <div className="bg-[#E7E7E7] flex flex-col gap-5 px-[50px] py-6 h-full">
       <h1 className="text-2xl font-bold text-dark">Conversations</h1>
 
       <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-9">

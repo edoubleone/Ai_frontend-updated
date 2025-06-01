@@ -3,22 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
-type DashboardHeaderProps = {
-  onCreateBot?: () => void; // optional prop
-};
 
-export function DashboardHeader({ onCreateBot }: DashboardHeaderProps) {
+export function DashboardHeader() {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
       <div className="flex items-center">
-        <Button
-          className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-          onClick={() => onCreateBot?.()} // call only if defined
-        >
-          Build a Bot
-          <ChevronRight className="w-4 h-4 ml-2" />
-        </Button>
+        <Link to="/dashboard/CreateBot">
+          <Button
+            className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+          >
+            Build a Bot
+            <ChevronRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
       </div>
 
       <div className="flex items-center gap-4">

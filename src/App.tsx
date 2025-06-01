@@ -18,6 +18,7 @@ import PrivateRoute from "./utils/protected-routes";
 import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
 import { BotsContent } from "./components/Features/bot/bots-content";
+import CreateBot from "./Pages/dashboard/CreateBot";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="" element={<BotsContent />} />
           <Route path="conversations" element={<Conversations />} />
           <Route path="integrations" element={<Integrations />} />
+          <Route path="createBot" element={<CreateBot />} />
         </Route>
       </Route>
 

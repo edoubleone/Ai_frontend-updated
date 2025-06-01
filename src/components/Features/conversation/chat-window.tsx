@@ -121,7 +121,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
             onOpenChange={(open) => setActions(open ? "more-actions" : null)}
           >
             <PopoverTrigger asChild>
-              <button>
+              <button >
                 <Ellipsis className="text-[#737373] " />
               </button>
             </PopoverTrigger>
