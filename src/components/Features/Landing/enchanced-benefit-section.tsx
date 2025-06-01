@@ -86,19 +86,19 @@ export function EnhancedBenefitsSection() {
   }, [])
 
   return (
-    <section id="benefits" className="bg-white py-4 sm:py-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="benefits" className="bg-white py-5 md:py-10">
+      <div className="container mx-auto px-4 md:px-5 lg:px-10">
         {/* Header */}
         <div
           className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className=" font-light  text-xl sm:text-4xl lg:text-5xl mb-6">
+          <h2 className=" font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
             Benefits of subscribing to{" "}
             <span className="text-blue-600">ArgenticAI</span>.
           </h2>
-          <p className="mx-auto max-w-4xl font-light text-sm text-gray-600 leading-relaxed">
+          <p className="mx-auto w-[90%] md:w-[75%] lg:w-[60%] font-light text-sm text-gray-600 leading-relaxed">
             Subscribe to ArgenticAI and unlock advanced AI-powered insights,
             streamline your workflow, save valuable time, and enhance
             decision-making. Enjoy personalized support and continuous updates

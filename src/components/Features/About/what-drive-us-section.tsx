@@ -42,12 +42,12 @@ const features = [
 
 export default function WhatDrivesUsSection() {
   return (
-    <section className="w-full py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full py-16 bg-white">
+      <div className="max-w-screen-2xl px-5 md:px-6 lg:px-12 mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="font-medium text-xl md:text-5xl lg:text-6xl text-gray-900 mb-4">What drives us</h2>
-          <p className="font-light text-sm md:text-sm  max-w-3xl mx-auto">
+          <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4">What drives us</h2>
+          <p className="font-light text-sm md:text-xl w-[80%] md:w-[60%] mx-auto">
             We're building a future where your customers don't have to wait
           </p>
         </div>
@@ -63,12 +63,12 @@ export default function WhatDrivesUsSection() {
               >
                 <CardContent className="p-8">
                   <div className="mb-6">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                       <IconComponent className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h3 className="font-light text-xl text-gray-900 mb-4">{feature.title}</h3>
+                    <h3 className="font-bold text-xl md:text-2xl text-gray-900 mb-4">{feature.title}</h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed font-light text-sm">{feature.description}</p>
+                  <p className="text-gray-600 leading-relaxed font-light text-md md:text-lg">{feature.description}</p>
                 </CardContent>
               </Card>
             )

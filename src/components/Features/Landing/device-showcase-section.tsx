@@ -30,7 +30,7 @@ export function DeviceShowcaseSection() {
   return (
     <section
       id="device-showcase"
-      className="py-4 sm:py-12 bg-white w-full"
+      className="max-w-sceen-2xl bg-white w-full"
     >
       <div className="relative w-full">
         {/* Main Device Mockup - Full Width */}
@@ -41,11 +41,11 @@ export function DeviceShowcaseSection() {
               : "opacity-0 translate-y-10 scale-95"
           }`}
         >
-          <div className="relative w-full">
+          <div className="w-full">
             <img
               src="/images/hero-device-mockup.png"
               alt="Kool AI Platform Interface - Everything made easy for you"
-              className="w-full h-auto"
+              className="w-full h-full"
             />
           </div>
         </div>

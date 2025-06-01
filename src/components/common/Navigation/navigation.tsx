@@ -25,11 +25,11 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 shadow-sm bg-white/95 backdrop-blur-sm">
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+      <div className="container px-5 mx-auto sm:px-6 lg:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <div className="flex items-center justify-center w-12 h-12 rounded-lg">
+            <div className="flex items-center justify-center rounded-lg">
               <img 
                 src={logo} 
                 alt="Kool AI Logo" 
