@@ -140,7 +140,9 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
     mutationFn: (data: any) =>
       UploadKnowledgeFile(data.assistantId, data.formData),
     onError: (err: ErrorResponse) => {
-      toast.error(err?.response?.data?.detail|| "Something went wrong. Try again");
+      toast.error(
+        err?.response?.data?.detail || "Something went wrong. Try again"
+      );
       navigate("/dashboard");
     },
     onSuccess: () => {
@@ -152,7 +154,9 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
   const { mutateAsync } = useMutation({
     mutationFn: CreateAssistant,
     onError: (err: ErrorResponse) => {
-      toast.error(err?.response?.data?.detail || "Something went wrong. Try again");
+      toast.error(
+        err?.response?.data?.detail || "Something went wrong. Try again"
+      );
     },
   });
 
@@ -178,20 +182,23 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
       const response = await mutateAsync(payload);
       const assistantId = response.data.id;
 
-      if (values.companyDocument) {
+      if (values.uploadFile || values.companyDocument) {
         const formData = new FormData();
-        formData.append("files", values.companyDocument);
-
+        if (values.uploadFile) {
+          formData.append("files", values.uploadFile);
+        }
+        if (values.companyDocument) {
+          formData.append("files", values.companyDocument);
+        }
         await uploadKnowledgeFile({ assistantId, formData });
-      } else {
-        toast.success("Assistant created successfully!");
-        navigate("/dashboard");
       }
+
+      toast.success("Assistant created successfully!");
+      navigate("/dashboard");
 
       setIsSubmitting(false);
     } catch (error) {
       console.error("Error creating assistant or uploading file:", error);
-    } finally {
       setIsSubmitting(false);
     }
   };

@@ -99,6 +99,7 @@ export const basicSetupSchema = Yup.object({
           'image/png',
           'application/svg+xml',
           'image/svg+xml',
+          "application/pdf"
         ].includes(file.type))
       ),
     otherwise: (schema) => schema.nullable() // if assistantType is 'text', file can be null
