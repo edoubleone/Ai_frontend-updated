@@ -5,8 +5,8 @@ import { Link } from "react-router-dom"
 
 export default function TermOfUse() {
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-100 p-5 py-20">
+      <div className="max-w-5xl mx-auto">
       
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-6">
