@@ -1,50 +1,80 @@
-import { Button } from '@/components/ui/button'
-import { ChevronLeft } from 'lucide-react'
-import { BasicSetup, Preview, CompanyDetails, Customize, Settings, FAQs, RoleAndAudience } from '../../components/Features/bot/create-bot/forms'
-import { useEffect, useState } from 'react'
-import { Formik } from 'formik'
-import type { BotEditPageProps } from '../../components/Features/bot/bot-edit-page'
-import { stepSchemas } from '../../components/Features/bot/create-bot/Types'
-import apiClient from '@/services/config/api'
-import { useMutation } from '@tanstack/react-query'
-import { BASE_URL } from '@/utils'
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import {
+  BasicSetup,
+  Preview,
+  CompanyDetails,
+  Customize,
+  Settings,
+  FAQs,
+  RoleAndAudience,
+} from "../../components/Features/bot/create-bot/forms";
+import { useEffect, useState } from "react";
+import { Formik } from "formik";
+import type { BotEditPageProps } from "../../components/Features/bot/bot-edit-page";
+import { stepSchemas } from "../../components/Features/bot/create-bot/Types";
+import apiClient from "@/services/config/api";
+import { useMutation } from "@tanstack/react-query";
+import { BASE_URL } from "@/utils";
 
 export function ChatWithAssistant(payload: any) {
-  return apiClient.post(`${BASE_URL}/assistants`,  payload, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0'
-    },
-  });
+  return apiClient.post(`/assistants/`, payload);
 }
 
 // return apiClient.post(`${BASE_URL}/assistants/${assistant_id}/knowledge`, {
 //     message,
 //   });
 
-  const steps = [
-    {heading: 'Basic Setup', desc: "Give a name to your new assistant. This name will be used when it introduces itself to your clients. Select the languages your assistant will communicate in and choose its type: voice or text.", component: <BasicSetup /> },
-    {heading: 'Give us details about your Company', desc: "In this section, we will ask you to provide details about your company that the assistant should know to perform its functions effectively. Imagine that you are training a new employee and telling them about your company.", component: <CompanyDetails /> },
-    {heading: 'Role and Audience', desc: "Create and customize the assistant’s role by defining its tasks, target audience, and communication style. This section helps you tailor the assistant to meet specific needs and ensure consistent and personalized user interactions.", component: <RoleAndAudience /> },
-    {heading: 'Additional Settings and Restrictions', desc: "Here you can set up the bot’s reactions to random client phrases, support for small talk, use of emojis, as well as configure restrictions and limitations for your assistant. For example: 'Offer cross-sells (recommend complementary products)' or 'Use short and clear phrases, avoiding complex technical terms' or 'Emphasize modern technologies, innovative solutions, and speed of service' or 'When questions about returns arise, always provide a link to the return policy page.'", component: <Settings /> },
-    {heading: 'FAQ', desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.", component: <FAQs /> },
-    {heading: 'Customize', desc: "Customize the look and feel of your Bot to reflect your brand and website", component: <Customize /> },
-    {heading: 'Full Preview', desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.", component: <Preview /> }
-  ];
+const steps = [
+  {
+    heading: "Basic Setup",
+    desc: "Give a name to your new assistant. This name will be used when it introduces itself to your clients. Select the languages your assistant will communicate in and choose its type: voice or text.",
+    component: <BasicSetup />,
+  },
+  {
+    heading: "Give us details about your Company",
+    desc: "In this section, we will ask you to provide details about your company that the assistant should know to perform its functions effectively. Imagine that you are training a new employee and telling them about your company.",
+    component: <CompanyDetails />,
+  },
+  {
+    heading: "Role and Audience",
+    desc: "Create and customize the assistant’s role by defining its tasks, target audience, and communication style. This section helps you tailor the assistant to meet specific needs and ensure consistent and personalized user interactions.",
+    component: <RoleAndAudience />,
+  },
+  {
+    heading: "Additional Settings and Restrictions",
+    desc: "Here you can set up the bot’s reactions to random client phrases, support for small talk, use of emojis, as well as configure restrictions and limitations for your assistant. For example: 'Offer cross-sells (recommend complementary products)' or 'Use short and clear phrases, avoiding complex technical terms' or 'Emphasize modern technologies, innovative solutions, and speed of service' or 'When questions about returns arise, always provide a link to the return policy page.'",
+    component: <Settings />,
+  },
+  {
+    heading: "FAQ",
+    desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
+    component: <FAQs />,
+  },
+  {
+    heading: "Customize",
+    desc: "Customize the look and feel of your Bot to reflect your brand and website",
+    component: <Customize />,
+  },
+  {
+    heading: "Full Preview",
+    desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.",
+    component: <Preview />,
+  },
+];
 
-  const initialValues = {
-    name: '',
-    typeOfAssistant: '',
-    language: '',
-    uploadFile: undefined,
-    isMultilingual: true,
-    companyName: '',
-    companyDescription: '',
-    companyWebsite: '',
-  }
+const initialValues = {
+  name: "",
+  typeOfAssistant: "",
+  language: "",
+  uploadFile: undefined,
+  isMultilingual: true,
+  companyName: "",
+  companyDescription: "",
+  companyWebsite: "",
+};
 
-
-const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
+const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [animate, setAnimate] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -60,21 +90,30 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
     return () => clearTimeout(timeout); // cleanup
   }, [currentStep]);
 
-  const handleValidation = async (validateForm:any, setTouched:any, errors:any) => {
+  const handleValidation = async (
+    validateForm: any,
+    setTouched: any,
+    errors: any
+  ) => {
     // Validate the current step's form
     const formErrors = await validateForm();
 
-    setTouched(Object.keys(errors).reduce((touchedObj:any, key:string) => {
-      touchedObj[key] = true;
-      return touchedObj;
-    }
-    , {}));
-    
+    setTouched(
+      Object.keys(errors).reduce((touchedObj: any, key: string) => {
+        touchedObj[key] = true;
+        return touchedObj;
+      }, {})
+    );
+
     return formErrors;
-  }
+  };
 
-
-  const handleNextStep = async (validateForm:any, setTouched:any, errors:any, event?:React.FormEvent) => {
+  const handleNextStep = async (
+    validateForm: any,
+    setTouched: any,
+    errors: any,
+    event?: React.FormEvent
+  ) => {
     if (event) {
       event.preventDefault(); // Prevent default form submission
     }
@@ -84,16 +123,13 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
     // Validate the current step's form
     const formErrors = await handleValidation(validateForm, setTouched, errors);
 
-    
     if (Object.keys(formErrors).length === 0) {
       setAnimate(true);
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
     }
-  }
+  };
 
-  
-
-    const { mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: ChatWithAssistant,
     onError: (err, _newMessage, context) => {
       console.log("Error creating assistant:", err);
@@ -103,110 +139,136 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
       alert("Assistant created successfully!");
       setIsSubmitting(false);
       // Optionally, you can redirect or reset the form here
-    }
+    },
   });
 
   const handleSubmit = async (values: any) => {
-  try {
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
 
-    const payload = {
-      name: values.name,
-      business_name: values.companyName || "",
-      industry: values.IndustryAndDescription || "",
-      description: values.description || "",
-      greeting: values.greeting || "",
-      persona: values.setRole || "",
-      tone: values.toneOfCommunication || "",
-      small_talk_level: values.talkLevel || "none",
-      jokes_level: values.jokeLevel || "none",
-      emoji_level: values.emodzy || "none",
-      additional_instructions: values.additionalInstruction || "",
-      config: {},
-    };
+      const payload = {
+        name: values.name,
+        business_name: values.companyName || "",
+        industry: values.IndustryAndDescription || "",
+        description: values.description || "",
+        greeting: values.greeting || "",
+        persona: values.setRole || "",
+        tone: values.toneOfCommunication || "",
+        small_talk_level: values.talkLevel || "none",
+        jokes_level: values.jokeLevel || "none",
+        emoji_level: values.emodzy || "none",
+        additional_instructions: values.additionalInstruction || "",
+        config: {},
+      };
 
-    // Bearer : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0
+      // Bearer : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0
 
-    mutate(payload);
+      mutate(payload);
 
-    console.log('Creating assistant with payload:', payload);
+      console.log("Creating assistant with payload:", payload);
 
-    // Step 1: Create Assistant
-    // const assistantRes = await apiClient.post(`/assistants`, payload);
-    // const assistantId = assistantRes?.data?.id;
+      // Step 1: Create Assistant
+      // const assistantRes = await apiClient.post(`/assistants`, payload);
+      // const assistantId = assistantRes?.data?.id;
 
-    // console.log("Assistant creation response:", assistantRes.data);
+      // console.log("Assistant creation response:", assistantRes.data);
 
-    // if (!assistantId) {
-    //   throw new Error("Assistant creation failed. No ID returned.");
-    // }
+      // if (!assistantId) {
+      //   throw new Error("Assistant creation failed. No ID returned.");
+      // }
 
-    // console.log("Assistant created with ID:", assistantId);
+      // console.log("Assistant created with ID:", assistantId);
 
-    // // Step 2: Upload Document (conditionally)
-    // const filledForm = values.filledForm; // this should be passed or available via Formik context or props
-    // const document = values.companyDocument;
+      // // Step 2: Upload Document (conditionally)
+      // const filledForm = values.filledForm; // this should be passed or available via Formik context or props
+      // const document = values.companyDocument;
 
-    // if (!filledForm && document) {
-    //   const formData = new FormData();
-    //   formData.append("assistant_id", assistantId); // adjust key name if needed
-    //   formData.append("document", document);
+      // if (!filledForm && document) {
+      //   const formData = new FormData();
+      //   formData.append("assistant_id", assistantId); // adjust key name if needed
+      //   formData.append("document", document);
 
-    //   console.log("Uploading document...");
+      //   console.log("Uploading document...");
 
-    //   const uploadRes = await apiClient.post(`/knowledge/${assistantId}/knowledge`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   });
+      //   const uploadRes = await apiClient.post(`/knowledge/${assistantId}/knowledge`, formData, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   });
 
-    //   console.log("Document uploaded:", uploadRes.data);
-    // }
+      //   console.log("Document uploaded:", uploadRes.data);
+      // }
 
-    // alert("Assistant created successfully!");
+      // alert("Assistant created successfully!");
 
-    // return assistantId;
-  } catch (error) {
-    console.error("Error during assistant creation or document upload:", error);
-    alert("Submission failed. Please try again.");
-    throw error;
-  } finally {
-    setIsSubmitting(false);
-  }
-
-};
-
+      // return assistantId;
+    } catch (error) {
+      console.error(
+        "Error during assistant creation or document upload:",
+        error
+      );
+      alert("Submission failed. Please try again.");
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handlePreviousStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
     setAnimate(true);
-  }
+  };
 
   const totalSteps = steps.length;
 
   const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
 
   return (
-    <div className='flex flex-col bg-secondary p-6'>
-      <header className='mb-4'>
-        <Button onClick={onBack} className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg' variant="ghost">
+    <div className="flex flex-col bg-secondary p-6">
+      <header className="mb-4">
+        <Button
+          onClick={onBack}
+          className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg"
+          variant="ghost"
+        >
           <ChevronLeft className="w-4 h-4 ml-2" />
           Back
         </Button>
       </header>
 
-      <main className='flex flex-col bg-background rounded-lg p-8'>
+      <main className="flex flex-col bg-background rounded-lg p-8">
         <header>
-          <h1 className='text-2xl font-semibold mb-4'>Let&apos;s set up your Bot Assistant</h1>
-          <p className='text-gray-600 mb-6'>Customize and fine-tune the way your assistant communicates and interacts with customers to ensure it delivers consistent, engaging, and brand-aligned conversations across every touchpoint.</p>
+          <h1 className="text-2xl font-semibold mb-4">
+            Let&apos;s set up your Bot Assistant
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Customize and fine-tune the way your assistant communicates and
+            interacts with customers to ensure it delivers consistent, engaging,
+            and brand-aligned conversations across every touchpoint.
+          </p>
         </header>
 
         {/* Progress Bar */}
-        <div className='relative w-full mb-6'>
-          <div className='w-full h-[3px] bg-[#D0D0D0] absolute top-5'><div className='h-full bg-blue-600' style={{width: `${progressPercentage}%`, transition: "all ease-in-out 0.5s"}} /></div>
-          <div className='w-full flex justify-between'>
+        <div className="relative w-full mb-6">
+          <div className="w-full h-[3px] bg-[#D0D0D0] absolute top-5">
+            <div
+              className="h-full bg-blue-600"
+              style={{
+                width: `${progressPercentage}%`,
+                transition: "all ease-in-out 0.5s",
+              }}
+            />
+          </div>
+          <div className="w-full flex justify-between">
             {steps.map((_, index) => (
-              <div key={index} className={`h-10 w-10 rounded-full z-[2] transition-colors duration-500 delay-200 ${currentStep >= index ? "bg-blue-600" : "bg-[#D0D0D0]"} flex items-center justify-center font-semibold text-background`}>{index + 1}</div>
+              <div
+                key={index}
+                className={`h-10 w-10 rounded-full z-[2] transition-colors duration-500 delay-200 ${
+                  currentStep >= index ? "bg-blue-600" : "bg-[#D0D0D0]"
+                } flex items-center justify-center font-semibold text-background`}
+              >
+                {index + 1}
+              </div>
             ))}
           </div>
         </div>
@@ -217,59 +279,76 @@ const CreateBot: React.FC<BotEditPageProps> = ({onBack}) => {
           validateOnChange={true}
           validateOnBlur={true}
           onSubmit={handleSubmit}
-        >{({ validateForm, setTouched, errors, values }) => (
-          <div>
-            <main className={`flex flex-col gap-y-3 w-full`}>
-              <section className={`flex flex-col gap-y-3 transition-all duration-500 delay-300 ${animate ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-10 opacity-0 scale-95'}`}>
-                <h2 className='font-semibold text-lg'>{steps[currentStep].heading}</h2>
-                <p className='text-gray-600 mb-4'>{steps[currentStep].desc}</p>
-              </section>
+        >
+          {({ validateForm, setTouched, errors, values }) => (
+            <div>
+              <main className={`flex flex-col gap-y-3 w-full`}>
+                <section
+                  className={`flex flex-col gap-y-3 transition-all duration-500 delay-300 ${
+                    animate
+                      ? "translate-y-0 opacity-100 scale-100"
+                      : "-translate-y-10 opacity-0 scale-95"
+                  }`}
+                >
+                  <h2 className="font-semibold text-lg">
+                    {steps[currentStep].heading}
+                  </h2>
+                  <p className="text-gray-600 mb-4">
+                    {steps[currentStep].desc}
+                  </p>
+                </section>
 
-              <section>
-                {steps[currentStep].component}
-              </section>
-            </main>
+                <section>{steps[currentStep].component}</section>
+              </main>
 
+              <footer className={`flex justify-between items-center`}>
+                <button
+                  type="button"
+                  className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium"
+                  onClick={handlePreviousStep}
+                >
+                  Previous
+                </button>
 
-          <footer className={`flex justify-between items-center`}>
-            <button
-              type='button'
-              className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium'
-              onClick={handlePreviousStep}
-            >
-              Previous
-            </button>
-
-            <div className=''>
-              {currentStep < totalSteps-1 && <button
-                type='button'
-                className='px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium'
-                // disabled={currentStep === 0}
-                onClick={() => handleSubmit(values)}
-              >
-                {isSubmitting ? "Saving..." : "Save and Finish Later"}
-              </button>}
-              {!isLastStep ? (<button
-                type='button'
-                className='px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium'
-                // onClick={currentStep === 0 ? () => handleSubmit(values) : () => handleNextStep(validateForm, setTouched, errors)}
-                onClick={() => handleNextStep(validateForm, setTouched, errors)}
-              >
-                Proceed</button>) : (<button
-                type='button'
-                className='px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium'
-                onClick={() => handleSubmit(values)}
-              >
-                {isSubmitting ? "Submitting..." : "Finish"}
-              </button>)}
+                <div className="">
+                  {currentStep < totalSteps - 1 && (
+                    <button
+                      type="button"
+                      className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium"
+                      // disabled={currentStep === 0}
+                      onClick={() => handleSubmit(values)}
+                    >
+                      {isSubmitting ? "Saving..." : "Save and Finish Later"}
+                    </button>
+                  )}
+                  {!isLastStep ? (
+                    <button
+                      type="button"
+                      className="px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium"
+                      // onClick={currentStep === 0 ? () => handleSubmit(values) : () => handleNextStep(validateForm, setTouched, errors)}
+                      onClick={() =>
+                        handleNextStep(validateForm, setTouched, errors)
+                      }
+                    >
+                      Proceed
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium"
+                      onClick={() => handleSubmit(values)}
+                    >
+                      {isSubmitting ? "Submitting..." : "Finish"}
+                    </button>
+                  )}
+                </div>
+              </footer>
             </div>
-          </footer>
-        </div>
-        )}
+          )}
         </Formik>
       </main>
     </div>
   );
-}
+};
 
-export default CreateBot
+export default CreateBot;
