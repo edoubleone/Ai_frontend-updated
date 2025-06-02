@@ -26,8 +26,13 @@ function App() {
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
+<<<<<<< HEAD
           <Route path="conversations" element={<Conversations />} />
           <Route path="" element={<BotsContent />} />
+=======
+        <Route path="" element={<BotsContent />} />
+          <Route path="conversations" element={<Conversations />} />
+>>>>>>> ff8b2e0088a5d13073dadcc7675a665867bea6f8
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
         </Route>
