@@ -20,7 +20,7 @@ const SelectionTab: React.FC<SelectionTabProps> = ({option, setSelectedOption}) 
             <button 
                 key={index} 
                 type='button' 
-                className={`border text-[14px] w-[calc(100%/3)] rounded-lg px-4 py-2 ${isWhenToCollectInformation === option ? 'bg-blue-600 border-blue-600 text-white' : 'bg-[#E7E7E7] text-gray-900 hover:bg-blue-400'} transition-colors`}
+                className={`border capitalize text-[14px] w-[calc(100%/3)] rounded-lg px-4 py-2 ${isWhenToCollectInformation === option ? 'bg-blue-600 border-blue-600 text-white' : 'bg-[#E7E7E7] text-gray-900 hover:bg-blue-400'} transition-colors`}
                 onClick={() => handleSelectedOption(option)}
             >{option}</button>
         ))}

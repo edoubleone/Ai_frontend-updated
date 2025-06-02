@@ -10,7 +10,7 @@ const RoleAndAudience = () => {
 
     const { values, errors, touched, handleChange, handleBlur } = useFormikContext<RoleAndAudienceFormValues>();
     
-    const whenToCollectInformation = ["Start of the chat", "End of the chat", "No Preference"];
+    const whenToCollectInformation = ["start of the chat", "end of the chat", "no preference"];
     
     const [isWhenToCollectInformation, setIsWhenToCollectInformation] = React.useState<string>(whenToCollectInformation[0]);
     const [toCollectInformation, setToCollectInformation] = React.useState<boolean>(false);

@@ -11,14 +11,22 @@ import {
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
-import type { BotEditPageProps } from "../../components/Features/bot/bot-edit-page";
 import { stepSchemas } from "../../components/Features/bot/create-bot/Types";
 import apiClient from "@/services/config/api";
 import { useMutation } from "@tanstack/react-query";
-import { BASE_URL } from "@/utils";
+import { Link } from "react-router-dom";
+// import { BASE_URL } from "@/utils";
 
-export function ChatWithAssistant(payload: any) {
+export function CreateAssistant(payload: any) {
   return apiClient.post(`/assistants/`, payload);
+}
+
+export function UploadDocument(payload: any, assistant_id: any) {
+  return apiClient.post(`/knowledge/${assistant_id}/knowledge`, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 // return apiClient.post(`${BASE_URL}/assistants/${assistant_id}/knowledge`, {
@@ -74,12 +82,18 @@ const initialValues = {
   companyWebsite: "",
 };
 
-const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
+const CreateBot = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [animate, setAnimate] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [document, setDocument] = useState<File | null>(null);
 
   const isLastStep = currentStep === steps.length - 1;
+
+  const formData = new FormData();
+
+  if (document && document != null) 
+    formData.append("files", document);
 
   useEffect(() => {
     setAnimate(false); // Reset animation
@@ -118,8 +132,6 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
       event.preventDefault(); // Prevent default form submission
     }
 
-    // console.log('data :', validateForm.data);
-
     // Validate the current step's form
     const formErrors = await handleValidation(validateForm, setTouched, errors);
 
@@ -129,14 +141,40 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
     }
   };
 
-  const { mutate } = useMutation({
-    mutationFn: ChatWithAssistant,
-    onError: (err, _newMessage, context) => {
-      console.log("Error creating assistant:", err);
+  const { mutate: createAssistant } = useMutation({
+    mutationFn: CreateAssistant,
+    onError: (err, _newMessage) => {
+      alert("Error creating assistant: " + err.message);
     },
     onSuccess: (data) => {
-      console.log("Assistant created successfully:", data);
       alert("Assistant created successfully!");
+      setIsSubmitting(false);
+      // Optionally, you can redirect or reset the form here
+
+      const assistant_id = data?.data?.id;
+      // variables contains the payload passed to createAssistant
+      if (formData && formData != null && assistant_id) {
+        uploadDocument({
+          payload: formData,
+          assistant_id,
+        });
+      } else {
+        setIsSubmitting(false);
+      }
+    },
+  });
+
+
+  const { mutate: uploadDocument } = useMutation({
+    mutationFn: ({ payload, assistant_id }: { payload: any; assistant_id: any }) =>
+      UploadDocument(payload, assistant_id),
+    onError: (_newMessage) => {
+      // console.log("Error uploading document:", err);
+      alert("Assistant created successfully, but document upload failed.");
+    },
+    onSuccess: () => {
+      // console.log("Document uploaded successfully:", data);
+      alert("Document uploaded successfully!");
       setIsSubmitting(false);
       // Optionally, you can redirect or reset the form here
     },
@@ -145,6 +183,8 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
   const handleSubmit = async (values: any) => {
     try {
       setIsSubmitting(true);
+
+      setDocument(values.companyDocument);
 
       const payload = {
         name: values.name,
@@ -163,9 +203,11 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
 
       // Bearer : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJub21vbG9zMjAxOUBnbWFpbC5jb20iLCJleHAiOjE3NDg4MTYzNDN9.ePNdsLs7B0pFzS3EiIF3F8jTC2oEB86nWTFW1g_XpM0
 
-      mutate(payload);
+      createAssistant(payload);
 
-      console.log("Creating assistant with payload:", payload);
+      
+
+      // console.log("Creating assistant with payload:", payload);
 
       // Step 1: Create Assistant
       // const assistantRes = await apiClient.post(`/assistants`, payload);
@@ -226,14 +268,15 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
   return (
     <div className="flex flex-col bg-secondary p-6">
       <header className="mb-4">
-        <Button
-          onClick={onBack}
-          className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg"
-          variant="ghost"
-        >
-          <ChevronLeft className="w-4 h-4 ml-2" />
-          Back
-        </Button>
+        <Link to="/dashboard">
+          <Button
+            className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg"
+            variant="ghost"
+          >
+            <ChevronLeft className="w-4 h-4 ml-2" />
+            Back
+          </Button>
+        </Link>
       </header>
 
       <main className="flex flex-col bg-background rounded-lg p-8">
