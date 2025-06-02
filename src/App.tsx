@@ -13,12 +13,12 @@ import Forgot from "./Pages/ForgotPassword";
 import Demo from "./Pages/BookDemo";
 import { TestFont } from "@/components/common/TestFont";
 import NotFound from "./Pages/NotFound";
-import { DashboardLayout } from "./components/Features/bot/dashboard-layout";
 import PrivateRoute from "./utils/protected-routes";
 import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
 import { BotsContent } from "./components/Features/bot/bots-content";
 import CreateBot from "./Pages/dashboard/CreateBot";
+import { DashboardLayout } from "./components/common/dashboard/layout";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="conversations" element={<Conversations />} />   
+          <Route path="conversations" element={<Conversations />} />
           <Route path="" element={<BotsContent />} />
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
