@@ -1,3 +1,4 @@
+import { CircleAlert } from "lucide-react";
 import React from "react";
 
 export interface SecondaryInputProps
@@ -7,6 +8,7 @@ export interface SecondaryInputProps
   errorText?: string;
   wrapperClass?: string;
   inputClass?: string;
+  info?: boolean;
   icon?: React.ReactNode;
   iconposition?: "left" | "right";
 }
@@ -20,6 +22,7 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
       wrapperClass,
       inputClass,
       icon,
+      info,
       iconposition = "left",
       ...restProps
     } = props;
@@ -27,29 +30,35 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
     return (
       <div className={`grid gap-2 ${wrapperClass}`}>
         {label && (
-          <label className="text-base text-[#454545] font-semibold" htmlFor={label}>
-            {label}
+          <label
+            className="text-base inline-flex items-center gap-x-1.5 text-[#454545] font-semibold"
+            htmlFor={label}
+          >
+            {label}{" "}
+            {info && (
+              <CircleAlert size={18} strokeWidth={1.25} className="text-sm" />
+            )}
           </label>
         )}
         <div className={`flex items-center relative `}>
           {icon && iconposition === "left" && (
-            <span className="absolute top-1/2 -translate-y-1/2 left-3">
+            <span className="absolute left-[16px] top-1/2 -translate-y-1/2">
               {icon}
             </span>
           )}
           <input
             ref={ref}
-            className={`flex-1 text-sm flex placeholder:text-[#454545] focus:ring-[3px] ring-[#343CED] items-center rounded-md border border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white ${
+            className={`flex-1 text-sm flex placeholder:text-[#454545] focus:ring-[3px] ring-[#343CED] items-center rounded-md border w-full border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white ${
               icon && iconposition === "left"
-                ? "pl-10 pr-4"
+                ? "pl-[48px] pr-4"
                 : icon && iconposition === "right"
-                ? "pr-10 pl-4"
+                ? "pr-[48px] pl-4"
                 : "px-4"
             } ${inputClass}`}
             {...restProps}
           />
           {icon && iconposition === "right" && (
-            <span className="absolute top-1/2 -translate-y-1/2 right-3">
+            <span className="absolute right-[16px] top-1/2 -translate-y-1/2">
               {icon}
             </span>
           )}

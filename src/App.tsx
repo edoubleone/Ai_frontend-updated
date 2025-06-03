@@ -29,7 +29,7 @@ function App() {
           <Route path="conversations" element={<Conversations />} />
           <Route path="" element={<BotsContent />} />
           <Route path="integrations" element={<Integrations />} />
-          <Route path="createBot" element={<CreateBot />} />
+          <Route path="create-bot" element={<CreateBot />} />
         </Route>
       </Route>
 

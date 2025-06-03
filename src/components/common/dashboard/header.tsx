@@ -8,7 +8,7 @@ import SearchInput from "@/components/shared/search-input";
 export function DashboardHeader() {
   return (
     <header className="flex sticky top-0 z-40 w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5 bg-white border-b-[1.13px] border-[#E7E7E7]">
-      <Link to="/dashboard/CreateBot">
+      <Link to="/dashboard/create-bot">
         <Button className="!font-bold !text-base" variant="lightLavender">
           Build a Bot
           <ArrowRight2 size="18" />

@@ -20,12 +20,21 @@ export type ButtonProps = React.DetailedHTMLProps<
 > &
   ButtonOptions;
 
-export type ButtonVariant = "outline" | "solid" | "lightLavender";
+export type ButtonVariant =
+  | "outline"
+  | "outline-blue"
+  | "solid"
+  | "ghost"
+  | "lightLavender";
 
 export const getVariant = (variant: ButtonVariant) => {
   switch (variant) {
     case "outline":
       return "text-[#343CED] bg-white border border-[#343CED]";
+    case "ghost":
+      return "text-dark bg-transparent";
+    case "outline-blue":
+      return "text-defaultBlue bg-white border border-defaultBlue";
     case "lightLavender":
       return "bg-[#EEEEFD] border-[0.5px] text-[#343CED] border-[#BBBEF9]";
     default: // "solid"
