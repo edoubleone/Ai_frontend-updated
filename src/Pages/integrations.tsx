@@ -70,7 +70,7 @@ const Integrations = () => {
   };
 
   return (
-    <div className="bg-[#E7E7E7] flex flex-col gap-5 px-[50px] py-6">
+    <div className="flex flex-col gap-5">
       {openDialog && (
         <Dialog open={openDialog} onOpenChange={handleDialogClose}>
           {currentChannel === "Email" && <EmailIntegrationSetup />}

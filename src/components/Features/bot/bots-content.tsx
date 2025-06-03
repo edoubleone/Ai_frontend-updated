@@ -96,7 +96,7 @@ export function BotsContent({ onEditBot, onDuplicateBot, onCreateBot }: BotsCont
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Page Header */}
       <header className="flex items-center justify-between">
         <div>
