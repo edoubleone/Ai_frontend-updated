@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import {
   BasicSetup,
@@ -17,6 +16,7 @@ import apiClient, { type ErrorResponse } from "@/services/config/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import Button from "@/components/shared/button";
 
 export function CreateAssistant(payload: any) {
   return apiClient.post(`/assistants/`, payload);
@@ -70,8 +70,8 @@ const steps = [
 
 const initialValues = {
   name: "",
-  typeOfAssistant: "",
-  language: "",
+  typeOfAssistant: "text",
+  language: "English",
   uploadFile: undefined,
   isMultilingual: true,
   companyName: "",
@@ -79,7 +79,7 @@ const initialValues = {
   companyWebsite: "",
 };
 
-const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
+const CreateBot: React.FC<BotEditPageProps> = () => {
   const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -213,14 +213,15 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
   const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
 
   return (
-    <div className="flex flex-col bg-secondary p-6">
+    <div className="flex flex-col">
       <header className="mb-4">
         <Button
-          onClick={onBack}
-          className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg"
           variant="ghost"
+          wrapperclass="w-fit"
+          onClick={() => navigate(-1)}
+          className="!px-0 bg-transparent !w-fit"
         >
-          <ChevronLeft className="w-4 h-4 ml-2" />
+          <ChevronLeft className="w-4 h-4" />
           Back
         </Button>
       </header>
@@ -290,45 +291,45 @@ const CreateBot: React.FC<BotEditPageProps> = ({ onBack }) => {
                 <section>{steps[currentStep].component}</section>
               </main>
 
-              <footer className={`flex justify-between items-center`}>
+              <footer
+                className={`flex w-full justify-between mt-12 items-center`}
+              >
                 <button
                   type="button"
-                  className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium"
+                  disabled={currentStep === 0}
+                  className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-defaultBlue font-medium"
                   onClick={handlePreviousStep}
                 >
                   Previous
                 </button>
 
-                <div className="">
+                <div className="flex gap-3.5 items-center">
                   {currentStep < totalSteps - 1 && (
-                    <button
+                    <Button
+                      variant="outline-blue"
                       type="button"
-                      className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-gray-600 font-medium"
+                      className="!w-[207px]"
                       // disabled={currentStep === 0}
                       onClick={() => handleSubmit(values)}
                     >
                       {isSubmitting ? "Saving..." : "Save and Finish Later"}
-                    </button>
+                    </Button>
                   )}
                   {!isLastStep ? (
-                    <button
+                    <Button
+                      className="!w-[207px]"
                       type="button"
-                      className="px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium"
                       // onClick={currentStep === 0 ? () => handleSubmit(values) : () => handleNextStep(validateForm, setTouched, errors)}
                       onClick={() =>
                         handleNextStep(validateForm, setTouched, errors)
                       }
                     >
                       Proceed
-                    </button>
+                    </Button>
                   ) : (
-                    <button
-                      type="button"
-                      className="px-5 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg font-medium"
-                      onClick={() => handleSubmit(values)}
-                    >
+                    <Button type="button" onClick={() => handleSubmit(values)}>
                       {isSubmitting ? "Submitting..." : "Finish"}
-                    </button>
+                    </Button>
                   )}
                 </div>
               </footer>

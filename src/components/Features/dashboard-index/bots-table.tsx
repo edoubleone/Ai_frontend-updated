@@ -1,0 +1,160 @@
+import type { ColumnDef } from "@tanstack/react-table";
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+interface DataTableProps {
+  data: any[];
+}
+
+const columns: ColumnDef<any>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        className="rounded-[1.91px] shadow-none"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+      />
+    ),
+  },
+  {
+    accessorKey: "botAvatar",
+    header: "Bot",
+    cell: ({ row }) => (
+      <Avatar>
+        <AvatarImage src={row.original.botAvatar} />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+    ),
+  },
+  {
+    accessorKey: "assistantName",
+    header: "Assistant Name",
+  },
+  {
+    accessorKey: "botType",
+    header: "Bot Type",
+  },
+  {
+    accessorKey: "assistantLanguage",
+    header: "Assistant Language",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <span
+        className={`text-base font-bold ${
+          row.original.status === "Bot created"
+            ? "text-[#34A853]"
+            : "text-[#D39900]"
+        }`}
+      >
+        {row.original.status}
+      </span>
+    ),
+  },
+  {
+    id: "actions",
+    header: () => (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.83545 12.5593H11.8005C12.1524 12.5593 12.4377 12.274 12.4377 11.9221V3.95691C12.4377 3.60499 12.1524 3.3197 11.8005 3.3197H3.83545C3.48353 3.3197 3.19824 3.60499 3.19824 3.95691V11.9221C3.19824 12.274 3.48353 12.5593 3.83545 12.5593Z"
+          stroke="#2E2E2E"
+          stroke-width="1.43371"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M6.06592 3.479V12.3999"
+          stroke="#2E2E2E"
+          stroke-width="1.43371"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M9.5708 3.479V12.3999"
+          stroke="#2E2E2E"
+          stroke-width="1.43371"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    ),
+    cell: ({ row }) => (
+      <Button onClick={() => console.log(row)} variant="ghost" size="icon">
+        <MoreHorizontal className="h-4 w-4" />
+      </Button>
+    ),
+  },
+];
+
+const DashboardBotsDataTable = ({ data }: DataTableProps) => {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: true,
+  });
+
+  return (
+    <div className="border-t border-[#E7E7E7] pt-2.5">
+      <Table>
+        <TableHeader className="bg-[#EEEEFD]">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead className="text-dark p-4 text-base" key={header.id}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell className="p-4" key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+export default DashboardBotsDataTable;

@@ -5,13 +5,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
+import ChatItemLoader from "@/components/Features/conversation/chat-item-skeleton";
 
 const Conversations = () => {
   const queryClient = useQueryClient();
 
   const [assistant, setAssistant] = useState<IAssistant | null>(null);
 
-  const { data: assistants = [] } = useQuery({
+  const { data: assistants = [], isLoading } = useQuery({
     queryFn: GetAssistants,
     queryKey: ["assistants"],
   });
@@ -43,18 +44,24 @@ const Conversations = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto">
-            {assistants &&
-              assistants?.map((assistantItem) => (
-                <div
-                  onClick={() => handleAssistantClick(assistantItem)}
-                  className={`px-6 cursor-pointer py-[18px] ${
-                    assistant?.id === assistantItem?.id ? "bg-[#EEEEFD]" : ""
-                  }`}
-                  key={assistantItem?.id}
-                >
-                  <ChatItemComponent {...assistantItem} />
-                </div>
-              ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, i) => (
+                  <div className="p-6" key={i}>
+                    <ChatItemLoader />
+                  </div>
+                ))
+              : assistants &&
+                assistants?.map((assistantItem) => (
+                  <div
+                    onClick={() => handleAssistantClick(assistantItem)}
+                    className={`px-6 cursor-pointer py-[18px] ${
+                      assistant?.id === assistantItem?.id ? "bg-[#EEEEFD]" : ""
+                    }`}
+                    key={assistantItem?.id}
+                  >
+                    <ChatItemComponent {...assistantItem} />
+                  </div>
+                ))}
           </div>
         </div>
 
