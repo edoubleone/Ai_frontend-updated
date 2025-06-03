@@ -19,6 +19,9 @@ import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
 import { BotsContent } from "./components/Features/bot/bots-content";
 import CreateBot from "./Pages/dashboard/CreateBot";
+import Payment from "./Pages/dashboard/Payment";
+import BotSetting from "./Pages/dashboard/bot-setting";
+import Profile from "./Pages/dashboard/Profile";
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
           <Route path="" element={<BotsContent />} />
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="bot-setting" element={<BotSetting />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Route>
 

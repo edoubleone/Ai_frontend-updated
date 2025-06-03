@@ -52,12 +52,12 @@ const navigationItems = [
   },
   {
     title: "Payments",
-    url: "/dashboard",
+    url: "/dashboard/payment",
     icon: CreditCard,
   },
   {
     title: "Settings",
-    url: "/dashboard",
+    url: "/dashboard/bot-setting",
     icon: Settings,
   },
 ]

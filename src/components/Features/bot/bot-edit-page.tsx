@@ -22,8 +22,17 @@ export function BotEditPage({ onBack, switchColor }: BotEditPageProps) {
     additionalSettings: true,
   })
 
-  const handleSettingChange = (setting: keyof typeof settings) => {
-    setSettings((prev) => ({
+  interface SettingsState {
+    general: boolean;
+    colorsAndStyle: boolean;
+    chatButton: boolean;
+    additionalSettings: boolean;
+  }
+
+  type SettingKey = keyof SettingsState;
+
+  const handleSettingChange = (setting: SettingKey) => {
+    setSettings((prev: SettingsState) => ({
       ...prev,
       [setting]: !prev[setting],
     }))
@@ -49,7 +58,7 @@ export function BotEditPage({ onBack, switchColor }: BotEditPageProps) {
       </header>}
 
       {/* Main Content */}
-      <div className={`flex-1 flex gap-6 ${onBack && "p-6"}`}>
+      <div className={`flex-1 flex flex-col lg:flex-row gap-y-8 lg:gap-6 ${onBack && "p-6"}`}>
         {/* Settings Panel - Left Side */}
         <div className="flex-1 space-y-6">
           {/* General Settings */}
@@ -96,7 +105,7 @@ export function BotEditPage({ onBack, switchColor }: BotEditPageProps) {
         </div>
 
         {/* Chat Preview - Right Side */}
-        <div>
+        <div className="h-[600px]">
           <BotChatPreview />
         </div>
       </div>

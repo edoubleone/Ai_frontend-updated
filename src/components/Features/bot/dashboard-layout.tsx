@@ -14,8 +14,10 @@ export function DashboardLayout() {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex w-full min-h-screen">
-        <AppSidebar />
-        <SidebarInset className="flex-1">
+        <aside className="hidden lg:block">
+          <AppSidebar />
+        </aside>
+        <SidebarInset className="flex-1 w-full">
           <DashboardHeader onCreateBot={() => setCurrentView("create-bot")} />
           <Outlet />
         </SidebarInset>

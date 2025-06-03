@@ -192,94 +192,96 @@ export default function Footer() {
       {/* Main Footer Section */}
       <div className="pt-12 px-5 md:px-10 lg:px-16">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-y-12 mb-12 md:grid-cols-2 lg:grid-cols-4 md:gap-10 lg:gap-12">
+          <div className="flex gap-y-12 mb-12 md:gap-10 lg:gap-20">
             {/* Company Section */}
-            <div>
-              <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Company</h3>
-              <ul className="space-y-4">
-                <li>
-                  <a href="/about" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="/products" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    Products & Services
-                  </a>
-                </li>
-                <li>
-                  <a href="/testimonials" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    Testimonial
-                  </a>
-                </li>
-                <li>
-                  <a href="/faq" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    FAQ
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <nav className="flex w-[70%] justify-between gap-x-16">
+              <div className="w-[20%]">
+                <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Company</h3>
+                <ul className="space-y-4">
+                  <li>
+                    <a href="/about" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/products" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      Products & Services
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/testimonials" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      Testimonial
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/faq" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      FAQ
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-            {/* Links Section */}
-            <div>
-              <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Link</h3>
-              <ul className="space-y-4">
-                <li>
-                  <a href="/terms" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    Terms & conditions
-                  </a>
-                </li>
-                <li>
-                  <a href="/privacy" className="text-base text-gray-600 transition-colors hover:text-gray-900">
-                    Privacy policy
-                  </a>
-                </li>
-              </ul>
-            </div>
+              {/* Links Section */}
+              <div>
+                <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Link</h3>
+                <ul className="space-y-4">
+                  <li>
+                    <a href="/terms" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      Terms & conditions
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/privacy" className="text-base text-gray-600 transition-colors hover:text-gray-900">
+                      Privacy policy
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-            {/* Contact Section */}
-            <div>
-              <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Contact</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <a
-                    href="mailto:hi@digitalagency.com"
-                    className="text-base text-gray-600 transition-colors hover:text-gray-900"
-                  >
-                    hello@koolai.com
-                  </a>
-                </li>
-                <li className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-base leading-relaxed text-gray-600">
-                  7404 Executive place, Lanham MD, 
-                    <br />
-                    United States
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <a
-                    href="tel:+6281234567890"
-                    className="text-base text-gray-600 transition-colors hover:text-gray-900"
-                  >
-                    +12029710392
-                  </a>
-                </li>
-              </ul>
-            </div>
+              {/* Contact Section */}
+              <div>
+                <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Contact</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                    <a
+                      href="mailto:hi@digitalagency.com"
+                      className="text-base text-gray-600 transition-colors hover:text-gray-900"
+                    >
+                      hello@koolai.com
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-base leading-relaxed text-gray-600">
+                    7404 Executive place, Lanham MD, 
+                      <br />
+                      United States
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Phone className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                    <a
+                      href="tel:+6281234567890"
+                      className="text-base text-gray-600 transition-colors hover:text-gray-900"
+                    >
+                      +12029710392
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
 
             {/* Newsletter Section */}
-            <div>
-              <h3 className="mb-6 text-lg font-semibold text-gray-900">Join our Newsletter</h3>
-              <div className="space-y-4">
-                <Input
+            <div className="w-2/5">
+              <h3 className="mb-5 text-lg font-semibold text-gray-900">Join our Newsletter</h3>
+              <div className="flex items-center w-full bg-[#ECECEC] rounded-lg py-2 px-3 border border-[#E2E8F0]">
+                <input
                   type="email"
                   placeholder="Your email address"
-                  className="w-full h-12 px-4 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-[70%] h-12 px-4 bg-transparent"
                 />
-                <Button className="w-full h-12 font-semibold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                <Button className="w-[30%] h-12 font-semibold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
                   Submit
                 </Button>
               </div>

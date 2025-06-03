@@ -7,13 +7,14 @@ import { EnhancedFAQSection } from "@/components/Features/Landing/enchanced-faq-
 import { EnhancedHowItWorksSection } from "@/components/Features/Landing/enchanced-how-it-work-section"
 
 import HeroSection from "@/components/Features/Landing/hero-section"
+import HowItWorksSection from "@/components/Features/Landing/HowItWorksSection"
 
 
 export default function Landing() {
   return (
     <div>
       <HeroSection />
-  
+      <HowItWorksSection />
       <EnhancedHowItWorksSection/>
       <EnhancedBenefitsSection/>
       <DeviceShowcaseSection />

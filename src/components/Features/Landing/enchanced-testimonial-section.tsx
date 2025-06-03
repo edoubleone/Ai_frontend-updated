@@ -8,19 +8,19 @@ import { useEffect, useState } from "react"
 
 const stats = [
 	{
-		value: "150k",
+		value: "130k",
 		label: "Active users",
 		icon: Users,
 		color: "text-blue-600",
 	},
 	{
-		value: "50k",
+		value: "10k",
 		label: "New users per month",
 		icon: TrendingUp,
 		color: "text-green-600",
 	},
 	{
-		value: "98%",
+		value: "18%",
 		label: "Satisfied Customers",
 		icon: Heart,
 		color: "text-red-600",

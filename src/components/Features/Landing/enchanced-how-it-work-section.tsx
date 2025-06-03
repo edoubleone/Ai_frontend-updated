@@ -1,25 +1,29 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import bot from "/images/bot.png"
+import chat from "/images/chatting-01.png"
+import database from "/images/database-locked.png"
+import users from "/images/user-multiple-02.png"
 
 const steps = [
   {
-    number: "1",
+    icon: bot,
     title: "Understanding",
     description: "It understands what your customers want and gives clear answers that make sense.",
   },
   {
-    number: "2",
+    icon: users,
     title: "Presence",
     description: "Connect with customers on Instagram, WhatsApp, email, and your website—wherever they are.",
   },
   {
-    number: "3",
+    icon: chat,
     title: "Automate",
     description: "It follows up with customers, sends quotes, and reminds them so you don't have to do anything.",
   },
   {
-    number: "4",
+    icon: database,
     title: "Analyze",
     description: "Monitor what works, what doesn't, and pinpoint areas to focus your efforts for better results.",
   },
@@ -51,15 +55,15 @@ export function EnhancedHowItWorksSection() {
   }, [])
 
   return (
-    <section id="how-it-works" className="py-10 lg:py-14 bg-white">
+    <section id="how-it-works" className="py-10 lg:py-14 bg-white overflow-hidden">
       <div className="max-w-screen-2xl mx-auto px-4 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-32 items-center">
           {/* Left Side - Illustration */}
           <div
-            className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+            className={`relative transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
-            <div className="mb-8">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">How it works</h2>
+            <div className="mb-8 z-[2]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Our Commitment</h2>
               <p className="font-light text-sm leading-relaxed">
                 We believe that the best way to create successful marketing campaigns is to work closely with our
                 clients to understand their goals and challenges.
@@ -67,9 +71,12 @@ export function EnhancedHowItWorksSection() {
             </div>
 
             
-            <div className="relative">
+            <div className="relative z-[2]">
                <img src="/images/agentic.png" alt="CTA Banner Background" className="w-full h-auto max-w-lg mx-auto" />
             </div>
+
+            <div className="w-[500px] h-[400px] bg-blue-600/10 blur-3xl absolute top-0 -left-40" />
+            <div className="w-[500px] h-[400px] bg-blue-600/10 blur-3xl absolute -bottom-28 -right-[175%]" />
           </div>
 
           {/* Right Side - Content */}
@@ -82,8 +89,8 @@ export function EnhancedHowItWorksSection() {
                 <div key={index} className="flex items-start gap-6">
                   {/* Step Number Badge */}
                   {/* <div className="flex-shrink-0"> */}
-                    <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold text-3xl">{step.number}</span>
+                    <div className="w-20 h-20 bg-[#343CED] rounded-xl flex items-center justify-center">
+                      <img src={step.icon} alt="icon" className="text-white font-bold text-3xl" />
                     </div>
                   {/* </div> */}
 
