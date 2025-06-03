@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import DashboardMyBots from "@/components/Features/dashboard-index/my-bots";
+import DashboardNotiifications from "@/components/Features/dashboard-index/notifications";
 
 const DashboardIndexPage = () => {
   return (
@@ -92,6 +93,8 @@ const DashboardIndexPage = () => {
       </div>
 
       <DashboardMyBots />
+
+      <DashboardNotiifications />
     </div>
   );
 };
