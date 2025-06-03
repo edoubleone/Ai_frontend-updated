@@ -18,7 +18,7 @@ const navigationItems = [
   },
   {
     title: "My Bots",
-    url: "/dashboard/my-bots",
+    url: "/dashboard/bots",
     icon: BotsIcon,
   },
   {

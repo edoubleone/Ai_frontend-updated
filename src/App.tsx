@@ -19,6 +19,7 @@ import Conversations from "./Pages/conversations";
 import { BotsContent } from "./components/Features/bot/bots-content";
 import CreateBot from "./Pages/dashboard/CreateBot";
 import { DashboardLayout } from "./components/common/dashboard/layout";
+import DashboardIndexPage from "./Pages/dashboard/Page";
 
 function App() {
   return (
@@ -27,9 +28,12 @@ function App() {
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="conversations" element={<Conversations />} />
-          <Route path="" element={<BotsContent />} />
+          <Route path="" element={<DashboardIndexPage />} />
+          <Route path="bots">
+            <Route path="" element={<BotsContent />} />
+            <Route path="create-bot" element={<CreateBot />} />
+          </Route>
           <Route path="integrations" element={<Integrations />} />
-          <Route path="create-bot" element={<CreateBot />} />
         </Route>
       </Route>
 
