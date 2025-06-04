@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Star, TrendingUp, Users, Heart } from "lucide-react"
+import { ArrowRight, TrendingUp, Users, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Link } from "react-router-dom"
@@ -74,7 +74,7 @@ export function EnhancedTestimonialsSection() {
 	}, [])
 
 	return (
-		<section id="testimonials" className="py-7 bg-white sm:py-12">
+		<section id="testimonials" className="bg-white py-7 sm:py-12">
 			<div className="w-full px-5 md:px-10 lg:px-0">
 				<div className="grid grid-cols-1 md:gap-7 lg:items-end lg:gap-x-32 md:grid-cols-2">
 					{/* Left Side - Trust Indicators & Stats */}
@@ -114,7 +114,7 @@ export function EnhancedTestimonialsSection() {
 						</div>
 
 						{/* Statistics */}
-						<div className="flex justify-center md:justify-between w-full gap-3 md:gap-x-6">
+						<div className="flex justify-center w-full gap-3 md:justify-between md:gap-x-6">
 							{stats.map((stat, index) => (
 								<div
 									key={index}
@@ -124,7 +124,7 @@ export function EnhancedTestimonialsSection() {
 									style={{ transitionDelay: `${index * 200}ms` }}
 								>
 									<h3 className="text-4xl font-bold md:text-5xl lg:text-7xl">{stat.value}</h3>
-									<p className="text-sm md:text-md font-light ">{stat.label}</p>
+									<p className="text-sm font-light md:text-md ">{stat.label}</p>
 								</div>
 							))}
 						</div>
@@ -141,7 +141,7 @@ export function EnhancedTestimonialsSection() {
 								Why Choose Agentic AI?
 							</h2>
 
-							<p className="text-md font-light">
+							<p className="font-light text-md">
 								Because it works. Because it saves time. It feels like having another teammate who never sleeps,
 								never forgets to follow up, and always keeps your sales moving.
 							</p>
