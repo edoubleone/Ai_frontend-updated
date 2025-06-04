@@ -55,7 +55,7 @@ export function EnhancedHowItWorksSection() {
   }, [])
 
   return (
-    <section id="how-it-works" className="py-10 lg:py-14 bg-white overflow-hidden">
+    <section id="how-it-works" className="py-16 lg:py-14 bg-white overflow-hidden">
       <div className="max-w-screen-2xl mx-auto px-4 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-32 items-center">
           {/* Left Side - Illustration */}
@@ -72,7 +72,7 @@ export function EnhancedHowItWorksSection() {
 
             
             <div className="relative z-[2]">
-               <img src="/images/agentic.png" alt="CTA Banner Background" className="w-full h-auto max-w-lg mx-auto" />
+               <img src="/images/integration.png" alt="CTA Banner Background" className="w-full lg:-mb-[180px] md:mt-14 h-auto max-w-xl ld:max-w-lg lg:mx-auto" />
             </div>
 
             <div className="w-[500px] h-[400px] bg-blue-600/10 blur-3xl absolute top-0 -left-40" />
@@ -81,10 +81,10 @@ export function EnhancedHowItWorksSection() {
 
           {/* Right Side - Content */}
           <div
-            className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+            className={`transition-all flex items-end h-full duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
           >
             {/* Steps */}
-            <div className="space-y-6">
+            <div className="flex flex-col gap-y-6">
               {steps.map((step, index) => (
                 <div key={index} className="flex items-start gap-6">
                   {/* Step Number Badge */}

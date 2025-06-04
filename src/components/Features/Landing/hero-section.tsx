@@ -17,12 +17,11 @@ const icons = [email, whatsapp, telegram, messanger, slack, instagram, twitter, 
 const HeroSection = () => {
   return (
     <div className="bg-white pt-2 sm:pt-4">
-      <div className="mx-auto max-w-screen-xl lg:px-8">
+      <div className="mx-auto max-w-screen-xl lg:px-8 overflow-hidden">
         {/* Hero Content */}
         <div className="flex flex-col items-center text-center gap-y-3 md:gap-y-5 px-4 pt-20 pb-10 lg:py-20">
-          <h1 className="font-bold capitalize text-[24px] md:text-5xl lg:text-6xl xl:text-7xl text-gray-900 leading-tight">
-            Grow your business <br />
-            Make smarter engagement and sales with <span className="text-blue-600">AI</span>
+          <h1 className="font-bold capitalize text-[24px] px-4 md:text-5xl lg:text-6xl text-gray-900 leading-tight">
+            Grow your business by using <span className="text-blue-600">AI</span> to make smarter engagement and sales
           </h1>
 
           <p className="w-[90%] md:w-[75%] lg:w-[65%] text-md md:text-lg lg:text-xl">
@@ -47,16 +46,16 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="flex items-center gap-x-6 mt-10">
+          <div className="flex items-center gap-x-6 mt-10 overflow-x-auto">
             {icons.map((icon, index) => (
-              <img src={icon} key={index} alt="telegram icon" width={50} height={50} />
+              <img src={icon} key={index} alt="social icon" width={50} height={50} />
             ))}
           </div>
         </div>
 
         {/* Hero Image Section with Overlapping Testimonials */}
         <div className="relative">
-          <div className="flex justify-center items-center px-4">
+          <div className="flex justify-center md:-mb-[100px] lg:-mb-[200px] items-center px-4">
             <div className="relative w-full max-w-6xl">
               <div className="flex justify-center w-full px-6 md:px-20">
                 <img
@@ -66,11 +65,6 @@ const HeroSection = () => {
                 />
               </div>
             </div>
-          </div>
-
-          {/* Testimonials Section - Full Width */}
-          <div className="max-w-screen-2xl">
-            <EnhancedTestimonialsSection />
           </div>
         </div>
       </div>

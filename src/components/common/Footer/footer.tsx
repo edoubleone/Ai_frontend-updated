@@ -184,7 +184,9 @@ export default function Footer() {
           <div className="w-full md:w-[43%] flex flex-col pt-5 md:pt-0 items-start gap-5">
             <p className="text-2xl text-white">Ready to transform your digital dresence? Let's create magic together! book our services now!</p>
             
-            <button type="button" className="rounded-lg bg-white font-semibold text-[#343CED] px-[24px] py-[12px]">Book a call</button>
+            <Link to="/signup">
+              <button type="button" className="rounded-lg bg-white font-semibold text-[#343CED] px-[24px] py-[12px]">Book a call</button>
+            </Link>
           </div>
         </main>
       </div>
@@ -192,10 +194,10 @@ export default function Footer() {
       {/* Main Footer Section */}
       <div className="pt-12 px-5 md:px-10 lg:px-16">
         <div className="mx-auto max-w-7xl">
-          <div className="flex gap-y-12 mb-12 md:gap-10 lg:gap-20">
+          <div className="flex flex-col lg:flex-row gap-y-12 mb-12 md:gap-14 lg:gap-20">
             {/* Company Section */}
-            <nav className="flex w-[70%] justify-between gap-x-16">
-              <div className="w-[20%]">
+            <nav className="grid grid-cols-2 gap-y-10 md:grid-cols-3 w-full lg:w-[70%] justify-between gap-x-16">
+              <div className="">
                 <h3 className="mb-6 text-2xl md:text-xl font-semibold text-gray-900">Company</h3>
                 <ul className="space-y-4">
                   <li>
@@ -273,7 +275,7 @@ export default function Footer() {
             </nav>
 
             {/* Newsletter Section */}
-            <div className="w-2/5">
+            <div className="w-full md:w-3/5 lg:w-2/5">
               <h3 className="mb-5 text-lg font-semibold text-gray-900">Join our Newsletter</h3>
               <div className="flex items-center w-full bg-[#ECECEC] rounded-lg py-2 px-3 border border-[#E2E8F0]">
                 <input

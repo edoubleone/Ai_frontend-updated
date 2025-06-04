@@ -42,7 +42,7 @@ const navigationItems = [
   },
   {
     title: "Test and share bots",
-    url: "/dashboard",
+    url: "/dashboard/test-and-share-bot",
     icon: Share2,
   },
   {
@@ -65,7 +65,7 @@ const navigationItems = [
 const footerItems = [
   {
     title: "Help and Support",
-    url: "/help",
+    url: "/dashboard/help-and-support",
     icon: HelpCircle,
   },
   {

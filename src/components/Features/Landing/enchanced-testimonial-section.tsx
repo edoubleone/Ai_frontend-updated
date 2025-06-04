@@ -74,7 +74,7 @@ export function EnhancedTestimonialsSection() {
 	}, [])
 
 	return (
-		<section id="testimonials" className="py-7 bg-white sm:py-12">
+		<section id="testimonials" className="py-7 bg-white md:py-12">
 			<div className="w-full px-5 md:px-10 lg:px-0">
 				<div className="grid grid-cols-1 md:gap-7 lg:items-end lg:gap-x-32 md:grid-cols-2">
 					{/* Left Side - Trust Indicators & Stats */}

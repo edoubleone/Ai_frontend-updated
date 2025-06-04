@@ -25,10 +25,10 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 shadow-sm bg-white/95 backdrop-blur-sm">
-      <div className="container px-5 mx-auto sm:px-6 lg:px-6">
+      <div className="container mx-auto px-5 sm:px-6 lg:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Link to="/" className="transition-opacity hover:opacity-80">
             <div className="flex items-center justify-center rounded-lg">
               <img 
                 src={logo} 
@@ -76,7 +76,7 @@ export function Navigation() {
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-10 h-10" />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>

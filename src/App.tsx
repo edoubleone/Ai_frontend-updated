@@ -22,6 +22,9 @@ import CreateBot from "./Pages/dashboard/CreateBot";
 import Payment from "./Pages/dashboard/Payment";
 import BotSetting from "./Pages/dashboard/bot-setting";
 import Profile from "./Pages/dashboard/Profile";
+import Checkout from "./Pages/dashboard/Checkout";
+import TestShareBots from "./Pages/dashboard/ShareBot";
+import HelpAndSupport from "./Pages/dashboard/Support";
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
           <Route path="payment" element={<Payment />} />
           <Route path="bot-setting" element={<BotSetting />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="test-and-share-bot" element={<TestShareBots />} />
+          <Route path="help-and-support" element={<HelpAndSupport />} />
         </Route>
       </Route>
 
