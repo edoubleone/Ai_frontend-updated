@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import DashboardMyBots from "@/components/Features/dashboard-index/my-bots";
-import DashboardNotiifications from "@/components/Features/dashboard-index/notifications";
+// import DashboardNotiifications from "@/components/Features/dashboard-index/notifications";
 import { useQuery } from "@tanstack/react-query";
 import { GetAssistants } from "@/services/api/conversation";
 import { Link } from "react-router-dom";
@@ -160,7 +160,7 @@ const DashboardIndexPage = () => {
 
       <DashboardMyBots data={data} loading={isLoading} />
 
-      <DashboardNotiifications />
+      {/* <DashboardNotiifications /> */}
     </div>
   );
 };
