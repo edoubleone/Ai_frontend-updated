@@ -41,7 +41,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
       </div>
 
       <div className="flex flex-col gap-y-9">
-        <div className="flex justify-between w-full">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between w-full">
           <SearchInput
             placeholder="Search Bot"
             inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
@@ -51,20 +51,23 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
             <p className="text-sm font-semibold text-[#334155]">Sort: </p>
             <Button
               variant={"ghost"}
+              wrapperclass="!w-fit"
               className="!rounded-[1.91px] !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
             >
               Most Recent
               <ChevronDown className="size-5" />
             </Button>
             <Button
+              wrapperclass="!w-fit"
               variant={"ghost"}
-              className="!rounded-[1.91px] !p-2 !border-[.96px] !border-[#E2E8F0]"
+              className="!rounded-[1.91px] !w-fit !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Funnel className="size-5 text-dark" />
             </Button>
 
             <Button
               variant={"ghost"}
+               wrapperclass="!w-fit"
               className="!rounded-[1.91px] !text-sm !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Download className="size-5 text-dark" />

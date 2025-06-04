@@ -12,6 +12,8 @@ import clsx from "clsx";
 import { AlertDialog } from "@/components/ui/alert-dialog";
 import LogOutDialog from "../logout-dialog";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { XIcon } from "lucide-react";
 
 const navigationItems = [
   {
@@ -64,18 +66,39 @@ const footerItems = [
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({
+  open,
+  toggleMenu,
+}: {
+  open: boolean;
+  toggleMenu: () => void;
+}) {
   const { pathname } = useLocation();
-
   const [isLogOut, setLogOut] = useState(false);
 
   return (
-    <div className="fixed lg:sticky top-0 left-0 h-screen w-64 px-6 flex flex-col border-r border-[#E7E7E7] bg-white z-40">
-      <Link to={"/dashboard"} className="mb-8 mt-6">
-        <img src="/kool_ai.png" width={103} height={38} alt="Kool AI logo" />
-      </Link>
+    <div
+      className={clsx(
+        "fixed lg:sticky lg:flex top-0 left-0 h-full lg:translate-x-0 duration-300 ease-linear transition-all lg:h-screen py-6 lg:py-0 w-64 px-6 flex-col border-r border-[#E7E7E7] bg-white z-50 lg:z-40",
+        `${open ? "translate-x-0" : "-translate-x-full"}`
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <Link to={"/dashboard"} className="mt-6">
+          <img src="/kool_ai.png" width={103} height={38} alt="Kool AI logo" />
+        </Link>
 
-      <div className="flex-1 flex flex-col gap-y-20 no-scroll overflow-y-auto">
+        <Button
+          onClick={toggleMenu}
+          className="bg-[#F5F7FA] block lg:hidden p-2.5 rounded-full"
+          variant={"ghost"}
+          size={"icon"}
+        >
+          <XIcon className="text-dark size-5" />
+        </Button>
+      </div>
+
+      <div className="flex-1 flex flex-col pt-8 gap-y-20 no-scroll overflow-y-auto">
         <div className="flex flex-col gap-y-4">
           {navigationItems.map((route) => (
             <Link to={route.url} key={route.title}>

@@ -4,16 +4,28 @@ import { Button as IconButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
 import SearchInput from "@/components/shared/search-input";
+import { MenuIcon } from "lucide-react";
 
-export function DashboardHeader() {
+export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
   return (
     <header className="flex sticky top-0 z-40 w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5 bg-white border-b-[1.13px] border-[#E7E7E7]">
-      <Link to="/dashboard/bots/create-bot">
-        <Button className="!font-bold !text-base" variant="lightLavender">
-          Build a Bot
-          <ArrowRight2 size="18" />
-        </Button>
-      </Link>
+      <div className="flex items-center gap-x-3">
+        <IconButton
+          onClick={toggleMenu}
+          className="bg-[#F5F7FA] block lg:hidden p-2.5 rounded-md"
+          variant={"ghost"}
+          size={"icon"}
+        >
+          <MenuIcon className="size-5 text-dark" />
+        </IconButton>
+
+        <Link to="/dashboard/bots/create-bot">
+          <Button className="!font-bold !text-base" variant="lightLavender">
+            Build a Bot
+            <ArrowRight2 size="18" />
+          </Button>
+        </Link>
+      </div>
 
       <div className="flex items-center gap-6">
         <SearchInput
