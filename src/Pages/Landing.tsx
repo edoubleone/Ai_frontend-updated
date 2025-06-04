@@ -15,7 +15,7 @@ export default function Landing() {
       <HeroSection />
   
       <EnhancedHowItWorksSection/>
-       <EnhancedBenefitsSection/>
+      <EnhancedBenefitsSection/>
       <DeviceShowcaseSection />
       <EnhancedTestimonialsCarousel />
       <PricingSection />

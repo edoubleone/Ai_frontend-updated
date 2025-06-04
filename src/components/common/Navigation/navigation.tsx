@@ -30,7 +30,7 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 shadow-sm bg-white/95 backdrop-blur-sm">
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+      <div className="container px-5 mx-auto sm:px-6 lg:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
@@ -125,7 +125,7 @@ export function Navigation() {
                       {item.name}
                     </Link>
                   ))}
-                  <div className="pt-6 flex flex-col gap-y-4 border-t">
+                  <div className="flex flex-col pt-6 border-t gap-y-4">
                     {isAuthenticated ? (
                       <>
                         <Link to="/dashboard" onClick={handleNavigation}>

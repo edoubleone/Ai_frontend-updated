@@ -51,15 +51,15 @@ export function EnhancedHowItWorksSection() {
   }, [])
 
   return (
-    <section id="how-it-works" className="py-24 sm:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="how-it-works" className="py-10 lg:py-14 bg-white">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-12 lg:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-32 items-center">
           {/* Left Side - Illustration */}
           <div
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
             <div className="mb-8">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-xl text-gray-900 mb-6">How it works</h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">How it works</h2>
               <p className="font-light text-sm leading-relaxed">
                 We believe that the best way to create successful marketing campaigns is to work closely with our
                 clients to understand their goals and challenges.
@@ -68,11 +68,6 @@ export function EnhancedHowItWorksSection() {
 
             
             <div className="relative">
-              {/* <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%201618869099%20%281%29-t4XXbSG2E4RhcvjA0VbaJQPKcY0qvm.png"
-                alt="AI Robot working with various communication channels"
-                className="w-full h-auto max-w-lg mx-auto"
-              /> */}
                <img src="/images/agentic.png" alt="CTA Banner Background" className="w-full h-auto max-w-lg mx-auto" />
             </div>
           </div>
@@ -81,22 +76,20 @@ export function EnhancedHowItWorksSection() {
           <div
             className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
           >
-
-
             {/* Steps */}
             <div className="space-y-6">
               {steps.map((step, index) => (
-                <div key={index} className="flex items-start gap-4">
+                <div key={index} className="flex items-start gap-6">
                   {/* Step Number Badge */}
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">{step.number}</span>
+                  {/* <div className="flex-shrink-0"> */}
+                    <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center">
+                      <span className="text-white font-bold text-3xl">{step.number}</span>
                     </div>
-                  </div>
+                  {/* </div> */}
 
                   {/* Step Content */}
                   <div className="flex-1 pt-1">
-                    <h3 className="font-semibold text-xl  mb-2">{step.title}</h3>
+                    <h3 className="font-semibold text-xl mb-1">{step.title}</h3>
                     <p className="font-light text-sm leading-relaxed">{step.description}</p>
                   </div>
                 </div>

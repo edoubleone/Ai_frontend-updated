@@ -3,20 +3,20 @@ import { EnhancedTestimonialsSection } from "@/components/Features/Landing/encha
 const HeroSection = () => {
   return (
     <div className="bg-white pt-2 sm:pt-4">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-screen-xl lg:px-8">
         {/* Hero Content */}
-        <div className="text-center px-4 py-16 lg:py-20">
-          <h1 className="font-light text-xl sm:text-5xl lg:text-6xl xl:text-7xl text-gray-900 leading-tight mb-6">
+        <div className="flex flex-col items-center text-center gap-y-3 md:gap-y-5 px-4 pt-20 pb-10 lg:py-20">
+          <h1 className="font-bold text-[24px] md:text-5xl lg:text-6xl xl:text-7xl text-gray-900 leading-tight">
             Sell Smarter, Engage Better, and <br />
             Grow your <span className="text-blue-600">business</span> faster
           </h1>
 
-          <p className="max-w-2xl mx-auto font-normal text-xl lg:text-sm mb-10">
+          <p className="w-[90%] md:w-[55%] lg:max-w-2xl text-md md:text-lg lg:text-xl">
             Create your AI manager in 30 minutes with our user-friendly builder. No tech skills required! Pay only when
             it engages with your customers.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-2">
+          <div className="flex justify-center gap-4 sm:gap-6 mt-2">
             <a href="/signup" className="w-full sm:w-auto">
               <Button
                 size="lg"
@@ -41,9 +41,9 @@ const HeroSection = () => {
         <div className="relative">
           <div className="flex justify-center items-center px-4">
             <div className="relative w-full max-w-6xl">
-              <div className="flex justify-center">
+              <div className="flex justify-center w-full px-6 md:px-20">
                 <img
-                  src="/images/desktop.png?height=600&width=1200"
+                  src="/images/desktop.png"
                   alt="AI Manager Platform Interface"
                   className="w-full max-w-[2000px] h-auto object-contain"
                 />
@@ -52,10 +52,8 @@ const HeroSection = () => {
           </div>
 
           {/* Testimonials Section - Full Width */}
-          <div className="absolute bottom-[-100px] w-screen left-[50%] transform -translate-x-1/2">
-            <div className="container mx-auto">
-              <EnhancedTestimonialsSection />
-            </div>
+          <div className="max-w-screen-2xl">
+            <EnhancedTestimonialsSection />
           </div>
         </div>
       </div>

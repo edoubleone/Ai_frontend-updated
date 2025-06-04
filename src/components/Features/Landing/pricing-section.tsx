@@ -58,15 +58,15 @@ export function PricingSection() {
 	const [isAnnual, setIsAnnual] = useState(true)
 
 	return (
-		<section id="pricing" className="py-6 bg-white sm:py-16 md:py-20"> {/* Increased padding */}
-			<div className="container px-4 mx-auto space-y-16 sm:px-6 lg:px-8"> {/* Added space between container elements */}
+		<section id="pricing" className="py-5 bg-white md:py-5 lg:py-10"> {/* Increased padding */}
+			<div className="max-w-screen-2xl px-4 mx-auto space-y-16 sm:px-6 lg:px-8"> {/* Added space between container elements */}
 				{/* Header */}
-				<div className="py-8 mb-16 text-center md:py-12"> {/* Increased header spacing */}
-					<h2 className="mb-6 text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">Choose your plan</h2>
-					<p className="mb-12 text-sm font-light text-gray-600">Flexible Plans for Every Business</p>
+				<div className="flex flex-col gap-y-2 text-center pt-10 md:py-12"> {/* Increased header spacing */}
+					<h2 className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">Choose your plan</h2>
+					<p className="text-sm font-light text-gray-600 mt-3">Flexible Plans for Every Business</p>
 
 					{/* Billing Toggle */}
-					<div className="flex items-center justify-center gap-4 mb-12">
+					<div className="flex items-center justify-center gap-4 md:mb-5">
 						<span className={`text-lg font-medium ${!isAnnual ? "text-gray-900" : "text-gray-500"}`}>Monthly</span>
 						<Switch checked={isAnnual} onCheckedChange={setIsAnnual} className="data-[state=checked]:bg-blue-600" />
 						<span className={`text-lg font-medium ${isAnnual ? "text-gray-900" : "text-gray-500"}`}>Annually</span>
@@ -74,7 +74,7 @@ export function PricingSection() {
 				</div>
 
 				{/* Pricing Cards */}
-				<div className="grid max-w-6xl grid-cols-1 gap-8 pb-8 mx-auto lg:grid-cols-3 md:pb-12"> {/* Added bottom padding */}
+				<div className="grid w-full md:max-w-screen-2xl px-5 md:px-32 lg:px-10 grid-cols-1 gap-y-14 md:gap-8 mx-auto lg:grid-cols-3 pb-12"> {/* Added bottom padding */}
 					{reorderedPlans.map((plan) => (
 						<div
 							key={plan.name}
@@ -92,7 +92,7 @@ export function PricingSection() {
 							)}
 
 							{/* Plan Header */}
-							<div className="mb-8">
+							<div className="mb-8 flex flex-col items-start gap-y-3">
 								<div className="flex items-center gap-3 mb-4">
 									<div
 										className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${
