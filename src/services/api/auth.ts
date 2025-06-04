@@ -12,3 +12,9 @@ export function RegisterUser(payload: any) {
     return response.data;
   });
 }
+
+export function LogOutUser() {
+  return apiClient.post(`/auth/logout`).then((response) => {
+    return response.data;
+  });
+}

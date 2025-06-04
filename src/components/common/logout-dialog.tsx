@@ -7,8 +7,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import useLogOut from "@/hooks/useLogOut";
 
 const LogOutDialog = () => {
+  const { mutate } = useLogOut();
+
   return (
     <AlertDialogContent className="flex flex-col items-center">
       <svg
@@ -25,7 +28,9 @@ const LogOutDialog = () => {
       </svg>
 
       <AlertDialogHeader className="mt-5">
-        <AlertDialogTitle className="text-dark font-bold max-w-72 w-full text-center">Are you sure you want to logout?</AlertDialogTitle>
+        <AlertDialogTitle className="text-dark font-bold max-w-72 w-full text-center">
+          Are you sure you want to logout?
+        </AlertDialogTitle>
         <AlertDialogDescription className="hidden">
           You are about to logout.
         </AlertDialogDescription>
@@ -33,7 +38,7 @@ const LogOutDialog = () => {
 
       <AlertDialogFooter className="flex w-full mt-11 gap-7">
         <AlertDialogCancel>No</AlertDialogCancel>
-        <AlertDialogAction>Yes</AlertDialogAction>
+        <AlertDialogAction onClick={() => mutate()}>Yes</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );
