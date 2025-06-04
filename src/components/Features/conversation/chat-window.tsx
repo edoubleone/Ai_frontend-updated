@@ -32,6 +32,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
     "delete-confirmation" | "more-actions" | "delete-success" | null
   >(null);
   const [message, setMessage] = useState("");
+  const [isBotResponding, setIsBotResponding] = useState(false);
 
   const { data: assistantChatHistory = [] } = useQuery({
     queryFn: () => GetAssistantChatHistory(assistant?.id!),
@@ -42,6 +43,8 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   const { mutate } = useMutation({
     mutationFn: ChatWithAssistant,
     onMutate: async (newMessage) => {
+      setIsBotResponding(true);
+
       await queryClient.cancelQueries({
         queryKey: ["assistant-chat-history", assistant.id],
       });
@@ -78,6 +81,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
       );
     },
     onSettled: () => {
+      setIsBotResponding(false);
       queryClient.invalidateQueries({
         queryKey: ["assistant-chat-history", assistant.id],
       });
@@ -85,6 +89,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   });
 
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!message || isBotResponding) return;
     e.preventDefault();
     mutate({ assistant_id: assistant.id, message });
     setMessage("");
@@ -121,7 +126,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
             onOpenChange={(open) => setActions(open ? "more-actions" : null)}
           >
             <PopoverTrigger asChild>
-              <button >
+              <button>
                 <Ellipsis className="text-[#737373] " />
               </button>
             </PopoverTrigger>
@@ -143,6 +148,15 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
           {assistantChatHistory?.map((chat) => (
             <ChatBubble key={chat?.id} {...chat} />
           ))}
+          {isBotResponding && (
+            <ChatBubble
+              id={Date.now()}
+              role="AI"
+              content=""
+              created_at={new Date().toISOString()}
+              responding={true}
+            />
+          )}
         </div>
       </div>
 
@@ -160,7 +174,11 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
             name="message"
             id="message"
           />
-          <button type="submit" className="absolute right-5">
+          <button
+            disabled={isBotResponding || !message.trim()}
+            type="submit"
+            className="absolute right-5"
+          >
             <img src={sendicon} alt="sendicon" />
           </button>
         </form>

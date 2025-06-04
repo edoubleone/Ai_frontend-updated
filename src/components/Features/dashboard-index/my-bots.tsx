@@ -6,50 +6,38 @@ import { ArrowRight2 } from "iconsax-reactjs";
 import DashboardBotsDataTable from "./bots-table";
 
 import { ChevronDown, Download, Funnel } from "lucide-react";
+import BotsTableSkeletonLoader from "../bot/bot-table-loader";
+import { Link } from "react-router-dom";
 
-const data = [
-  {
-    id: 1,
-    botAvatar: "https://example.com/bot-avatar-1.png",
-    assistantName: "Assistant 1",
-    botType: "Text",
-    assistantLanguage: "English",
-    status: "Bot in Progress",
-  },
+interface DataType {
+  botAvatar: string;
+  assistantName: string;
+  botType: string;
+  assistantLanguage: string;
+  status: string;
+}
 
-  {
-    id: 2,
-    botAvatar: "https://example.com/bot-avatar-1.png",
-    assistantName: "Assistant 2",
-    botType: "Image",
-    assistantLanguage: "English",
-    status: "Bot in Progress",
-  },
+interface DashboardBotsTableProps {
+  data: DataType[];
+  loading: boolean;
+}
 
-  {
-    id: 3,
-    botAvatar: "https://example.com/bot-avatar-1.png",
-    assistantName: "Assistant 3",
-    botType: "Text",
-    assistantLanguage: "English",
-    status: "Bot created",
-  },
-];
-
-const DashboardMyBots = () => {
+const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
   return (
     <Card className="border-none w-full rounded-lg py-8 px-4 sm:px-8 lg:px-12">
       <div className="flex w-full mb-9 items-center justify-between">
         <h1 className="text-dark font-bold text-2xl">My Bots</h1>
 
-        <Button
-          wrapperclass="!w-fit"
-          variant="ghost"
-          className="!text-defaultBlue !p-0"
-        >
-          See All
-          <ArrowRight2 size={24} />
-        </Button>
+        <Link to={`/dashboard/bots`}>
+          <Button
+            wrapperclass="!w-fit"
+            variant="ghost"
+            className="!text-defaultBlue !p-0"
+          >
+            See All
+            <ArrowRight2 size={24} />
+          </Button>
+        </Link>
       </div>
 
       <div className="flex flex-col gap-y-9">
@@ -66,7 +54,7 @@ const DashboardMyBots = () => {
               className="!rounded-[1.91px] !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
             >
               Most Recent
-              <ChevronDown className="size-5"/>
+              <ChevronDown className="size-5" />
             </Button>
             <Button
               variant={"ghost"}
@@ -85,7 +73,11 @@ const DashboardMyBots = () => {
           </div>
         </div>
 
-        <DashboardBotsDataTable data={data} />
+        {loading ? (
+          <BotsTableSkeletonLoader />
+        ) : (
+          <DashboardBotsDataTable data={data} />
+        )}
       </div>
     </Card>
   );

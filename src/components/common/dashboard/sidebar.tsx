@@ -9,6 +9,9 @@ import SupportIcon from "@/components/shared/support-icon";
 import LogOutIcon from "@/components/shared/logout-icon";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
+import { AlertDialog } from "@/components/ui/alert-dialog";
+import LogOutDialog from "../logout-dialog";
+import { useState } from "react";
 
 const navigationItems = [
   {
@@ -64,6 +67,8 @@ const footerItems = [
 export function AppSidebar() {
   const { pathname } = useLocation();
 
+  const [isLogOut, setLogOut] = useState(false);
+
   return (
     <div className="fixed lg:sticky top-0 left-0 h-screen w-64 px-6 flex flex-col border-r border-[#E7E7E7] bg-white z-40">
       <Link to={"/dashboard"} className="mb-8 mt-6">
@@ -91,19 +96,24 @@ export function AppSidebar() {
           ))}
         </div>
 
+        <AlertDialog open={isLogOut} onOpenChange={setLogOut}>
+          <LogOutDialog />
+        </AlertDialog>
+
         <div className="flex flex-col gap-y-4 mt-6 mb-6">
           {footerItems.map((item) => {
             return (
               <>
                 {item.title === "Logout" ? (
-                  <div
+                  <button
+                    onClick={() => setLogOut(true)}
                     className={clsx(
-                      "flex hover:bg-[#E7E7E7]/30 rounded transition-all ease-in-out duration-500 items-center gap-3 py-3 px-4"
+                      "flex hover:bg-[#E7E7E7]/30 outline-none focus:outline-none rounded transition-all ease-in-out duration-500 items-center gap-3 py-3 px-4"
                     )}
                   >
                     <item.icon width={20} height={20} />
                     <p className="text-sm">{item.title}</p>
-                  </div>
+                  </button>
                 ) : (
                   <Link to={item.url} key={item.title}>
                     <div

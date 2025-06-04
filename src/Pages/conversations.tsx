@@ -25,10 +25,10 @@ const Conversations = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col h-screen gap-5">
       <h1 className="text-2xl font-bold text-dark">Conversations</h1>
 
-      <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-9">
+      <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-9 overflow-y-hidden">
         <div
           className={`${
             assistant ? "w-full max-w-96" : "w-full"
@@ -66,7 +66,7 @@ const Conversations = () => {
         </div>
 
         {assistant ? (
-          <div className="w-full border-[#D0D0D0] border-l-[0.25px] pl-4">
+          <div className="w-full border-[#D0D0D0] border-l-[0.25px] pl-4 overflow-y-auto">
             <ChatWindow assistant={assistant} />
           </div>
         ) : null}

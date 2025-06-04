@@ -15,10 +15,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AvatarComponent from "@/components/shared/custom-avatar";
 
 interface DataTableProps {
-  data: any[];
+  data: {
+    botAvatar: string;
+    assistantName: string;
+    botType: string;
+    assistantLanguage: string;
+    status: string;
+  }[]
 }
 
 const columns: ColumnDef<any>[] = [
@@ -41,12 +47,7 @@ const columns: ColumnDef<any>[] = [
   {
     accessorKey: "botAvatar",
     header: "Bot",
-    cell: ({ row }) => (
-      <Avatar>
-        <AvatarImage src={row.original.botAvatar} />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-    ),
+    cell: () => <AvatarComponent />,
   },
   {
     accessorKey: "assistantName",
@@ -88,23 +89,23 @@ const columns: ColumnDef<any>[] = [
         <path
           d="M3.83545 12.5593H11.8005C12.1524 12.5593 12.4377 12.274 12.4377 11.9221V3.95691C12.4377 3.60499 12.1524 3.3197 11.8005 3.3197H3.83545C3.48353 3.3197 3.19824 3.60499 3.19824 3.95691V11.9221C3.19824 12.274 3.48353 12.5593 3.83545 12.5593Z"
           stroke="#2E2E2E"
-          stroke-width="1.43371"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.43371"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M6.06592 3.479V12.3999"
           stroke="#2E2E2E"
-          stroke-width="1.43371"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.43371"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M9.5708 3.479V12.3999"
           stroke="#2E2E2E"
-          stroke-width="1.43371"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.43371"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     ),
