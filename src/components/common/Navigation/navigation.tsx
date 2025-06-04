@@ -6,6 +6,8 @@ import logo from "@/assets/images/logo.png";
 import Button from "@/components/shared/button";
 import { Button as IconButton } from "@/components/ui/button";
 import { useAuth } from "@/context/auth-provider";
+import { AlertDialog } from "@/components/ui/alert-dialog";
+import LogOutDialog from "../logout-dialog";
 
 const navigationItems = [
   { name: "Home", href: "/" },
@@ -17,6 +19,7 @@ const navigationItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const [isLogOut, setLogOut] = useState(false);
 
   const { isAuthenticated } = useAuth();
 
@@ -73,7 +76,10 @@ export function Navigation() {
                     Dashboard
                   </Button>
                 </Link>
-                <Button className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700">
+                <Button
+                  onClick={() => setLogOut(true)}
+                  className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700"
+                >
                   Log Out
                 </Button>
               </>
@@ -127,8 +133,10 @@ export function Navigation() {
                             Dashboard
                           </Button>
                         </Link>
-                        
-                        <Button>Log Out</Button>
+
+                        <Button onClick={() => setLogOut(true)}>
+                          Log Out
+                        </Button>
                       </>
                     ) : (
                       <>
@@ -154,6 +162,9 @@ export function Navigation() {
             </Sheet>
           </div>
         </div>
+        <AlertDialog open={isLogOut} onOpenChange={setLogOut}>
+          <LogOutDialog />
+        </AlertDialog>
       </div>
     </nav>
   );
