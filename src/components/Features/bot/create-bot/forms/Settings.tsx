@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const Settings = () => {
-  const { values, setFieldValue, handleChange, handleBlur } =
+  const { values, errors, setFieldValue, handleChange, handleBlur } =
     useFormikContext<SettingsFormValues>();
 
   // const [addistionalInfo, setAdditionalInfo] = React.useState<boolean>(false);
@@ -97,6 +97,8 @@ const Settings = () => {
               rows={5}
               hasMax
               max={50}
+              error={!!errors.additionalInstruction}
+              errorText={errors.additionalInstruction}
               value={values.additionalInstruction}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -115,6 +117,8 @@ const Settings = () => {
             <SecondaryTextArea
               id="additionalInstructionExtra"
               rows={5}
+              error={!!errors.additionalInstructionExtra}
+              errorText={errors.additionalInstructionExtra}
               hasMax
               max={50}
               value={values.additionalInstructionExtra}
@@ -167,6 +171,8 @@ const Settings = () => {
               info
               id="additionalLimitation"
               value={values.additionalLimitation}
+              error={!!errors.additionalLimitation}
+              errorText={errors.additionalLimitation}
               onChange={handleChange}
               onBlur={handleBlur}
               rows={5}
@@ -186,6 +192,8 @@ const Settings = () => {
               info
               label="Additional Limitation"
               id="additionalLimitationExtra"
+              error={!!errors.additionalLimitationExtra}
+              errorText={errors.additionalLimitationExtra}
               value={values.additionalLimitationExtra}
               onChange={handleChange}
               onBlur={handleBlur}

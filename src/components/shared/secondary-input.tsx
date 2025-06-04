@@ -54,7 +54,7 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
                 : icon && iconposition === "right"
                 ? "pr-[48px] pl-4"
                 : "px-4"
-            } ${inputClass}`}
+            } ${inputClass} ${error ? "ring-[3px] ring-[#DC2626]" : ""}`}
             {...restProps}
           />
           {icon && iconposition === "right" && (

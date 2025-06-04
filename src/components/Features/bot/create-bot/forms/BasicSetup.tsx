@@ -7,6 +7,8 @@ const BasicSetup = () => {
   const { values, errors, handleChange, handleBlur, setFieldValue } =
     useFormikContext<BasicSetupFormValues>();
 
+    console.log(errors)
+
   return (
     <main className="flex flex-col gap-y-11">
       <div className="flex items-center gap-4 mb-6">
@@ -43,6 +45,7 @@ const BasicSetup = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           name="name"
+          error={!!errors.name}
           errorText={errors.name}
           label="Assistant's Name Displayed to Users"
           placeholder="Example: Joe"

@@ -136,6 +136,8 @@ const CompanyDetails = () => {
               placeholder="Enter your company name"
               onBlur={handleBlur}
               errorText={errors.companyName}
+              value={values.companyName}
+              error={errors.companyName && touched.companyName ? true : false}
             />
 
             <SecondaryInput
@@ -144,6 +146,7 @@ const CompanyDetails = () => {
               name="TypeOfAssistant"
               value={values.TypeOfAssistant}
               onChange={handleChange}
+              readOnly
             />
 
             <SecondaryTextArea
@@ -156,6 +159,11 @@ const CompanyDetails = () => {
               errorText={errors.IndustryAndDescription}
               onBlur={handleBlur}
               value={values.IndustryAndDescription}
+              error={
+                errors.IndustryAndDescription && touched.IndustryAndDescription
+                  ? true
+                  : false
+              }
               name="IndustryAndDescription"
               placeholder="For example, we create website that convert for start up "
             />
@@ -170,6 +178,9 @@ const CompanyDetails = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.CompanyMission}
+              error={
+                errors.CompanyMission && touched.CompanyMission ? true : false
+              }
               name="CompanyMission"
               placeholder="Example: Our goal is to make diapers easier to reach across the world"
             />
@@ -198,6 +209,7 @@ const CompanyDetails = () => {
                 onBlur={handleBlur}
                 value={values.service}
                 name="service"
+                error={errors.service && touched.service ? true : false}
                 placeholder="For example, we create website that convert for start up"
                 errorText={errors.service}
               />
@@ -239,6 +251,7 @@ const CompanyDetails = () => {
                 hasMax
                 label="Description"
                 maxLength={50}
+                error={!!errors.description}
                 errorText={errors.description}
                 rows={5}
                 onChange={handleChange}
@@ -275,6 +288,8 @@ const CompanyDetails = () => {
                 onBlur={handleBlur}
                 placeholder="Enter country"
                 value={values.country}
+                error={errors.country && touched.country ? true : false}
+                errorText={errors.country}
                 name="country"
                 label="Country"
               />
@@ -284,6 +299,8 @@ const CompanyDetails = () => {
                 onBlur={handleBlur}
                 placeholder="Enter city"
                 value={values.city}
+                error={errors.city && touched.city ? true : false}
+                errorText={errors.city}
                 name="city"
                 label="City"
               />
@@ -291,6 +308,8 @@ const CompanyDetails = () => {
               <SecondaryInput
                 placeholder="ZIP Code"
                 onChange={handleChange}
+                error={errors.ZIPCode && touched.ZIPCode ? true : false}
+                errorText={errors.ZIPCode}
                 onBlur={handleBlur}
                 value={values.ZIPCode}
                 name="ZIPCode"
@@ -301,6 +320,8 @@ const CompanyDetails = () => {
                 placeholder="State"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                error={errors.state && touched.state ? true : false}
+                errorText={errors.state}
                 value={values.state}
                 name="state"
                 label="State"
@@ -309,6 +330,8 @@ const CompanyDetails = () => {
               <SecondaryInput
                 placeholder="Address 1"
                 onChange={handleChange}
+                error={errors.address1 && touched.address1 ? true : false}
+                errorText={errors.address1}
                 onBlur={handleBlur}
                 value={values.address1}
                 name="address1"
@@ -318,6 +341,8 @@ const CompanyDetails = () => {
               <SecondaryInput
                 placeholder="Address 2"
                 onChange={handleChange}
+                error={errors.address2 && touched.address2 ? true : false}
+                errorText={errors.address2}
                 onBlur={handleBlur}
                 value={values.address2}
                 name="address2"
@@ -366,6 +391,8 @@ const CompanyDetails = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   label=" Team Member's Name"
+                  error={!!errors.teamMemberName}
+                  errorText={errors.teamMemberName}
                   placeholder="Enter team member's name"
                   value={values.teamMemberName}
                   name="teamMemberName"
@@ -378,6 +405,8 @@ const CompanyDetails = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.teamMemberPosition}
+                  error={!!errors.teamMemberPosition}
+                  errorText={errors.teamMemberPosition}
                   name="teamMemberPosition"
                   label=" Team Member's Position"
                 />
@@ -393,6 +422,7 @@ const CompanyDetails = () => {
                   name="description_team"
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  error={!!errors.description_team}
                   value={values.description_team}
                   placeholder="For example, we create website that convert for start up"
                 />

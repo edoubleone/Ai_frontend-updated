@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const FAQs = () => {
-  const { values, setFieldValue, handleChange, handleBlur } =
+  const { values, errors, setFieldValue, handleChange, handleBlur } =
     useFormikContext<FaqsFormValues>();
 
   const [questions, setQuestions] = React.useState<boolean>(false);
@@ -41,6 +41,8 @@ const FAQs = () => {
             value={values.faqQuestion}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={!!errors.faqQuestion}
+            errorText={errors.faqQuestion}
             rows={5}
             name="faqQuestion"
             placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
@@ -55,6 +57,8 @@ const FAQs = () => {
             value={values.faqAnswer}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={!!errors.faqAnswer}
+            errorText={errors.faqAnswer}
             rows={5}
             name="faqAnswer"
             placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
@@ -71,6 +75,8 @@ const FAQs = () => {
             id="extraQuestion"
             value={values.extraQuestion}
             onChange={handleChange}
+            error={!!errors.extraQuestion}
+            errorText={errors.extraQuestion}
             onBlur={handleBlur}
             rows={5}
             name="extraQuestion"
@@ -87,6 +93,8 @@ const FAQs = () => {
             label="Answer"
             id="extraAnswer"
             value={values.extraAnswer}
+            error={!!errors.extraAnswer}
+            errorText={errors.extraAnswer}
             onChange={handleChange}
             onBlur={handleBlur}
             rows={5}

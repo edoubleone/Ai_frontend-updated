@@ -84,7 +84,7 @@ export const SelectInput = React.forwardRef<HTMLButtonElement, SelectProps>(
           <SelectTrigger
             ref={ref}
             className={`disabled:bg-[#F0F2F5] disabled:opacity-50 ${
-              error ? "border-danger focus:!ring-0" : ""
+              error ? "ring-3 ring-[#DC2626]" : ""
             } ${extraClass}`}
           >
             <SelectValue placeholder={placeholder} />

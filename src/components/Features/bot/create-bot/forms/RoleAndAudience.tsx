@@ -10,7 +10,7 @@ import SecondaryTextArea from "@/components/shared/secondary-textarea";
 import { SelectInput } from "@/components/shared/secondary-select";
 
 const RoleAndAudience = () => {
-  const { values, setFieldValue, handleChange, handleBlur } =
+  const { values, errors, setFieldValue, handleChange, handleBlur } =
     useFormikContext<RoleAndAudienceFormValues>();
 
   const whenToCollectInformation = [
@@ -47,6 +47,8 @@ const RoleAndAudience = () => {
               id="setRole"
               label="Set Role"
               value={values.setRole}
+              error={!!errors.setRole}
+              errorText={errors.setRole}
               onChange={handleChange}
               onBlur={handleBlur}
               name="setRole"
@@ -58,6 +60,8 @@ const RoleAndAudience = () => {
               type="text"
               id="purposeOfRole"
               value={values.purposeOfRole}
+              error={!!errors.purposeOfRole}
+              errorText={errors.purposeOfRole}
               onChange={handleChange}
               onBlur={handleBlur}
               name="purposeOfRole"
@@ -69,6 +73,8 @@ const RoleAndAudience = () => {
               info
               label="Industry and Description"
               id="IndustryAndDescription"
+              error={!!errors.IndustryAndDescription}
+              errorText={errors.IndustryAndDescription}
               rows={5}
               value={values.IndustryAndDescription}
               onChange={handleChange}
@@ -93,6 +99,8 @@ const RoleAndAudience = () => {
           <div className="grid sm:grid-cols-2 items-start gap-10">
             <SecondaryInput
               label="Tone of Communication"
+              error={!!errors.toneOfCommunication}
+              errorText={errors.toneOfCommunication}
               type="text"
               id="toneOfCommunication"
               value={values.toneOfCommunication}
@@ -108,6 +116,8 @@ const RoleAndAudience = () => {
               info
               label="Welcome words"
               id="welcomeWords"
+              error={!!errors.welcomeWords}
+              errorText={errors.welcomeWords}
               rows={5}
               name="welcomeWords"
               value={values.welcomeWords}
@@ -121,6 +131,8 @@ const RoleAndAudience = () => {
               label=" Welcome (Logged in user) (Optional)"
               id="welcomeLoggedUser"
               value={values.welcomeLoggedUser}
+              error={!!errors.welcomeLoggedUser}
+              errorText={errors.welcomeLoggedUser}
               onChange={handleChange}
               onBlur={handleBlur}
               rows={5}
@@ -135,6 +147,8 @@ const RoleAndAudience = () => {
               label="Conclusion (Optional)"
               id="conclusion"
               rows={5}
+              error={!!errors.conclusion}
+              errorText={errors.conclusion}
               value={values.conclusion}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -163,6 +177,8 @@ const RoleAndAudience = () => {
               info
               name="targetAudience"
               label="Target Audience"
+              error={!!errors.targetAudience}
+              errorText={errors.targetAudience}
               placeholder="Target Audience"
               value={values.targetAudience}
               onChange={(value) => setFieldValue("targetAudience", value)}
@@ -175,6 +191,8 @@ const RoleAndAudience = () => {
               info
               label="Audience Needs / Pains (optional)"
               id="audiencePainPoints"
+              error={!!errors.audiencePainPoints}
+              errorText={errors.audiencePainPoints}
               rows={5}
               value={values.audiencePainPoints}
               onChange={handleChange}
@@ -218,6 +236,8 @@ const RoleAndAudience = () => {
               wrapperClass="flex-1"
               info
               id="informationToCollect"
+              error={!!errors.informationToCollect}
+              errorText={errors.informationToCollect}
               rows={5}
               value={values.informationToCollect}
               onChange={handleChange}
