@@ -16,11 +16,13 @@ import NotFound from "./Pages/NotFound";
 import PrivateRoute from "./utils/protected-routes";
 import Integrations from "./Pages/integrations";
 import Conversations from "./Pages/conversations";
-import { BotsContent } from "./components/Features/bot/bots-content";
+
 import CreateBot from "./Pages/dashboard/CreateBot";
 import { DashboardLayout } from "./components/common/dashboard/layout";
 import DashboardIndexPage from "./Pages/dashboard/Page";
 import NotificationsPage from "./Pages/dashboard/notifications";
+import BotsPage from "./Pages/dashboard/bots";
+import ShareBots from "./Pages/dashboard/share-bots";
 
 function App() {
   return (
@@ -31,8 +33,9 @@ function App() {
           <Route path="conversations" element={<Conversations />} />
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="" element={<DashboardIndexPage />} />
+          <Route path="test-and-share-bots" element={<ShareBots />} />
           <Route path="bots">
-            <Route path="" element={<BotsContent />} />
+            <Route path="" element={<BotsPage />} />
             <Route path="create-bot" element={<CreateBot />} />
           </Route>
           <Route path="integrations" element={<Integrations />} />

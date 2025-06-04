@@ -4,12 +4,14 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { parseISO } from "date-fns/parseISO";
 
-const ChatBubble: React.FC<IAssistantMessage> = ({
+const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
   role,
   content,
   created_at,
+  responding,
 }) => {
   const isUser = role === "user";
+  const isBotResponding = role === "AI" && responding;
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
@@ -26,23 +28,33 @@ const ChatBubble: React.FC<IAssistantMessage> = ({
             }
           )}
         >
-          <p
-            className={clsx("text-base", {
-              "text-[#454545]": !isUser,
-              "text-[#F8F9FD]": isUser,
-            })}
-          >
-            {content}
-          </p>
+          {isBotResponding ? (
+            <div className="flex gap-1">
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+            </div>
+          ) : (
+            <>
+              <p
+                className={clsx("text-base", {
+                  "text-[#454545]": !isUser,
+                  "text-[#F8F9FD]": isUser,
+                })}
+              >
+                {content}
+              </p>
 
-          <p
-            className={clsx("text-xs text-end ", {
-              "text-[#5C5C5C]": !isUser,
-              "text-white": isUser,
-            })}
-          >
-            {content && format(parseISO(created_at), "hh:mma")}
-          </p>
+              <p
+                className={clsx("text-xs text-end ", {
+                  "text-[#5C5C5C]": !isUser,
+                  "text-white": isUser,
+                })}
+              >
+                {content && format(parseISO(created_at), "hh:mma")}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
