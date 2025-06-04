@@ -24,7 +24,7 @@ interface DataTableProps {
     botType: string;
     assistantLanguage: string;
     status: string;
-  }[]
+  }[];
 }
 
 const columns: ColumnDef<any>[] = [
@@ -126,13 +126,16 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   });
 
   return (
-    <div className="border-t border-[#E7E7E7] pt-2.5">
+    <>
       <Table>
         <TableHeader className="bg-[#EEEEFD]">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead className="text-dark p-4 text-base" key={header.id}>
+                <TableHead
+                  className="text-dark whitespace-nowrap p-4 text-base"
+                  key={header.id}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -146,7 +149,7 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell className="p-4" key={cell.id}>
+                <TableCell className="p-4 whitespace-nowrap" key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -154,7 +157,7 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </>
   );
 };
 

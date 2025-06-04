@@ -6,9 +6,11 @@ import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
 import ChatItemLoader from "@/components/Features/conversation/chat-item-skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Conversations = () => {
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
 
   const [assistant, setAssistant] = useState<IAssistant | null>(null);
 
@@ -28,46 +30,53 @@ const Conversations = () => {
     <div className="flex flex-col h-screen gap-5">
       <h1 className="text-2xl font-bold text-dark">Conversations</h1>
 
-      <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-9 overflow-y-hidden">
-        <div
-          className={`${
-            assistant ? "w-full max-w-96" : "w-full"
-          } flex flex-col h-full`}
-        >
-          <div className="flex items-center border-b-[0.25px] border-[#AFB8CF] py-4 px-5 relative">
-            <SearchIcon className="text-[#737373] mx-4 absolute size-6" />
-            <input
-              type="search"
-              className="py-[11.5px] pl-12 outline-none focus:outline-none pr-4 w-full"
-              placeholder="Search or start a new chat"
-            />
-          </div>
+      <div className="flex h-full gap-12 py-6 bg-white border rounded-lg px-4 sm:px-9 overflow-y-hidden">
+        {!assistant || !isMobile ? (
+          <div
+            className={`${
+              assistant ? "w-full max-w-96" : "w-full"
+            } flex flex-col h-full`}
+          >
+            <div className="flex items-center border-b-[0.25px] border-[#AFB8CF] py-4 px-5 relative">
+              <SearchIcon className="text-[#737373] mx-4 absolute size-6" />
+              <input
+                type="search"
+                className="py-[11.5px] pl-12 outline-none focus:outline-none pr-4 w-full"
+                placeholder="Search or start a new chat"
+              />
+            </div>
 
-          <div className="flex-1 overflow-y-auto">
-            {isLoading
-              ? Array.from({ length: 5 }).map((_, i) => (
-                  <div className="p-6" key={i}>
-                    <ChatItemLoader />
-                  </div>
-                ))
-              : assistants &&
-                assistants?.map((assistantItem) => (
-                  <div
-                    onClick={() => handleAssistantClick(assistantItem)}
-                    className={`px-6 cursor-pointer py-[18px] ${
-                      assistant?.id === assistantItem?.id ? "bg-[#EEEEFD]" : ""
-                    }`}
-                    key={assistantItem?.id}
-                  >
-                    <ChatItemComponent {...assistantItem} />
-                  </div>
-                ))}
+            <div className="flex-1 overflow-y-auto">
+              {isLoading
+                ? Array.from({ length: 5 }).map((_, i) => (
+                    <div className="px-4 py-[18px] sm:px-6" key={i}>
+                      <ChatItemLoader />
+                    </div>
+                  ))
+                : assistants &&
+                  assistants?.map((assistantItem) => (
+                    <div
+                      onClick={() => handleAssistantClick(assistantItem)}
+                      className={`px-4 sm:px-6 cursor-pointer py-[18px] ${
+                        assistant?.id === assistantItem?.id
+                          ? "bg-[#EEEEFD]"
+                          : ""
+                      }`}
+                      key={assistantItem?.id}
+                    >
+                      <ChatItemComponent {...assistantItem} />
+                    </div>
+                  ))}
+            </div>
           </div>
-        </div>
+        ) : null}
 
         {assistant ? (
-          <div className="w-full border-[#D0D0D0] border-l-[0.25px] pl-4 overflow-y-auto">
-            <ChatWindow assistant={assistant} />
+          <div className="w-full border-[#D0D0D0] sm:border-l-[0.25px] sm:pl-4 overflow-y-auto">
+            <ChatWindow
+              goBack={() => setAssistant(null)}
+              assistant={assistant}
+            />
           </div>
         ) : null}
       </div>

@@ -24,9 +24,20 @@ import {
   ChatWithAssistant,
   GetAssistantChatHistory,
 } from "@/services/api/conversation";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ArrowLeft2 } from "iconsax-reactjs";
+import { Button as IconButton } from "@/components/ui/button";
 
-const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
+const ChatWindow = ({
+  assistant,
+  goBack,
+}: {
+  assistant: IAssistant;
+  goBack: () => void;
+}) => {
   const queryClient = useQueryClient();
+
+  const isMobile = useIsMobile();
 
   const [actions, setActions] = useState<
     "delete-confirmation" | "more-actions" | "delete-success" | null
@@ -98,7 +109,18 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-start flex-wrap gap-3 border-b pb-5 border-[#B1B1B133] justify-between">
-        <div className="flex gap-2">
+        <div className="flex items-start gap-2">
+          {isMobile && (
+            <IconButton
+              onClick={goBack}
+              className="bg-[#F5F7FA] text-dark block lg:hidden p-2.5 rounded-md"
+              variant={"ghost"}
+              size={"icon"}
+            >
+              <ArrowLeft2 size={20} />
+            </IconButton>
+          )}
+
           <AvatarComponent fallback="SK" />
           <div className="flex flex-col">
             <h1 className="text-base font-semibold text-[#2E2E2E]">
@@ -143,7 +165,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto sm:p-4">
         <div className="flex flex-col gap-y-4">
           {assistantChatHistory?.map((chat) => (
             <ChatBubble key={chat?.id} {...chat} />
@@ -160,7 +182,7 @@ const ChatWindow = ({ assistant }: { assistant: IAssistant }) => {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="py-4 sm:p-4">
         <form
           onSubmit={handleSendMessage}
           className="relative flex items-center"

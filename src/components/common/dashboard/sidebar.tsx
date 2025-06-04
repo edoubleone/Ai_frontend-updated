@@ -129,6 +129,7 @@ export function AppSidebar({
               <>
                 {item.title === "Logout" ? (
                   <button
+                    key={item.title}
                     onClick={() => setLogOut(true)}
                     className={clsx(
                       "flex hover:bg-[#E7E7E7]/30 outline-none focus:outline-none rounded transition-all ease-in-out duration-500 items-center gap-3 py-3 px-4"

@@ -4,7 +4,7 @@ import { Button as IconButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
 import SearchInput from "@/components/shared/search-input";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, Search } from "lucide-react";
 
 export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
   return (
@@ -29,11 +29,20 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
 
       <div className="flex items-center gap-6">
         <SearchInput
+          wrapperClass="hidden sm:!grid"
           inputClass="!py-2.5 !bg-[#F5F7FA]"
           placeholder="Search for something"
         />
 
         <div className="flex items-center gap-2.5">
+          <IconButton
+            className="bg-[#F5F7FA] block lg:hidden p-2.5 rounded-full"
+            variant={"ghost"}
+            size={"icon"}
+          >
+            <Search className="text-dark size-5" />
+          </IconButton>
+
           <IconButton
             className="bg-[#F5F7FA] p-2.5 rounded-full"
             variant={"ghost"}
