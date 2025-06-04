@@ -85,7 +85,7 @@ const DashboardIndexPage = () => {
           </IconBtn>
           <div>
             <h1 className="text-dark text-2xl font-bold">Total Integrations</h1>
-            <p className="text-lg font-bold text-dark">50</p>
+            <p className="text-lg font-bold text-dark">5</p>
           </div>
 
           <Link to={`/dashboard/integrations`}>
