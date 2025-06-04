@@ -75,7 +75,7 @@ export function AppSidebar() {
         <img src="/kool_ai.png" width={103} height={38} alt="Kool AI logo" />
       </Link>
 
-      <div className="flex-1 flex flex-col gap-y-20 overflow-y-auto">
+      <div className="flex-1 flex flex-col gap-y-20 no-scroll overflow-y-auto">
         <div className="flex flex-col gap-y-4">
           {navigationItems.map((route) => (
             <Link to={route.url} key={route.title}>

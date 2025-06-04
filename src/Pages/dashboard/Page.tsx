@@ -30,7 +30,7 @@ const DashboardIndexPage = () => {
     <div className="flex flex-col gap-5">
       <h1 className="text-2xl font-bold text-dark">Dashboard</h1>
 
-      <div className="flex gap-2.5 w-full overflow-x-auto">
+      <div className="flex gap-2.5 w-full no-scroll overflow-x-auto">
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-4">
           <IconBtn
             className="border-[0.4px] border-[#00000033] rounded-md"
