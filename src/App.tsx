@@ -23,7 +23,6 @@ import DashboardIndexPage from "./Pages/dashboard/Page";
 import NotificationsPage from "./Pages/dashboard/notifications";
 import BotsPage from "./Pages/dashboard/bots";
 import ShareBots from "./Pages/dashboard/share-bots";
-import Payment from "./Pages/dashboard/Payment";
 import BotSetting from "./Pages/dashboard/bot-setting";
 import Profile from "./Pages/dashboard/Profile";
 import Checkout from "./Pages/dashboard/Checkout";
@@ -46,7 +45,6 @@ function App() {
           </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
-          <Route path="payment" element={<Payment />} />
           <Route path="bot-setting" element={<BotSetting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />

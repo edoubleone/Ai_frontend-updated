@@ -3,7 +3,6 @@ import SubscriptionPlan from '@/components/Features/Payment/SubscriptionPlan'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import userMain from "/images/dashboard/userMain.png"
 import camera from "/images/dashboard/camera.png"
-import React, { useState } from 'react'
 import { fieldsetStyles } from '@/components/Features/bot/create-bot/forms'
 
 const tabMenu = ["Account", "My Plan", "Available Plans"]
@@ -14,10 +13,10 @@ const Profile = () => {
 
   return (
     <div className='py-5 px-5 md:px-7 lg:px-[50px] bg-secondary flex flex-col gap-y-5 w-full'>
-        <h2 className='font-bold text-2xl'>Profile</h2>
+        <h2 className='text-2xl font-bold'>Profile</h2>
 
         <main className='flex flex-col gap-y-6'>
-            <div className='py-6 px-5 md:px-6 lg:px-9 bg-background rounded-lg flex flex-col gap-y-10'>
+            <div className='flex flex-col px-5 py-6 rounded-lg md:px-6 lg:px-9 bg-background gap-y-10'>
                 <section className='flex items-center gap-x-4'>
                     <div className='relative w-fit'>
                         <Avatar className="w-16 h-16 cursor-pointer">
@@ -30,7 +29,7 @@ const Profile = () => {
                     </div>
 
                     <div className='flex flex-col gap-y-1'>
-                        <h2 className='font-semibold text-lg'>Elizabeth Kafaru</h2>
+                        <h2 className='text-lg font-semibold'>Elizabeth Kafaru</h2>
                         <p className='text-[#737373] text-sm'>elizabeth@gmail.com</p>
                     </div>
                 </section>

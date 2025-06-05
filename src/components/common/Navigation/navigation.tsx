@@ -4,7 +4,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import Button from "@/components/shared/button";
-import { Button as IconButton } from "@/components/ui/button";
 import { useAuth } from "@/context/auth-provider";
 import LogOutDialog from "../logout-dialog";
 

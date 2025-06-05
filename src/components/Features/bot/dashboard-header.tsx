@@ -10,10 +10,10 @@ type DashboardHeaderProps = {
   onCreateBot?: () => void; // optional prop
 };
 
-export function DashboardHeader({ onCreateBot }: DashboardHeaderProps) {
+export function DashboardHeader({ }: DashboardHeaderProps) {
   return (
     <main>
-      <header className="hidden lg:flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 sticky top-0 z-10">
+      <header className="sticky top-0 z-10 items-center justify-between hidden px-6 py-4 bg-white border-b border-gray-200 lg:flex">
         <div className="flex items-center">
           <Link to="/dashboard/CreateBot">
             <Button

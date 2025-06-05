@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { EnhancedTestimonialsSection } from "@/components/Features/Landing/enchanced-testimonial-section"
 import telegram from "/images/telegram.png"
 import email from "/images/email 2.png"
 import instagram from "/images/instagram.png"
@@ -16,10 +15,10 @@ const icons = [email, whatsapp, telegram, messanger, slack, instagram, twitter, 
 
 const HeroSection = () => {
   return (
-    <div className="bg-white pt-2 sm:pt-4">
-      <div className="mx-auto max-w-screen-xl lg:px-8 overflow-hidden">
+    <div className="pt-2 bg-white sm:pt-4">
+      <div className="max-w-screen-xl mx-auto overflow-hidden lg:px-8">
         {/* Hero Content */}
-        <div className="flex flex-col items-center text-center gap-y-3 md:gap-y-5 px-4 pt-20 pb-10 lg:py-20">
+        <div className="flex flex-col items-center px-4 pt-20 pb-10 text-center gap-y-3 md:gap-y-5 lg:py-20">
           <h1 className="font-bold capitalize text-[24px] px-4 md:text-5xl lg:text-6xl text-gray-900 leading-tight">
             Grow your business by using <span className="text-blue-600">AI</span> to make smarter engagement and sales
           </h1>
@@ -28,7 +27,7 @@ const HeroSection = () => {
             Enhance your business with intelligent automated responses across all platforms.
           </p>
 
-          <div className="flex justify-center gap-4 sm:gap-6 mt-2">
+          <div className="flex justify-center gap-4 mt-2 sm:gap-6">
             <a href="/signup" className="w-full sm:w-auto">
               <Button
                 className="w-full py-[27px] bg-blue-600 border-2 border-blue-600 hover:bg-blue-700 text-white px-8 text-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
@@ -46,7 +45,7 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="flex items-center gap-x-6 mt-10 overflow-x-auto">
+          <div className="flex items-center mt-10 overflow-x-auto gap-x-6">
             {icons.map((icon, index) => (
               <img src={icon} key={index} alt="social icon" width={50} height={50} />
             ))}

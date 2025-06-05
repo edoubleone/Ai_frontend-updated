@@ -1,8 +1,8 @@
-import { CreditCard, RefreshCw, ArrowUp, Edit } from 'lucide-react';
+import { ArrowUp, Edit } from 'lucide-react';
 
 const SubscriptionPlan = () => {
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
       {/* Plan Header */}
       <section className='flex flex-col gap-y-3 p-6 border border-[#E2E8F0] rounded-lg'>
         <div className="flex items-center justify-between pb-4">
@@ -16,7 +16,7 @@ const SubscriptionPlan = () => {
           </div>
         </div>
 
-        <div className="border-b pb-4">
+        <div className="pb-4 border-b">
           <p className="text-gray-600">M of 40 users</p>
         </div>
 
@@ -29,7 +29,7 @@ const SubscriptionPlan = () => {
           </div>
 
           {/* Upgrade Button */}
-          <button type='button' title='button' className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded font-medium">
+          <button type='button' title='button' className="flex items-center justify-center gap-2 px-4 py-2 font-medium text-white bg-blue-600 rounded">
             <ArrowUp size={16} />
             Upgrade plan
           </button>
@@ -43,7 +43,7 @@ const SubscriptionPlan = () => {
         <h3 className="font-medium">Payment Method</h3>
         <p className="text-sm text-gray-600">Change how you pay for your plan</p>
         
-        <div className="flex items-center justify-between border p-3 rounded">
+        <div className="flex items-center justify-between p-3 border rounded">
           <div>
             <p className="font-medium">VISA</p>
             <p className="text-sm text-gray-600">You ending in LISA</p>
