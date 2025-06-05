@@ -100,7 +100,7 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-  // <-- Pass your custom Navbar component here
+      components={{ navbar: Navbar }}// <-- Pass custom Navbar here
       {...props}
     />
   )
