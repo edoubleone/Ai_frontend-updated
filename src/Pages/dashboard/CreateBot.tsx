@@ -10,6 +10,7 @@ import {
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
+import type { BotEditPageProps } from "../../components/Features/bot/bot-edit-page";
 import { stepSchemas } from "../../components/Features/bot/create-bot/Types";
 import apiClient, { type ErrorResponse } from "@/services/config/api";
 import { useMutation } from "@tanstack/react-query";
@@ -84,14 +85,8 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [animate, setAnimate] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [document, setDocument] = useState<File | null>(null);
 
   const isLastStep = currentStep === steps.length - 1;
-
-  const formData = new FormData();
-
-  if (document && document != null) 
-    formData.append("files", document);
 
   useEffect(() => {
     setAnimate(false); // Reset animation
@@ -130,6 +125,8 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
       event.preventDefault(); // Prevent default form submission
     }
 
+    // console.log('data :', validateForm.data);
+
     // Validate the current step's form
     const formErrors = await handleValidation(validateForm, setTouched, errors);
 
@@ -166,8 +163,6 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const handleSubmit = async (values: any) => {
     try {
       setIsSubmitting(true);
-
-      setDocument(values.companyDocument);
 
       const payload = {
         name: values.name,
