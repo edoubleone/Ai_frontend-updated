@@ -153,10 +153,8 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: CreateAssistant,
-    onError: (err: ErrorResponse) => {
-      toast.error(
-        err?.response?.data?.detail || "Something went wrong. Try again"
-      );
+    onError: () => {
+      toast.error("Something went wrong. Try again");
     },
   });
 
@@ -171,6 +169,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
         description: values.description || "",
         greeting: values.greeting || "",
         persona: values.setRole || "",
+        customer_support_contact: values.customer_support_contact || "",
         tone: values.toneOfCommunication || "",
         small_talk_level: values.talkLevel || "none",
         jokes_level: values.jokeLevel || "none",
@@ -180,7 +179,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
       };
 
       const response = await mutateAsync(payload);
-      const assistantId = response.data.id;
+      const assistantId = response.data.assistant.id;
 
       if (values.uploadFile || values.companyDocument) {
         const formData = new FormData();
@@ -267,7 +266,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
           initialValues={initialValues}
           validationSchema={stepSchemas[currentStep]}
           validateOnChange={true}
-          validateOnBlur={true}
+          validateOnBlur={false}
           onSubmit={handleSubmit}
         >
           {({ validateForm, setTouched, errors, values }) => (

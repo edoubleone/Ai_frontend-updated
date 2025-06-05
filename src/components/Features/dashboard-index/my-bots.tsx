@@ -10,6 +10,7 @@ import BotsTableSkeletonLoader from "../bot/bot-table-loader";
 import { Link } from "react-router-dom";
 
 interface DataType {
+  id: number
   botAvatar: string;
   assistantName: string;
   botType: string;

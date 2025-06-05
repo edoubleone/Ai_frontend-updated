@@ -19,6 +19,7 @@ const DashboardIndexPage = () => {
   });
 
   const data = assistants.map((assistant) => ({
+    id: assistant.id,
     botAvatar: assistant.name,
     assistantName: assistant.name,
     botType: "Text",

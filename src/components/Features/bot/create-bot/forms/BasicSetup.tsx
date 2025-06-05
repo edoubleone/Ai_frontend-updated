@@ -7,8 +7,6 @@ const BasicSetup = () => {
   const { values, errors, handleChange, handleBlur, setFieldValue } =
     useFormikContext<BasicSetupFormValues>();
 
-    console.log(errors)
-
   return (
     <main className="flex flex-col gap-y-11">
       <div className="flex items-center gap-4 mb-6">
@@ -80,6 +78,16 @@ const BasicSetup = () => {
             />
           </div>
         </div>
+
+        <SecondaryInput
+          name="customer_support_contact"
+          onChange={handleChange}
+          placeholder="Customer Support Contact"
+          value={values.customer_support_contact}
+          error={!!errors.customer_support_contact}
+          errorText={errors.customer_support_contact}
+          label="Customer Support Contact"
+        />
       </div>
     </main>
   );
