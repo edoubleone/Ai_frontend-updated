@@ -10,7 +10,6 @@ import {
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
-import type { BotEditPageProps } from "../../components/Features/bot/bot-edit-page";
 import { stepSchemas } from "../../components/Features/bot/create-bot/Types";
 import apiClient, { type ErrorResponse } from "@/services/config/api";
 import { useMutation } from "@tanstack/react-query";
@@ -85,8 +84,14 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [animate, setAnimate] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [document, setDocument] = useState<File | null>(null);
 
   const isLastStep = currentStep === steps.length - 1;
+
+  const formData = new FormData();
+
+  if (document && document != null) 
+    formData.append("files", document);
 
   useEffect(() => {
     setAnimate(false); // Reset animation
@@ -125,8 +130,6 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
       event.preventDefault(); // Prevent default form submission
     }
 
-    // console.log('data :', validateForm.data);
-
     // Validate the current step's form
     const formErrors = await handleValidation(validateForm, setTouched, errors);
 
@@ -163,6 +166,8 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const handleSubmit = async (values: any) => {
     try {
       setIsSubmitting(true);
+
+      setDocument(values.companyDocument);
 
       const payload = {
         name: values.name,
@@ -226,12 +231,12 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
         </Button>
       </header>
 
-      <main className="flex flex-col bg-background rounded-lg p-8">
+      <main className="flex flex-col p-8 rounded-lg bg-background">
         <header>
-          <h1 className="text-2xl font-semibold mb-4">
+          <h1 className="mb-4 text-2xl font-semibold">
             Let&apos;s set up your Bot Assistant
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="mb-6 text-gray-600">
             Customize and fine-tune the way your assistant communicates and
             interacts with customers to ensure it delivers consistent, engaging,
             and brand-aligned conversations across every touchpoint.
@@ -249,7 +254,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
               }}
             />
           </div>
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between w-full">
             {steps.map((_, index) => (
               <div
                 key={index}
@@ -280,10 +285,10 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
                       : "-translate-y-10 opacity-0 scale-95"
                   }`}
                 >
-                  <h2 className="font-semibold text-lg">
+                  <h2 className="text-lg font-semibold">
                     {steps[currentStep].heading}
                   </h2>
-                  <p className="text-gray-600 mb-4">
+                  <p className="mb-4 text-gray-600">
                     {steps[currentStep].desc}
                   </p>
                 </section>
@@ -297,7 +302,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
                 <button
                   type="button"
                   disabled={currentStep === 0}
-                  className="px-5 py-2 bg-transparent hover:bg-background transition-colors rounded-lg text-defaultBlue font-medium"
+                  className="px-5 py-2 font-medium transition-colors bg-transparent rounded-lg hover:bg-background text-defaultBlue"
                   onClick={handlePreviousStep}
                 >
                   Previous

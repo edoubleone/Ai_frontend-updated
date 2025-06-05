@@ -104,10 +104,10 @@ export function Navigation() {
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <IconButton variant="ghost" size="icon">
-                  <Menu className="w-6 h-6" />
+                <Button variant="ghost" size="icon">
+                  <Menu className="w-10 h-10" />
                   <span className="sr-only">Open menu</span>
-                </IconButton>
+                </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col mt-6 space-y-6">

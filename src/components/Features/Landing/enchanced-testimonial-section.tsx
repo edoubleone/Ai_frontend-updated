@@ -8,19 +8,19 @@ import { useEffect, useState } from "react"
 
 const stats = [
 	{
-		value: "150k",
+		value: "130k",
 		label: "Active users",
 		icon: Users,
 		color: "text-blue-600",
 	},
 	{
-		value: "50k",
+		value: "10k",
 		label: "New users per month",
 		icon: TrendingUp,
 		color: "text-green-600",
 	},
 	{
-		value: "98%",
+		value: "18%",
 		label: "Satisfied Customers",
 		icon: Heart,
 		color: "text-red-600",
@@ -74,7 +74,7 @@ export function EnhancedTestimonialsSection() {
 	}, [])
 
 	return (
-		<section id="testimonials" className="bg-white py-7 sm:py-12">
+		<section id="testimonials" className="bg-white py-7 md:py-12">
 			<div className="w-full px-5 md:px-10 lg:px-0">
 				<div className="grid grid-cols-1 md:gap-7 lg:items-end lg:gap-x-32 md:grid-cols-2">
 					{/* Left Side - Trust Indicators & Stats */}

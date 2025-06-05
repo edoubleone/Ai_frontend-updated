@@ -38,9 +38,9 @@ const RoleAndAudience = () => {
         </p>
       </div>
 
-      <main className="flex flex-col gap-y-10 py-10">
+      <main className="flex flex-col py-10 gap-y-10">
         <section className={sectionStyles}>
-          <div className="grid sm:grid-cols-2 items-start gap-10">
+          <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryInput
               info
               type="text"
@@ -89,14 +89,14 @@ const RoleAndAudience = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">Role Tone</h2>
+            <h2 className="mb-2 text-lg font-semibold">Role Tone</h2>
             <p className="text-sm text-gray-500">
               Lorem ipsum dolor sit amet consectetur. Ornare lorem consectetur
               magna mi id. Porta id id sed blandit suspendisse.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 items-start gap-10">
+          <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryInput
               label="Tone of Communication"
               error={!!errors.toneOfCommunication}
@@ -111,7 +111,7 @@ const RoleAndAudience = () => {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-10 items-start">
+          <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryTextArea
               info
               label="Welcome words"
@@ -141,7 +141,7 @@ const RoleAndAudience = () => {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 items-start gap-10">
+          <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryTextArea
               info
               label="Conclusion (Optional)"
@@ -162,7 +162,7 @@ const RoleAndAudience = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">
+            <h2 className="mb-2 text-lg font-semibold">
               Target Audience for This Role / Users
             </h2>
             <p className="text-sm text-gray-500">
@@ -209,7 +209,7 @@ const RoleAndAudience = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">Collect Information?</h2>
+            <h2 className="mb-2 text-lg font-semibold">Collect Information?</h2>
             <div className="flex items-center w-full justify-between gap-[30px]">
               <span
                 className={`${
@@ -250,7 +250,7 @@ const RoleAndAudience = () => {
               label="What Information to Collect?"
             />
 
-            <fieldset className="flex flex-1 flex-col gap-2 w-full">
+            <fieldset className="flex flex-col flex-1 w-full gap-2">
               <label
                 htmlFor="description"
                 className="flex items-center gap-x-3"

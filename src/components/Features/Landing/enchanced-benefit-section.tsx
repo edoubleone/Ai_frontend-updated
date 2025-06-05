@@ -96,7 +96,7 @@ export function EnhancedBenefitsSection() {
         >
           <h2 className=" font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
             Benefits of subscribing to{" "}
-            <span className="text-blue-600">ArgenticAI</span>.
+            <span className="text-blue-800">ArgenticAI</span>.
           </h2>
           <p className="mx-auto w-[90%] md:w-[75%] lg:w-[60%] font-light text-sm text-gray-600 leading-relaxed">
             Subscribe to ArgenticAI and unlock advanced AI-powered insights,
@@ -127,8 +127,8 @@ export function EnhancedBenefitsSection() {
                 <div
                   className={`p-6 rounded-2xl h-full transition-all duration-300 ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-xl transform scale-105"
-                      : "bg-white hover:bg-gray-50 border border-gray-100 shadow-sm hover:shadow-md"
+                      ? "bg-blue-600 text-white transform"
+                      : "bg-[#F4F4F4] hover:bg-gray-50 border border-gray-100"
                   }`}
                 >
                   <div
@@ -150,7 +150,7 @@ export function EnhancedBenefitsSection() {
                   </h3>
 
                   <p
-                    className={`font-normal text-sm leading-relaxed transition-colors duration-300 ${
+                    className={`font-normal text-sm leading-tight transition-colors duration-300 ${
                       isActive ? "text-blue-100" : "text-gray-600"
                     }`}
                   >
