@@ -1,7 +1,6 @@
 import DashboardIcon from "@/components/shared/dashboard-icon";
 import BotsIcon from "@/components/shared/bots-icon";
 import ConversationsIcon from "@/components/shared/conversations-icon";
-import ShareIcon from "@/components/shared/share-icon";
 import IntegrationsIcon from "@/components/shared/integration-icon";
 import PaymentIcon from "@/components/shared/payment-icon";
 import SettingsIcon from "@/components/shared/settings-icon";
@@ -31,11 +30,6 @@ const navigationItems = [
     icon: ConversationsIcon,
   },
   {
-    title: "Test and share assistants",
-    url: "/dashboard/test-and-share-assistants",
-    icon: ShareIcon,
-  },
-  {
     title: "Integrations",
     url: "/dashboard/integrations",
     icon: IntegrationsIcon,
@@ -55,7 +49,7 @@ const navigationItems = [
 const footerItems = [
   {
     title: "Help and Support",
-    url: "/help",
+    url: "/dashboard/help",
     icon: SupportIcon,
   },
   {

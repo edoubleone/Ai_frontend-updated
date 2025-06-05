@@ -45,11 +45,11 @@ function App() {
           </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
-          <Route path="bot-setting" element={<BotSetting />} />
+          <Route path="settings" element={<BotSetting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="test-and-share-bot" element={<TestShareBots />} />
-          <Route path="help-and-support" element={<HelpAndSupport />} />
+          <Route path="help" element={<HelpAndSupport />} />
         </Route>
       </Route>
 

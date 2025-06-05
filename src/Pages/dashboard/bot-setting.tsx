@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 
 const BotSetting = () => {
   return (
-    <div className='py-5 px-5 md:px-7 lg:px-[50px] bg-secondary flex flex-col gap-y-5 w-full'>
+    <div className='flex flex-col gap-y-5 w-full'>
       <h2 className='font-bold text-2xl'>Settings</h2>
 
       <main  className="w-full bg-background rounded-lg p-6">

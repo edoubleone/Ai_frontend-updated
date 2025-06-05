@@ -25,8 +25,8 @@ function Calendar({
     className,
     style,
   }: {
-    onPreviousClick: React.MouseEventHandler<HTMLButtonElement>
-    onNextClick: React.MouseEventHandler<HTMLButtonElement>
+    onPreviousClick?: React.MouseEventHandler<HTMLButtonElement>
+    onNextClick?: React.MouseEventHandler<HTMLButtonElement>
     className?: string
     style?: React.CSSProperties
   }) => (
@@ -39,6 +39,7 @@ function Calendar({
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute left-1"
         )}
         aria-label="Previous month"
+        disabled={!onPreviousClick}
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -50,6 +51,7 @@ function Calendar({
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute right-1"
         )}
         aria-label="Next month"
+        disabled={!onNextClick}
       >
         <ChevronRight className="w-4 h-4" />
       </button>
@@ -100,7 +102,7 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{ navbar: Navbar }}// <-- Pass custom Navbar here
+      components={{ Nav: Navbar }}// <-- Pass custom Navbar here
       {...props}
     />
   )
