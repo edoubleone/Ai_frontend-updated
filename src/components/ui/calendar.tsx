@@ -1,11 +1,16 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import  DayPicker  from "react-day-picker"
+import { DayPicker } from "react-day-picker"
+import type { DayPickerProps } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = DayPickerProps & {
+  className?: string
+  classNames?: Partial<DayPickerProps["classNames"]>
+  showOutsideDays?: boolean
+}
 
 function Calendar({
   className,
@@ -13,6 +18,44 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  // Custom Navbar component to replace default nav buttons
+  const Navbar = ({
+    onPreviousClick,
+    onNextClick,
+    className,
+    style,
+  }: {
+    onPreviousClick: React.MouseEventHandler<HTMLButtonElement>
+    onNextClick: React.MouseEventHandler<HTMLButtonElement>
+    className?: string
+    style?: React.CSSProperties
+  }) => (
+    <div className={cn("flex items-center space-x-1", className)} style={style}>
+      <button
+        type="button"
+        onClick={onPreviousClick}
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute left-1"
+        )}
+        aria-label="Previous month"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={onNextClick}
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute right-1"
+        )}
+        aria-label="Next month"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+    </div>
+  )
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -22,7 +65,7 @@ function Calendar({
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
-        nav: "space-x-1 flex items-center",
+        nav: "relative space-x-1 flex items-center justify-center", // make relative for absolute buttons
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
@@ -57,18 +100,11 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("h-4 w-4", className)} {...props} />
-        ),
-      }}
+  // <-- Pass your custom Navbar component here
       {...props}
     />
   )
 }
-Calendar.displayName = "Calendar"
 
+Calendar.displayName = "Calendar"
 export { Calendar }

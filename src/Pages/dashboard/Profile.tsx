@@ -9,7 +9,7 @@ const tabMenu = ["Account", "My Plan", "Available Plans"]
 const inputField = "w-full border px-4 py-[8px] outline-none rounded-md p-2"
 
 const Profile = () => {
-    const [activeMenu, setActiveMenu] = (tabMenu[0])
+    const [activeMenu] = (tabMenu[0])
 
   return (
     <div className='py-5 px-5 md:px-7 lg:px-[50px] bg-secondary flex flex-col gap-y-5 w-full'>
@@ -37,7 +37,7 @@ const Profile = () => {
 
                 <div className='border-b border-[#E2E8F0] flex items-center justify-between md:justify-start'>
                     {tabMenu.map((menu, index) => (
-                        <nav key={index} onClick={() => setActiveMenu(tabMenu[index])} className={`transition-all duration-300 border-b-[2px] py-2 px-7 font-semibold ${menu === activeMenu ? "text-blue-600 border-blue-600" : "hover:text-gray-400 cursor-pointer"}`}>{menu}</nav>
+                        <nav key={index} onClick={() => (tabMenu[index])} className={`transition-all duration-300 border-b-[2px] py-2 px-7 font-semibold ${menu === activeMenu ? "text-blue-600 border-blue-600" : "hover:text-gray-400 cursor-pointer"}`}>{menu}</nav>
                     ))}
                 </div>
 
