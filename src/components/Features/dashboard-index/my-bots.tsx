@@ -26,9 +26,9 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
   return (
     <Card className="border-none w-full rounded-lg py-8 px-4 sm:px-8 lg:px-12">
       <div className="flex w-full mb-9 items-center justify-between">
-        <h1 className="text-dark font-bold text-2xl">My Bots</h1>
+        <h1 className="text-dark font-bold text-2xl">My Assistants</h1>
 
-        <Link to={`/dashboard/bots`}>
+        <Link to={`/dashboard/assistants`}>
           <Button
             wrapperclass="!w-fit"
             variant="ghost"

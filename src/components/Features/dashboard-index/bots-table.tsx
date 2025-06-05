@@ -46,7 +46,7 @@ const columns: ColumnDef<any>[] = [
   },
   {
     accessorKey: "botAvatar",
-    header: "Bot",
+    header: "Assistant",
     cell: () => <AvatarComponent />,
   },
   {
@@ -55,7 +55,7 @@ const columns: ColumnDef<any>[] = [
   },
   {
     accessorKey: "botType",
-    header: "Bot Type",
+    header: "Assitant Type",
   },
   {
     accessorKey: "assistantLanguage",

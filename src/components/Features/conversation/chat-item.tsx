@@ -24,7 +24,7 @@ const ChatItemComponent: React.FC<IAssistant> = ({ name }) => {
         </div>
       </div>
 
-      <div className="flex items-end">
+      <div className="hidden items-end">
         <Badge className="bg-[#343CED] rounded-full p-1 flex items-center justify-center w-5 h-5 font-bold text-xs text-white">
           20
         </Badge>

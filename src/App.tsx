@@ -34,9 +34,9 @@ function App() {
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="" element={<DashboardIndexPage />} />
           <Route path="test-and-share-bots" element={<ShareBots />} />
-          <Route path="bots">
+          <Route path="assistants">
             <Route path="" element={<BotsPage />} />
-            <Route path="create-bot" element={<CreateBot />} />
+            <Route path="create-assistant" element={<CreateBot />} />
           </Route>
           <Route path="integrations" element={<Integrations />} />
         </Route>

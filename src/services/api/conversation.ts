@@ -25,8 +25,8 @@ export function ChatWithAssistant({
 export async function GetAssistantChatHistory(
   assistant_id: number
 ): Promise<IAssistantMessage[]> {
-  const response = await apiClient.get<IAssistantMessage[]>(
+  const response = await apiClient.get<{ history: IAssistantMessage[] }>(
     `${BASE_URL}/assistants/${assistant_id}/history`
   );
-  return response.data;
+  return response.data.history;
 }

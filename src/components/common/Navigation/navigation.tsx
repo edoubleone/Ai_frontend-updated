@@ -6,7 +6,6 @@ import logo from "@/assets/images/logo.png";
 import Button from "@/components/shared/button";
 import { Button as IconButton } from "@/components/ui/button";
 import { useAuth } from "@/context/auth-provider";
-import { AlertDialog } from "@/components/ui/alert-dialog";
 import LogOutDialog from "../logout-dialog";
 
 const navigationItems = [
@@ -19,9 +18,8 @@ const navigationItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const [isLogOut, setLogOut] = useState(false);
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setLogOut } = useAuth();
 
   // Close mobile drawer
   const handleNavigation = () => {
@@ -134,9 +132,7 @@ export function Navigation() {
                           </Button>
                         </Link>
 
-                        <Button onClick={() => setLogOut(true)}>
-                          Log Out
-                        </Button>
+                        <Button onClick={() => setLogOut(true)}>Log Out</Button>
                       </>
                     ) : (
                       <>
@@ -162,9 +158,7 @@ export function Navigation() {
             </Sheet>
           </div>
         </div>
-        <AlertDialog open={isLogOut} onOpenChange={setLogOut}>
-          <LogOutDialog />
-        </AlertDialog>
+        <LogOutDialog />
       </div>
     </nav>
   );

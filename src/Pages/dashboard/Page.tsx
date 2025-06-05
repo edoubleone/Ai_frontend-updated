@@ -40,15 +40,15 @@ const DashboardIndexPage = () => {
             <BotsIcon width={16} height={16} />
           </IconBtn>
           <div>
-            <h1 className="text-dark text-2xl font-bold">Total Bots</h1>
+            <h1 className="text-dark text-2xl font-bold">Total Assistants</h1>
             <p className="text-lg font-bold text-dark">
               {assistants?.length || 0}
             </p>
           </div>
 
-          <Link to={`/dashboard/bots`}>
+          <Link to={`/dashboard/assistants`}>
             <Button variant="ghost" className="!text-defaultBlue !w-fit !p-0">
-              View Bots
+              View Assistants
               <svg
                 width="21"
                 height="21"

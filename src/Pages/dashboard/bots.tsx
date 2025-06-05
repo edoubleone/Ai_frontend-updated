@@ -27,15 +27,15 @@ const BotsPage = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-2xl font-bold text-dark">My Bots</h1>
+      <h1 className="text-2xl font-bold text-dark">My Assistants</h1>
 
       <Card className="flex overflow-hidden flex-col gap-6 py-4 px-4 sm:px-8 w-full">
         <div className="flex items-center justify-between">
           <h1 className="text-base font-semibold">Analytics</h1>
 
-          <Link to={"/dashboard/bots/create-bot"}>
+          <Link to={"/dashboard/assistants/create-assistant"}>
             <Button wrapperclass="!w-fit">
-              Build a Bot <ArrowRight2 size={20} />
+              Build an Assistant <ArrowRight2 size={20} />
             </Button>
           </Link>
         </div>
@@ -49,7 +49,7 @@ const BotsPage = () => {
             >
               <BotsIcon width={16} height={16} />
             </IconBtn>
-            <h1 className="text-dark text-2xl font-bold">Total Bots</h1>
+            <h1 className="text-dark text-2xl font-bold">Total Assistants</h1>
             <p className="text-lg font-bold text-defaultBlue">
               {assistants?.length || 0}
             </p>
@@ -63,7 +63,7 @@ const BotsPage = () => {
             >
               <BotsIcon width={16} height={16} />
             </IconBtn>
-            <h1 className="text-dark text-2xl font-bold">Total Bots Deleted</h1>
+            <h1 className="text-dark text-2xl font-bold">Total Assistants Deleted</h1>
             <p className="text-lg font-bold text-defaultBlue">0</p>
           </Card>
         </div>
