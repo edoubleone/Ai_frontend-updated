@@ -27,6 +27,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft2 } from "iconsax-reactjs";
 import { Button as IconButton } from "@/components/ui/button";
+import { format } from "date-fns";
 
 const ChatWindow = ({
   assistant,
@@ -121,12 +122,12 @@ const ChatWindow = ({
             </IconButton>
           )}
 
-          <AvatarComponent fallback="SK" />
+          <AvatarComponent />
           <div className="flex flex-col">
             <h1 className="text-base font-semibold text-[#2E2E2E]">
-              Product Inquiry
+              {assistant?.name}
             </h1>
-            <p className="text-sm text-[#454545]">Ijetechemmaule@gmail.com</p>
+            {/* <p className="text-sm text-[#454545]">Ijetechemmaule@gmail.com</p> */}
             <span className="mt-1.5 flex items-center gap-1.5 text-[#8B8B8B]">
               <MessageSquare className="size-[18px]" />
               <p className="text-xs">
@@ -137,7 +138,9 @@ const ChatWindow = ({
         </div>
 
         <div className="flex items-center gap-x-4">
-          <p className="text-[#8B8B8B] text-xs">May 08, 2:34 PM</p>
+            <p className="text-[#8B8B8B] text-xs">
+            {format(new Date(), "MMM dd, hh:mma")}
+            </p>
 
           <button>
             <img src={copy} alt="copy icon" />

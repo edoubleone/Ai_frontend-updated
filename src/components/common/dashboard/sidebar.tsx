@@ -9,11 +9,10 @@ import SupportIcon from "@/components/shared/support-icon";
 import LogOutIcon from "@/components/shared/logout-icon";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
-import { AlertDialog } from "@/components/ui/alert-dialog";
-import LogOutDialog from "../logout-dialog";
-import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
+import { useAuth } from "@/context/auth-provider";
 
 const navigationItems = [
   {
@@ -22,8 +21,8 @@ const navigationItems = [
     icon: DashboardIcon,
   },
   {
-    title: "My Bots",
-    url: "/dashboard/bots",
+    title: "My Assistants",
+    url: "/dashboard/assistants",
     icon: BotsIcon,
   },
   {
@@ -32,8 +31,8 @@ const navigationItems = [
     icon: ConversationsIcon,
   },
   {
-    title: "Test and share bots",
-    url: "/dashboard/test-and-share-bots",
+    title: "Test and share assistants",
+    url: "/dashboard/test-and-share-assistants",
     icon: ShareIcon,
   },
   {
@@ -74,7 +73,7 @@ export function AppSidebar({
   toggleMenu: () => void;
 }) {
   const { pathname } = useLocation();
-  const [isLogOut, setLogOut] = useState(false);
+  const { setLogOut } = useAuth();
 
   return (
     <div
@@ -118,10 +117,6 @@ export function AppSidebar({
             </Link>
           ))}
         </div>
-
-        <AlertDialog open={isLogOut} onOpenChange={setLogOut}>
-          <LogOutDialog />
-        </AlertDialog>
 
         <div className="flex flex-col gap-y-4 mt-6 mb-6">
           {footerItems.map((item) => {

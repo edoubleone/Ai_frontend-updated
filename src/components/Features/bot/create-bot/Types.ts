@@ -8,6 +8,7 @@ export interface BotFormTrigger {
 export type BasicSetupFormValues = {
     name: string;
     typeOfAssistant: string;
+    customer_support_contact: string;
     language: string;
     uploadFile: File | null;
     isMultilingual: boolean;
@@ -82,6 +83,7 @@ export type CustomizeFormValues = {
 export const basicSetupSchema = Yup.object({
   name: Yup.string().min(3).max(25).required("Assistant name is required"),
   typeOfAssistant: Yup.string().required("Type of Assistant is required"),
+  customer_support_contact: Yup.string().min(5).max(20).required("Customer support contact is required"),
   language: Yup.string().min(2).max(20).required("Language is required"),
   uploadFile: Yup.mixed().when('assistantType', {
     is: (typeOfAssistant: string) => typeOfAssistant !== 'text', // if assistantType is not 'text'
