@@ -9,7 +9,7 @@ const tabMenu = ["Account", "My Plan", "Available Plans"]
 const inputField = "w-full border px-4 py-[8px] outline-none rounded-md p-2"
 
 const Profile = () => {
-    const [activeMenu, setActiveMenu] = useState<string>(tabMenu[0])
+    const [activeMenu, setActiveMenu] = (tabMenu[0])
 
   return (
     <div className='py-5 px-5 md:px-7 lg:px-[50px] bg-secondary flex flex-col gap-y-5 w-full'>

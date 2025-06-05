@@ -17,10 +17,8 @@ const navigationItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-
   const { isAuthenticated, setLogOut } = useAuth();
 
-  // Close mobile drawer
   const handleNavigation = () => {
     setIsOpen(false);
   };
@@ -30,16 +28,9 @@ export function Navigation() {
       <div className="container px-5 mx-auto sm:px-6 lg:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          >
+          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <div className="flex items-center justify-center w-12 h-12 rounded-lg">
-              <img
-                src={logo}
-                alt="Kool AI Logo"
-                className="object-contain w-full h-full p-1"
-              />
+              <img src={logo} alt="Kool AI Logo" className="object-contain w-full h-full p-1" />
             </div>
           </Link>
 
@@ -65,13 +56,8 @@ export function Navigation() {
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             {isAuthenticated ? (
               <>
-                <Link
-                  to="/dashboard"
-                  className="font-light text-gray-700 transition-colors duration-200 hover:text-blue-600"
-                >
-                  <Button className="!text-defaultBlue" variant="ghost">
-                    Dashboard
-                  </Button>
+                <Link to="/dashboard" className="font-light text-gray-700 transition-colors duration-200 hover:text-blue-600">
+                  <Button className="!text-defaultBlue" variant="ghost">Dashboard</Button>
                 </Link>
                 <Button
                   onClick={() => setLogOut(true)}
@@ -82,16 +68,11 @@ export function Navigation() {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="font-light text-gray-700 transition-colors duration-200 hover:text-blue-600"
-                >
+                <Link to="/login" className="font-light text-gray-700 transition-colors duration-200 hover:text-blue-600">
                   Login
                 </Link>
                 <Link to="/signup" className="inline-block">
-                  <Button className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700">
-                    Sign Up
-                  </Button>
+                  <Button className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700">Sign Up</Button>
                 </Link>
               </>
             )}
@@ -101,8 +82,8 @@ export function Navigation() {
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="w-10 h-10" />
+                <Button variant="ghost" className="p-2">
+                  <Menu className="w-6 h-6" />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
@@ -122,32 +103,22 @@ export function Navigation() {
                       {item.name}
                     </Link>
                   ))}
+
                   <div className="flex flex-col pt-6 border-t gap-y-4">
                     {isAuthenticated ? (
                       <>
                         <Link to="/dashboard" onClick={handleNavigation}>
-                          <Button variant="ghost" className="!text-defaultBlue">
-                            Dashboard
-                          </Button>
+                          <Button variant="ghost" className="!text-defaultBlue">Dashboard</Button>
                         </Link>
-
                         <Button onClick={() => setLogOut(true)}>Log Out</Button>
                       </>
                     ) : (
                       <>
-                        <Link
-                          to="/login"
-                          className="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600"
-                          onClick={handleNavigation}
-                        >
-                          <Button variant="ghost" className="!text-defaultBlue">
-                            Login
-                          </Button>
+                        <Link to="/login" onClick={handleNavigation}>
+                          <Button variant="ghost" className="!text-defaultBlue">Login</Button>
                         </Link>
                         <Link to="/signup" onClick={handleNavigation}>
-                          <Button className="w-full text-white bg-blue-600 hover:bg-blue-700">
-                            Get Started
-                          </Button>
+                          <Button className="w-full text-white bg-blue-600 hover:bg-blue-700">Get Started</Button>
                         </Link>
                       </>
                     )}
