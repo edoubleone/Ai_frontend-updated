@@ -168,6 +168,7 @@ export function DatePicker({
               setMonth(newMonth.getMonth());
               setYear(newMonth.getFullYear());
             }}
+            mode="single"
             selected={date}
             onSelect={handleDateChange}
             initialFocus
