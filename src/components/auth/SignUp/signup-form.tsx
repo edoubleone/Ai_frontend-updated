@@ -41,8 +41,8 @@ export function SignupFormComponent() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: RegisterUser,
-    onSuccess: () => {
-      toast.success("Registration successful!");
+    onSuccess: (data) => {
+      toast.success(data.message);
       navigate("/login");
     },
     onError: (error: ErrorResponse) => {
@@ -91,7 +91,7 @@ export function SignupFormComponent() {
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               <SecondaryInput
                 label="First Name"
                 placeholder="First Name"
@@ -109,6 +109,7 @@ export function SignupFormComponent() {
 
             <SecondaryInput
               type="email"
+              label="Email Address"
               placeholder="Enter your email address"
               {...register("email")}
               errorText={errors.email?.message}

@@ -121,7 +121,7 @@ export function LoginFormComponent() {
             </div>
 
             {/* Social Login Buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               <Button
                 variant="outline"
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
