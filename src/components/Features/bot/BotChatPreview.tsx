@@ -28,8 +28,8 @@ const BotChatPreview:React.FC<BotChatPreviewProps> = ({switchColor}) => {
     }
 
   return (
-    <div className="w-96 h-full">
-          <div className="bg-white rounded-lg border border-gray-200 h-full flex flex-col">
+    <div className="w-full lg:w-96 h-full">
+          <div className="bg-[#F5F5F5] rounded-lg border border-gray-200 h-full flex flex-col">
             {/* Chat Header */}
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center gap-3 mb-3">

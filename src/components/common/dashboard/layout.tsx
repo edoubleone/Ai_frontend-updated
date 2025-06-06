@@ -19,7 +19,7 @@ export function DashboardLayout() {
       />
       <div className="flex flex-1 flex-col">
         <DashboardHeader toggleMenu={() => setSidebarOpen(!sidebarOpen)} />
-        <div className="flex-1 py-5 px-4 sm:px-8 lg:px-12 bg-[#E7E7E7] overflow-y-auto">
+        <div className="flex-1 py-5 px-4 sm:px-8 lg:px-12 bg-gray-50 overflow-y-auto">
           <Outlet />
         </div>
       </div>

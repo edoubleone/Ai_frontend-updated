@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
 
 const testimonials = [
   {
@@ -48,88 +49,90 @@ const testimonials = [
   },
 ]
 
-export function EnhancedTestimonialsCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+const TestimonialSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerView = 3;
+  const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % (testimonials.length - 3))
-  }
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + (testimonials.length - 3)) % (testimonials.length - 3))
-  }
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
 
-  const getVisibleTestimonials = () => {
-    return testimonials.slice(currentIndex, currentIndex + 4)
-  }
+  const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + itemsPerView);
 
   return (
-    <section id="testimonials-carousel" className="bg-white sm:py-12">
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl">What Our Client Said about us</h2>
-
-          {/* Navigation Arrows */}
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={prevSlide}
-              disabled={currentIndex === 0}
-              className="w-12 h-12 border-gray-300 rounded-full hover:bg-gray-100 disabled:opacity-50"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-600" />
-            </Button>
-            <Button
-              size="icon"
-              onClick={nextSlide}
-              disabled={currentIndex >= testimonials.length - 4}
-              className="w-12 h-12 text-white bg-blue-600 rounded-full hover:bg-blue-700 disabled:opacity-50"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Testimonials Grid - 4 cards in a row */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {getVisibleTestimonials().map((testimonial, index) => (
-            <div
-              key={`${testimonial.id}-${currentIndex}`}
-              className={`p-6 rounded-2xl flex flex-col gap-y-7 justify-between transition-all duration-300 ${
-                index === 0 ? "bg-blue-600 text-white" : "bg-white border border-gray-200 hover:shadow-md"
-              }`}
-            >
-              {/* Testimonial Content */}
-              <div className=" ">
-                <p className={`font-light text-sm leading-relaxed ${index === 0 ? "text-blue-100" : "text-gray-600"}`}>
-                  {testimonial.content}
-                </p>
-              </div>
-
-              {/* Author Info */}
-              <div className="flex items-center gap-3">
-                <Avatar className="w-10 h-10">
-                  <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
-                  <AvatarFallback className="font-medium text-white bg-orange-500">
-                    {testimonial.author
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col gap-y-1">
-                  <h4 className={`font-medium leading-none ${index === 0 ? "text-white" : "text-gray-900"}`}>
-                    {testimonial.author}
-                  </h4>
-                  <p className={`text-sm leading-none ${index === 0 ? "text-blue-200" : "text-gray-500"}`}>{testimonial.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+    <div className="max-w-7xl mx-auto px-4 py-16">
+      <div className="flex items-center justify-between mb-12">
+        <h2 className="text-4xl font-bold text-gray-900">
+          What Our Client Said about us
+        </h2>
+        
+        <div className="flex gap-4">
+          <Button
+            onClick={handlePrevious}
+            disabled={currentIndex === 0}
+            variant="outline"
+            size="icon"
+            className="w-12 h-12 rounded-full border-2 border-gray-300 hover:border-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          
+          <Button
+            onClick={handleNext}
+            disabled={currentIndex >= maxIndex}
+            variant="default"
+            size="icon"
+            className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ArrowRight className="w-5 h-5 text-white" />
+          </Button>
         </div>
       </div>
-    </section>
-  )
-}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {visibleTestimonials.map((testimonial, index) => (
+          <div
+            key={`${testimonial.id}-${currentIndex}`}
+            className={`rounded-2xl p-6 transition-all duration-300 ${
+              index === currentIndex
+                ? "bg-blue-600 text-white"
+                : "bg-white border border-gray-200 text-gray-900"
+            }`}
+          >
+            <p className={`text-sm leading-relaxed mb-6 ${
+              index === currentIndex ? "text-white" : "text-gray-600"
+            }`}>
+              {testimonial.content}
+            </p>
+            
+            <div className="flex items-center gap-3">
+              <Avatar className="w-12 h-12">
+                <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
+                <AvatarFallback>EK</AvatarFallback>
+              </Avatar>
+              <div>
+                <h4 className={`font-semibold ${
+                  index === currentIndex ? "text-white" : "text-gray-900"
+                }`}>
+                  {testimonial.author}
+                </h4>
+                <p className={`text-sm ${
+                  index === currentIndex ? "text-blue-200" : "text-gray-500"
+                }`}>
+                  {testimonial.role}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default TestimonialSection;

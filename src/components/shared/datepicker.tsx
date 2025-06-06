@@ -130,7 +130,7 @@ export function DatePicker({
               !date && "placeholder:text-[#454545]"
             )}
           >
-            <CalendarIcon className="mr-2 text-dark h-4 w-4" />
+            <CalendarIcon className="w-4 h-4 mr-2 text-dark" />
             {date ? format(date, dateFormat) : placeholder}
           </button>
         </PopoverTrigger>
@@ -164,7 +164,7 @@ export function DatePicker({
 
           <Calendar
             month={new Date(year, month)}
-            onMonthChange={(newMonth) => {
+            onMonthChange={(newMonth: Date) => {
               setMonth(newMonth.getMonth());
               setYear(newMonth.getFullYear());
             }}

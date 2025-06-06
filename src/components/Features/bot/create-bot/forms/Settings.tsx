@@ -15,7 +15,7 @@ const Settings = () => {
 
   // const [addistionalInfo, setAdditionalInfo] = React.useState<boolean>(false);
 
-  const Options = ["none", "low", "moderate"];
+    const Options = ["none", "low", "moderate"];
 
   const [talkLevel, setTalkLevel] = React.useState<string>(Options[0]);
   const [jokeLevel, setJokeLevel] = React.useState<string>(Options[0]);
@@ -27,10 +27,10 @@ const Settings = () => {
 
   return (
     <div>
-      <main className="flex flex-col gap-y-10 py-10">
+      <main className="flex flex-col py-10 gap-y-10">
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">Small Talk</h2>
+            <h2 className="mb-2 text-lg font-semibold">Small Talk</h2>
             <p className="text-sm text-gray-500">
               Casual, friendly conversations about non-controversial topics to
               build rapport and create a comfortable interaction atmosphere
@@ -46,7 +46,7 @@ const Settings = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">Jokes</h2>
+            <h2 className="mb-2 text-lg font-semibold">Jokes</h2>
             <p className="text-sm text-gray-500">
               Enable to include jokes in responses, making the assistant&apos;s
               interactions more engaging
@@ -62,7 +62,7 @@ const Settings = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">Emodzy</h2>
+            <h2 className="mb-2 text-lg font-semibold">Emodzy</h2>
             <p className="text-sm text-gray-500">
               Enable to add emojis to responses, making the assistant&apos;s
               interactions more friendly
@@ -78,7 +78,7 @@ const Settings = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">
+            <h2 className="mb-2 text-lg font-semibold">
               Additional Instructions
               {/* <span className='text-[#737373]'>(Optional)</span> */}
             </h2>
@@ -146,7 +146,7 @@ const Settings = () => {
 
         <section className={sectionStyles}>
           <div>
-            <h2 className="text-lg font-semibold mb-2">
+            <h2 className="mb-2 text-lg font-semibold">
               Assistant Restrictions
               {/* <span className='text-[#737373]'>(Optional)</span> */}
             </h2>
