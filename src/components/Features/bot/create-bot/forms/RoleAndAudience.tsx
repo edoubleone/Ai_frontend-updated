@@ -32,10 +32,6 @@ const RoleAndAudience = () => {
     <div>
       <div>
         <h1 className="text-2xl font-semibold">Main Role of the Assistant</h1>
-        <p className="text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur. Ornare lorem consectetur magna
-          mi id. Porta id id sed blandit suspendisse.
-        </p>
       </div>
 
       <main className="flex flex-col gap-y-10 py-10">

@@ -42,7 +42,7 @@ const steps = [
     component: <CompanyDetails />,
   },
   {
-    heading: "Role and Audience",
+    heading: "Level Three, Fine Tuning your Agent",
     desc: "Create and customize the assistant’s role by defining its tasks, target audience, and communication style. This section helps you tailor the assistant to meet specific needs and ensure consistent and personalized user interactions.",
     component: <RoleAndAudience />,
   },
@@ -228,7 +228,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
       <main className="flex flex-col bg-background rounded-lg p-8">
         <header>
           <h1 className="text-2xl font-semibold mb-4">
-            Let&apos;s set up your Bot Assistant
+            Let's set up your AI Assistant
           </h1>
           <p className="text-gray-600 mb-6">
             Customize and fine-tune the way your assistant communicates and

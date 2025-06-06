@@ -44,6 +44,7 @@ const CompanyDetails = () => {
           <div className="flex flex-col justify-center items-center gap-y-2">
             <p className="font-medium">OR</p>
             <Switch
+              disabled
               checked={isToFillForm}
               onCheckedChange={setIsToFillForm}
               className="data-[state=checked]:bg-blue-600"
