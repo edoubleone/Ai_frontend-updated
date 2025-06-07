@@ -3,7 +3,7 @@ import { ClockIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { IAssistant } from "@/services/models/conversation.model";
 
-const ChatItemComponent: React.FC<IAssistant> = ({ name }) => {
+const ChatItemComponent: React.FC<IAssistant> = ({ name, last_message }) => {
   return (
     <div className="flex justify-between w-full gap-4">
       <div className="flex gap-4">
@@ -12,10 +12,10 @@ const ChatItemComponent: React.FC<IAssistant> = ({ name }) => {
           <h1 className="text-base font-semibold text-[#171717]">
             {name || "Ijetechemmaule@gmail.com"}
           </h1>
-          <p className="text-sm text-[#636363]">
-            Let's continue where you left off
+          <p className="text-sm line-clamp-1 text-[#636363]">
+            {last_message || "Hi, how are you?"}
           </p>
-          <div className="flex text-[#8B8B8B] text-sm items-center gap-1">
+          <div className="hidden text-[#8B8B8B] text-sm items-center gap-1">
             <ClockIcon className="size-3.5" />
             <p>Today</p>
             <hr className="bg-[#8B8B8B] rounded-lg border-none w-px h-4" />

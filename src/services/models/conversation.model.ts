@@ -20,6 +20,7 @@ export interface IAssistant {
   };
   public_url: string;
   created_at: string;
+  last_message: string;
 }
 
 export interface IAssistantMessage {
