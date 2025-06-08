@@ -14,10 +14,20 @@ import clsx from "clsx";
 import LogOutIcon from "@/components/shared/logout-icon";
 import SettingsIcon from "@/components/shared/settings-icon";
 import { useAuth } from "@/context/auth-provider";
+import { useQuery } from "@tanstack/react-query";
+import { GetUserData } from "@/services/api/conversation";
 
 export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
   const { pathname } = useLocation();
   const { setLogOut } = useAuth();
+
+  const { data: user } = useQuery({
+    queryFn: GetUserData,
+    queryKey: ["user"],
+  });
+  
+  const Names = user?.full_name.split(" ")
+
 
   return (
     <header className="flex sticky top-0 z-40 w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5 bg-white border-b-[1.13px] border-[#E7E7E7]">
@@ -80,8 +90,8 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
                       src="/placeholder.svg?height=32&width=32"
                       alt="User"
                     />
-                    <AvatarFallback className="text-sm text-white bg-orange-500">
-                      U
+                    <AvatarFallback className="text-sm font-bold text-white bg-orange-500">
+                      {Names ? (Names.length > 1 ? Names[0][0] + Names[1][0] : Names[0][0]) : ""}
                     </AvatarFallback>
                     <ChevronDown className={`cursor-pointer transition-all duration-300 -translate-x-[150%] w-0 group-hover:translate-x-0 group-hover:w-16`} />
                   </Avatar>

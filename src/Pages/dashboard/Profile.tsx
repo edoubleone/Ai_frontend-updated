@@ -20,7 +20,6 @@ const Profile = () => {
     const [activeMenu, setActiveMenu] = useState(tabMenu[0])
 
     const Names = user?.full_name.split(" ")
-    console.log(Names)
 
   return (
     <div className='flex flex-col gap-y-5 w-full'>
@@ -31,8 +30,8 @@ const Profile = () => {
                 <section className='flex items-center gap-x-4'>
                     <div className='relative w-fit'>
                         <Avatar className="w-16 h-16 cursor-pointer">
-                            <AvatarImage src={userMain} width={1000} height={1000} alt="User" />
-                            <AvatarFallback className="text-sm text-white bg-orange-500">U</AvatarFallback>
+                            <AvatarImage src="" width={1000} height={1000} alt="User" />
+                            <AvatarFallback className="text-2xl font-bold flex items-center justify-self-center text-white bg-orange-500">{Names ? (Names.length > 1 ? Names[0][0] + Names[1][0] : Names[0][0]) : ""}</AvatarFallback>
                         </Avatar>
                         <div className='p-[6px] rounded-full absolute bottom-0 cursor-pointer -right-1 bg-white shadow-lg w-fit'>
                             <img src={camera} alt="edit photo" />
