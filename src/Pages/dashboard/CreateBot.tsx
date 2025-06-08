@@ -307,7 +307,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
                     <Button
                       variant="outline-blue"
                       type="button"
-                      className="!w-[207px]"
+                      className="!w-[207px] !hidden"
                       // disabled={currentStep === 0}
                       onClick={() => handleSubmit(values)}
                     >

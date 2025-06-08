@@ -37,7 +37,7 @@ export type CompanyDetailsFormValues = {
 }
 
 export type RoleAndAudienceFormValues = {
-    collectInformation: boolean;
+    collectInformation?: boolean;
     setRole: string;
     purposeOfRole: string;
     IndustryAndDescription: string;
@@ -45,7 +45,7 @@ export type RoleAndAudienceFormValues = {
     welcomeWords?: string;
     welcomeLoggedUser?: string;
     conclusion?: string;
-    targetAudience: string;
+    targetAudience?: string;
     audiencePainPoints?: string;
     informationToCollect?: string[];
     whenToCollectInformation?: string;
@@ -193,22 +193,22 @@ export const roleAndAudienceSchema = Yup.object({
   setRole: Yup.string().required("Role is required"),
   purposeOfRole: Yup.string().required("Purpose is required"),
   IndustryAndDescription: Yup.string().required().test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  toneOfCommunication: Yup.string().required("Role description is required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+  toneOfCommunication: Yup.string().required("Select tone of communication"),
   welcomeWords: Yup.string().required("Please input tone description").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  welcomeLoggedUser: Yup.string().required("Please input tone description").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  conclusion: Yup.string().required("Please input tone description").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  targetAudience: Yup.string().required().oneOf(["Text", "Image", "All Users"]),
-  audiencePainPoints: Yup.string().required("Please input audience pain points").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  informationToCollect: Yup.array().when('collectInformation', {
-    is: (collectInformation: boolean) => collectInformation, // if collectInformation is true
-    then: (schema) => schema.of(Yup.string()).min(1, "min of 1 data").max(5, "Max 5 items"),
-    otherwise: (schema) => schema.notRequired(), // if collectInformation is false, informationToCollect can be not required
-  }),
-  whenToCollectInformation: Yup.string().when('collectInformation', {
-    is: (collectInformation: boolean) => collectInformation, // if collectInformation is true
-    then: (schema) => schema.required().oneOf(["Start of the chat", "End of the chat", "No Preference"]),
-    otherwise: (schema) => schema.notRequired(), // if collectInformation is false, whenToCollectInformation can be not required
-  }),
+  // welcomeLoggedUser: Yup.string().required("Please input tone description").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+  // conclusion: Yup.string().required("Please input tone description").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+  // targetAudience: Yup.string().required().oneOf(["Text", "Image", "All Users"]),
+  // audiencePainPoints: Yup.string().required("Please input audience pain points").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+  // informationToCollect: Yup.array().when('collectInformation', {
+  //   is: (collectInformation: boolean) => collectInformation, // if collectInformation is true
+  //   then: (schema) => schema.of(Yup.string()).min(1, "min of 1 data").max(5, "Max 5 items"),
+  //   otherwise: (schema) => schema.notRequired(), // if collectInformation is false, informationToCollect can be not required
+  // }),
+  // whenToCollectInformation: Yup.string().when('collectInformation', {
+  //   is: (collectInformation: boolean) => collectInformation, // if collectInformation is true
+  //   then: (schema) => schema.required().oneOf(["Start of the chat", "End of the chat", "No Preference"]),
+  //   otherwise: (schema) => schema.notRequired(), // if collectInformation is false, whenToCollectInformation can be not required
+  // }),
 });
 
 // Step 3: Settings

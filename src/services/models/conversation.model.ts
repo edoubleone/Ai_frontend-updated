@@ -21,6 +21,7 @@ export interface IAssistant {
   public_url: string;
   created_at: string;
   last_message: string;
+  share_url: string;
 }
 
 export interface IAssistantMessage {

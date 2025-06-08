@@ -13,6 +13,7 @@ const Conversations = () => {
   const isMobile = useIsMobile();
 
   const [assistant, setAssistant] = useState<IAssistant | null>(null);
+  const [query, setQuery] = useState("");
 
   const { data: assistants = [], isLoading } = useQuery({
     queryFn: GetAssistants,
@@ -24,6 +25,14 @@ const Conversations = () => {
     queryClient.invalidateQueries({
       queryKey: ["assistant-chat-history", assistant.id],
     });
+  };
+
+  const filteredData = assistants.filter((assistant) =>
+    assistant.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const handleSearch = (value: string) => {
+    setQuery(value);
   };
 
   return (
@@ -41,32 +50,37 @@ const Conversations = () => {
               <SearchIcon className="text-[#737373] mx-4 absolute size-6" />
               <input
                 type="search"
+                value={query}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="py-[11.5px] pl-12 outline-none focus:outline-none pr-4 w-full"
                 placeholder="Search or start a new chat"
               />
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              {isLoading
-                ? Array.from({ length: 5 }).map((_, i) => (
-                    <div className="px-4 py-[18px] sm:px-6" key={i}>
-                      <ChatItemLoader />
-                    </div>
-                  ))
-                : assistants &&
-                  assistants?.map((assistantItem) => (
-                    <div
-                      onClick={() => handleAssistantClick(assistantItem)}
-                      className={`px-4 sm:px-6 cursor-pointer py-[18px] ${
-                        assistant?.id === assistantItem?.id
-                          ? "bg-[#EEEEFD]"
-                          : ""
-                      }`}
-                      key={assistantItem?.id}
-                    >
-                      <ChatItemComponent {...assistantItem} />
-                    </div>
-                  ))}
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <div className="px-4 py-[18px] sm:px-6" key={i}>
+                    <ChatItemLoader />
+                  </div>
+                ))
+              ) : filteredData && filteredData?.length === 0 ? (
+                <div className="text-center h-full flex items-center justify-center text-[#737373]">
+                  No conversations found
+                </div>
+              ) : (
+                filteredData?.map((assistantItem) => (
+                  <div
+                    onClick={() => handleAssistantClick(assistantItem)}
+                    className={`px-4 sm:px-6 cursor-pointer py-[18px] ${
+                      assistant?.id === assistantItem?.id ? "bg-[#EEEEFD]" : ""
+                    }`}
+                    key={assistantItem?.id}
+                  >
+                    <ChatItemComponent {...assistantItem} />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         ) : null}

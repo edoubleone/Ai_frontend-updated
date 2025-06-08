@@ -10,12 +10,15 @@ import { useQuery } from "@tanstack/react-query";
 import { GetAssistants } from "@/services/api/conversation";
 import { Link } from "react-router-dom";
 import BotsTableSkeletonLoader from "@/components/Features/bot/bot-table-loader";
+import { useState } from "react";
 
 const BotsPage = () => {
   const { data: assistants = [], isLoading } = useQuery({
     queryFn: GetAssistants,
     queryKey: ["assistants"],
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const data = assistants.map((assistant) => ({
     id: assistant.id,
@@ -24,7 +27,16 @@ const BotsPage = () => {
     botType: "Text",
     assistantLanguage: "English",
     status: "Bot created",
+    share_url: assistant.share_url,
   }));
+
+  const filteredData = data.filter((row) =>
+    row.assistantName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -64,7 +76,9 @@ const BotsPage = () => {
             >
               <BotsIcon width={16} height={16} />
             </IconBtn>
-            <h1 className="text-dark text-2xl font-bold">Total Assistants Deleted</h1>
+            <h1 className="text-dark text-2xl font-bold">
+              Total Assistants Deleted
+            </h1>
             <p className="text-lg font-bold text-defaultBlue">0</p>
           </Card>
         </div>
@@ -73,6 +87,7 @@ const BotsPage = () => {
       <Card className="flex flex-col gap-y-5 py-4 px-4 sm:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between w-full">
           <SearchInput
+            onDebouncedChange={handleSearch}
             placeholder="Search Bot"
             inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
           />
@@ -109,7 +124,7 @@ const BotsPage = () => {
         {isLoading ? (
           <BotsTableSkeletonLoader />
         ) : (
-          <DashboardBotsDataTable data={data} />
+          <DashboardBotsDataTable data={filteredData} />
         )}
       </Card>
     </div>

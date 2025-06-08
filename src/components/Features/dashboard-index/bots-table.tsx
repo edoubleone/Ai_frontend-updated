@@ -35,6 +35,7 @@ interface RowAssistant {
   botType: string;
   assistantLanguage: string;
   status: string;
+  share_url: string;
 }
 
 interface DataTableProps {
@@ -43,7 +44,6 @@ interface DataTableProps {
 
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<"share" | "campaign" | null>(null);
-  // const [url, setUrl] = useState("");
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
 
   const columns: ColumnDef<RowAssistant>[] = [
@@ -138,6 +138,7 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
 
           <PopoverContent className="p-3">
             <button
+              disabled={!row.original.share_url}
               onClick={() => {
                 setAction("share");
                 setSelectedRow(row.original);
@@ -212,7 +213,9 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
         open={action === "share"}
         onOpenChange={(open) => setAction(open ? "share" : null)}
       >
-        <ShareBotModal url="" />
+        {selectedRow && selectedRow.share_url && (
+          <ShareBotModal url={selectedRow.share_url} />
+        )}
       </Dialog>
 
       <Dialog

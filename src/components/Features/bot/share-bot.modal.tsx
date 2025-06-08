@@ -1,7 +1,15 @@
 import SecondaryInput from "@/components/shared/secondary-input";
 import { DialogContent } from "@/components/ui/dialog";
+import copy from "@/assets/icons/copy.svg";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const ShareBotModal = ({ url }: { url: string }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(url);
+    toast.success("Link copied to clipboard!");
+  };
+
   return (
     <DialogContent>
       <div className="flex flex-col gap-y-6 mt-6">
@@ -17,6 +25,17 @@ const ShareBotModal = ({ url }: { url: string }) => {
           label="Get your demonstration link"
           placeholder="Assistant Link"
           type="text"
+          iconposition="right"
+          icon={
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              onClick={handleCopy}
+              title="Copy link"
+            >
+              <img src={copy} alt="copy icon" />
+            </Button>
+          }
           value={url}
         />
       </div>

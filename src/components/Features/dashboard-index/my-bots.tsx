@@ -8,14 +8,16 @@ import DashboardBotsDataTable from "./bots-table";
 import { ChevronDown, Download, Funnel } from "lucide-react";
 import BotsTableSkeletonLoader from "../bot/bot-table-loader";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 interface DataType {
-  id: number
+  id: number;
   botAvatar: string;
   assistantName: string;
   botType: string;
   assistantLanguage: string;
   status: string;
+  share_url: string;
 }
 
 interface DashboardBotsTableProps {
@@ -24,6 +26,16 @@ interface DashboardBotsTableProps {
 }
 
 const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredData = data.filter((row) =>
+    row.assistantName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+  };
+
   return (
     <Card className="border-none w-full rounded-lg py-8 px-4 sm:px-8 lg:px-12">
       <div className="flex w-full mb-9 items-center justify-between">
@@ -44,6 +56,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
       <div className="flex flex-col gap-y-9">
         <div className="flex flex-col sm:flex-row gap-4 justify-between w-full">
           <SearchInput
+            onDebouncedChange={handleSearch}
             placeholder="Search Bot"
             inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
           />
@@ -68,7 +81,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
 
             <Button
               variant={"ghost"}
-               wrapperclass="!w-fit"
+              wrapperclass="!w-fit"
               className="!rounded-[1.91px] !text-sm !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Download className="size-5 text-dark" />
@@ -80,7 +93,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
         {loading ? (
           <BotsTableSkeletonLoader />
         ) : (
-          <DashboardBotsDataTable data={data} />
+          <DashboardBotsDataTable data={filteredData} />
         )}
       </div>
     </Card>
