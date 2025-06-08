@@ -36,6 +36,8 @@ const ShareBotModal = ({ url }: { url: string }) => {
               <img src={copy} alt="copy icon" />
             </Button>
           }
+          readOnly
+          disabled
           value={url}
         />
       </div>
