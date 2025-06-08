@@ -31,23 +31,11 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response) => {
-    if (
-      response.data &&
-      response.data.idToken &&
-      response.data.accessToken &&
-      response.data.refreshToken
-    ) {
-      localStorage.setItem("idToken", response.data.idToken);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-    }
     return response;
   },
   async (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem("idToken");
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("access_token");
       window.location.replace("/");
     }
     return Promise.reject(error);
