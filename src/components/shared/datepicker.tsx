@@ -1,182 +1,113 @@
+"use client";
+
 import * as React from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 
-import { cn } from "../../lib/utils";
-
-import { Calendar } from "../ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Label } from "../ui/label";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-interface SingleDatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
-  date?: Date | null;
-  onDateChange?: (date: Date | undefined) => void;
-  initialDate?: Date;
-  placeholder?: string;
-  buttonClassName?: string;
-  dateFormat?: string;
-  label?: string;
-  optional?: boolean;
+interface DatePickerProps {
+  date?: Date;
+  onDateChange: (date: Date | undefined) => void;
   error?: boolean;
-  disabled?: boolean;
-  startDate?: Date;
   errorText?: string;
+  label?: string;
+  placeholder?: string;
 }
 
-export function DatePicker({
-  date: controlledDate,
+function formatDate(date: Date | undefined) {
+  if (!date) return "";
+  return date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function isValidDate(date: Date | undefined) {
+  if (!date) return false;
+  return !isNaN(date.getTime());
+}
+
+const DatePicker: React.FC<DatePickerProps> = ({
+  date,
   onDateChange,
-  placeholder,
-  buttonClassName,
-  className,
-  optional = false,
-  label,
   error,
-  dateFormat = "PPP",
-  disabled,
-  startDate,
   errorText,
-  ...props
-}: SingleDatePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(
-    controlledDate ?? undefined
-  );
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [month, setMonth] = React.useState<number>(new Date().getMonth());
-  const [year, setYear] = React.useState<number>(new Date().getFullYear());
-
-  const years = React.useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    return Array.from(
-      { length: currentYear - 1900 + 101 },
-      (_, i) => currentYear - i + 100
-    );
-  }, []);
-
-  const months = React.useMemo(() => {
-    if (year) {
-      return Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
-    }
-    return [];
-  }, [year]);
-
-  React.useEffect(() => {
-    if (date) {
-      setMonth(date.getMonth());
-      setYear(date.getFullYear());
-    }
-  }, [date]);
-
-  React.useEffect(() => {
-    setDate(controlledDate ?? undefined);
-  }, [controlledDate]);
-
-  const handleDateChange = (selectedDate: Date | undefined) => {
-    setDate(selectedDate);
-    if (onDateChange) {
-      onDateChange(selectedDate);
-    }
-    setOpen(false);
-  };
-
-  const handleYearChange = (selectedYear: string) => {
-    const newYear = parseInt(selectedYear, 10);
-    setYear(newYear);
-    if (date) {
-      const newDate = new Date(date);
-      newDate.setFullYear(newYear);
-      setDate(newDate);
-    }
-  };
-
-  const handleMonthChange = (selectedMonth: string) => {
-    const newMonth = parseInt(selectedMonth, 10);
-    setMonth(newMonth);
-    if (date) {
-      const newDate = new Date(date);
-      newDate.setMonth(newMonth);
-      setDate(newDate);
-    } else {
-      setDate(new Date(year, newMonth, 1));
-    }
-  };
+  label,
+  placeholder,
+}) => {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(formatDate(date));
 
   return (
-    <div className={cn("grid w-full gap-2", className)} {...props}>
-      <div className="flex justify-between">
-        <Label
-          className="text-base inline-flex items-center gap-x-1.5 text-[#454545] font-semibold"
-          htmlFor={label}
-        >
+    <div className="flex flex-col gap-2">
+      {label && (
+        <Label htmlFor="date" className="px-1">
           {label}
         </Label>
-        {optional && <Label htmlFor={label}>Optional</Label>}
-      </div>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <button
-            disabled={disabled}
-            className={cn(
-              "flex items-center disabled:bg-[#F0F2F5] truncate focus:ring-[3px] ring-[#343CED] rounded-md border w-full border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white text-sm p-4 text-left font-normal",
-              buttonClassName,
-              error ? "ring-[3px] ring-[#DC2626]" : "",
-              !date && "placeholder:text-[#454545]"
-            )}
+      )}
+      <div className="relative flex gap-2">
+        <Input
+          id="date"
+          value={value}
+          placeholder={placeholder}
+          className={`bg-background pr-10 ${error ? "border-red-500" : ""}`}
+          onChange={(e) => {
+            const inputDate = new Date(e.target.value);
+            setValue(e.target.value);
+            if (isValidDate(inputDate)) {
+              onDateChange(inputDate);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setOpen(true);
+            }
+          }}
+        />
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              id="date-picker"
+              variant="ghost"
+              className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
+            >
+              <CalendarIcon className="size-3.5" />
+              <span className="sr-only">Select date</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-auto overflow-hidden p-0"
+            align="end"
+            alignOffset={-8}
+            sideOffset={10}
           >
-            <CalendarIcon className="w-4 h-4 mr-2 text-dark" />
-            {date ? format(date, dateFormat) : placeholder}
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto !z-9999 p-0">
-          <div className="flex justify-between p-2 space-x-1">
-            <Select onValueChange={handleYearChange} value={year.toString()}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Year" />
-              </SelectTrigger>
-              <SelectContent>
-                {years.map((y) => (
-                  <SelectItem key={y} value={y.toString()}>
-                    {y}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select onValueChange={handleMonthChange} value={month.toString()}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Month" />
-              </SelectTrigger>
-              <SelectContent>
-                {months.map((m, index) => (
-                  <SelectItem key={index} value={index.toString()}>
-                    {format(m, "MMMM")}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Calendar
-            month={new Date(year, month)}
-            onMonthChange={(newMonth: Date) => {
-              setMonth(newMonth.getMonth());
-              setYear(newMonth.getFullYear());
-            }}
-            mode="single"
-            selected={date}
-            onSelect={handleDateChange}
-            initialFocus
-            disabled={startDate ? (day: Date) => day < startDate : disabled}
-          />
-        </PopoverContent>
-      </Popover>
-      {error && <p className="text-[#DC2626] text-sm">{errorText}</p>}
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(selectedDate) => {
+                onDateChange(selectedDate);
+                setValue(formatDate(selectedDate));
+                setOpen(false);
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+      {error && errorText && (
+        <span className="text-sm text-red-500 px-1">{errorText}</span>
+      )}
     </div>
   );
-}
+};
+
+export default DatePicker;

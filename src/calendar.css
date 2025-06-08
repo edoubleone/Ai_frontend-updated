@@ -1,0 +1,17 @@
+.rdp {
+  --rdp-cell-size: 2.5rem;
+  --rdp-caption-font-size: 0.875rem;
+  margin: 0.5rem;
+}
+.rdp-month {
+  width: 100%;
+}
+.rdp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.rdp-day {
+  height: var(--rdp-cell-size);
+  width: var(--rdp-cell-size);
+  border-radius: 0.375rem;
+}
