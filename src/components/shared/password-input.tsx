@@ -19,6 +19,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
             showPassword ? (
               <button
                 type="button"
+                title="hide password"
                 className="!p-0"
                 onClick={togglePasswordVisibility}
               >
@@ -27,6 +28,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
             ) : (
               <button
                 type="button"
+                title="see password"
                 className="!p-0"
                 onClick={togglePasswordVisibility}
               >

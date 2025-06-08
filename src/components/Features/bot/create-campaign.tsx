@@ -1,5 +1,5 @@
 import Button from "@/components/shared/button";
-import { DatePicker } from "@/components/shared/datepicker";
+import DatePicker from "@/components/shared/datepicker";
 import SecondaryInput from "@/components/shared/secondary-input";
 import { SelectInput } from "@/components/shared/secondary-select";
 import {
