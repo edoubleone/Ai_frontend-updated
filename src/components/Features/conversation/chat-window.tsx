@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Button from "@/components/shared/button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type {
   IAssistant,
   IAssistantMessage,
@@ -45,6 +45,11 @@ const ChatWindow = ({
   >(null);
   const [message, setMessage] = useState("");
   const [isBotResponding, setIsBotResponding] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const { data: assistantChatHistory = [] } = useQuery({
     queryFn: () => GetAssistantChatHistory(assistant?.id!),
@@ -100,6 +105,16 @@ const ChatWindow = ({
     },
   });
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [assistantChatHistory, isBotResponding]);
+
+  useEffect(() => {
+    setMessage("");
+    setActions(null);
+    setIsBotResponding(false)
+  }, [assistant]);
+
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     if (!message || isBotResponding) return;
     e.preventDefault();
@@ -138,9 +153,9 @@ const ChatWindow = ({
         </div>
 
         <div className="flex items-center gap-x-4">
-            <p className="text-[#8B8B8B] text-xs">
+          <p className="text-[#8B8B8B] text-xs">
             {format(new Date(), "MMM dd, hh:mma")}
-            </p>
+          </p>
 
           <button>
             <img src={copy} alt="copy icon" />
@@ -182,6 +197,7 @@ const ChatWindow = ({
               responding={true}
             />
           )}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 

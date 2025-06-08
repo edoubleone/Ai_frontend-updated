@@ -1,9 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 import {
   BasicSetup,
-  Preview,
   CompanyDetails,
-  Customize,
   Settings,
   FAQs,
   RoleAndAudience,
@@ -56,16 +54,16 @@ const steps = [
     desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
     component: <FAQs />,
   },
-  {
-    heading: "Customize",
-    desc: "Customize the look and feel of your Bot to reflect your brand and website",
-    component: <Customize />,
-  },
-  {
-    heading: "Full Preview",
-    desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.",
-    component: <Preview />,
-  },
+  // {
+  //   heading: "Customize",
+  //   desc: "Customize the look and feel of your Bot to reflect your brand and website",
+  //   component: <Customize />,
+  // },
+  // {
+  //   heading: "Full Preview",
+  //   desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.",
+  //   component: <Preview />,
+  // },
 ];
 
 const initialValues = {

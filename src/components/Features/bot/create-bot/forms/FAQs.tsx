@@ -45,7 +45,7 @@ const FAQs = () => {
             errorText={errors.faqQuestion}
             rows={5}
             name="faqQuestion"
-            placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
+            placeholder="e.g Are you opened on weekends?"
             label="Question"
           />
         </div>
@@ -61,7 +61,7 @@ const FAQs = () => {
             errorText={errors.faqAnswer}
             rows={5}
             name="faqAnswer"
-            placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
+            placeholder="e.g Yes, but we close before 2pm"
             label="Answer"
           />
         </div>
@@ -82,7 +82,7 @@ const FAQs = () => {
             name="extraQuestion"
             hasMax
             max={50}
-            placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
+            placeholder="e.g Are you opened on weekends?"
           />
         </div>
 
@@ -99,7 +99,7 @@ const FAQs = () => {
             onBlur={handleBlur}
             rows={5}
             name="extraAnswer"
-            placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
+            placeholder="e.g Yes, but we close before 2pm"
             hasMax
             max={50}
           />
