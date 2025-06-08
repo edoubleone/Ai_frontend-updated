@@ -2,7 +2,7 @@ import AvatarComponent from "@/components/shared/custom-avatar";
 import type { IAssistantMessage } from "@/services/models/conversation.model";
 import clsx from "clsx";
 import { format } from "date-fns";
-import parseISO from "date-fns/parseISO";
+import { parseISO } from "date-fns/parseISO";
 
 const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
   role,
