@@ -1,6 +1,5 @@
 import React from "react";
 import { sectionStyles } from ".";
-import { TriangleAlert } from "lucide-react";
 import SelectionTab from "../components/SelectionTab";
 // import { Switch } from '@/components/ui/switch'
 import { useFormikContext } from "formik";
@@ -15,7 +14,7 @@ const Settings = () => {
 
   // const [addistionalInfo, setAdditionalInfo] = React.useState<boolean>(false);
 
-    const Options = ["none", "low", "moderate"];
+  const Options = ["none", "low", "moderate"];
 
   const [talkLevel, setTalkLevel] = React.useState<string>(Options[0]);
   const [jokeLevel, setJokeLevel] = React.useState<string>(Options[0]);
@@ -139,80 +138,6 @@ const Settings = () => {
               }
             />
             Add Instructions
-          </Label>
-        </section>
-
-        <hr />
-
-        <section className={sectionStyles}>
-          <div>
-            <h2 className="mb-2 text-lg font-semibold">
-              Assistant Restrictions
-              {/* <span className='text-[#737373]'>(Optional)</span> */}
-            </h2>
-            <div className="flex items-center w-full justify-between gap-[30px]">
-              <div className="mb-4 bg-[#EEEEFD] px-5 py-4  flex gap-5 rounded-lg w-full">
-                <TriangleAlert className="text-[#C82332] text-2xl w-[10%]" />
-                <span>
-                  Add restrictions carefully as they may impact the quality of
-                  the assistant&aspo;s responses. Only apply restrictions if you
-                  are certain of their necessity. Also, please note that
-                  Resonoon has built-in system limitations to protect your
-                  assistants from hackers and breaches.
-                </span>
-              </div>
-              {/* <Switch checked={addistionalInfo} onCheckedChange={setAdditionalInfo} className="data-[state=checked]:bg-blue-600 mt-20" /> */}
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2">
-            <SecondaryTextArea
-              label="Additional Limitation"
-              info
-              id="additionalLimitation"
-              value={values.additionalLimitation}
-              error={!!errors.additionalLimitation}
-              errorText={errors.additionalLimitation}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              rows={5}
-              max={50}
-              hasMax
-              name="additionalLimitation"
-              placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
-            />
-          </div>
-
-          <div
-            className={
-              values.addLimitationCheckbox ? "grid sm:grid-cols-2" : "hidden"
-            }
-          >
-            <SecondaryTextArea
-              info
-              label="Additional Limitation"
-              id="additionalLimitationExtra"
-              error={!!errors.additionalLimitationExtra}
-              errorText={errors.additionalLimitationExtra}
-              value={values.additionalLimitationExtra}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              rows={5}
-              name="additionalLimitationExtra"
-              placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
-              hasMax
-              max={50}
-            />
-          </div>
-
-          <Label className="flex text-base text-[#5C5C5C] items-center gap-x-3">
-            <Checkbox
-              checked={values.addLimitationCheckbox}
-              onCheckedChange={(checked) =>
-                setFieldValue("addLimitationCheckbox", checked)
-              }
-            />
-            Add Limitation
           </Label>
         </section>
       </main>

@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { GitPullRequest, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
 import {
@@ -160,7 +160,7 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
                 "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
               )}
             >
-              <ShareIcon width={16} height={16} />
+              <GitPullRequest className="size-4" />
               Create Campaign
             </button>
           </PopoverContent>

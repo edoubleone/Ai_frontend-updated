@@ -58,9 +58,6 @@ export type SettingsFormValues = {
     additionalInstruction: string;
     addInstructionCheckbox?: boolean;
     additionalInstructionExtra?: string;
-    additionalLimitation: string;
-    addLimitationCheckbox?: boolean;
-    additionalLimitationExtra?: string;
 }
 
 export type FaqsFormValues = {
@@ -223,13 +220,6 @@ export const settingsSchema = Yup.object({
     then: (schema) => schema.required("This field cannot be empty").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
     otherwise: (schema) => schema.notRequired(),
   }),
-  additionalLimitation: Yup.string().required("Additional limitations are neccessary").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  addLimitationCheckbox: Yup.boolean(),
-  additionalLimitationExtra: Yup.string().when('addLimitationCheckbox', {
-    is: (addLimitationCheckbox: boolean) => addLimitationCheckbox,
-    then: (schema) => schema.required("This field cannot be empty").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-    otherwise: (schema) => schema.notRequired(),
-  })
 });
 
 // Step 4: FAQs
