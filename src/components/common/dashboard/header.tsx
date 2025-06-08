@@ -4,7 +4,7 @@ import { Button as IconButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
 import SearchInput from "@/components/shared/search-input";
-import { MenuIcon, Search } from "lucide-react";
+import { ChevronDown, MenuIcon, Search } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -71,50 +71,73 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
             <img src="/icon/notifications.svg" alt="notifications icon" />
           </IconButton>
 
-          <Popover>
-            <PopoverTrigger className="cursor-pointer" asChild>
-              <Avatar className="w-10 h-10">
-                <AvatarImage
-                  src="/placeholder.svg?height=32&width=32"
-                  alt="User"
-                />
-                <AvatarFallback className="text-sm text-white bg-orange-500">
-                  U
-                </AvatarFallback>
-              </Avatar>
-            </PopoverTrigger>
+          <section className="group">
+            <Popover>
+              <div className="p-1 gap-x-1 rounded-full bg-secondary">
+                <PopoverTrigger className="cursor-pointer" asChild>
+                  <Avatar className="w-10 h-10 hover:w-[75px] z-[3] transition-all duration-300 flex items-center">
+                    <AvatarImage
+                      src="/placeholder.svg?height=32&width=32"
+                      alt="User"
+                    />
+                    <AvatarFallback className="text-sm text-white bg-orange-500">
+                      U
+                    </AvatarFallback>
+                    <ChevronDown className={`cursor-pointer transition-all duration-300 -translate-x-[150%] w-0 group-hover:translate-x-0 group-hover:w-16`} />
+                  </Avatar>
+                </PopoverTrigger>
+              </div>
 
-            <PopoverContent className="!max-w-48 !p-4">
-              <Link to={"/dashboard/settings"}>
+              <PopoverContent className="!max-w-48 !p-4">
+                <Link to={"/dashboard/profile"}>
+                  <button
+                    type="button"
+                    className={clsx(
+                      "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4",
+                      {
+                        "bg-[#EEEEFD] border-l-2 text-[#343CED] font-bold":
+                          pathname === "/dashboard/profile",
+                      }
+                    )}
+                  >
+                    <SettingsIcon width={16} height={16} />
+                    Profile
+                  </button>
+                </Link>
+
+                <Link to={"/dashboard/settings"}>
+                  <button
+                    type="button"
+                    className={clsx(
+                      "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4",
+                      {
+                        "bg-[#EEEEFD] border-l-2 text-[#343CED] font-bold":
+                          pathname === "/dashboard/settings",
+                      }
+                    )}
+                  >
+                    <SettingsIcon width={16} height={16} />
+                    Settings
+                  </button>
+                </Link>
+
                 <button
+                  type="button"
+                  onClick={() => setLogOut(true)}
                   className={clsx(
                     "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4",
                     {
                       "bg-[#EEEEFD] border-l-2 text-[#343CED] font-bold":
-                        pathname === "/dashboard/settings",
+                        pathname === "",
                     }
                   )}
                 >
-                  <SettingsIcon width={16} height={16} />
-                  Settings
+                  <LogOutIcon width={16} height={16} />
+                  Log Out
                 </button>
-              </Link>
-
-              <button
-                onClick={() => setLogOut(true)}
-                className={clsx(
-                  "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4",
-                  {
-                    "bg-[#EEEEFD] border-l-2 text-[#343CED] font-bold":
-                      pathname === "/dashboard/settings",
-                  }
-                )}
-              >
-                <LogOutIcon width={16} height={16} />
-                Log Out
-              </button>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
+          </section>
         </div>
       </div>
     </header>

@@ -24,6 +24,13 @@ export interface IAssistant {
   share_url: string;
 }
 
+export interface UserData {
+  id: number,
+  email: string,
+  full_name: string,
+  is_active: boolean
+}
+
 export interface IAssistantMessage {
   id: number
   role: "user" | "AI"
