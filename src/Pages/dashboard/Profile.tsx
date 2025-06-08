@@ -4,15 +4,26 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import userMain from "/images/dashboard/userMain.png"
 import camera from "/images/dashboard/camera.png"
 import { fieldsetStyles } from '@/components/Features/bot/create-bot/forms'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { GetUserData } from '@/services/api/conversation'
 
 const tabMenu = ["Account", "My Plan", "Available Plans"]
 const inputField = "w-full border px-4 py-[8px] outline-none rounded-md p-2"
 
 const Profile = () => {
-    const [activeMenu] = (tabMenu[0])
+    const { data: user } = useQuery({
+        queryFn: GetUserData,
+        queryKey: ["user"],
+    });
+
+    const [activeMenu, setActiveMenu] = useState(tabMenu[0])
+
+    const Names = user?.full_name.split(" ")
+    console.log(Names)
 
   return (
-    <div className='py-5 px-5 md:px-7 lg:px-[50px] bg-secondary flex flex-col gap-y-5 w-full'>
+    <div className='flex flex-col gap-y-5 w-full'>
         <h2 className='text-2xl font-bold'>Profile</h2>
 
         <main className='flex flex-col gap-y-6'>
@@ -29,15 +40,15 @@ const Profile = () => {
                     </div>
 
                     <div className='flex flex-col gap-y-1'>
-                        <h2 className='text-lg font-semibold'>Elizabeth Kafaru</h2>
-                        <p className='text-[#737373] text-sm'>elizabeth@gmail.com</p>
+                        <h2 className='text-lg font-semibold'>{user?.full_name ? user.full_name : "Elizabeth Kafaru"}</h2>
+                        <p className='text-[#737373] text-sm'>{user?.email ? user.email : "elizabeth@gmail.com"}</p>
                     </div>
                 </section>
                 
 
                 <div className='border-b border-[#E2E8F0] flex items-center justify-between md:justify-start'>
                     {tabMenu.map((menu, index) => (
-                        <nav key={index} onClick={() => (tabMenu[index])} className={`transition-all duration-300 border-b-[2px] py-2 px-7 font-semibold ${menu === activeMenu ? "text-blue-600 border-blue-600" : "hover:text-gray-400 cursor-pointer"}`}>{menu}</nav>
+                        <nav key={index} onClick={() => setActiveMenu(tabMenu[index])} className={`transition-all duration-300 border-b-[2px] py-2 px-7 font-semibold ${menu === activeMenu ? "text-blue-600 border-blue-600" : "hover:text-gray-400 cursor-pointer"}`}>{menu}</nav>
                     ))}
                 </div>
 
@@ -47,23 +58,23 @@ const Profile = () => {
                             <div className='flex justify-between gap-x-40'>
                                 <fieldset className={fieldsetStyles}>
                                     <label htmlFor="firstname">First Name</label>
-                                    <input id="firstname" value="Elizabeth" name='firstname' type="text" className={inputField} />
+                                    <input id="firstname" value={Names ? Names[0] : "Elizabeth"} name='firstname' type="text" className={inputField} />
                                 </fieldset>
 
                                 <fieldset className={fieldsetStyles}>
                                     <label htmlFor="lastname">Last Name</label>
-                                    <input id="lastname" value="Kafaru" name='lastname' type="text" className={inputField} />
+                                    <input id="lastname" value={Names ? Names[1] : "Kafaru"} name='lastname' type="text" className={inputField} />
                                 </fieldset>
                             </div>
 
                             <div className='flex justify-between gap-x-40'>
                                 <fieldset className={fieldsetStyles}>
                                     <label htmlFor="email">Email</label>
-                                    <input id="email" value="elizabeth@gmail.com" name='email' type="email" className={inputField} />
+                                    <input id="email" value={user?.email ? user.email : "elizabeth@gmail.com"} name='email' type="email" className={inputField} />
                                 </fieldset>
 
                                 <fieldset className={fieldsetStyles}>
-                                    <label htmlFor="language">Last Name</label>
+                                    <label htmlFor="language">Language</label>
                                     <select
                                         name="language"
                                         id="language"

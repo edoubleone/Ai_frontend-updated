@@ -22,6 +22,13 @@ export interface IAssistant {
   created_at: string;
 }
 
+export interface UserData {
+  id: number,
+  email: string,
+  full_name: string,
+  is_active: boolean
+}
+
 export interface IAssistantMessage {
   id: number
   role: "user" | "AI"

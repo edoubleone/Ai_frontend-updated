@@ -28,6 +28,7 @@ import Profile from "./Pages/dashboard/Profile";
 import Checkout from "./Pages/dashboard/Checkout";
 import TestShareBots from "./Pages/dashboard/ShareBot";
 import HelpAndSupport from "./Pages/dashboard/Support";
+import Payment from "./Pages/dashboard/Payment";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="test-and-share-bot" element={<TestShareBots />} />
           <Route path="help" element={<HelpAndSupport />} />
+          <Route path="payments" element={<Payment />} />
         </Route>
       </Route>
 
