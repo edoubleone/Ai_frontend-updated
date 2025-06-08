@@ -60,7 +60,7 @@ const BasicSetup = () => {
         <SecondaryInput
           name="customer_support_contact"
           onChange={handleChange}
-          placeholder="e.g +1345635464234"
+          placeholder="e.g Phone number/email/website"
           value={values.customer_support_contact}
           error={!!errors.customer_support_contact}
           errorText={errors.customer_support_contact}
