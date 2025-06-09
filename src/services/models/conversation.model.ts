@@ -33,8 +33,11 @@ export interface UserData {
 
 export interface IAssistantMessage {
   id: number
-  role: "user" | "AI"
+  role: "user" | "AI" | "assistant"
   content: string
   created_at: Date
 }
-
+export interface CustomerHistory {
+  history: IAssistantMessage[];
+  last_message: IAssistantMessage;
+}

@@ -4,7 +4,7 @@ import { Button as IconButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
 import SearchInput from "@/components/shared/search-input";
-import { ChevronDown, MenuIcon, Search } from "lucide-react";
+import { ChevronDown, CircleUser, MenuIcon, Search } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -17,7 +17,7 @@ import { useAuth } from "@/context/auth-provider";
 
 export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
   const { pathname } = useLocation();
-  const { setLogOut } = useAuth();
+  const { setLogOut, user } = useAuth();
 
   return (
     <header className="flex sticky top-0 z-40 w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5 bg-white border-b-[1.13px] border-[#E7E7E7]">
@@ -81,9 +81,11 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
                       alt="User"
                     />
                     <AvatarFallback className="text-sm text-white bg-orange-500">
-                      U
+                      {user?.full_name?.charAt(0)?.toUpperCase() || "G"}
                     </AvatarFallback>
-                    <ChevronDown className={`cursor-pointer transition-all duration-300 -translate-x-[150%] w-0 group-hover:translate-x-0 group-hover:w-16`} />
+                    <ChevronDown
+                      className={`cursor-pointer transition-all duration-300 -translate-x-[150%] w-0 group-hover:translate-x-0 group-hover:w-16`}
+                    />
                   </Avatar>
                 </PopoverTrigger>
               </div>
@@ -100,7 +102,7 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
                       }
                     )}
                   >
-                    <SettingsIcon width={16} height={16} />
+                    <CircleUser width={16} height={16} />
                     Profile
                   </button>
                 </Link>

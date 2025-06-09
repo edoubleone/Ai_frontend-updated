@@ -29,6 +29,7 @@ import Checkout from "./Pages/dashboard/Checkout";
 import TestShareBots from "./Pages/dashboard/ShareBot";
 import HelpAndSupport from "./Pages/dashboard/Support";
 import Payment from "./Pages/dashboard/Payment";
+import TestCustomerAssistant from "./Pages/dashboard/test-customer-assistant";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="assistants">
             <Route path="" element={<BotsPage />} />
             <Route path="create-assistant" element={<CreateBot />} />
+            <Route path="test/:id" element={<TestCustomerAssistant />} />
           </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />

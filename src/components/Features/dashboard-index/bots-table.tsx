@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { GitPullRequest, MoreHorizontal } from "lucide-react";
+import { BookCheck, GitPullRequest, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
 import {
@@ -27,6 +27,7 @@ import { useState } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import ShareBotModal from "../bot/share-bot.modal";
 import CreateCampaign from "../bot/create-campaign";
+import { useNavigate } from "react-router-dom";
 
 interface RowAssistant {
   id: number;
@@ -45,6 +46,8 @@ interface DataTableProps {
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<"share" | "campaign" | null>(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
+
+  const navigate = useNavigate();
 
   const columns: ColumnDef<RowAssistant>[] = [
     {
@@ -137,6 +140,18 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           </PopoverTrigger>
 
           <PopoverContent className="p-3">
+            <button
+              onClick={() => {
+                navigate(`/dashboard/assistants/test/${row.original.id}`);
+              }}
+              className={clsx(
+                "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
+              )}
+            >
+              <BookCheck className="size-4" />
+              Test Assistant
+            </button>
+
             <button
               disabled={!row.original.share_url}
               onClick={() => {
