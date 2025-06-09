@@ -2,7 +2,6 @@ import AvatarComponent from "@/components/shared/custom-avatar";
 import type { IAssistantMessage } from "@/services/models/conversation.model";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { parseISO } from "date-fns/parseISO";
 
 const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
   role,
@@ -51,7 +50,7 @@ const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
                   "text-white": isUser,
                 })}
               >
-                {content && format(parseISO(created_at), "hh:mma")}
+                {created_at && format(created_at, "hh:mma")}
               </p>
             </>
           )}

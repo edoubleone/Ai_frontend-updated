@@ -35,7 +35,7 @@ export interface IAssistantMessage {
   id: number
   role: "user" | "AI" | "assistant"
   content: string
-  created_at: string
+  created_at: Date
 }
 export interface CustomerHistory {
   history: IAssistantMessage[];
