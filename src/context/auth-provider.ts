@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./auth-context";
+import { GetUserData } from "@/services/api/auth";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token = sessionStorage.getItem("access_token") ?? null;
@@ -11,6 +12,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useNavigate();
   const queryClient = useQueryClient();
+
+  const { data: user } = useQuery({
+    queryFn: GetUserData,
+    queryKey: ["user"],
+    enabled: isAuthenticated,
+  });
 
   const logout = () => {
     sessionStorage.clear();
@@ -33,6 +40,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         setAuthenticated,
         logout,
+        user: user ?? null,
         isLogOut,
         setLogOut,
       },

@@ -11,7 +11,7 @@ const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
   responding,
 }) => {
   const isUser = role === "user";
-  const isBotResponding = role === "AI" && responding;
+  const isBotResponding = (role === "AI" || role === "assistant") && responding;
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>

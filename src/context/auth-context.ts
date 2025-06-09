@@ -1,3 +1,4 @@
+import type { UserData } from "@/services/models/conversation.model";
 import { createContext } from "react";
 
 interface AuthContextType {
@@ -5,6 +6,7 @@ interface AuthContextType {
   setAuthenticated: (value: string | null) => void;
   logout: () => void;
   isLogOut: boolean;
+  user: UserData | null;
   setLogOut: (value: boolean) => void;
 }
 

@@ -3,16 +3,10 @@ import apiClient from "../config/api";
 import type {
   IAssistant,
   IAssistantMessage,
-  UserData,
 } from "../models/conversation.model";
 
 export async function GetAssistants(): Promise<IAssistant[]> {
   const response = await apiClient.get<IAssistant[]>(`${BASE_URL}/assistants/`);
-  return response.data;
-}
-
-export async function GetUserData(): Promise<UserData> {
-  const response = await apiClient.get<UserData>(`${BASE_URL}/auth/me`);
   return response.data;
 }
 

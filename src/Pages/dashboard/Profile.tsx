@@ -6,7 +6,7 @@ import camera from "/images/dashboard/camera.png"
 import { fieldsetStyles } from '@/components/Features/bot/create-bot/forms'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { GetUserData } from '@/services/api/conversation'
+import { GetUserData } from '@/services/api/auth'
 
 const tabMenu = ["Account", "My Plan", "Available Plans"]
 const inputField = "w-full border px-4 py-[8px] outline-none rounded-md p-2"
