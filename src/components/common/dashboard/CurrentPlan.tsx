@@ -10,7 +10,7 @@ interface CurrentPlanProps {
 
 const CurrentPlan = (border : CurrentPlanProps) => {
   return (
-    <Card className={`flex w-full flex-col flex-shrink-0 border max-w-[434px] gap-y-5 ${border ? "border-[#d2d2d2] rounded-lg" : "border-transparent"}`}>
+    <Card className={`flex w-full flex-col justify-between flex-shrink-0 border max-w-[434px] gap-y-5 ${border ? "border-[#E2E8F0] rounded-lg" : "border-transparent"}`}>
         <div className="flex items-center justify-between">
         <div>
             <span className="inline-flex gap-2 items-center">

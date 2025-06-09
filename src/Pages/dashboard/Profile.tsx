@@ -1,12 +1,13 @@
 import AvailablePlans from '@/components/Features/Payment/AvailablePlans'
 import SubscriptionPlan from '@/components/Features/Payment/SubscriptionPlan'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import userMain from "/images/dashboard/userMain.png"
+// import userMain from "/images/dashboard/userMain.png"
 import camera from "/images/dashboard/camera.png"
 import { fieldsetStyles } from '@/components/Features/bot/create-bot/forms'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { GetUserData } from '@/services/api/conversation'
+import PaymentHistory from '@/components/Features/Payment/PaymentHistory'
 
 const tabMenu = ["Account", "My Plan", "Available Plans"]
 const inputField = "w-full border px-4 py-[8px] outline-none rounded-md p-2"
@@ -91,6 +92,8 @@ const Profile = () => {
                     </section>
                 ) : activeMenu === tabMenu[1] ? <SubscriptionPlan /> : <AvailablePlans />}
             </div>
+
+            {activeMenu === tabMenu[1] && <PaymentHistory />}
         </main>
     </div>
   )

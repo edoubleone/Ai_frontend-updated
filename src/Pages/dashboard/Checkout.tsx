@@ -3,18 +3,17 @@ import { Download } from 'lucide-react';
 
 const Checkout = () => {
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen w-full">
       <div className="w-full mx-auto">
-        {/* Header with Download Button */}
-        <div className="flex justify-end mb-6">
-          <button type='button' className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-            <Download size={16} />
-            <span className="text-sm">Download Invoice</span>
-          </button>
-        </div>
 
         {/* Main Invoice Card */}
         <div className="bg-white rounded-lg p-6 md:p-8 flex flex-col gap-y-5">
+          <div className="flex justify-end mb-6">
+            <button type='button' className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
+              <Download size={16} />
+              <span className="text-sm">Download Invoice</span>
+            </button>
+          </div>
           {/* Pricing Plan Header */}
           <section className='border border-gray-200 flex flex-col p-3 rounded-2xl'>
             <div className="flex items-center bg-gray-50 rounded-lg px-4 py-3 justify-between mb-2">
