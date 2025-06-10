@@ -77,7 +77,7 @@ export function AppSidebar({
       )}
     >
       <div className="flex items-center justify-between">
-        <Link to={"/dashboard"} className="mt-6">
+        <Link to={"/"} className="mt-6">
           <img src="/kool_ai.png" width={103} height={38} alt="Kool AI logo" />
         </Link>
 

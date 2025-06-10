@@ -8,7 +8,7 @@ const HowItWorksSection = () => {
             description: "Sign up in a few clicks and get access to everything you need, no tech skills required."
         },
         {
-            title: "Build Your Bot",
+            title: "Build An AI Assistant",
             description: "Customize your bot to match your goals. From replies to tone, to remain consistent ."
         },
         {

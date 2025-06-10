@@ -42,7 +42,7 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
         )}
         <div className={`flex items-center relative `}>
           {icon && iconposition === "left" && (
-            <span className="absolute left-[16px] top-1/2 -translate-y-1/2">
+            <span className="absolute left-[16px] top-0 bottom-0 flex items-center">
               {icon}
             </span>
           )}
@@ -58,7 +58,7 @@ const SecondaryInput = React.forwardRef<HTMLInputElement, SecondaryInputProps>(
             {...restProps}
           />
           {icon && iconposition === "right" && (
-            <span className="absolute right-[16px] top-1/2 -translate-y-1/2">
+            <span className="absolute right-[16px] top-0 bottom-0 flex items-center">
               {icon}
             </span>
           )}
