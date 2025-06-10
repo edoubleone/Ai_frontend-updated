@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const faqs = [
   {
     id: "item-1",
-    question: "What types of AI solutions does Argentic AI offer?",
+    question: "What types of AI solutions does KoolAI offer?",
     answer:
       "We provide machine learning, automation, data analytics, and custom AI software tailored to your industry needs.",
   },
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     id: "item-3",
-    question: "Is my data secure with Argentic AI?",
+    question: "Is my data secure with KoolAI?",
     answer:
       "Absolutely. We use enterprise-grade security with end-to-end encryption, GDPR compliance, and SOC 2 certification. Your data is stored securely and never shared with third parties.",
   },
@@ -74,7 +74,7 @@ export function EnhancedFAQSection() {
                 value={faq.id}
                 className="bg-white rounded-lg border border-gray-200 px-6 shadow-sm"
               >
-                <AccordionTrigger className="text-left font-normal text-xl text-gray-900 hover:text-blue-600 py-6">
+                <AccordionTrigger className="text-left font-normal text-[#2E2E2E]">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="font-normal text-sm pb-6  leading-relaxed">

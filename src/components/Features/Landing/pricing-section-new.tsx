@@ -1,7 +1,7 @@
-
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, Info } from 'lucide-react';
+import { Check, Info } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -29,9 +29,9 @@ const PricingTable = () => {
         unlimitedConversation: false,
         restAPI: false,
         liveAgentTransfer: false,
-        fineTuning: false
+        fineTuning: false,
       },
-      upgradePrice: 29
+      upgradePrice: 29,
     },
     {
       name: "Basic",
@@ -55,9 +55,9 @@ const PricingTable = () => {
         unlimitedConversation: false,
         restAPI: false,
         liveAgentTransfer: false,
-        fineTuning: false
+        fineTuning: false,
       },
-      upgradePrice: 29
+      upgradePrice: 29,
     },
     {
       name: "Standard",
@@ -81,9 +81,9 @@ const PricingTable = () => {
         unlimitedConversation: false,
         restAPI: false,
         liveAgentTransfer: false,
-        fineTuning: false
+        fineTuning: false,
       },
-      upgradePrice: 29
+      upgradePrice: 29,
     },
     {
       name: "Professional",
@@ -107,9 +107,9 @@ const PricingTable = () => {
         unlimitedConversation: true,
         restAPI: true,
         liveAgentTransfer: true,
-        fineTuning: true
+        fineTuning: true,
       },
-      upgradePrice: 29
+      upgradePrice: 29,
     },
     {
       name: "Enterprise",
@@ -134,10 +134,10 @@ const PricingTable = () => {
         unlimitedConversation: true,
         restAPI: true,
         liveAgentTransfer: true,
-        fineTuning: true
+        fineTuning: true,
       },
-      upgradePrice: 29
-    }
+      upgradePrice: 29,
+    },
   ];
 
   const featureRows = [
@@ -147,38 +147,70 @@ const PricingTable = () => {
     { key: "chatHistory", label: "Chat history", hasTooltip: false },
     { key: "faq", label: "FAQ", hasTooltip: false },
     { key: "assistantSecurity", label: "Assistant Security", hasTooltip: true },
-    { key: "collectLeads", label: "Collect and export leads", hasTooltip: false },
+    {
+      key: "collectLeads",
+      label: "Collect and export leads",
+      hasTooltip: false,
+    },
     { key: "modelGPT", label: "Model GPT assistant", hasTooltip: false },
-    { key: "sendLeads", label: "Send collected leads to your email", hasTooltip: false },
+    {
+      key: "sendLeads",
+      label: "Send collected leads to your email",
+      hasTooltip: false,
+    },
     { key: "customisation", label: "Customisation", hasTooltip: false },
-    { key: "sendDirectly", label: "Send collected leads directly in your personal messengers", hasTooltip: true },
-    { key: "unlimitedConversation", label: "Unlimited conversation", hasTooltip: true },
+    {
+      key: "sendDirectly",
+      label: "Send collected leads directly in your personal messengers",
+      hasTooltip: true,
+    },
+    {
+      key: "unlimitedConversation",
+      label: "Unlimited conversation",
+      hasTooltip: true,
+    },
     { key: "restAPI", label: "Rest API", hasTooltip: true },
-    { key: "liveAgentTransfer", label: "Live agent transfer", hasTooltip: true },
-    { key: "fineTuning", label: "Fine tuning", hasTooltip: true }
+    {
+      key: "liveAgentTransfer",
+      label: "Live agent transfer",
+      hasTooltip: true,
+    },
+    { key: "fineTuning", label: "Fine tuning", hasTooltip: true },
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
       {/* Header */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-foreground mb-4">Choose your plan</h2>
-        <p className="text-muted-foreground mb-8">Flexible Plans for Every Business</p>
-        
+        <h2 className="text-4xl font-bold text-foreground mb-4">
+          Choose your plan
+        </h2>
+        <p className="text-muted-foreground mb-8">
+          Flexible Plans for Every Business
+        </p>
+
         {/* Toggle */}
         <div className="flex items-center justify-center gap-4 mb-12">
-          <span className={`text-sm ${!isAnnual ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+          <span
+            className={`text-sm ${
+              !isAnnual
+                ? "text-foreground font-medium"
+                : "text-muted-foreground"
+            }`}
+          >
             Monthly
           </span>
-          <button
-            type='button'
-            title='Annually'
-            onClick={() => setIsAnnual(!isAnnual)}
-            className="relative w-12 h-6 bg-primary rounded-full transition-colors"
+
+          <Switch
+            checked={isAnnual}
+            onCheckedChange={(checked) => setIsAnnual(checked)}
+          />
+
+          <span
+            className={`text-sm ${
+              isAnnual ? "text-foreground font-medium" : "text-muted-foreground"
+            }`}
           >
-            <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${isAnnual ? 'translate-x-6' : 'translate-x-0.5'}`} />
-          </button>
-          <span className={`text-sm ${isAnnual ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
             Annually
           </span>
         </div>
@@ -190,37 +222,55 @@ const PricingTable = () => {
           <div
             key={plan.name}
             className={`relative border rounded-lg p-6 ${
-              plan.isPopular 
-                ? 'border-primary bg-primary text-primary-foreground' 
-                : 'border-border bg-card'
+              plan.isPopular
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card"
             }`}
           >
             {index === 0 && (
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-lg -z-10" />
             )}
-            
+
             <div className="text-center">
-              <h3 className={`font-semibold mb-4 text-xl  ${plan.isPopular ? 'text-primary-foreground' : 'text-[#343CED]'}`}>
+              <h3
+                className={`font-semibold mb-4 text-xl  ${
+                  plan.isPopular ? "text-primary-foreground" : "text-[#343CED]"
+                }`}
+              >
                 {plan.name}
               </h3>
-              
+
               {plan.customText ? (
                 <div className="mb-6">
-                  <p className="text-sm text-muted-foreground">{plan.customText}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {plan.customText}
+                  </p>
                 </div>
               ) : (
                 <div className="mb-6">
                   <div className="flex items-baseline justify-center">
-                    <span className={`text-3xl font-bold ${plan.isPopular ? 'text-primary-foreground' : 'text-foreground'}`}>
+                    <span
+                      className={`text-3xl font-bold ${
+                        plan.isPopular
+                          ? "text-primary-foreground"
+                          : "text-foreground"
+                      }`}
+                    >
                       €{plan.price}
                     </span>
-                    <span className={`text-sm ml-1 ${plan.isPopular ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+                    <span
+                      className={`text-sm ml-1 ${
+                        plan.isPopular
+                          ? "text-primary-foreground/80"
+                          : "text-muted-foreground"
+                      }`}
+                    >
                       /{plan.period}
                     </span>
                   </div>
                 </div>
               )}
-              
+
               <Button
                 variant={plan.isPopular ? "secondary" : plan.buttonVariant}
                 className="w-full bg-[#343CED]"
@@ -237,20 +287,25 @@ const PricingTable = () => {
         <div className="bg-muted p-4">
           <h4 className="font-semibold text-foreground">Plan</h4>
         </div>
-        
+
         <div className="divide-y divide-border">
           {featureRows.map((row) => (
             <div key={row.key} className="grid grid-cols-6 items-center">
               <div className="p-4 font-medium text-foreground text-[14px] flex items-center gap-2">
-                <p className='w-[80%]'>{row.label}</p>
+                <p className="w-[80%]">{row.label}</p>
                 {row.hasTooltip && (
                   <Info className="w-4 h-4 text-muted-foreground" />
                 )}
               </div>
-              
+
               {plans.map((plan) => (
-                <div key={`${plan.name}-${row.key}`} className="p-4 text-center">
-                  {typeof plan.features[row.key as keyof typeof plan.features] === 'boolean' ? (
+                <div
+                  key={`${plan.name}-${row.key}`}
+                  className="p-4 text-center"
+                >
+                  {typeof plan.features[
+                    row.key as keyof typeof plan.features
+                  ] === "boolean" ? (
                     plan.features[row.key as keyof typeof plan.features] ? (
                       <Check className="w-5 h-5 text-primary mx-auto" />
                     ) : (
@@ -258,7 +313,11 @@ const PricingTable = () => {
                     )
                   ) : (
                     <span className="text-sm text-foreground">
-                      {plan.features[row.key as keyof typeof plan.features] as string}
+                      {
+                        plan.features[
+                          row.key as keyof typeof plan.features
+                        ] as string
+                      }
                     </span>
                   )}
                 </div>
@@ -266,7 +325,7 @@ const PricingTable = () => {
             </div>
           ))}
         </div>
-        
+
         {/* Upgrade Section */}
         <div className="grid grid-cols-6 border-t border-border">
           <div className="p-4">
@@ -274,11 +333,13 @@ const PricingTable = () => {
               Remove the "Powered by Resonoon" badge per assistant per month
             </p>
           </div>
-          
+
           {plans.map((plan) => (
             <div key={`upgrade-${plan.name}`} className="p-4 text-center">
               <div className="mb-2">
-                <span className="text-lg font-bold text-foreground">€{plan.upgradePrice}</span>
+                <span className="text-lg font-bold text-foreground">
+                  €{plan.upgradePrice}
+                </span>
                 <Info className="w-4 h-4 text-muted-foreground inline ml-1" />
               </div>
               <Button variant="default" size="sm" className="w-full">
@@ -288,11 +349,11 @@ const PricingTable = () => {
           ))}
         </div>
       </div>
-      
+
       {/* Footer */}
       <div className="text-center mt-8">
         <p className="text-sm text-muted-foreground">
-          Don't know which plan is right for you? Use the{' '}
+          Don't know which plan is right for you? Use the{" "}
           <a href="#" className="text-primary hover:underline">
             ROI Calculator
           </a>

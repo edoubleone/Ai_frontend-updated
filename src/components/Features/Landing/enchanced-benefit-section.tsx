@@ -96,10 +96,10 @@ export function EnhancedBenefitsSection() {
         >
           <h2 className=" font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
             Benefits of subscribing to{" "}
-            <span className="text-blue-800">ArgenticAI</span>.
+            <span className="text-blue-800">KoolAI</span>.
           </h2>
           <p className="mx-auto w-[90%] md:w-[75%] lg:w-[60%] font-light text-sm text-gray-600 leading-relaxed">
-            Subscribe to ArgenticAI and unlock advanced AI-powered insights,
+            Subscribe to KoolAI and unlock advanced AI-powered insights,
             streamline your workflow, save valuable time, and enhance
             decision-making. Enjoy personalized support and continuous updates
             designed to help you stay ahead, increase productivity, and achieve
