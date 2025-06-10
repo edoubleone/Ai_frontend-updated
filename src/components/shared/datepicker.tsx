@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "../../lib/utils";
-
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Label } from "../ui/label";
@@ -54,17 +53,11 @@ export function DatePicker({
 
   const years = React.useMemo(() => {
     const currentYear = new Date().getFullYear();
-    return Array.from(
-      { length: currentYear - 1900 + 101 },
-      (_, i) => currentYear - i + 100
-    );
+    return Array.from({ length: 101 }, (_, i) => currentYear - i);
   }, []);
 
   const months = React.useMemo(() => {
-    if (year) {
-      return Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
-    }
-    return [];
+    return Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
   }, [year]);
 
   React.useEffect(() => {
@@ -80,9 +73,7 @@ export function DatePicker({
 
   const handleDateChange = (selectedDate: Date | undefined) => {
     setDate(selectedDate);
-    if (onDateChange) {
-      onDateChange(selectedDate);
-    }
+    onDateChange?.(selectedDate);
     setOpen(false);
   };
 
@@ -163,7 +154,7 @@ export function DatePicker({
           </div>
 
           <Calendar
-            month={new Date(year, month)}
+            defaultMonth={new Date(year, month)}
             onMonthChange={(newMonth: Date) => {
               setMonth(newMonth.getMonth());
               setYear(newMonth.getFullYear());
