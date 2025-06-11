@@ -51,7 +51,7 @@ const ChatBubble: React.FC<IAssistantMessage & { responding?: boolean }> = ({
                   "text-white": isUser,
                 })}
               >
-                {created_at && format(parseISO(created_at.toISOString()), "hh:mma")}
+                {created_at && format(parseISO(created_at), "hh:mma")}
               </p>
             </>
           )}

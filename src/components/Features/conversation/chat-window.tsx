@@ -79,7 +79,7 @@ const ChatWindow = ({
             id: Date.now(),
             role: "user",
             content: newMessage.message,
-            created_at: new Date(),
+            created_at: new Date().toISOString,
           },
         ]
       );
@@ -193,7 +193,7 @@ const ChatWindow = ({
               id={Date.now()}
               role="AI"
               content=""
-              created_at={new Date()}
+              created_at={new Date().toISOString()}
               responding={true}
             />
           )}

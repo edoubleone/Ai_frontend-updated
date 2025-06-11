@@ -95,7 +95,7 @@ const TestCustomerAssistant = () => {
           id: Date.now(),
           role: "user",
           content: newMessage,
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           origin: "outbound",
         },
       ]);
@@ -180,7 +180,7 @@ const TestCustomerAssistant = () => {
                   id={Date.now()}
                   role="assistant"
                   content=""
-                  created_at={new Date()}
+                  created_at={new Date().toISOString()}
                   responding={true}
                 />
               )}
