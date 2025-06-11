@@ -307,7 +307,7 @@ const PricingTable = () => {
                 {plans.map((plan) => (
                   <td
                     key={`${plan.name}-${row.key}`}
-                    className="p-4 text-center"
+                    className="p-4"
                   >
                     {typeof plan.features[
                       row.key as keyof typeof plan.features
@@ -316,7 +316,6 @@ const PricingTable = () => {
                         <img
                           src="/icon/blue-check.svg"
                           width={20}
-                          className="mx-auto"
                           alt="check"
                         />
                       ) : (
@@ -327,7 +326,6 @@ const PricingTable = () => {
                         <img
                           src="/icon/blue-check.svg"
                           width={20}
-                          className="mx-auto"
                           alt="check"
                         />
                         {
