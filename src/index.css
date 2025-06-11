@@ -28,6 +28,13 @@
 
 @font-face {
   font-family: 'Avenir LT Std';
+  src: url('/fonts/AvenirLTStd95Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std';
   src: url('/fonts/AvenirLTStd85Heavy.otf') format('opentype');
   font-weight: 600;
   font-style: normal;

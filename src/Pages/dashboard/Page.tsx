@@ -23,7 +23,7 @@ const DashboardIndexPage = () => {
     botType: "Text",
     assistantLanguage: "English",
     status: "Bot created",
-    share_url: assistant.share_url
+    share_url: assistant.share_url,
   }));
 
   return (
