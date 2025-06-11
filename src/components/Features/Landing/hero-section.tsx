@@ -1,26 +1,41 @@
-import telegram from "/images/telegram.png";
-import email from "/images/email 2.png";
-import instagram from "/images/instagram.png";
-import linktree from "/images/linktree.png";
-import messanger from "/images/messanger.png";
-import slack from "/images/slack.png";
-import soundwave from "/images/soundwave.png";
-import twitter from "/images/twitter.png";
-import whatsapp from "/images/WhatsApp-White-Dark-Background-Logo.wine 3.png";
 import Button from "@/components/shared/button";
 import { Link } from "react-router-dom";
+import email from "@/assets/images/email.png";
+import telegram from "@/assets/images/telegram.png";
+import voice from "@/assets/images/voice.png";
+
+import whatsapp from "@/assets/images/whatsapp.png";
+import x from "@/assets/images/x-icon.png";
+import slack from "@/assets/images/slack-icon.png";
+
+import restapi from "@/assets/images/rest-api.png";
+import messenger from "@/assets/images/messenger-icon.png";
+
+import instagram from "@/assets/images/ig-icon.png";
+import Slider from "react-slick";
 
 const icons = [
   email,
   whatsapp,
   telegram,
-  messanger,
+  messenger,
   slack,
   instagram,
-  twitter,
-  linktree,
-  soundwave,
+  x,
+  restapi,
+  voice,
 ];
+
+const settings = {
+  dots: false,
+  infinite: true,
+  slidesToShow: 9,
+  slidesToScroll: 8,
+  cssEase: "linear",
+  autoplay: true,
+  autoplaySpeed: 1000,
+  pauseOnHover: false,
+};
 
 const HeroSection = () => {
   return (
@@ -53,19 +68,21 @@ const HeroSection = () => {
             </Link>
           </div>
 
-          <div className="flex items-center overflow-x-auto gap-x-6">
-            {icons.map((icon, index) => (
-              <img
-                src={icon}
-                key={index}
-                alt="social icon"
-                width={50}
-                height={50}
-              />
-            ))}
+          <div className="overflow-hidden max-w-2xl mx-auto">
+          <Slider {...settings}>
+  {icons.map((icon, iconIndex) => (
+    <div key={iconIndex} style={{ marginRight: 24 }}>
+      <img
+        src={icon}
+        alt="social icon"
+        width={50}
+        height={50}
+        loading="lazy"
+      />
+    </div>
+  ))}
+</Slider>
           </div>
-
-          {/* <div className="pb-32" /> */}
         </div>
       </div>
     </div>
