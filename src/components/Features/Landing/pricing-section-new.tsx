@@ -251,8 +251,7 @@ const PricingTable = () => {
                     className={`text-3xl whitespace-nowrap font-black text-dark
                 `}
                   >
-                    {currencySymbol || "$"}{" "}
-                    {plan.price}
+                    {currencySymbol || "$"} {plan.price}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>
                     /{plan.period}
@@ -305,10 +304,7 @@ const PricingTable = () => {
                   )}
                 </td>
                 {plans.map((plan) => (
-                  <td
-                    key={`${plan.name}-${row.key}`}
-                    className="p-4"
-                  >
+                  <td key={`${plan.name}-${row.key}`} className="p-4">
                     {typeof plan.features[
                       row.key as keyof typeof plan.features
                     ] === "boolean" ? (
@@ -342,14 +338,15 @@ const PricingTable = () => {
             <tr className="border-t border-border">
               <td className="p-4">
                 <p className="text-sm max-w-56 font-semibold text-[#2E2E2E]">
-                  Remove the "Powered by Resonoon" badge per assistant per month
+                  Powered by E-Doubleone Inc
                 </p>
               </td>
               {plans.map((plan) => (
                 <td key={`upgrade-${plan.name}`} className="p-4 text-center">
                   <div className="mb-2 flex gap-2.5 items-center">
                     <span className="text-3xl font-bold text-foreground">
-                      {currencySymbol}{plan.upgradePrice}
+                      {currencySymbol}
+                      {plan.upgradePrice}
                     </span>
                     <svg
                       width="24"
