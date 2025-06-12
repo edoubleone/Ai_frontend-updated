@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const MakePlanPayment = ({
@@ -21,25 +22,30 @@ const MakePlanPayment = ({
 }) => {
   const { exchangeRate, currencySymbol, currencyCode } = useCurrency();
 
-  const { mutate: initializePaystack } = useMutation({
-    mutationFn: AsyncInitializePaystack,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: initializePaystack, isPending: initializingPaystack } =
+    useMutation({
+      mutationFn: AsyncInitializePaystack,
+      onSuccess: () => {
+        toast.success("Payment initialized! Proceeding to checkout..");
+        reset();
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
 
-  const { mutate: initializeStripe } = useMutation({
-    mutationFn: AsyncInitializeStripe,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: initializeStripe, isPending: initializingStripe } =
+    useMutation({
+      mutationFn: AsyncInitializeStripe,
+      onSuccess: (data) => {
+        toast.success("Payment initialized! Proceeding to checkout..");
+        window.location.href = data.checkout_url;
+        reset();
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
 
   const {
     control,
@@ -68,13 +74,13 @@ const MakePlanPayment = ({
     if (getValues("paymentMethod") === "paystack") {
       initializePaystack({
         email: getValues("email"),
-        amount: Number((plan.price * exchangeRate).toFixed(2)),
+        amount: Number((plan.price * exchangeRate).toFixed(0)),
         currency: currencyCode,
       });
     } else if (getValues("paymentMethod") === "stripe") {
       initializeStripe({
         email: getValues("email"),
-        amount: Number((plan.price * exchangeRate).toFixed(2)),
+        amount: Number((plan.price * exchangeRate).toFixed(0)),
         currency: currencyCode,
       });
     }
@@ -113,8 +119,7 @@ const MakePlanPayment = ({
                     htmlFor="stripe"
                     className="inline-flex items-center gap-1.5"
                   >
-                    <img src="/icon/stripe.png" width={24} alt="stripe" />{" "}
-                    Stripe
+                    <img src="/icon/stripe.png" width={40} alt="stripe" />{" "}
                   </Label>
                 </div>
               </RadioGroup>
@@ -132,7 +137,7 @@ const MakePlanPayment = ({
           <SecondaryInput
             label="Amount"
             value={`${currencySymbol}${Number(
-              (plan.price * exchangeRate).toFixed(2)
+              (plan.price * exchangeRate).toFixed(0)
             )}`}
             readOnly
             disabled
@@ -140,7 +145,12 @@ const MakePlanPayment = ({
           />
 
           <DialogFooter>
-            <Button disabled={!isValid} type="submit" wrapperclass="!max-w-[180px]">
+            <Button
+              disabled={!isValid}
+              loading={initializingPaystack || initializingStripe}
+              type="submit"
+              wrapperclass="!max-w-[180px]"
+            >
               Save
             </Button>
           </DialogFooter>

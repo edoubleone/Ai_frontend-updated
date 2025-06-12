@@ -232,7 +232,7 @@ const AvailablePlans = () => {
                     {plan.price !== null
                       ? `${currencySymbol || "$"} ${(
                           plan.price * exchangeRate
-                        ).toFixed(2)}`
+                        ).toFixed(0)}`
                       : "Contact us"}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>

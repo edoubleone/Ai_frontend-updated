@@ -66,7 +66,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
             <Button
               variant={"ghost"}
               wrapperclass="!w-fit"
-              className="!rounded-[1.91px] !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
+              className="!rounded-[1.91px] !whitespace-nowrap !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
             >
               Most Recent
               <ChevronDown className="size-5" />
