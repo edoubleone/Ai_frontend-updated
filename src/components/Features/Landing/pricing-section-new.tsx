@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import Button from "@/components/shared/button";
 import useCurrency from "@/hooks/use-currency";
+import { useAuth } from "@/context/auth-provider";
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
+  const { isAuthenticated } = useAuth();
 
-  const { currencySymbol } = useCurrency();
+  const { currencySymbol, exchangeRate } = useCurrency();
 
   const plans = [
     {
@@ -39,7 +41,7 @@ const PricingTable = () => {
       name: "Basic",
       price: 75,
       period: "month",
-      buttonText: "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -65,7 +67,7 @@ const PricingTable = () => {
       name: "Standard",
       price: 150,
       period: "month",
-      buttonText: "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: true,
       features: {
@@ -91,7 +93,7 @@ const PricingTable = () => {
       name: "Professional",
       price: 300,
       period: "month",
-      buttonText: "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -117,7 +119,7 @@ const PricingTable = () => {
       name: "Enterprise",
       price: null,
       period: "month",
-      buttonText: "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       customText: "Contact Sales",
@@ -184,10 +186,10 @@ const PricingTable = () => {
     <div className="max-w-7xl mx-auto px-4 py-16">
       {/* Header */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-foreground mb-4">
+        <h2 className="text-3xl sm:text-[48px] font-semibold text-black mb-4">
           Choose your plan
         </h2>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-[#737373] text-base mb-4">
           Flexible Plans for Every Business
         </p>
 
@@ -220,11 +222,11 @@ const PricingTable = () => {
 
       {/* Pricing Cards */}
       <div className="flex flex-wrap justify-center gap-4 mb-8">
-        <div className="bg-[url('/images/blue-gradient.png')] rounded-xl w-full bg-no-repeat bg-center bg-cover min-h-60 flex basis-full md:basis-auto md:w-48" />
+        <div className="bg-[url('/images/blue-gradient.png')] rounded-xl w-full bg-no-repeat bg-center bg-cover min-h-60 flex basis-full md:basis-auto md:w-72" />
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`relative w-full min-h-60 sm:w-48 border border-t-2 border-t-defaultBlue rounded-lg p-6 flex flex-col justify-between`}
+            className={`relative w-full min-h-60 sm:min-w-72 sm:w-fit border border-t-2 border-t-defaultBlue rounded-lg p-6 flex flex-col justify-between`}
           >
             <div className="text-start flex flex-col justify-between h-full">
               <div>
@@ -248,10 +250,12 @@ const PricingTable = () => {
               {!plan.customText && (
                 <div className="flex items-baseline">
                   <span
-                    className={`text-3xl whitespace-nowrap font-black text-dark
+                    className={`text-3xl font-black text-dark
                 `}
                   >
-                    {currencySymbol || "$"} {plan.price}
+                    {plan.price !== null
+                      ? `${currencySymbol || "$"} ${(plan.price * exchangeRate).toFixed(2)}`
+                      : "Contact us"}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>
                     /{plan.period}
