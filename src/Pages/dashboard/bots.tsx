@@ -28,6 +28,7 @@ const BotsPage = () => {
     assistantLanguage: "English",
     status: "Bot created",
     share_url: assistant.share_url,
+    share_whatsapp_url: assistant.share_whatsapp_url
   }));
 
   const filteredData = data.filter((row) =>
