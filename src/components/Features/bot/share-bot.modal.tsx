@@ -11,10 +11,18 @@ const ShareBotModal = ({
   url: string;
   whatsapp_url: string;
 }) => {
-  const handleCopy = () => {
-    if (url) navigator.clipboard.writeText(url);
-    if (whatsapp_url) navigator.clipboard.writeText(whatsapp_url);
-    toast.success("Link copied to clipboard!");
+  const handleCopyUrl = () => {
+    if (url) {
+      navigator.clipboard.writeText(url);
+      toast.success("Assistant link copied to clipboard!");
+    }
+  };
+
+  const handleCopyWhatsappUrl = () => {
+    if (whatsapp_url) {
+      navigator.clipboard.writeText(whatsapp_url);
+      toast.success("WhatsApp link copied to clipboard!");
+    }
   };
 
   return (
@@ -37,7 +45,7 @@ const ShareBotModal = ({
             <Button
               variant={"ghost"}
               size={"icon"}
-              onClick={handleCopy}
+              onClick={handleCopyUrl}
               title="Copy link"
             >
               <img src={copy} alt="copy icon" />
@@ -48,25 +56,27 @@ const ShareBotModal = ({
           value={url}
         />
 
-        <SecondaryInput
-          label="Get your WhatsApp demonstration link"
-          placeholder="Assistant WhatsApp Link"
-          type="text"
-          iconposition="right"
-          icon={
-            <Button
-              variant={"ghost"}
-              size={"icon"}
-              onClick={handleCopy}
-              title="Copy link"
-            >
-              <img src={copy} alt="copy icon" />
-            </Button>
-          }
-          readOnly
-          disabled
-          value={whatsapp_url}
-        />
+        {whatsapp_url && (
+          <SecondaryInput
+            label="Get your WhatsApp demonstration link"
+            placeholder="Assistant WhatsApp Link"
+            type="text"
+            iconposition="right"
+            icon={
+              <Button
+                variant={"ghost"}
+                size={"icon"}
+                onClick={handleCopyWhatsappUrl}
+                title="Copy link"
+              >
+                <img src={copy} alt="copy icon" />
+              </Button>
+            }
+            readOnly
+            disabled
+            value={whatsapp_url}
+          />
+        )}
       </div>
     </DialogContent>
   );
