@@ -3,6 +3,7 @@ import SecondaryInput from "@/components/shared/secondary-input";
 import { DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useAuth } from "@/context/auth-provider";
 import useCurrency from "@/hooks/use-currency";
 import {
   AsyncInitializePaystack,
@@ -23,6 +24,7 @@ const MakePlanPayment = ({
   closeModal: () => void;
 }) => {
   const { exchangeRate, currencySymbol, currencyCode } = useCurrency();
+  const { user } = useAuth();
 
   const { mutate: initializePaystack, isPending: initializingPaystack } =
     useMutation({
@@ -31,7 +33,7 @@ const MakePlanPayment = ({
         toast.success("Payment initialized! Proceeding to checkout..");
         window.location.href = data.authorization_url;
         reset();
-        closeModal()
+        closeModal();
       },
       onError: () => {
         toast.error("An error occurred. Please try again.");
@@ -56,16 +58,13 @@ const MakePlanPayment = ({
     reset,
     handleSubmit,
     getValues,
-    register,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
     defaultValues: {
-      email: "",
       paymentMethod: undefined,
     },
     resolver: zodResolver(
       z.object({
-        email: z.string().email().min(1, { message: "Enter your email" }),
         paymentMethod: z
           .string()
           .min(1, { message: "Select a payment method" }),
@@ -75,15 +74,17 @@ const MakePlanPayment = ({
   });
 
   const onSubmit = () => {
+    if (!user) return;
+
     if (getValues("paymentMethod") === "paystack") {
       initializePaystack({
-        email: getValues("email"),
+        email: user?.email,
         amount: Number((plan.price * exchangeRate).toFixed(0)),
         currency: currencyCode,
       });
     } else if (getValues("paymentMethod") === "stripe") {
       initializeStripe({
-        email: getValues("email"),
+        email: user?.email,
         amount: Number((plan.price * exchangeRate).toFixed(0)),
         currency: currencyCode,
       });
@@ -129,14 +130,14 @@ const MakePlanPayment = ({
               </RadioGroup>
             )}
           />
-          <SecondaryInput
+          {/* <SecondaryInput
             {...register("email")}
             errorText={errors.email?.message}
             error={!!errors.email}
             label="E-mail"
             placeholder="Enter email"
             type="email"
-          />
+          /> */}
 
           <SecondaryInput
             label="Amount"
@@ -155,7 +156,7 @@ const MakePlanPayment = ({
               type="submit"
               wrapperclass="!max-w-[180px]"
             >
-              Save
+              Pay Now
             </Button>
           </DialogFooter>
         </form>
