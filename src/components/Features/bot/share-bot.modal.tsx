@@ -4,9 +4,16 @@ import copy from "@/assets/icons/copy.svg";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-const ShareBotModal = ({ url }: { url: string }) => {
+const ShareBotModal = ({
+  url,
+  whatsapp_url,
+}: {
+  url: string;
+  whatsapp_url: string;
+}) => {
   const handleCopy = () => {
-    navigator.clipboard.writeText(url);
+    if (url) navigator.clipboard.writeText(url);
+    if (whatsapp_url) navigator.clipboard.writeText(whatsapp_url);
     toast.success("Link copied to clipboard!");
   };
 
@@ -39,6 +46,26 @@ const ShareBotModal = ({ url }: { url: string }) => {
           readOnly
           disabled
           value={url}
+        />
+
+        <SecondaryInput
+          label="Get your WhatsApp demonstration link"
+          placeholder="Assistant WhatsApp Link"
+          type="text"
+          iconposition="right"
+          icon={
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              onClick={handleCopy}
+              title="Copy link"
+            >
+              <img src={copy} alt="copy icon" />
+            </Button>
+          }
+          readOnly
+          disabled
+          value={whatsapp_url}
         />
       </div>
     </DialogContent>

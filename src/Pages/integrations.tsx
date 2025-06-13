@@ -1,15 +1,15 @@
-import email from "@/assets/images/email.png";
+// import email from "@/assets/images/email.png";
 import telegram from "@/assets/images/telegram.png";
 import voice from "@/assets/images/voice.png";
 import webchat from "@/assets/images/webchat.png";
 import whatsapp from "@/assets/images/whatsapp.png";
-import x from "@/assets/images/x-icon.png";
-import slack from "@/assets/images/slack-icon.png";
-import webhook from "@/assets/images/webhook.png";
-import restapi from "@/assets/images/rest-api.png";
-import messenger from "@/assets/images/messenger-icon.png";
+// import x from "@/assets/images/x-icon.png";
+// import slack from "@/assets/images/slack-icon.png";
+// import webhook from "@/assets/images/webhook.png";
+// import restapi from "@/assets/images/rest-api.png";
+// import messenger from "@/assets/images/messenger-icon.png";
 import imap from "@/assets/images/imap.png";
-import instagram from "@/assets/images/ig-icon.png";
+// import instagram from "@/assets/images/ig-icon.png";
 
 import EmailIntegrationSetup from "@/components/Features/integration/email-integration-setup";
 import IMapIntegrationSetup from "@/components/Features/integration/imap-integration-setup";
@@ -122,7 +122,7 @@ const Integrations = () => {
                       </div>
                     </div>
 
-                    <Switch />
+                    <Switch checked={channel.channel === "WhatsApp"} />
                   </div>
 
                   <Button
@@ -161,27 +161,15 @@ export default Integrations;
 
 const integrations: Integration[] = [
   {
-    title: "Notification channels",
-    description: "Channels where leads collected by your bots will be sent",
-    channels: [
-      {
-        channel: "Email",
-        description:
-          "Automatically send required information directly to your email. A great way to keep track of inquiries and follow-ups without missing any details.",
-        icon: email,
-      },
-      {
-        channel: "Webhook",
-        description:
-          "Call out to an external program based on events in your dialog.",
-        icon: webhook,
-      },
-    ],
-  },
-  {
     title: "Social channels",
     description: "Channels where your bots connect",
     channels: [
+      {
+        channel: "WhatsApp",
+        description:
+          "Deliver an automated and personalized experience to each customer in WhatsApp",
+        icon: whatsapp,
+      },
       {
         channel: "Voice connection",
         description: "Connect your bot to a phone number as support manager",
@@ -199,12 +187,7 @@ const integrations: Integration[] = [
           "Make your Bot available to customers by adding it in to a Telegram as a bot",
         icon: telegram,
       },
-      {
-        channel: "WhatsApp",
-        description:
-          "Deliver an automated and personalized experience to each customer in WhatsApp",
-        icon: whatsapp,
-      },
+
       {
         channel: "E-mail IMAP",
         description:
@@ -213,47 +196,66 @@ const integrations: Integration[] = [
       },
     ],
   },
-  {
-    title: "API channels",
-    description:
-      "Channels where external systems can interact with your bots via API",
-    channels: [
-      {
-        channel: "REST API",
-        description:
-          "Lorem ipsum dolor sit amet consectetur. Velit tortor eu sapien tellus placerat. Bibendum ultricies varius at in blandit vivamus. At nec eget tellus lacinia in. Amet.",
-        icon: restapi,
-      },
-    ],
-  },
-  {
-    title: "Available channels",
-    description: "Channels your bots are able to connect to and interact with",
-    channels: [
-      {
-        channel: "Facebook messenger",
-        description:
-          "Make your Bot available to customers through Facebook Messenger on the web or on native mobile clients",
-        icon: messenger,
-      },
-      {
-        channel: "Slack",
-        description:
-          "Make your Bot available to customers by adding it in to a Slack as a bot",
-        icon: slack,
-      },
-      {
-        channel: "Instagram",
-        description:
-          "Make your Bot available to customers by adding it in to a Instagram as a bot",
-        icon: instagram,
-      },
-      {
-        channel: "X",
-        description:
-          "Make your Bot available to customers by adding it in to a X as a bot",
-        icon: x,
-      },
-    ],
-  },
+  // {
+  //   title: "Notification channels",
+  //   description: "Channels where leads collected by your bots will be sent",
+  //   channels: [
+  //     {
+  //       channel: "Email",
+  //       description:
+  //         "Automatically send required information directly to your email. A great way to keep track of inquiries and follow-ups without missing any details.",
+  //       icon: email,
+  //     },
+  //     {
+  //       channel: "Webhook",
+  //       description:
+  //         "Call out to an external program based on events in your dialog.",
+  //       icon: webhook,
+  //     },
+  //   ],
+  // },
+
+  // {
+  //   title: "API channels",
+  //   description:
+  //     "Channels where external systems can interact with your bots via API",
+  //   channels: [
+  //     {
+  //       channel: "REST API",
+  //       description:
+  //         "Lorem ipsum dolor sit amet consectetur. Velit tortor eu sapien tellus placerat. Bibendum ultricies varius at in blandit vivamus. At nec eget tellus lacinia in. Amet.",
+  //       icon: restapi,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Available channels",
+  //   description: "Channels your bots are able to connect to and interact with",
+  //   channels: [
+  //     {
+  //       channel: "Facebook messenger",
+  //       description:
+  //         "Make your Bot available to customers through Facebook Messenger on the web or on native mobile clients",
+  //       icon: messenger,
+  //     },
+  //     {
+  //       channel: "Slack",
+  //       description:
+  //         "Make your Bot available to customers by adding it in to a Slack as a bot",
+  //       icon: slack,
+  //     },
+  //     {
+  //       channel: "Instagram",
+  //       description:
+  //         "Make your Bot available to customers by adding it in to a Instagram as a bot",
+  //       icon: instagram,
+  //     },
+  //     {
+  //       channel: "X",
+  //       description:
+  //         "Make your Bot available to customers by adding it in to a X as a bot",
+  //       icon: x,
+  //     },
+  //   ],
+  // },
 ];

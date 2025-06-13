@@ -3,6 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import Button from "@/components/shared/button";
 import useCurrency from "@/hooks/use-currency";
 import { useAuth } from "@/context/auth-provider";
+import { useNavigate } from "react-router-dom";
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -10,12 +11,14 @@ const PricingTable = () => {
 
   const { currencySymbol, exchangeRate } = useCurrency();
 
+  const navigate = useNavigate();
+
   const plans = [
     {
       name: "Free",
       price: 0,
       period: "month",
-      buttonText: "Your Plan",
+      buttonText: "Select Plan",
       buttonVariant: "lightLavender" as const,
       isPopular: false,
       features: {
@@ -41,7 +44,7 @@ const PricingTable = () => {
       name: "Basic",
       price: 75,
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -67,7 +70,7 @@ const PricingTable = () => {
       name: "Standard",
       price: 150,
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: true,
       features: {
@@ -93,7 +96,7 @@ const PricingTable = () => {
       name: "Professional",
       price: 300,
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -119,7 +122,7 @@ const PricingTable = () => {
       name: "Enterprise",
       price: null,
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       customText: "Contact Sales",
@@ -254,7 +257,9 @@ const PricingTable = () => {
                 `}
                   >
                     {plan.price !== null
-                      ? `${currencySymbol || "$"} ${(plan.price * exchangeRate).toFixed(2)}`
+                      ? `${currencySymbol || "$"} ${(
+                          plan.price * exchangeRate
+                        ).toFixed(0)}`
                       : "Contact us"}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>
@@ -263,7 +268,20 @@ const PricingTable = () => {
                 </div>
               )}
 
-              <Button variant={plan.buttonVariant}>{plan.buttonText}</Button>
+              <Button
+                onClick={() => {
+                  if (plan.name === "Try for Free") {
+                    navigate("/signup");
+                  } else if (plan.name === "Free") {
+                    navigate("/dashboard/payments");
+                  } else {
+                    navigate("/dashboard/payments");
+                  }
+                }}
+                variant={plan.buttonVariant}
+              >
+                {plan.buttonText}
+              </Button>
             </div>
           </div>
         ))}

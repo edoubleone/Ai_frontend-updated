@@ -41,7 +41,7 @@ const WhatsappSetup = () => {
         </Alert>
 
         <DialogFooter>
-          <Button wrapperclass="!max-w-[180px]">Continue with WhatsApp</Button>
+          <Button wrapperclass="!max-w-[180px] !hidden">Continue with WhatsApp</Button>
         </DialogFooter>
       </div>
     </DialogContent>

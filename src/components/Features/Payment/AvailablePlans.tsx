@@ -241,26 +241,33 @@ const AvailablePlans = () => {
                 </div>
               )}
 
-              <Button
-                onClick={() => {
-                  if (plan.buttonText === "Switch Plan") {
-                    handlePlanClick({
-                      price: plan?.price || 0,
-                      name: plan.name,
-                    });
-                  }
-                }}
-                variant={plan.buttonVariant}
-              >
-                {plan.buttonText}
-              </Button>
+              {plan.name !== "Enterprise" && (
+                <Button
+                  onClick={() => {
+                    if (plan.buttonText === "Switch Plan") {
+                      handlePlanClick({
+                        price: plan?.price || 0,
+                        name: plan.name,
+                      });
+                    }
+                  }}
+                  variant={plan.buttonVariant}
+                >
+                  {plan.buttonText}
+                </Button>
+              )}
             </div>
           </div>
         ))}
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {selectedPlan && <MakePlanPayment plan={selectedPlan} />}
+        {selectedPlan && (
+          <MakePlanPayment
+            closeModal={() => setIsOpen(false)}
+            plan={selectedPlan}
+          />
+        )}
       </Dialog>
     </div>
   );

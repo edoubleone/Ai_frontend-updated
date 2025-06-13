@@ -37,6 +37,7 @@ interface RowAssistant {
   assistantLanguage: string;
   status: string;
   share_url: string;
+  share_whatsapp_url: string;
 }
 
 interface DataTableProps {
@@ -229,7 +230,10 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
         onOpenChange={(open) => setAction(open ? "share" : null)}
       >
         {selectedRow && selectedRow.share_url && (
-          <ShareBotModal url={selectedRow.share_url} />
+          <ShareBotModal
+            whatsapp_url={selectedRow.share_whatsapp_url}
+            url={selectedRow.share_url}
+          />
         )}
       </Dialog>
 

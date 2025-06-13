@@ -1,5 +1,3 @@
-// /payments/initialize
-
 import { MESSAGING_URL } from "@/utils";
 import apiClient from "../config/api";
 

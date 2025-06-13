@@ -18,6 +18,7 @@ interface DataType {
   assistantLanguage: string;
   status: string;
   share_url: string;
+  share_whatsapp_url: string;
 }
 
 interface DashboardBotsTableProps {

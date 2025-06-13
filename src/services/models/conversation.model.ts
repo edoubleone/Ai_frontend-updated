@@ -22,20 +22,21 @@ export interface IAssistant {
   created_at: string;
   last_message: string;
   share_url: string;
+  share_whatsapp_url: string;
 }
 
 export interface UserData {
-  id: number,
-  email: string,
-  full_name: string,
-  is_active: boolean
+  id: number;
+  email: string;
+  full_name: string;
+  is_active: boolean;
 }
 
 export interface IAssistantMessage {
-  id: number
-  role: "user" | "AI" | "assistant"
-  content: string
-  created_at: string
+  id: number;
+  role: "user" | "AI" | "assistant";
+  content: string;
+  created_at: string;
 }
 export interface CustomerHistory {
   history: IAssistantMessage[];

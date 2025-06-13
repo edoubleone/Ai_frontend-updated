@@ -17,20 +17,24 @@ import { z } from "zod";
 
 const MakePlanPayment = ({
   plan,
+  closeModal,
 }: {
   plan: { name: string; price: number };
+  closeModal: () => void;
 }) => {
   const { exchangeRate, currencySymbol, currencyCode } = useCurrency();
 
   const { mutate: initializePaystack, isPending: initializingPaystack } =
     useMutation({
       mutationFn: AsyncInitializePaystack,
-      onSuccess: () => {
+      onSuccess: (data) => {
         toast.success("Payment initialized! Proceeding to checkout..");
+        window.location.href = data.authorization_url;
         reset();
+        closeModal()
       },
-      onError: (error) => {
-        console.log(error);
+      onError: () => {
+        toast.error("An error occurred. Please try again.");
       },
     });
 
@@ -42,8 +46,8 @@ const MakePlanPayment = ({
         window.location.href = data.checkout_url;
         reset();
       },
-      onError: (error) => {
-        console.log(error);
+      onError: () => {
+        toast.error("An error occurred. Please try again.");
       },
     });
 
