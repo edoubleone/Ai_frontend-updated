@@ -79,7 +79,7 @@ const ChatWindow = ({
             id: Date.now(),
             role: "user",
             content: newMessage.message,
-            created_at: new Date().toISOString,
+            created_at: new Date().toISOString(),
           },
         ]
       );
