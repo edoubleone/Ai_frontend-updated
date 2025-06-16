@@ -108,25 +108,28 @@ const MakePlanPayment = ({
                 value={value}
                 className="grid grid-cols-2 gap-6"
               >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="paystack" id="paystack" />
-                  <Label
-                    htmlFor="paystack"
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <img src="/icon/paystack.svg" width={24} alt="paystack" />{" "}
-                    Paystack
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="stripe" id="stripe" />
-                  <Label
-                    htmlFor="stripe"
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <img src="/icon/stripe.png" width={40} alt="stripe" />{" "}
-                  </Label>
-                </div>
+                {currencyCode === "NGN" ? (
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="paystack" id="paystack" />
+                    <Label
+                      htmlFor="paystack"
+                      className="inline-flex items-center gap-1.5"
+                    >
+                      <img src="/icon/paystack.svg" width={24} alt="paystack" />{" "}
+                      Paystack
+                    </Label>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="stripe" id="stripe" />
+                    <Label
+                      htmlFor="stripe"
+                      className="inline-flex items-center gap-1.5"
+                    >
+                      <img src="/icon/stripe.png" width={40} alt="stripe" />{" "}
+                    </Label>
+                  </div>
+                )}
               </RadioGroup>
             )}
           />
