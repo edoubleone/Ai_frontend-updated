@@ -197,12 +197,12 @@ const AvailablePlans = () => {
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-4 mb-8">
-        <div className="bg-[url('/images/blue-gradient.png')] rounded-xl w-full bg-no-repeat bg-center bg-cover min-h-60 flex basis-full md:basis-auto" />
+      <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="bg-[url('/images/blue-gradient.png')] rounded-xl w-full bg-no-repeat bg-center bg-cover min-h-60 flex basis-full md:basis-auto md:w-72" />
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`relative w-full min-h-60 border border-t-2 border-t-defaultBlue rounded-lg p-6 flex flex-col justify-between`}
+            className={`relative w-full min-h-60 sm:min-w-72 sm:w-fit border border-t-2 border-t-defaultBlue rounded-lg p-6 flex flex-col justify-between`}
           >
             <div className="text-start flex flex-col justify-between h-full">
               <div>
@@ -231,12 +231,13 @@ const AvailablePlans = () => {
                   >
                     {plan.price !== null
                       ? `${currencySymbol || "$"} ${(
-                          plan.price * exchangeRate
+                          (isAnnual ? plan.price * 12 : plan.price) *
+                          exchangeRate
                         ).toFixed(0)}`
                       : "Contact us"}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>
-                    /{plan.period}
+                    /{isAnnual ? "year" : plan.period}
                   </span>
                 </div>
               )}
@@ -246,7 +247,9 @@ const AvailablePlans = () => {
                   onClick={() => {
                     if (plan.buttonText === "Switch Plan") {
                       handlePlanClick({
-                        price: plan?.price || 0,
+                        price: isAnnual
+                          ? (plan.price ?? 0) * 12
+                          : plan.price ?? 0,
                         name: plan.name,
                       });
                     }

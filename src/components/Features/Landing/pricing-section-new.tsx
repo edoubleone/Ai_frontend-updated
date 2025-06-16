@@ -258,12 +258,13 @@ const PricingTable = () => {
                   >
                     {plan.price !== null
                       ? `${currencySymbol || "$"} ${(
-                          plan.price * exchangeRate
+                          (isAnnual ? plan.price * 12 : plan.price) *
+                          exchangeRate
                         ).toFixed(0)}`
                       : "Contact us"}
                   </span>
                   <span className={`text-xs mt-auto text-[#737373]`}>
-                    /{plan.period}
+                    /{isAnnual ? "year" : plan.period}
                   </span>
                 </div>
               )}
