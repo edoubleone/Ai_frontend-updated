@@ -4,7 +4,7 @@ import ConversationsIcon from "@/components/shared/conversations-icon";
 import IntegrationsIcon from "@/components/shared/integration-icon";
 import PaymentIcon from "@/components/shared/payment-icon";
 import SettingsIcon from "@/components/shared/settings-icon";
-import SupportIcon from "@/components/shared/support-icon";
+
 import LogOutIcon from "@/components/shared/logout-icon";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
@@ -47,11 +47,6 @@ const navigationItems = [
 ];
 
 const footerItems = [
-  {
-    title: "Help and Support",
-    url: "/dashboard/help",
-    icon: SupportIcon,
-  },
   {
     title: "Logout",
     icon: LogOutIcon,
