@@ -15,15 +15,18 @@ import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import type { CurrencyCode, SelectedPlan } from "./AvailablePlans";
 
 const MakePlanPayment = ({
   plan,
   closeModal,
+  isAnnual,
 }: {
-  plan: { name: string; price: number };
+  plan: SelectedPlan;
+  isAnnual: boolean;
   closeModal: () => void;
 }) => {
-  const { exchangeRate, currencySymbol, currencyCode } = useCurrency();
+  const { currencySymbol, currencyCode } = useCurrency();
   const { user } = useAuth();
 
   const { mutate: initializePaystack, isPending: initializingPaystack } =
@@ -76,17 +79,26 @@ const MakePlanPayment = ({
   const onSubmit = () => {
     if (!user) return;
 
+    const code = currencyCode.toLowerCase() as "ngn" | "usd";
+    const prices = plan.price[code];
+    const amount = isAnnual ? prices?.yearly : prices?.monthly;
+
+    if (amount == null) {
+      toast.error("Invalid plan amount. Please try again.");
+      return;
+    }
+
     if (getValues("paymentMethod") === "paystack") {
       initializePaystack({
         email: user?.email,
-        amount: Number((plan.price * exchangeRate).toFixed(0)),
-        currency: currencyCode,
+        amount: amount,
+        currency: code.toUpperCase(),
       });
     } else if (getValues("paymentMethod") === "stripe") {
       initializeStripe({
         email: user?.email,
-        amount: Number((plan.price * exchangeRate).toFixed(0)),
-        currency: currencyCode,
+        amount: amount,
+        currency: code.toUpperCase(),
       });
     }
   };
@@ -144,9 +156,11 @@ const MakePlanPayment = ({
 
           <SecondaryInput
             label="Amount"
-            value={`${currencySymbol}${Number(
-              (plan.price * exchangeRate).toFixed(0)
-            )}`}
+            value={`${currencySymbol}${
+              isAnnual
+                ? plan.price[currencyCode.toLowerCase() as CurrencyCode]?.yearly
+                : plan.price[currencyCode.toLowerCase() as CurrencyCode]?.monthly
+            }`}
             readOnly
             disabled
             type="text"

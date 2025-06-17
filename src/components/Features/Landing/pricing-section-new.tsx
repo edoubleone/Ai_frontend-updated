@@ -4,21 +4,31 @@ import Button from "@/components/shared/button";
 import useCurrency from "@/hooks/use-currency";
 import { useAuth } from "@/context/auth-provider";
 import { useNavigate } from "react-router-dom";
+import type { CurrencyCode, SelectedPlan } from "../Payment/AvailablePlans";
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const { isAuthenticated } = useAuth();
 
-  const { currencySymbol, exchangeRate } = useCurrency();
+  const { currencySymbol, currencyCode } = useCurrency();
 
   const navigate = useNavigate();
 
   const plans = [
     {
       name: "Free",
-      price: 0,
+      price: {
+        usd: {
+          monthly: 0,
+          yearly: 0,
+        },
+        ngn: {
+          monthly: 0,
+          yearly: 0,
+        },
+      },
       period: "month",
-      buttonText: "Select Plan",
+      buttonText: "Your Plan",
       buttonVariant: "lightLavender" as const,
       isPopular: false,
       features: {
@@ -38,13 +48,31 @@ const PricingTable = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Basic",
-      price: 75,
+      price: {
+        usd: {
+          monthly: 75,
+          yearly: 825,
+        },
+        ngn: {
+          monthly: 3000,
+          yearly: 30000,
+        },
+      },
       period: "month",
-      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -64,13 +92,31 @@ const PricingTable = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Standard",
-      price: 150,
+      price: {
+        usd: {
+          monthly: 150,
+          yearly: 1650,
+        },
+        ngn: {
+          monthly: 5000,
+          yearly: 50000,
+        },
+      },
       period: "month",
-      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: true,
       features: {
@@ -90,13 +136,31 @@ const PricingTable = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Professional",
-      price: 300,
+      price: {
+        usd: {
+          monthly: 300,
+          yearly: 3300,
+        },
+        ngn: {
+          monthly: 8000,
+          yearly: 80000,
+        },
+      },
       period: "month",
-      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -116,13 +180,31 @@ const PricingTable = () => {
         liveAgentTransfer: true,
         fineTuning: true,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Enterprise",
-      price: null,
+      price: {
+        usd: {
+          monthly: 400,
+          yearly: 4000,
+        },
+        ngn: {
+          monthly: 13500,
+          yearly: 135000,
+        },
+      },
       period: "month",
-      buttonText: isAuthenticated ? "Select Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       customText: "Contact Sales",
@@ -143,7 +225,16 @@ const PricingTable = () => {
         liveAgentTransfer: true,
         fineTuning: true,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
   ];
 
@@ -184,6 +275,18 @@ const PricingTable = () => {
     },
     { key: "fineTuning", label: "Fine tuning", hasTooltip: true },
   ];
+
+   const getPrice = (plan: SelectedPlan) => {
+      const code = currencyCode.toLowerCase() as CurrencyCode;
+      const prices = plan?.price[code];
+      return isAnnual ? prices?.yearly : prices?.monthly;
+    };
+
+    const getUpgradePrice = (plan: SelectedPlan) => {
+      const code = currencyCode.toLowerCase() as CurrencyCode;
+      const prices = plan?.upgradePrice?.[code];
+      return isAnnual ? prices?.yearly : prices?.monthly;
+    };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
@@ -241,33 +344,27 @@ const PricingTable = () => {
                   {plan.name}
                 </h3>
 
-                {plan.customText && (
+                {/* {plan.customText && (
                   <div className="mb-6">
                     <p className="text-sm font-medium underline text-defaultBlue">
                       {plan.customText}
                     </p>
                   </div>
-                )}
+                )} */}
               </div>
 
-              {!plan.customText && (
-                <div className="flex items-baseline">
-                  <span
-                    className={`text-3xl font-black text-dark
+              <div className="flex items-baseline">
+                <span
+                  className={`text-3xl font-black text-dark
                 `}
-                  >
-                    {plan.price !== null
-                      ? `${currencySymbol || "$"} ${(
-                          (isAnnual ? plan.price * 12 : plan.price) *
-                          exchangeRate
-                        ).toFixed(0)}`
-                      : "Contact us"}
-                  </span>
-                  <span className={`text-xs mt-auto text-[#737373]`}>
-                    /{isAnnual ? "year" : plan.period}
-                  </span>
-                </div>
-              )}
+                >
+                  {currencySymbol}
+                  {getPrice(plan)}
+                </span>
+                <span className={`text-xs mt-auto text-[#737373]`}>
+                  /{isAnnual ? "year" : plan.period}
+                </span>
+              </div>
 
               <Button
                 onClick={() => {
@@ -369,7 +466,7 @@ const PricingTable = () => {
                   <div className="mb-2 flex gap-2.5 items-center">
                     <span className="text-3xl font-bold text-foreground">
                       {currencySymbol}
-                      {plan.upgradePrice}
+                      {getUpgradePrice(plan)}
                     </span>
                     <svg
                       width="24"

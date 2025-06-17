@@ -6,23 +6,53 @@ import { useAuth } from "@/context/auth-provider";
 import { Dialog } from "@/components/ui/dialog";
 import MakePlanPayment from "./make-payment";
 
-interface Plan {
+export type CurrencyCode = "usd" | "ngn";
+
+export interface SelectedPlan {
   name: string;
-  price: number;
+  price: {
+    usd: {
+      monthly: number;
+      yearly: number;
+    };
+    ngn: {
+      monthly: number;
+      yearly: number;
+    };
+  };
+  upgradePrice?: {
+    usd: {
+      monthly: number;
+      yearly: number;
+    };
+    ngn: {
+      monthly: number;
+      yearly: number;
+    };
+  };
 }
 
 const AvailablePlans = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const { isAuthenticated } = useAuth();
 
-  const { currencySymbol, exchangeRate } = useCurrency();
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const { currencySymbol, currencyCode } = useCurrency();
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const plans = [
     {
       name: "Free",
-      price: 0,
+      price: {
+        usd: {
+          monthly: 0,
+          yearly: 0,
+        },
+        ngn: {
+          monthly: 0,
+          yearly: 0,
+        },
+      },
       period: "month",
       buttonText: "Your Plan",
       buttonVariant: "lightLavender" as const,
@@ -44,11 +74,29 @@ const AvailablePlans = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Basic",
-      price: 75,
+      price: {
+        usd: {
+          monthly: 75,
+          yearly: 825,
+        },
+        ngn: {
+          monthly: 3000,
+          yearly: 30000,
+        },
+      },
       period: "month",
       buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
@@ -70,11 +118,29 @@ const AvailablePlans = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Standard",
-      price: 150,
+      price: {
+        usd: {
+          monthly: 150,
+          yearly: 1650,
+        },
+        ngn: {
+          monthly: 5000,
+          yearly: 50000,
+        },
+      },
       period: "month",
       buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
@@ -96,11 +162,29 @@ const AvailablePlans = () => {
         liveAgentTransfer: false,
         fineTuning: false,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Professional",
-      price: 300,
+      price: {
+        usd: {
+          monthly: 300,
+          yearly: 3300,
+        },
+        ngn: {
+          monthly: 8000,
+          yearly: 80000,
+        },
+      },
       period: "month",
       buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
@@ -122,11 +206,29 @@ const AvailablePlans = () => {
         liveAgentTransfer: true,
         fineTuning: true,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
     {
       name: "Enterprise",
-      price: null,
+      price: {
+        usd: {
+          monthly: 400,
+          yearly: 4000,
+        },
+        ngn: {
+          monthly: 13500,
+          yearly: 135000,
+        },
+      },
       period: "month",
       buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
       buttonVariant: "solid" as const,
@@ -149,13 +251,28 @@ const AvailablePlans = () => {
         liveAgentTransfer: true,
         fineTuning: true,
       },
-      upgradePrice: 29,
+      upgradePrice: {
+        usd: {
+          monthly: 25,
+          yearly: 25,
+        },
+        ngn: {
+          monthly: 1000,
+          yearly: 8000,
+        },
+      },
     },
   ];
 
-  const handlePlanClick = (plan: Plan) => {
+  const handlePlanClick = (plan: SelectedPlan) => {
     setSelectedPlan(plan);
     setIsOpen(true);
+  };
+
+  const getPrice = (plan: SelectedPlan) => {
+    const code = currencyCode.toLowerCase() as CurrencyCode;
+    const prices = plan?.price[code];
+    return isAnnual ? prices?.yearly : prices?.monthly;
   };
 
   return (
@@ -214,51 +331,38 @@ const AvailablePlans = () => {
                   {plan.name}
                 </h3>
 
-                {plan.customText && (
+                {/* {plan.customText && (
                   <div className="mb-6">
                     <p className="text-sm font-medium underline text-defaultBlue">
                       {plan.customText}
                     </p>
                   </div>
-                )}
+                )} */}
               </div>
 
-              {!plan.customText && (
-                <div className="flex items-baseline">
-                  <span
-                    className={`text-3xl font-black text-dark
+              <div className="flex items-baseline">
+                <span
+                  className={`text-3xl font-black text-dark
                 `}
-                  >
-                    {plan.price !== null
-                      ? `${currencySymbol || "$"} ${(
-                          (isAnnual ? plan.price * 12 : plan.price) *
-                          exchangeRate
-                        ).toFixed(0)}`
-                      : "Contact us"}
-                  </span>
-                  <span className={`text-xs mt-auto text-[#737373]`}>
-                    /{isAnnual ? "year" : plan.period}
-                  </span>
-                </div>
-              )}
-
-              {plan.name !== "Enterprise" && (
-                <Button
-                  onClick={() => {
-                    if (plan.buttonText === "Switch Plan") {
-                      handlePlanClick({
-                        price: isAnnual
-                          ? (plan.price ?? 0) * 12
-                          : plan.price ?? 0,
-                        name: plan.name,
-                      });
-                    }
-                  }}
-                  variant={plan.buttonVariant}
                 >
-                  {plan.buttonText}
-                </Button>
-              )}
+                  {currencySymbol}
+                  {getPrice(plan)}
+                </span>
+                <span className={`text-xs mt-auto text-[#737373]`}>
+                  /{isAnnual ? "year" : plan.period}
+                </span>
+              </div>
+
+              <Button
+                onClick={() => {
+                  if (plan.buttonText === "Switch Plan") {
+                    handlePlanClick(plan);
+                  }
+                }}
+                variant={plan.buttonVariant}
+              >
+                {plan.buttonText}
+              </Button>
             </div>
           </div>
         ))}
@@ -267,6 +371,7 @@ const AvailablePlans = () => {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         {selectedPlan && (
           <MakePlanPayment
+            isAnnual={isAnnual}
             closeModal={() => setIsOpen(false)}
             plan={selectedPlan}
           />
