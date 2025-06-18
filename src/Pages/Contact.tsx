@@ -1,10 +1,9 @@
-
-import ContactSection from "@/components/Features/Contact/contact-section"
+import ContactSection from "@/components/Features/Contact/contact-section";
 
 export default function Contact() {
   return (
-    <div>
-        <ContactSection />
+    <div className="pt-10">
+      <ContactSection />
     </div>
-  )
+  );
 }

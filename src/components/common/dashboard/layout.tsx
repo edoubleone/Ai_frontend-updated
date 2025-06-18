@@ -9,17 +9,17 @@ export function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex relative w-full min-h-screen">
+    <div className="flex h-screen relative overflow-hidden">
       <LogOutDialog />
 
       <ScrollToTop />
       <AppSidebar
-        toggleMenu={() => setSidebarOpen(!sidebarOpen)}
+        setSideBar={setSidebarOpen}
         open={sidebarOpen}
       />
-      <div className="flex flex-1 flex-col">
-        <DashboardHeader toggleMenu={() => setSidebarOpen(!sidebarOpen)} />
-        <div className="flex-1 py-5 px-4 sm:px-8 lg:px-12 bg-gray-50 overflow-y-auto">
+      <div className="flex flex-1 overflow-x-hidden overflow-y-auto flex-col">
+        <DashboardHeader toggleMenu={() => setSidebarOpen(true)} />
+        <div className="flex-1 py-5 px-4 sm:px-8 lg:px-12 bg-gray-50">
           <Outlet />
         </div>
       </div>

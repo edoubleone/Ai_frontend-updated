@@ -6,9 +6,11 @@ export function AsyncInitializePaystack(payload: {
   currency: string;
   amount: number;
 }) {
-  return apiClient.post(`${MESSAGING_URL}/payments/initialize`, payload).then((response) => {
-    return response.data;
-  });
+  return apiClient
+    .post(`${MESSAGING_URL}/payments/initialize`, payload)
+    .then((response) => {
+      return response.data;
+    });
 }
 
 export function AsyncInitializeStripe(payload: {
@@ -21,4 +23,16 @@ export function AsyncInitializeStripe(payload: {
     .then((response) => {
       return response.data;
     });
+}
+
+export function getStripePaymentHistory(email: string) {
+  return apiClient.get(`/stripepayments/history?email=${email}`).then((res) => {
+    return res.data;
+  });
+}
+
+export function getPaystackPaymentHistory(email: string) {
+  return apiClient.get(`/stripepayments/history?email=${email}`).then((res) => {
+    return res.data;
+  });
 }

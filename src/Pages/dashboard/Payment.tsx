@@ -1,198 +1,19 @@
 import AvailablePlans from "@/components/Features/Payment/AvailablePlans";
+import PaymentHistory from "@/components/Features/Payment/payment-history";
 import SubscriptionPlan from "@/components/Features/Payment/SubscriptionPlan";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import Button from "@/components/shared/button";
+import SearchInput from "@/components/shared/search-input";
+
+import { Card } from "@/components/ui/card";
+
 // import { useToast } from '@/hooks/use-toast'
-import {
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  EllipsisVertical,
-  Filter,
-  Search,
-  TableProperties,
-} from "lucide-react";
+import { ChevronDown, Download, Funnel } from "lucide-react";
 import { useState } from "react";
-
-interface Transaction {
-  id: string;
-  invoiceNo: number;
-  dueDate: string;
-  amount: string;
-  paymentMethod: "Debit Card" | "Transfer";
-  subscriptionType: string;
-  status: "Pending" | "Paid";
-}
-
-interface BotsContentProps {
-  onEditBot?: (botId: string) => void;
-  onDuplicateBot?: (botId: string) => void;
-}
-
-const transactionsData: Transaction[] = [
-  {
-    id: "1",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Pending",
-  },
-  {
-    id: "2",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "3",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "4",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "5",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "6",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "7",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "8",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "9",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-  {
-    id: "10",
-    invoiceNo: 12345,
-    dueDate: "02 Sept. 2025",
-    amount: "N60,000.00",
-    paymentMethod: "Debit Card",
-    subscriptionType: "Debit Card",
-    status: "Paid",
-  },
-];
 
 const tabMenu = ["My Plan", "Available Plans"];
 
-const Payment = ({ onEditBot, onDuplicateBot }: BotsContentProps) => {
-  const [transactionData] = useState<Transaction[]>(transactionsData);
+const Payment = () => {
   const [activeMenu, setActiveMenu] = useState<string>(tabMenu[0]);
-  const [selectedTransaction, setSelectedTransaction] = useState<string[]>([]);
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [, setDeleteModalOpen] = useState(false)
-  // const [, setBotToDelete] = useState<Transaction | null>(null)
-  // const { toast } = useToast()
-
-  const handleSelectAll = (checked: boolean) => {
-    if (checked) {
-      setSelectedTransaction(
-        transactionData.map((transaction) => transaction.id)
-      );
-    } else {
-      setSelectedTransaction([]);
-    }
-  };
-
-  const handleSelectBot = (transactionId: string, checked: boolean) => {
-    if (checked) {
-      setSelectedTransaction([...selectedTransaction, transactionId]);
-    } else {
-      setSelectedTransaction(
-        selectedTransaction.filter((id) => id !== transactionId)
-      );
-    }
-  };
-
-  const handleEditBot = (transactionId: string) => {
-    onEditBot?.(transactionId);
-  };
-
-  const handleDuplicateBot = (transactionId: string) => {
-    onDuplicateBot?.(transactionId);
-  };
-
-  //   const handleDeleteClick = (transaction: Transaction) => {
-  //     setBotToDelete(transaction)
-  //     setDeleteModalOpen(true)
-  //   }
-
-  //   const handleDeleteCancel = () => {
-  //     setDeleteModalOpen(false)
-  //     setBotToDelete(null)
-  //   }
 
   return (
     <div className="flex flex-col gap-y-5 w-full">
@@ -205,9 +26,9 @@ const Payment = ({ onEditBot, onDuplicateBot }: BotsContentProps) => {
               <nav
                 key={index}
                 onClick={() => setActiveMenu(tabMenu[index])}
-                className={`transition-all duration-300 border-b-[2px] py-2 px-7 font-semibold ${
+                className={`transition-all whitespace-nowrap duration-300 py-2 px-7 font-semibold ${
                   menu === activeMenu
-                    ? "text-blue-600 border-blue-600"
+                    ? "text-blue-600 border-b-[2px] border-blue-600"
                     : "hover:text-gray-400 cursor-pointer"
                 }`}
               >
@@ -224,202 +45,44 @@ const Payment = ({ onEditBot, onDuplicateBot }: BotsContentProps) => {
         </section>
 
         {activeMenu === tabMenu[0] && (
-          <section className="py-6 px-3 md:px-9 bg-background rounded-lg flex flex-col gap-y-5">
-            {/* Search and Filters */}
-            <div className="w-full overflow-x-auto">
-              <div className="flex items-center justify-between min-w-[640px] gap-4">
-                {/* Search Bar */}
-                <div className="relative flex-1 max-w-sm">
-                  <Search className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-                  <Input
-                    placeholder="Search bot"
-                    className="py-2 pl-10 pr-4 border-gray-200 rounded-lg bg-gray-50 whitespace-nowrap"
-                  />
-                </div>
+          <Card className="flex flex-col border-none gap-y-5 py-4 px-4 sm:px-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between w-full">
+              <SearchInput
+                placeholder="Search History"
+                inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
+              />
 
-                {/* Buttons and Select */}
-                <div className="flex items-center gap-3 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600">Sort:</span>
-                    <Select defaultValue="recent">
-                      <SelectTrigger className="w-40">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="recent">Most Recent</SelectItem>
-                        <SelectItem value="oldest">Oldest</SelectItem>
-                        <SelectItem value="name">Name</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="whitespace-nowrap"
-                  >
-                    <Filter className="w-4 h-4 mr-2" />
-                    Filter
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="whitespace-nowrap"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Export
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Bots Table */}
-            {/* <Card> */}
-            <Table>
-              <TableHeader className="bg-gray-100 w-full">
-                <TableRow>
-                  <TableHead className="min-w-12">
-                    <Checkbox
-                      className="data-[state=checked]:bg-blue-600 ml-2 data-[state=checked]:border-blue-600"
-                      checked={
-                        selectedTransaction.length === transactionData.length
-                      }
-                      onCheckedChange={handleSelectAll}
-                    />
-                  </TableHead>
-                  <TableHead className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                    Invoice No.
-                  </TableHead>
-                  <TableHead className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                    Amount
-                  </TableHead>
-                  <TableHead className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                    Payment Method
-                  </TableHead>
-                  <TableHead className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                    Subscription Type
-                  </TableHead>
-                  <TableHead className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                    Status
-                  </TableHead>
-                  <TableHead className="w-10">
-                    <TableProperties size={18} className="ml-2" />
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {transactionData.map((transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell>
-                      <Checkbox
-                        checked={selectedTransaction.includes(transaction.id)}
-                        className="data-[state=checked]:bg-blue-600 ml-2 data-[state=checked]:border-blue-600"
-                        onCheckedChange={(checked) =>
-                          handleSelectBot(transaction.id, checked as boolean)
-                        }
-                      />
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                      {transaction.invoiceNo}
-                    </TableCell>
-                    <TableCell className="font-medium whitespace-nowrap text-ellipsis min-w-[120px]">
-                      {transaction.dueDate}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                      {transaction.amount}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                      {transaction.paymentMethod}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap min-w-[120px] text-ellipsis">
-                      <Badge
-                        variant={
-                          transaction.subscriptionType === "Bot created"
-                            ? "default"
-                            : "secondary"
-                        }
-                        className={
-                          transaction.status === "Paid"
-                            ? "bg-green-100 text-green-700 hover:bg-green-100"
-                            : "bg-yellow-100 text-yellow-700 hover:bg-yellow-100"
-                        }
-                      >
-                        {transaction.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <EllipsisVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="cursor-pointer"
-                        >
-                          <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={() => handleEditBot(transaction.id)}
-                          >
-                            View Details
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={() => handleDuplicateBot(transaction.id)}
-                          >
-                            Download Receipt
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            {/* </Card> */}
-
-            {/* Pagination */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" disabled>
-                  <ChevronLeft className="w-4 h-4" />
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm font-semibold text-[#334155]">Sort: </p>
+                <Button
+                  variant={"ghost"}
+                  wrapperclass="!w-fit"
+                  className="!rounded-[1.91px] !whitespace-nowrap !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
+                >
+                  Most Recent
+                  <ChevronDown className="size-5" />
                 </Button>
                 <Button
-                  variant="default"
-                  size="sm"
-                  className="text-white bg-blue-600"
+                  wrapperclass="!w-fit"
+                  variant={"ghost"}
+                  className="!rounded-[1.91px] !p-2 !border-[.96px] !border-[#E2E8F0]"
                 >
-                  1
+                  <Funnel className="size-5 text-dark" />
                 </Button>
-                <Button variant="outline" className="hidden lg:flex" size="sm">
-                  2
-                </Button>
-                <Button variant="outline" className="hidden lg:flex" size="sm">
-                  3
-                </Button>
-                <Button variant="outline" size="sm">
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
-              </div>
 
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Show:</span>
-                <Select defaultValue="all">
-                  <SelectTrigger className="w-20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="10">10</SelectItem>
-                    <SelectItem value="20">20</SelectItem>
-                    <SelectItem value="50">50</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Button
+                  wrapperclass="!w-fit"
+                  variant={"ghost"}
+                  className="!rounded-[1.91px] !text-sm !p-2 !border-[.96px] !border-[#E2E8F0]"
+                >
+                  <Download className="size-5 text-dark" />
+                  Export
+                </Button>
               </div>
             </div>
-          </section>
+
+            <PaymentHistory />
+          </Card>
         )}
       </main>
     </div>

@@ -56,16 +56,45 @@ const footerItems = [
 
 export function AppSidebar({
   open,
-  toggleMenu,
+  setSideBar,
 }: {
   open: boolean;
-  toggleMenu: () => void;
+  setSideBar: (arg: boolean) => void;
 }) {
   const { pathname } = useLocation();
   const { setLogOut } = useAuth();
 
+  // const sidebar = useRef<HTMLDivElement | null>(null);
+
+  // useEffect(() => {
+  //   const clickHandler = ({ target }: MouseEvent) => {
+  //     if (!sidebar.current || !trigger.current) return;
+  //     const targetNode = target as Node;
+  //     if (
+  //       sidebar.current.contains(targetNode) ||
+  //       trigger.current.contains(targetNode)
+  //     ) {
+  //       return;
+  //     }
+  //     setSideBar(false);
+  //   };
+  //   document.addEventListener("click", clickHandler);
+  //   return () => {
+  //     document.removeEventListener("click", clickHandler);
+  //   };
+  // }, [setSideBar, open]);
+
+  // useEffect(() => {
+  //   const keyHandler = ({ key }: KeyboardEvent) => {
+  //     if (!open || key !== "Escape") return;
+  //     setSideBar(false);
+  //   };
+  //   document.addEventListener("keydown", keyHandler);
+  // });
+
   return (
     <div
+      // ref={sidebar}
       className={clsx(
         "fixed lg:sticky lg:flex top-0 left-0 h-full lg:translate-x-0 duration-300 ease-linear transition-all lg:h-screen py-6 lg:py-0 w-64 px-6 flex-col border-r border-[#E7E7E7] bg-white z-50 lg:z-40",
         `${open ? "translate-x-0" : "-translate-x-full"}`
@@ -77,7 +106,7 @@ export function AppSidebar({
         </Link>
 
         <Button
-          onClick={toggleMenu}
+          onClick={() => setSideBar(false)}
           className="bg-[#F5F7FA] block lg:hidden p-2.5 rounded-full"
           variant={"ghost"}
           size={"icon"}

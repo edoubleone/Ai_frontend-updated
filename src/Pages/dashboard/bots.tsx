@@ -28,7 +28,7 @@ const BotsPage = () => {
     assistantLanguage: "English",
     status: "Bot created",
     share_url: assistant.share_url,
-    share_whatsapp_url: assistant.share_whatsapp_url
+    share_whatsapp_url: assistant.share_whatsapp_url,
   }));
 
   const filteredData = data.filter((row) =>
@@ -55,7 +55,7 @@ const BotsPage = () => {
         </div>
 
         <div className="flex gap-6 overflow-x-scroll no-scroll items-center">
-          <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col bg-[#EEEEFD] gap-y-4">
+          <Card className="flex flex-1 min-w-[318px] h-full flex-shrink-0 w-full flex-col bg-[#EEEEFD] gap-y-4">
             <IconBtn
               className="border-[0.4px] border-[#00000033] rounded-md"
               size={"icon"}
@@ -69,7 +69,7 @@ const BotsPage = () => {
             </p>
           </Card>
 
-          <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col bg-[#EEEEFD] gap-y-4">
+          <Card className="flex flex-1 min-w-[318px] h-full flex-shrink-0 w-full flex-col bg-[#EEEEFD] gap-y-4">
             <IconBtn
               className="border-[0.4px] border-[#00000033] rounded-md"
               size={"icon"}
@@ -93,12 +93,12 @@ const BotsPage = () => {
             inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
           />
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <p className="text-sm font-semibold text-[#334155]">Sort: </p>
             <Button
-              wrapperclass="!w-fit"
               variant={"ghost"}
-              className="!rounded-[1.91px] !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
+              wrapperclass="!w-fit"
+              className="!rounded-[1.91px] !whitespace-nowrap !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
             >
               Most Recent
               <ChevronDown className="size-5" />

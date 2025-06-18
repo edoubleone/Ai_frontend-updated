@@ -5,7 +5,7 @@ import WhatDrivesUsSection from "@/components/Features/About/what-drive-us-secti
 // Change to a named function component with explicit default export
 function About() {
   return (
-    <div>
+    <div className="pt-10">
       <AboutUsSection />
       <VisionMissionSection />
       <WhatDrivesUsSection />

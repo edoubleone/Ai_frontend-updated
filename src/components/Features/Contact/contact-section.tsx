@@ -10,7 +10,7 @@ export default function ContactSection() {
       <div className="max-w-screen-2xl px-5 md:px-10 lg:pt-5 lg:px-16 mx-auto">
         <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12">
           {/* Contact Form Column */}
-          <div>
+          <div className="flex-1 max-w-[545px]">
             <div className="mb-8">
               <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-2">Get in touch</h2>
               <p className="font-light text-sm">Our friendly team would love to hear from you.</p>
@@ -19,7 +19,7 @@ export default function ContactSection() {
           </div>
 
           {/* Map Column */}
-          <div className="h-full">
+          <div className="h-full flex-1">
             <MapComponent address={address} coordinates={coordinates} />
           </div>
         </div>

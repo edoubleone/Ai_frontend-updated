@@ -18,10 +18,10 @@ const CurrentPlan = (border: CurrentPlanProps) => {
         border ? "border-[#d2d2d2] rounded-lg" : "border-transparent"
       }`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
           <span className="inline-flex gap-2 items-center">
-            <h1 className="text-xl font-bold">Gold Plan</h1>
+            <h1 className="text-xl whitespace-nowrap font-bold">Gold Plan</h1>
             <Badge className="bg-[#F2F8F4] text-defaultBlue text-xs font-bold shadow-none rounded-xl">
               Monthly
             </Badge>

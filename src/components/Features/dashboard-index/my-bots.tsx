@@ -54,7 +54,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-y-9">
+      <div className="flex flex-col overflow-hidden gap-y-9">
         <div className="flex flex-col sm:flex-row gap-4 justify-between w-full">
           <SearchInput
             onDebouncedChange={handleSearch}
@@ -62,7 +62,7 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
             inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
           />
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <p className="text-sm font-semibold text-[#334155]">Sort: </p>
             <Button
               variant={"ghost"}
