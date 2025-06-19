@@ -43,7 +43,7 @@ export function DashboardHeader({ }: DashboardHeaderProps) {
             <Badge className="absolute w-2 h-2 p-0 bg-red-500 -top-1 -right-1" />
           </Button>
 
-          <Link to="/dashboard/profile">
+          <Link to="/dashboard/settings">
             <Avatar className="w-8 h-8 cursor-pointer">
               <AvatarImage src={user} alt="User" />
               <AvatarFallback className="text-sm text-white bg-orange-500">U</AvatarFallback>

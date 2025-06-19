@@ -91,14 +91,14 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
               </div>
 
               <PopoverContent className="!max-w-48 !p-4">
-                <Link to={"/dashboard/profile"}>
+                <Link to={"/dashboard/settings"}>
                   <button
                     type="button"
                     className={clsx(
                       "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4",
                       {
                         "bg-[#EEEEFD] border-l-2 text-[#343CED] font-bold":
-                          pathname === "/dashboard/profile",
+                          pathname === "/dashboard/settings",
                       }
                     )}
                   >
