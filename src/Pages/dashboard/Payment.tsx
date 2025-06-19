@@ -52,6 +52,7 @@ const Payment = () => {
         };
       });
     },
+    enabled: user?.email !== "",
     queryKey: ["paystack-payment-history", user?.email],
   });
 
@@ -76,6 +77,7 @@ const Payment = () => {
         };
       });
     },
+    enabled: user?.email !== "",
     queryKey: ["stripe-payment-history", user?.email],
   });
 
