@@ -1,10 +1,21 @@
 import AvailablePlans from "@/components/Features/Payment/AvailablePlans";
+import PaymentsTableSkeletonLoader from "@/components/Features/Payment/history-skeleton-loader";
 import PaymentHistory from "@/components/Features/Payment/payment-history";
 import SubscriptionPlan from "@/components/Features/Payment/SubscriptionPlan";
 import Button from "@/components/shared/button";
 import SearchInput from "@/components/shared/search-input";
 
 import { Card } from "@/components/ui/card";
+import { useAuth } from "@/context/auth-provider";
+import {
+  getPaystackPaymentHistory,
+  getStripePaymentHistory,
+} from "@/services/api/payment";
+import type {
+  IPaystackPaymentHistory,
+  IStripeHistory,
+} from "@/services/models/payment.model";
+import { useQuery } from "@tanstack/react-query";
 
 // import { useToast } from '@/hooks/use-toast'
 import { ChevronDown, Download, Funnel } from "lucide-react";
@@ -13,7 +24,66 @@ import { useState } from "react";
 const tabMenu = ["My Plan", "Available Plans"];
 
 const Payment = () => {
+  const { user } = useAuth();
+
+  const [query, setQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<string>(tabMenu[0]);
+
+  const { data, isPending } = useQuery({
+    queryFn: async () => {
+      const response = await getPaystackPaymentHistory(user?.email ?? "");
+      let invoiceNumber = 1;
+      return response.map((item: IPaystackPaymentHistory) => {
+        const createdAt = new Date(item.created_at);
+        const dueDate = new Date(
+          createdAt.getTime() + item.duration_days * 24 * 60 * 60 * 1000
+        );
+        const formattedDueDate = dueDate.toISOString().split("T")[0];
+        invoiceNumber++;
+        return {
+          id: item.id,
+          invoiceNo: `INV${String(invoiceNumber).padStart(3, "0")}`,
+          dueDate: formattedDueDate,
+          amount: `${item.currency} ${item.amount}`,
+          paymentMethod: "Paystack",
+          subscriptionType: item.plan_name,
+          createdAt: item.created_at,
+          status: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+        };
+      });
+    },
+    queryKey: ["paystack-payment-history", user?.email],
+  });
+
+  const { data: stripeData, isPending: loadingStripePayments } = useQuery({
+    queryFn: async () => {
+      const response = await getStripePaymentHistory(user?.email ?? "");
+      let invoiceNumber = 1;
+      return response.map((item: IStripeHistory) => {
+        const formattedDueDate = new Date(item.expires_at)
+          .toISOString()
+          .split("T")[0];
+        invoiceNumber++;
+        return {
+          id: item.id,
+          invoiceNo: `INV${String(invoiceNumber - 1).padStart(3, "0")}`,
+          dueDate: formattedDueDate,
+          amount: `${item.currency} ${item.amount}`,
+          paymentMethod: "Stripe",
+          subscriptionType: item.plan_name,
+          createdAt: item.created_at,
+          status: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+        };
+      });
+    },
+    queryKey: ["stripe-payment-history", user?.email],
+  });
+
+  const combinedData = [...(stripeData || []), ...(data || [])].sort(
+    (a, b) =>
+      new Date(a.created_at || a.createdAt).getTime() -
+      new Date(b.created_at || b.createdAt).getTime()
+  );
 
   return (
     <div className="flex flex-col gap-y-5 w-full">
@@ -48,6 +118,7 @@ const Payment = () => {
           <Card className="flex flex-col border-none gap-y-5 py-4 px-4 sm:px-8">
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between w-full">
               <SearchInput
+                onDebouncedChange={(value) => setQuery(value)}
                 placeholder="Search History"
                 inputClass="!border-[#D0D0D0] !border-[0.96px] !bg-[#F5F5F5]"
               />
@@ -81,7 +152,11 @@ const Payment = () => {
               </div>
             </div>
 
-            <PaymentHistory />
+            {isPending || loadingStripePayments ? (
+              <PaymentsTableSkeletonLoader />
+            ) : (
+              <PaymentHistory searchTerm={query} data={combinedData || []} />
+            )}
           </Card>
         )}
       </main>

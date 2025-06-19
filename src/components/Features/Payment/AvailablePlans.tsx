@@ -3,8 +3,15 @@ import { Switch } from "@/components/ui/switch";
 import Button from "@/components/shared/button";
 import useCurrency from "@/hooks/use-currency";
 import { useAuth } from "@/context/auth-provider";
-import { Dialog } from "@/components/ui/dialog";
-import MakePlanPayment from "./make-payment";
+
+import { useMutation } from "@tanstack/react-query";
+import {
+  asyncPaystackPlan,
+  asyncStripePlan,
+  type PlanType,
+  type StripePlanType,
+} from "@/services/api/payment";
+import { toast } from "sonner";
 
 export type CurrencyCode = "usd" | "ngn";
 
@@ -34,11 +41,52 @@ export interface SelectedPlan {
 
 const AvailablePlans = () => {
   const [isAnnual, setIsAnnual] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   const { currencySymbol, currencyCode } = useCurrency();
-  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+
+  const { mutate, isPending, error, variables } = useMutation({
+    mutationFn: async (planType: PlanType) => {
+      return await asyncPaystackPlan(planType, { email: user?.email ?? "" });
+    },
+    onSuccess: (data) => {
+      window.location.href = data.checkout_url;
+      toast.success("Payment initialized! Proceeding to checkout..");
+    },
+    onError: () => {
+      toast.error(
+        error?.message || "failed to initialize payment. please try again!"
+      );
+    },
+  });
+
+  const {
+    mutate: stripeMutate,
+    isPending: stripeLoading,
+    variables: stripeVariables,
+    error: stripeError,
+  } = useMutation({
+    mutationFn: async (payload: {
+      plan: StripePlanType;
+      email: string;
+      currency: string;
+    }) => {
+      return await asyncStripePlan(payload.plan, {
+        email: payload.email,
+        currency: payload.currency,
+      });
+    },
+    onSuccess: (data) => {
+      window.location.href = data.checkout_url;
+      toast.success("Payment initialized! Proceeding to checkout..");
+    },
+    onError: () => {
+      toast.error(
+        stripeError?.message ||
+          "failed to initialize payment. please try again!"
+      );
+    },
+  });
 
   const plans = [
     {
@@ -265,8 +313,24 @@ const AvailablePlans = () => {
   ];
 
   const handlePlanClick = (plan: SelectedPlan) => {
-    setSelectedPlan(plan);
-    setIsOpen(true);
+    if (!user) return;
+
+    if (currencyCode === "USD") {
+      const planType =
+        plan.name.toLowerCase().replace(" ", "-") +
+        (isAnnual ? "-yearly" : "-monthly");
+      const currency = currencyCode.toLowerCase();
+      stripeMutate({
+        plan: planType as StripePlanType,
+        email: user?.email,
+        currency,
+      });
+    } else {
+      const planType =
+        plan.name.toLowerCase().replace(" ", "-") +
+        (isAnnual ? "-yearly" : "-monthly");
+      mutate(planType as PlanType);
+    }
   };
 
   const getPrice = (plan: SelectedPlan) => {
@@ -354,6 +418,16 @@ const AvailablePlans = () => {
               </div>
 
               <Button
+                disabled={
+                  (isPending &&
+                    variables ===
+                      plan.name.toLowerCase().replace(" ", "-") +
+                        (isAnnual ? "-yearly" : "-monthly")) ||
+                  (stripeLoading &&
+                    stripeVariables?.plan ===
+                      plan.name.toLowerCase().replace(" ", "-") +
+                        (isAnnual ? "-yearly" : "-monthly"))
+                }
                 onClick={() => {
                   if (plan.buttonText === "Switch Plan") {
                     handlePlanClick(plan);
@@ -367,16 +441,6 @@ const AvailablePlans = () => {
           </div>
         ))}
       </div>
-
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {selectedPlan && (
-          <MakePlanPayment
-            isAnnual={isAnnual}
-            closeModal={() => setIsOpen(false)}
-            plan={selectedPlan}
-          />
-        )}
-      </Dialog>
     </div>
   );
 };

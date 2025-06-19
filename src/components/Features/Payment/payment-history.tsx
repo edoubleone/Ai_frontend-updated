@@ -13,7 +13,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  MoreHorizontal,
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
@@ -21,6 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import clsx from "clsx";
+import { useState } from "react";
 
 interface RowPaymentHistory {
   id: number;
@@ -34,9 +39,47 @@ interface RowPaymentHistory {
 
 interface DataTableProps {
   data: RowPaymentHistory[];
+  searchTerm: string;
 }
 
-const PaymentHistoryTable = ({ data }: DataTableProps) => {
+const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const filteredData = data.filter((row) => {
+    return (
+      row.invoiceNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.dueDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.subscriptionType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   const columns: ColumnDef<RowPaymentHistory>[] = [
     {
       id: "select",
@@ -154,7 +197,7 @@ const PaymentHistoryTable = ({ data }: DataTableProps) => {
   ];
 
   const table = useReactTable({
-    data,
+    data: paginatedData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: true,
@@ -200,79 +243,71 @@ const PaymentHistoryTable = ({ data }: DataTableProps) => {
 
       <div className="flex flex-wrap justify-between items-center gap-3">
         <div className="flex items-center gap-3">
-          <Button variant={"outline"} className="bg-[#EEEEFD]" size={"icon"}>
+          <Button
+            variant={"outline"}
+            className="bg-[#EEEEFD]"
+            size={"icon"}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
             <ChevronLeft className="text-dark" />
           </Button>
 
           <div className="flex gap-3 items-center">
-            {[1, 2, 3].map((e) => (
-              <Button
-                variant={"ghost"}
-                size={"icon"}
-                className={`text-sm ${
-                  e === 1
-                    ? "text-white rounded-full bg-defaultBlue"
-                    : "text-dark"
-                }`}
-                key={e}
-              >
-                {e}
-              </Button>
-            ))}
+            {Array(totalPages)
+              .fill(null)
+              .map((_, index) => (
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className={`text-sm ${
+                    index + 1 === currentPage
+                      ? "text-white rounded-full bg-defaultBlue"
+                      : "text-dark"
+                  }`}
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </Button>
+              ))}
           </div>
 
-          <Button variant={"outline"} size={"icon"}>
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
             <ChevronRight className="text-dark" />
           </Button>
         </div>
 
         <div className="flex items-center gap-2">
           <p className="text-sm font-semibold text-[#334155]">Show: </p>
-          <Button
-            variant={"ghost"}
+          <select
+            value={rowsPerPage}
+            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
             className="!rounded-[1.91px] !whitespace-nowrap !w-fit !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
           >
-            All
-            <ChevronDown className="size-5" />
-          </Button>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
         </div>
       </div>
     </div>
   );
 };
 
-const dummyData: RowPaymentHistory[] = [
-  {
-    id: 1,
-    invoiceNo: "INV001",
-    dueDate: "2024-01-01",
-    amount: "$100",
-    paymentMethod: "Credit Card",
-    subscriptionType: "Monthly",
-    status: "Paid",
-  },
-  {
-    id: 2,
-    invoiceNo: "INV002",
-    dueDate: "2024-02-01",
-    amount: "$200",
-    paymentMethod: "PayPal",
-    subscriptionType: "Yearly",
-    status: "Pending",
-  },
-  {
-    id: 3,
-    invoiceNo: "INV003",
-    dueDate: "2024-03-01",
-    amount: "$300",
-    paymentMethod: "Bank Transfer",
-    subscriptionType: "Monthly",
-    status: "Paid",
-  },
-];
-
-const PaymentHistory = () => {
-  return <PaymentHistoryTable data={dummyData} />;
+const PaymentHistory = ({
+  data,
+  searchTerm,
+}: {
+  data: RowPaymentHistory[];
+  searchTerm: string;
+}) => {
+  return <PaymentHistoryTable searchTerm={searchTerm} data={data} />;
 };
 
 export default PaymentHistory;
