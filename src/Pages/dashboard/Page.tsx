@@ -118,7 +118,7 @@ const DashboardIndexPage = () => {
           </Link>
         </Card>
 
-        <CurrentPlan />
+        <CurrentPlan border />
       </div>
 
       <DashboardMyBots data={data} loading={isLoading} />

@@ -123,7 +123,7 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
       cell: ({ row }) => (
         <span
           className={`text-base font-bold ${
-            row.original.status === "Paid" ? "text-[#34A853]" : "text-[#D39900]"
+            row.original.status === "Success" ? "text-[#34A853]" : "text-[#D39900]"
           }`}
         >
           {row.original.status}

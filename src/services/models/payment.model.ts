@@ -15,6 +15,16 @@ export interface IPaystackPaymentHistory {
   is_expired: boolean
 }
 
+export interface ISubscriptionPlan {
+  plan_name: string;
+  billing_cycle: string;
+  amount: number;
+  currency: string;
+  expires_at: string;
+  days_remaining: number;
+  status: string;
+}
+
 export interface IStripeHistory {
   customer_email: string
   amount: number
@@ -28,3 +38,8 @@ export interface IStripeHistory {
   plan_name: string
   expires_at: string
 }
+
+export const currencySymbols = {
+  NGN: "₦",
+  USD: "$",
+};

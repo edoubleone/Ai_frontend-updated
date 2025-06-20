@@ -10,7 +10,7 @@ const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const { isAuthenticated } = useAuth();
 
-  const { currencySymbol, currencyCode } = useCurrency();
+  const { currencySymbol, currencyCode, isLoading } = useCurrency();
 
   const navigate = useNavigate();
 
@@ -276,17 +276,17 @@ const PricingTable = () => {
     { key: "fineTuning", label: "Fine tuning", hasTooltip: true },
   ];
 
-   const getPrice = (plan: SelectedPlan) => {
-      const code = currencyCode.toLowerCase() as CurrencyCode;
-      const prices = plan?.price[code];
-      return isAnnual ? prices?.yearly : prices?.monthly;
-    };
+  const getPrice = (plan: SelectedPlan) => {
+    const code = currencyCode.toLowerCase() as CurrencyCode;
+    const prices = plan?.price[code];
+    return isAnnual ? prices?.yearly : prices?.monthly;
+  };
 
-    const getUpgradePrice = (plan: SelectedPlan) => {
-      const code = currencyCode.toLowerCase() as CurrencyCode;
-      const prices = plan?.upgradePrice?.[code];
-      return isAnnual ? prices?.yearly : prices?.monthly;
-    };
+  const getUpgradePrice = (plan: SelectedPlan) => {
+    const code = currencyCode.toLowerCase() as CurrencyCode;
+    const prices = plan?.upgradePrice?.[code];
+    return isAnnual ? prices?.yearly : prices?.monthly;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
@@ -354,13 +354,17 @@ const PricingTable = () => {
               </div>
 
               <div className="flex items-baseline">
-                <span
-                  className={`text-3xl font-black text-dark
+                {isLoading ? (
+                  <div className="h-8 w-16 bg-gray-200 rounded animate-pulse" />
+                ) : (
+                  <span
+                    className={`text-3xl font-black text-dark
                 `}
-                >
-                  {currencySymbol}
-                  {getPrice(plan)}
-                </span>
+                  >
+                    {currencySymbol}
+                    {getPrice(plan)}
+                  </span>
+                )}
                 <span className={`text-xs mt-auto text-[#737373]`}>
                   /{isAnnual ? "year" : plan.period}
                 </span>
@@ -464,10 +468,15 @@ const PricingTable = () => {
               {plans.map((plan) => (
                 <td key={`upgrade-${plan.name}`} className="p-4 text-center">
                   <div className="mb-2 flex gap-2.5 items-center">
-                    <span className="text-3xl font-bold text-foreground">
-                      {currencySymbol}
-                      {getUpgradePrice(plan)}
-                    </span>
+                    {isLoading ? (
+                      <div className="h-8 w-16 bg-gray-200 rounded animate-pulse" />
+                    ) : (
+                      <span className="text-3xl font-bold text-foreground">
+                        {currencySymbol}
+                        {getUpgradePrice(plan)}
+                      </span>
+                    )}
+
                     <svg
                       width="24"
                       height="24"

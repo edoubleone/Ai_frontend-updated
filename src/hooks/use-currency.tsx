@@ -2,17 +2,31 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+type ECurrencySymbol = "₦" | "$";
+
 const useCurrency = () => {
   const sessionCurrencySymbol =
     typeof sessionStorage !== "undefined"
       ? sessionStorage.getItem("currencySymbol")
       : "$";
 
-  const [currencySymbol, setCurrencySymbol] = useState(sessionCurrencySymbol);
+  const initialCurrencySymbol: ECurrencySymbol =
+    sessionCurrencySymbol === "₦" || sessionCurrencySymbol === "$"
+      ? (sessionCurrencySymbol as ECurrencySymbol)
+      : "$";
+
+  const [currencySymbol, setCurrencySymbol] = useState<ECurrencySymbol>(
+    initialCurrencySymbol
+  );
   const [currencyCode, setCurrencyCode] = useState("");
   const [exchangeRate, setExchangeRate] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data, isError } = useQuery({
+  const {
+    data,
+    isError,
+    isLoading: isQueryLoading,
+  } = useQuery({
     queryKey: ["currency-info"],
     queryFn: async () => {
       const response = await axios.get("http://ip-api.com/json");
@@ -33,20 +47,27 @@ const useCurrency = () => {
 
   useEffect(() => {
     if (data) {
-      setCurrencySymbol(data.currencySymbol);
+      setCurrencySymbol(data.currencySymbol as ECurrencySymbol);
       setExchangeRate(data.exchangeRate);
       setCurrencyCode(data.currencyCode);
       sessionStorage.setItem("currencyCode", data.currencyCode);
       sessionStorage.setItem("currencySymbol", data.currencySymbol);
+      setIsLoading(false);
     }
     if (isError) {
       setCurrencySymbol("$");
       setExchangeRate(1);
       setCurrencyCode("USD");
+      setIsLoading(false);
     }
   }, [data, isError]);
 
-  return { currencySymbol, exchangeRate, currencyCode };
+  return {
+    currencySymbol,
+    exchangeRate,
+    currencyCode,
+    isLoading: isQueryLoading || isLoading,
+  };
 };
 
 export default useCurrency;

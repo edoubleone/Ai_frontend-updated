@@ -37,13 +37,14 @@ export interface SelectedPlan {
       yearly: number;
     };
   };
+  buttonText?: string;
 }
 
 const AvailablePlans = () => {
   const [isAnnual, setIsAnnual] = useState(false);
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, activePlan } = useAuth();
 
-  const { currencySymbol, currencyCode } = useCurrency();
+  const { currencySymbol, currencyCode, isLoading } = useCurrency();
 
   const { mutate, isPending, error, variables } = useMutation({
     mutationFn: async (planType: PlanType) => {
@@ -102,8 +103,8 @@ const AvailablePlans = () => {
         },
       },
       period: "month",
-      buttonText: "Your Plan",
-      buttonVariant: "lightLavender" as const,
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
+      buttonVariant: "solid" as const,
       isPopular: false,
       features: {
         languages: "Multi",
@@ -146,7 +147,7 @@ const AvailablePlans = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -190,7 +191,7 @@ const AvailablePlans = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: true,
       features: {
@@ -234,7 +235,7 @@ const AvailablePlans = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -278,7 +279,7 @@ const AvailablePlans = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       customText: "Contact Sales",
@@ -331,6 +332,24 @@ const AvailablePlans = () => {
         (isAnnual ? "-yearly" : "-monthly");
       mutate(planType as PlanType);
     }
+  };
+
+  const getButtonText = (plan: SelectedPlan) => {
+    if (!isAuthenticated) return plan.buttonText;
+
+    const currentPlanName = activePlan?.plan_name.toLowerCase();
+    const planName = plan.name.toLowerCase();
+
+    if (planName === "free" && currentPlanName !== "free") return "Get Started";
+    if (planName === currentPlanName) return "Your Plan";
+
+    const currentPlanPrice = activePlan?.amount ?? 0;
+    const planPrice = getPrice(plan);
+
+    if (planPrice > currentPlanPrice) return "Upgrade";
+    if (planPrice < currentPlanPrice) return "Downgrade";
+    if (planPrice === currentPlanPrice) return "Your Plan";
+    return "Switch Plan";
   };
 
   const getPrice = (plan: SelectedPlan) => {
@@ -405,13 +424,18 @@ const AvailablePlans = () => {
               </div>
 
               <div className="flex items-baseline">
-                <span
-                  className={`text-3xl font-black text-dark
+                {isLoading ? (
+                  <div className="h-8 w-16 bg-gray-200 rounded animate-pulse" />
+                ) : (
+                  <span
+                    className={`text-3xl font-black text-dark
                 `}
-                >
-                  {currencySymbol}
-                  {getPrice(plan)}
-                </span>
+                  >
+                    {currencySymbol}
+                    {getPrice(plan)}
+                  </span>
+                )}
+
                 <span className={`text-xs mt-auto text-[#737373]`}>
                   /{isAnnual ? "year" : plan.period}
                 </span>
@@ -429,13 +453,18 @@ const AvailablePlans = () => {
                         (isAnnual ? "-yearly" : "-monthly"))
                 }
                 onClick={() => {
-                  if (plan.buttonText === "Switch Plan") {
+                  const buttonText = getButtonText(plan);
+                  if (buttonText === "Upgrade" || buttonText === "Downgrade") {
                     handlePlanClick(plan);
                   }
                 }}
-                variant={plan.buttonVariant}
+                variant={
+                  getButtonText(plan) === "Your Plan"
+                    ? "lightLavender"
+                    : plan.buttonVariant
+                }
               >
-                {plan.buttonText}
+                {getButtonText(plan)}
               </Button>
             </div>
           </div>

@@ -3,10 +3,17 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./auth-context";
 import { GetUserData } from "@/services/api/auth";
+import {
+  getCurrentPlanPaystack,
+  getCurrentPlanStripe,
+} from "@/services/api/payment";
+import useCurrency from "@/hooks/use-currency";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token = sessionStorage.getItem("access_token") ?? null;
   const [isLogOut, setLogOut] = useState(false);
+
+  const { currencyCode, isLoading: isCurrencyLoading } = useCurrency();
 
   const isAuthenticated = !!token;
 
@@ -17,6 +24,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     queryFn: GetUserData,
     queryKey: ["user"],
     enabled: isAuthenticated,
+  });
+
+  const paymentGateway = currencyCode === "NGN" ? "paystack" : "stripe";
+
+  const { data: activePlan, isLoading: isPlanLoading } = useQuery({
+    queryFn: () =>
+      paymentGateway === "paystack"
+        ? getCurrentPlanPaystack(user?.email ?? "")
+        : getCurrentPlanStripe(user?.email ?? ""),
+    queryKey: ["current-plan", user?.email, paymentGateway],
+    enabled: isAuthenticated && !!user?.email && !isCurrencyLoading,
   });
 
   const logout = () => {
@@ -39,6 +57,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value: {
         isAuthenticated,
         setAuthenticated,
+        isPlanLoading,
+        activePlan: activePlan ?? null,
         logout,
         user: user ?? null,
         isLogOut,

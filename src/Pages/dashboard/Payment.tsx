@@ -110,7 +110,7 @@ const Payment = () => {
           </div>
 
           {activeMenu === tabMenu[0] ? (
-            <SubscriptionPlan />
+            <SubscriptionPlan onUpgrade={() => setActiveMenu(tabMenu[1])} />
           ) : (
             <AvailablePlans />
           )}

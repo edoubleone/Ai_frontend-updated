@@ -1,5 +1,6 @@
 import apiClient from "../config/api";
 import { MESSAGING_URL } from "@/utils";
+import type { ISubscriptionPlan } from "../models/payment.model";
 interface PaymentPlanRequest {
   email: string;
 }
@@ -48,6 +49,22 @@ const asyncStripePlan = (
   return apiClient
     .post(`${MESSAGING_URL}/stripepayments/${plan}`, payload)
     .then((response) => response.data);
+};
+
+const getCurrentPlanPaystack = (email: string): Promise<ISubscriptionPlan> => {
+  return apiClient
+    .get<ISubscriptionPlan>(
+      `${MESSAGING_URL}/paystack/current-plan?email=${email}`
+    )
+    .then((res) => res.data);
+};
+
+const getCurrentPlanStripe = (email: string): Promise<ISubscriptionPlan> => {
+  return apiClient
+    .get<ISubscriptionPlan>(
+      `${MESSAGING_URL}/stripepayments/current-plan?email=${email}`
+    )
+    .then((res) => res.data);
 };
 
 const stripePlans = {
@@ -129,4 +146,6 @@ export {
   paystackPlans,
   asyncStripePlan,
   stripePlans,
+  getCurrentPlanPaystack,
+  getCurrentPlanStripe,
 };
