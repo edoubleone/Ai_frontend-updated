@@ -488,16 +488,6 @@ const PricingTable = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Footer */}
-      <div className="text-center mt-8">
-        <p className="text-lg text-black font-semibold">
-          Don't know which plan is right for you? Use the{" "}
-          <a href="#" className="text-defaultBlue underline">
-            ROI Calculator
-          </a>
-        </p>
-      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowRight2 } from "iconsax-reactjs";
 import DashboardBotsDataTable from "./bots-table";
 
-import { ChevronDown, Download, Funnel } from "lucide-react";
+import { ChevronDown, Funnel } from "lucide-react";
 import BotsTableSkeletonLoader from "../bot/bot-table-loader";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -78,15 +78,6 @@ const DashboardMyBots = ({ data, loading }: DashboardBotsTableProps) => {
               className="!rounded-[1.91px] !w-fit !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Funnel className="size-5 text-dark" />
-            </Button>
-
-            <Button
-              variant={"ghost"}
-              wrapperclass="!w-fit"
-              className="!rounded-[1.91px] !text-sm !p-2 !border-[.96px] !border-[#E2E8F0]"
-            >
-              <Download className="size-5 text-dark" />
-              Export
             </Button>
           </div>
         </div>

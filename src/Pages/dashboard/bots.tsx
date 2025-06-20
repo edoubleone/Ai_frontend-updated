@@ -4,7 +4,7 @@ import BotsIcon from "@/components/shared/bots-icon";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
 import DashboardBotsDataTable from "@/components/Features/dashboard-index/bots-table";
-import { ChevronDown, Download, Funnel } from "lucide-react";
+import { ChevronDown, Funnel } from "lucide-react";
 import SearchInput from "@/components/shared/search-input";
 import { useQuery } from "@tanstack/react-query";
 import { GetAssistants } from "@/services/api/conversation";
@@ -109,15 +109,6 @@ const BotsPage = () => {
               className="!rounded-[1.91px] !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Funnel className="size-5 text-dark" />
-            </Button>
-
-            <Button
-              wrapperclass="!w-fit"
-              variant={"ghost"}
-              className="!rounded-[1.91px] !text-sm !p-2 !border-[.96px] !border-[#E2E8F0]"
-            >
-              <Download className="size-5 text-dark" />
-              Export
             </Button>
           </div>
         </div>

@@ -73,18 +73,8 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
                 error ? "ring-[3px] ring-[#DC2626]" : ""
               )}
               flagComponent={FlagComponent}
-              countrySelectComponent={(props) => (
-                <CountrySelect
-                  {...props}
-                  className="absolute left-0 top-0 bottom-0 flex items-center"
-                />
-              )}
-              inputComponent={(props) => (
-                <InputComponent
-                  {...props}
-                  className={cn("pl-[80px] pr-4", props.className)}
-                />
-              )}
+              countrySelectComponent={CountrySelect}
+              inputComponent={InputComponent}
               smartCaret={false}
               value={value || undefined}
               onChange={(value) => onChange?.(value || ("" as RPNInput.Value))}
@@ -106,7 +96,8 @@ const InputComponent = React.forwardRef<
     ref={ref}
     className={cn(
       "flex-1 text-sm flex placeholder:text-[#454545] items-center border-none py-0 text-[#454545] outline-none bg-transparent",
-      className
+      className,
+      "pl-[80px] pr-4"
     )}
     {...props}
   />
@@ -142,7 +133,8 @@ const CountrySelect = ({
           variant="outline"
           className={cn(
             "flex gap-1 shadow-none rounded-r-none border h-full py-0 pl-4 pr-2 focus:z-10",
-            className
+            className,
+            "absolute left-0 top-0 bottom-0 flex items-center"
           )}
           disabled={disabled}
         >

@@ -228,14 +228,7 @@ export default function Footer() {
                       About
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="/products"
-                      className="text-base text-gray-600 transition-colors hover:text-gray-900"
-                    >
-                      Products & Services
-                    </a>
-                  </li>
+                 
                   <li>
                     <a
                       href="/testimonials"

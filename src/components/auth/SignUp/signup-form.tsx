@@ -23,7 +23,7 @@ export function SignupFormComponent() {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -154,7 +154,6 @@ export function SignupFormComponent() {
 
             <Button
               loading={isPending}
-              disabled={!isValid}
               type="submit"
               className="mt-8"
             >
