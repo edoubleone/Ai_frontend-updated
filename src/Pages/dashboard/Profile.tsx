@@ -1,4 +1,3 @@
-import SubscriptionPlan from "@/components/Features/Payment/SubscriptionPlan";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import camera from "/images/dashboard/camera.png";
@@ -10,7 +9,7 @@ import Button from "@/components/shared/button";
 import { useAuth } from "@/context/auth-provider";
 import PasswordInput from "@/components/shared/password-input";
 
-const tabMenu = ["Account", "My Plan", "Password"];
+const tabMenu = ["Account", "Password"];
 
 const Profile = () => {
   const { user } = useAuth();
@@ -119,8 +118,6 @@ const Profile = () => {
                 </div>
               </form>
             </section>
-          ) : activeMenu === tabMenu[1] ? (
-            <SubscriptionPlan />
           ) : (
             <>
               <form>
