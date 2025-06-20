@@ -178,7 +178,7 @@ const integrations: Integration[] = [
       {
         channel: "Web chat",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Risus consequat etiam erat sed tincidunt amet. Ac risus magna in nisl purus in mollis magna. Vivamus ultrices.",
+          "Connect assistant to your website and interact with customers.",
         icon: webchat,
       },
       {
