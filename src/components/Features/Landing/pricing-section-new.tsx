@@ -8,7 +8,7 @@ import type { CurrencyCode, SelectedPlan } from "../Payment/AvailablePlans";
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, activePlan } = useAuth();
 
   const { currencySymbol, currencyCode, isLoading } = useCurrency();
 
@@ -28,8 +28,8 @@ const PricingTable = () => {
         },
       },
       period: "month",
-      buttonText: "Your Plan",
-      buttonVariant: "lightLavender" as const,
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
+      buttonVariant: "solid" as const,
       isPopular: false,
       features: {
         languages: "Multi",
@@ -72,7 +72,7 @@ const PricingTable = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -116,7 +116,7 @@ const PricingTable = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: true,
       features: {
@@ -160,7 +160,7 @@ const PricingTable = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       features: {
@@ -204,7 +204,7 @@ const PricingTable = () => {
         },
       },
       period: "month",
-      buttonText: isAuthenticated ? "Switch Plan" : "Try for Free",
+      buttonText: isAuthenticated ? "Upgrade" : "Try for Free",
       buttonVariant: "solid" as const,
       isPopular: false,
       customText: "Contact Sales",
@@ -275,6 +275,24 @@ const PricingTable = () => {
     },
     { key: "fineTuning", label: "Fine tuning", hasTooltip: true },
   ];
+
+  const getButtonText = (plan: SelectedPlan) => {
+    if (!isAuthenticated) return plan.buttonText;
+
+    const currentPlanName = activePlan?.plan_name.toLowerCase();
+    const planName = plan.name.toLowerCase();
+
+    if (planName === "free" && currentPlanName !== "free") return "Get Started";
+    if (planName === currentPlanName) return "Your Plan";
+
+    const currentPlanPrice = activePlan?.amount ?? 0;
+    const planPrice = getPrice(plan);
+
+    if (planPrice > currentPlanPrice) return "Upgrade";
+    if (planPrice < currentPlanPrice) return "Downgrade";
+    if (planPrice === currentPlanPrice) return "Your Plan";
+    return "Switch Plan";
+  };
 
   const getPrice = (plan: SelectedPlan) => {
     const code = currencyCode.toLowerCase() as CurrencyCode;
@@ -371,18 +389,14 @@ const PricingTable = () => {
               </div>
 
               <Button
-                onClick={() => {
-                  if (plan.name === "Try for Free") {
-                    navigate("/signup");
-                  } else if (plan.name === "Free") {
-                    navigate("/dashboard/payments");
-                  } else {
-                    navigate("/dashboard/payments");
-                  }
-                }}
-                variant={plan.buttonVariant}
+                onClick={() => navigate("/dashboard/payments")}
+                variant={
+                  getButtonText(plan) === "Your Plan"
+                    ? "lightLavender"
+                    : plan.buttonVariant
+                }
               >
-                {plan.buttonText}
+                {getButtonText(plan)}
               </Button>
             </div>
           </div>
@@ -490,7 +504,9 @@ const PricingTable = () => {
                       />
                     </svg>
                   </div>
-                  <Button>Upgrade</Button>
+                  <Button onClick={() => navigate("/dashboard/payments")}>
+                    Upgrade
+                  </Button>
                 </td>
               ))}
             </tr>
