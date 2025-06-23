@@ -229,20 +229,22 @@ export default function Footer() {
                     </a>
                   </li>
                  
+                 
                   <li>
                     <a
-                      href="/testimonials"
+                      href="/contact"
                       className="text-base text-gray-600 transition-colors hover:text-gray-900"
                     >
-                      Testimonial
+                     Contact
                     </a>
                   </li>
+
                   <li>
                     <a
-                      href="/faq"
+                      href="/pricing"
                       className="text-base text-gray-600 transition-colors hover:text-gray-900"
                     >
-                      FAQ
+                     Pricing
                     </a>
                   </li>
                 </ul>
@@ -254,14 +256,7 @@ export default function Footer() {
                   Link
                 </h3>
                 <ul className="space-y-4">
-                  <li>
-                    <a
-                      href="/terms"
-                      className="text-base text-gray-600 transition-colors hover:text-gray-900"
-                    >
-                      Terms & conditions
-                    </a>
-                  </li>
+                  
                   <li>
                     <a
                       href="/privacy"
