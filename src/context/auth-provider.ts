@@ -1,5 +1,10 @@
+// AuthProvider.js
 import React, { useContext, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./auth-context";
 import { GetUserData } from "@/services/api/auth";
@@ -20,7 +25,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: user } = useQuery({
+  const { data: user, isLoading: isUserLoading } = useQuery({
     queryFn: GetUserData,
     queryKey: ["user"],
     enabled: isAuthenticated,
@@ -29,12 +34,18 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const paymentGateway = currencyCode === "NGN" ? "paystack" : "stripe";
 
   const { data: activePlan, isLoading: isPlanLoading } = useQuery({
-    queryFn: () =>
-      paymentGateway === "paystack"
-        ? getCurrentPlanPaystack(user?.email ?? "")
-        : getCurrentPlanStripe(user?.email ?? ""),
+    queryFn: async () => {
+      if (!user?.email) return null;
+      if (paymentGateway === "paystack") {
+        return getCurrentPlanPaystack(user.email);
+      } else {
+        return getCurrentPlanStripe(user.email);
+      }
+    },
     queryKey: ["current-plan", user?.email, paymentGateway],
-    enabled: isAuthenticated && !!user?.email && !isCurrencyLoading,
+    enabled:
+      isAuthenticated && !!user?.email && !isCurrencyLoading && !isUserLoading,
+    placeholderData: keepPreviousData,
   });
 
   const logout = () => {
@@ -57,7 +68,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value: {
         isAuthenticated,
         setAuthenticated,
-        isPlanLoading,
+        isPlanLoading: isPlanLoading || isCurrencyLoading || isUserLoading,
         activePlan: activePlan ?? null,
         logout,
         user: user ?? null,
