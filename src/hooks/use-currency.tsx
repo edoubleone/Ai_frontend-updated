@@ -19,7 +19,6 @@ const useCurrency = () => {
     initialCurrencySymbol
   );
   const [currencyCode, setCurrencyCode] = useState("");
-  const [exchangeRate, setExchangeRate] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   const {
@@ -29,17 +28,13 @@ const useCurrency = () => {
   } = useQuery({
     queryKey: ["currency-info"],
     queryFn: async () => {
-      const response = await axios.get("http://ip-api.com/json");
-      const countryCode = response.data.countryCode;
+      const response = await axios.get("https://ipapi.co/json/");
+      const countryCode = response.data.country_code;
 
       if (countryCode === "NG") {
-        const exchangeRateResponse = await axios.get(
-          `https://api.exchangerate-api.com/v4/latest/USD`
-        );
-        const exchangeRate = exchangeRateResponse.data.rates.NGN;
-        return { currencySymbol: "₦", currencyCode: "NGN", exchangeRate };
+        return { currencySymbol: "₦", currencyCode: "NGN" };
       } else {
-        return { currencySymbol: "$", currencyCode: "USD", exchangeRate: 1 };
+        return { currencySymbol: "$", currencyCode: "USD" };
       }
     },
     staleTime: 1000 * 60 * 60 * 24,
@@ -48,7 +43,6 @@ const useCurrency = () => {
   useEffect(() => {
     if (data) {
       setCurrencySymbol(data.currencySymbol as ECurrencySymbol);
-      setExchangeRate(data.exchangeRate);
       setCurrencyCode(data.currencyCode);
       sessionStorage.setItem("currencyCode", data.currencyCode);
       sessionStorage.setItem("currencySymbol", data.currencySymbol);
@@ -56,7 +50,6 @@ const useCurrency = () => {
     }
     if (isError) {
       setCurrencySymbol("$");
-      setExchangeRate(1);
       setCurrencyCode("USD");
       setIsLoading(false);
     }
@@ -64,7 +57,6 @@ const useCurrency = () => {
 
   return {
     currencySymbol,
-    exchangeRate,
     currencyCode,
     isLoading: isQueryLoading || isLoading,
   };
