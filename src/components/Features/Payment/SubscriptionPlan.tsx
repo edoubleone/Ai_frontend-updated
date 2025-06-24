@@ -112,7 +112,7 @@ const SubscriptionPlan = ({ onUpgrade }: { onUpgrade: () => void }) => {
 
       {activePlan && (
         <Card
-          className={`flex w-full border-[#d2d2d2] rounded-lg flex-col border gap-y-8`}
+          className={`hidden w-full border-[#d2d2d2] rounded-lg flex-col border gap-y-8`}
         >
           <div>
             <h1 className="text-xl font-bold text-[#232323]">Payment Method</h1>

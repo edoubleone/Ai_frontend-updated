@@ -10,15 +10,31 @@ import { useQuery } from "@tanstack/react-query";
 import { GetAssistants } from "@/services/api/conversation";
 import { Link } from "react-router-dom";
 import BotsTableSkeletonLoader from "@/components/Features/bot/bot-table-loader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const BotsPage = () => {
+  const fields = [
+    { label: "Name", value: "assistantName" },
+    { label: "Industry", value: "industry" },
+    { label: "Created At", value: "created_at" },
+    { label: "Updated At", value: "updated_at" },
+  ];
+
   const { data: assistants = [], isLoading } = useQuery({
     queryFn: GetAssistants,
     queryKey: ["assistants"],
   });
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState({
+    field: fields[0].value,
+    direction: "desc",
+  });
 
   const data = assistants.map((assistant) => ({
     id: assistant.id,
@@ -29,9 +45,43 @@ const BotsPage = () => {
     status: "Bot created",
     share_url: assistant.share_url,
     share_whatsapp_url: assistant.share_whatsapp_url,
+    industry: assistant.industry,
+    created_at: assistant.created_at,
+    updated_at: assistant.updated_at,
   }));
 
-  const filteredData = data.filter((row) =>
+  const sortedData = useMemo(() => {
+    const sorted = [...data];
+    sorted.sort((a, b) => {
+      switch (sortOption.field) {
+        case "assistantName":
+          return sortOption.direction === "asc"
+            ? a.assistantName.localeCompare(b.assistantName)
+            : b.assistantName.localeCompare(a.assistantName);
+        case "industry":
+          return sortOption.direction === "asc"
+            ? a.industry.localeCompare(b.industry)
+            : b.industry.localeCompare(a.industry);
+        case "created_at":
+          return sortOption.direction === "asc"
+            ? new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime()
+            : new Date(b.created_at).getTime() -
+                new Date(a.created_at).getTime();
+        case "updated_at":
+          return sortOption.direction === "asc"
+            ? new Date(a.updated_at).getTime() -
+                new Date(b.updated_at).getTime()
+            : new Date(b.updated_at).getTime() -
+                new Date(a.updated_at).getTime();
+        default:
+          return 0;
+      }
+    });
+    return sorted;
+  }, [data, sortOption]);
+
+  const filteredData = sortedData.filter((row) =>
     row.assistantName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -95,18 +145,48 @@ const BotsPage = () => {
 
           <div className="flex flex-wrap items-center gap-2">
             <p className="text-sm font-semibold text-[#334155]">Sort: </p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"ghost"}
+                  wrapperclass="!w-fit"
+                  className="!rounded-[1.91px] !whitespace-nowrap !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
+                >
+                  {fields.find((f) => f.value === sortOption.field)?.label}{" "}
+                  <ChevronDown className="size-5" />
+                </Button>
+              </PopoverTrigger>
+
+              <PopoverContent className="p-1 !max-w-56">
+                <div className="flex flex-col gap-2">
+                  {fields.map((field) => (
+                    <Button
+                      key={field.value}
+                      variant="ghost"
+                      className="!text-left hover:bg-gray-100 !font-medium !w-full !justify-start"
+                      onClick={() =>
+                        setSortOption((prev) => ({
+                          field: field.value,
+                          direction:
+                            prev.field === field.value &&
+                            prev.direction === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    >
+                      {field.label}{" "}
+                      {sortOption.field === field.value &&
+                        (sortOption.direction === "asc" ? "↑" : "↓")}
+                    </Button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
             <Button
-              variant={"ghost"}
-              wrapperclass="!w-fit"
-              className="!rounded-[1.91px] !whitespace-nowrap !w-36 !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
-            >
-              Most Recent
-              <ChevronDown className="size-5" />
-            </Button>
-            <Button
               wrapperclass="!w-fit"
               variant={"ghost"}
-              className="!rounded-[1.91px] !p-2 !border-[.96px] !border-[#E2E8F0]"
+              className="!rounded-[1.91px] !hidden !p-2 !border-[.96px] !border-[#E2E8F0]"
             >
               <Funnel className="size-5 text-dark" />
             </Button>
