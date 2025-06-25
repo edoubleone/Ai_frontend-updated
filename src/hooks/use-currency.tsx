@@ -5,36 +5,28 @@ import { useState, useEffect } from "react";
 type ECurrencySymbol = "₦" | "$";
 
 const useCurrency = () => {
-  const sessionCurrencySymbol =
-    typeof sessionStorage !== "undefined"
-      ? sessionStorage.getItem("currencySymbol")
-      : "$";
-
-  const initialCurrencySymbol: ECurrencySymbol =
-    sessionCurrencySymbol === "₦" || sessionCurrencySymbol === "$"
-      ? (sessionCurrencySymbol as ECurrencySymbol)
-      : "$";
-
-  const [currencySymbol, setCurrencySymbol] = useState<ECurrencySymbol>(
-    initialCurrencySymbol
-  );
-  const [currencyCode, setCurrencyCode] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [currencySymbol, setCurrencySymbol] = useState<ECurrencySymbol>("$");
+  const [currencyCode, setCurrencyCode] = useState("USD");
 
   const {
     data,
     isError,
-    isLoading: isQueryLoading,
+    isLoading,
+    error,
   } = useQuery({
     queryKey: ["currency-info"],
     queryFn: async () => {
-      const response = await axios.get("https://ipapi.co/json/");
-      const countryCode = response.data.country_code;
+      try {
+        const response = await axios.get("https://ipapi.co/json/");
+        const countryCode = response.data.country_code;
 
-      if (countryCode === "NG") {
-        return { currencySymbol: "₦", currencyCode: "NGN" };
-      } else {
-        return { currencySymbol: "$", currencyCode: "USD" };
+        if (countryCode === "NG") {
+          return { currencySymbol: "₦", currencyCode: "NGN" };
+        } else {
+          return { currencySymbol: "$", currencyCode: "USD" };
+        }
+      } catch (error) {
+        throw error;
       }
     },
     staleTime: 1000 * 60 * 60 * 24,
@@ -46,19 +38,18 @@ const useCurrency = () => {
       setCurrencyCode(data.currencyCode);
       sessionStorage.setItem("currencyCode", data.currencyCode);
       sessionStorage.setItem("currencySymbol", data.currencySymbol);
-      setIsLoading(false);
     }
     if (isError) {
+      console.error("Error fetching currency info:", error);
       setCurrencySymbol("$");
       setCurrencyCode("USD");
-      setIsLoading(false);
     }
-  }, [data, isError]);
+  }, [data, isError, error]);
 
   return {
     currencySymbol,
     currencyCode,
-    isLoading: isQueryLoading || isLoading,
+    isLoading,
   };
 };
 

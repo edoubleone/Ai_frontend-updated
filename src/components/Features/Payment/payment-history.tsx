@@ -13,11 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronLeft,
-  ChevronRight,
-  MoreHorizontal,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
@@ -25,10 +21,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import clsx from "clsx";
-import { useState } from "react";
 
 interface RowPaymentHistory {
-  id: number;
+  id: string;
   invoiceNo: string;
   dueDate: string;
   amount: string;
@@ -39,44 +34,32 @@ interface RowPaymentHistory {
 
 interface DataTableProps {
   data: RowPaymentHistory[];
-  searchTerm: string;
+  currentPage: number;
+  rowsPerPage: number;
+  totalCount: number;
+  onPageChange: (page: number) => void;
+  onRowsPerPageChange: (size: number) => void;
 }
 
-const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const filteredData = data.filter((row) => {
-    return (
-      row.invoiceNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.dueDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.subscriptionType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.status.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
-
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
-
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+const PaymentHistoryTable = ({
+  data,
+  currentPage,
+  rowsPerPage,
+  totalCount,
+  onPageChange,
+  onRowsPerPageChange,
+}: DataTableProps) => {
+  const totalPages = Math.ceil(totalCount / rowsPerPage);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
@@ -123,7 +106,9 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
       cell: ({ row }) => (
         <span
           className={`text-base font-bold ${
-            row.original.status === "Success" ? "text-[#34A853]" : "text-[#D39900]"
+            row.original.status === "Success"
+              ? "text-[#34A853]"
+              : "text-[#D39900]"
           }`}
         >
           {row.original.status}
@@ -197,11 +182,19 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
   ];
 
   const table = useReactTable({
-    data: paginatedData,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: true,
   });
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8">
+        <p className="text-gray-500">No payment history found</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-y-5">
@@ -254,23 +247,34 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
           </Button>
 
           <div className="flex gap-3 items-center">
-            {Array(totalPages)
-              .fill(null)
-              .map((_, index) => (
+            {Array.from({ length: Math.min(totalPages, 5) }, (_, index) => {
+              let pageNumber;
+              if (totalPages <= 5) {
+                pageNumber = index + 1;
+              } else if (currentPage <= 3) {
+                pageNumber = index + 1;
+              } else if (currentPage >= totalPages - 2) {
+                pageNumber = totalPages - 4 + index;
+              } else {
+                pageNumber = currentPage - 2 + index;
+              }
+
+              return (
                 <Button
                   variant={"ghost"}
                   size={"icon"}
                   className={`text-sm ${
-                    index + 1 === currentPage
+                    pageNumber === currentPage
                       ? "text-white rounded-full bg-defaultBlue"
                       : "text-dark"
                   }`}
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
+                  key={pageNumber}
+                  onClick={() => onPageChange(pageNumber)}
                 >
-                  {index + 1}
+                  {pageNumber}
                 </Button>
-              ))}
+              );
+            })}
           </div>
 
           <Button
@@ -287,7 +291,9 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
           <p className="text-sm font-semibold text-[#334155]">Show: </p>
           <select
             value={rowsPerPage}
-            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
+            onChange={(e) =>
+              onRowsPerPageChange(Number.parseInt(e.target.value))
+            }
             className="!rounded-[1.91px] !whitespace-nowrap !w-fit !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
           >
             <option value={10}>10</option>
@@ -302,12 +308,22 @@ const PaymentHistoryTable = ({ data, searchTerm }: DataTableProps) => {
 
 const PaymentHistory = ({
   data,
-  searchTerm,
-}: {
-  data: RowPaymentHistory[];
-  searchTerm: string;
-}) => {
-  return <PaymentHistoryTable searchTerm={searchTerm} data={data} />;
+  currentPage,
+  rowsPerPage,
+  totalCount,
+  onPageChange,
+  onRowsPerPageChange,
+}: DataTableProps) => {
+  return (
+    <PaymentHistoryTable
+      data={data}
+      currentPage={currentPage}
+      rowsPerPage={rowsPerPage}
+      totalCount={totalCount}
+      onPageChange={onPageChange}
+      onRowsPerPageChange={onRowsPerPageChange}
+    />
+  );
 };
 
 export default PaymentHistory;
