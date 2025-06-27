@@ -39,8 +39,6 @@ const CurrentPlan = ({ border }: CurrentPlanProps) => {
     );
   }
 
-  if (!activePlan) return null;
-
   return (
     <Card
       className={`flex w-full flex-col justify-between flex-shrink-0 border max-w-[434px] gap-y-5 ${
@@ -51,15 +49,15 @@ const CurrentPlan = ({ border }: CurrentPlanProps) => {
         <div>
           <span className="inline-flex gap-2 items-center">
             <h1 className="text-xl capitalize whitespace-nowrap font-bold">
-              {activePlan.plan_name}
+              {activePlan?.plan_name || "Free"}
             </h1>
             <Badge className="bg-[#F2F8F4] capitalize text-defaultBlue text-xs font-bold shadow-none rounded-xl">
-              {activePlan.billing_cycle}
+              {activePlan?.billing_cycle || "Monthly"}
             </Badge>
           </span>
           <p className="text-sm text-[#8B8B8B]">
-            {activePlan.days_remaining
-              ? `${activePlan.days_remaining} days remaining`
+            {activePlan?.days_remaining
+              ? `${activePlan?.days_remaining} days remaining`
               : "No expiration date"}
           </p>
         </div>
@@ -69,13 +67,13 @@ const CurrentPlan = ({ border }: CurrentPlanProps) => {
             ? `${
                 (activePlan?.currency &&
                   currencySymbols[
-                    activePlan.currency as keyof typeof currencySymbols
+                    activePlan?.currency as keyof typeof currencySymbols
                   ]) ||
                 "$"
               }${activePlan.amount}`
             : `${currencySymbol}0`}
           <span className="text-base text-[#8B8B8B]">
-            /{activePlan.billing_cycle}
+            /{activePlan?.billing_cycle || "Monthly"}
           </span>
         </p>
       </div>
@@ -91,14 +89,14 @@ const CurrentPlan = ({ border }: CurrentPlanProps) => {
           <p className="text-sm text-[#454545]">Enable auto renew</p>
         </div>
 
-        {activePlan.plan_name !== "Free" && (
+        {activePlan?.plan_name !== "Free" && (
           <Link to={"/dashboard/payments"}>
             <Button variant="ghost" className="!text-defaultBlue !p-0">
               Upgrade Plan
             </Button>
           </Link>
         )}
-        {activePlan.plan_name === "Free" && (
+        {activePlan?.plan_name === "Free" && (
           <Link to={"/dashboard/payments"}>
             <Button variant="ghost" className="!text-defaultBlue !p-0">
               Get Started

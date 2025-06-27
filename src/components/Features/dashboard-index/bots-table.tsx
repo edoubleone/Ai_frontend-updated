@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { BookCheck, GitPullRequest, MoreHorizontal } from 'lucide-react';
+import { BookCheck, Code2, GitPullRequest, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
 import {
@@ -28,6 +28,8 @@ import { Dialog } from "@/components/ui/dialog";
 import ShareBotModal from "../bot/share-bot.modal";
 import CreateCampaign from "../bot/create-campaign";
 import { useNavigate } from "react-router-dom";
+import BusinessIdModal from "../bot/register-bot";
+import { useAuth } from "@/context/auth-provider";
 
 interface RowAssistant {
   id: number;
@@ -50,8 +52,12 @@ interface DataTableProps {
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<"share" | "campaign" | null>(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
+  const [showBusinessModal, setShowBusinessModal] = useState(false);
+  const [embedSnippet, setEmbedSnippet] = useState<string>("");
 
   const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const columns: ColumnDef<RowAssistant>[] = [
     {
@@ -157,6 +163,19 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
             </button>
 
             <button
+              onClick={() => {
+                setSelectedRow(row.original);
+                setShowBusinessModal(true);
+              }}
+              className={clsx(
+                "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
+              )}
+            >
+              <Code2 className="size-4" />
+              Generate Embed Code
+            </button>
+
+            <button
               disabled={!row.original.share_url}
               onClick={() => {
                 setAction("share");
@@ -187,6 +206,8 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
       ),
     },
   ];
+
+  console.log(embedSnippet, "snippet")
 
   const table = useReactTable({
     data,
@@ -219,7 +240,10 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell className="p-2 sm:p-4 whitespace-nowrap text-sm sm:text-base" key={cell.id}>
+                <TableCell
+                  className="p-2 sm:p-4 whitespace-nowrap text-sm sm:text-base"
+                  key={cell.id}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -227,6 +251,20 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           ))}
         </TableBody>
       </Table>
+
+      {user && (
+        <BusinessIdModal
+          open={showBusinessModal}
+          onClose={() => setShowBusinessModal(false)}
+          bot={selectedRow}
+          userId={user?.full_name}
+          onEmbedReady={(snippet) => {
+            setEmbedSnippet(snippet);
+            setShowBusinessModal(false);
+            setAction("share");
+          }}
+        />
+      )}
 
       <Dialog
         open={action === "share"}

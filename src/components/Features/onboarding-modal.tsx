@@ -23,28 +23,28 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
       title: "Setup Your Profile",
       content:
         "Click on your profile icon in the top right corner to update your business details, contact information, and preferences.",
-      icon: <User className="w-8 h-8 text-green-600" />,
+      icon: <User className="w-8 h-8 text-white" />,
       color: "from-green-500 to-teal-600",
     },
     {
       title: "Create Your AI Assistant",
       content:
         "Navigate to the dashboard and click 'Create Assistant' to configure your AI's personality, knowledge base, and conversation flow.",
-      icon: <Bot className="w-8 h-8 text-purple-600" />,
+      icon: <Bot className="w-8 h-8 text-white" />,
       color: "from-purple-500 to-pink-600",
     },
     {
       title: "Share & Deploy",
       content:
         "Once your assistant is ready, copy the embed code for your website or share the direct chat link with your customers.",
-      icon: <Share2 className="w-8 h-8 text-orange-600" />,
+      icon: <Share2 className="w-8 h-8 text-white" />,
       color: "from-orange-500 to-red-600",
     },
     {
       title: "You're All Set!",
       content:
         "Your AI sales assistant is ready to help convert visitors into customers. Need help? Our support team is here for you 24/7.",
-      icon: <CheckCircle className="w-8 h-8 text-emerald-600" />,
+      icon: <CheckCircle className="w-8 h-8 text-white" />,
       color: "from-emerald-500 to-green-600",
     },
   ]
@@ -104,7 +104,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
       <Card className="w-full max-w-lg mx-auto shadow-2xl border-0 overflow-hidden">
         <CardHeader className="relative p-0">
-          {/* Close button */}
           <Button
             variant="ghost"
             size="icon"
@@ -114,7 +113,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
             <X className="w-4 h-4" />
           </Button>
 
-          {/* Gradient header */}
           <div className={`bg-gradient-to-r ${steps[currentStep].color} p-8 text-white text-center`}>
             <div className="mb-4 flex justify-center">{steps[currentStep].icon}</div>
             <Badge variant="secondary" className="mb-2 bg-white/20 text-white border-white/30">
@@ -122,7 +120,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
             </Badge>
           </div>
 
-          {/* Progress bar */}
           <div className="px-6 -mt-2">
             <Progress value={progress} className="h-2 bg-white/20" />
           </div>
@@ -136,7 +133,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
             <p className="text-gray-600 text-center leading-relaxed mb-8">{steps[currentStep].content}</p>
           </div>
 
-          {/* Step indicators */}
           <div className="flex justify-center space-x-2 mb-8">
             {steps.map((_, index) => (
               <button
@@ -185,7 +181,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
             </Button>
           </div>
 
-          {/* Skip option */}
           {currentStep < steps.length - 1 && (
             <div className="text-center mt-4">
               <Button variant="ghost" onClick={onClose} className="text-sm text-gray-500 hover:text-gray-700">

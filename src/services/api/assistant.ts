@@ -1,3 +1,4 @@
+import { MESSAGING_URL } from "@/utils";
 import apiClient from "../config/api";
 import type { CustomerHistory, IAssistant } from "../models/conversation.model";
 
@@ -54,3 +55,31 @@ export function GetCustomerHistory(
       return response.data;
     });
 }
+
+export const RegisterBotEmbed = async (payload: {
+  business_id: string;
+  bot_url: string;
+}) => {
+  const res = await apiClient.post(
+    `${MESSAGING_URL}/api/bot-embed/register`,
+    payload
+  );
+  return res.data;
+};
+
+export const GenerateEmbedKey = async (payload: {
+  assistant_id: number;
+  bot_url: string;
+  owner_id: string;
+  theme: string;
+}) => {
+  const res = await apiClient.post(`${MESSAGING_URL}/api/embed-key`, payload);
+  return res.data;
+};
+
+export const GenerateEmbedSnippet = async (publicKey: string) => {
+  const res = await apiClient.get(
+    `${MESSAGING_URL}/api/embed-snippet/${publicKey}`
+  );
+  return res.data;
+};
