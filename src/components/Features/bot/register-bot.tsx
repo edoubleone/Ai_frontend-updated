@@ -9,13 +9,10 @@ import {
 
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import {
-  GenerateEmbedKey,
-  GenerateEmbedSnippet,
-  RegisterBotEmbed,
-} from "@/services/api/assistant";
+import { RegisterBotEmbed } from "@/services/api/assistant";
 import SecondaryInput from "@/components/shared/secondary-input";
 import Button from "@/components/shared/button";
+import type { ErrorResponse } from "@/services/config/api";
 
 interface BusinessIdModalProps {
   open: boolean;
@@ -24,35 +21,22 @@ interface BusinessIdModalProps {
     id: number;
     share_url: string;
   } | null;
-  userId: string;
-  onEmbedReady: (embedSnippet: string) => void;
 }
 
-const BusinessIdModal = ({
-  open,
-  onClose,
-  bot,
-  userId,
-  onEmbedReady,
-}: BusinessIdModalProps) => {
+const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
   const [businessName, setBusinessName] = useState("");
 
-  const registerBotMutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (payload: { business_id: string; bot_url: string }) => {
       const res = await RegisterBotEmbed(payload);
       return res;
     },
-  });
-
-  const generateKeyMutation = useMutation({
-    mutationFn: async (payload: {
-      assistant_id: number;
-      bot_url: string;
-      owner_id: string;
-      theme: string;
-    }) => {
-      const res = await GenerateEmbedKey(payload);
-      return res;
+    onSuccess: () => {
+      onClose();
+      toast.success("Embed for assistant registered successfully");
+    },
+    onError: (error: ErrorResponse) => {
+      toast.error(error?.response?.data?.detail || "Failed to register embed");
     },
   });
 
@@ -69,32 +53,11 @@ const BusinessIdModal = ({
       .replace(/(^-|-$)+/g, "");
     if (!bot) return;
 
-    try {
-      await registerBotMutation.mutateAsync({
-        business_id: slugified,
-        bot_url: bot.share_url,
-      });
-
-      const keyRes = await generateKeyMutation.mutateAsync({
-        assistant_id: bot.id,
-        bot_url: bot.share_url,
-        owner_id: userId,
-        theme: "light",
-      });
-
-      const snippetRes = await GenerateEmbedSnippet(keyRes.public_key);
-
-      onEmbedReady(snippetRes.snippet);
-      onClose();
-      setBusinessName("");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to generate embed snippet");
-    }
+    mutate({
+      business_id: slugified,
+      bot_url: bot.share_url,
+    });
   };
-
-  const isLoading =
-    registerBotMutation.isPending || generateKeyMutation.isPending;
 
   return (
     <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
@@ -111,11 +74,11 @@ const BusinessIdModal = ({
         />
 
         <DialogFooter className="mt-4">
-          <Button variant="outline" onClick={onClose} disabled={isLoading}>
+          <Button variant="outline" onClick={onClose} disabled={isPending}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={isLoading}>
-            Generate Embed
+          <Button onClick={handleSubmit} loading={isPending}>
+            Register Assistant Embed
           </Button>
         </DialogFooter>
       </DialogContent>

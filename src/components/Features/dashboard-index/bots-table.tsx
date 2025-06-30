@@ -53,7 +53,6 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<"share" | "campaign" | null>(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
-  const [embedSnippet, setEmbedSnippet] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -207,8 +206,6 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
     },
   ];
 
-  console.log(embedSnippet, "snippet")
-
   const table = useReactTable({
     data,
     columns,
@@ -257,12 +254,6 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           open={showBusinessModal}
           onClose={() => setShowBusinessModal(false)}
           bot={selectedRow}
-          userId={user?.full_name}
-          onEmbedReady={(snippet) => {
-            setEmbedSnippet(snippet);
-            setShowBusinessModal(false);
-            setAction("share");
-          }}
         />
       )}
 

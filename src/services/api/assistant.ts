@@ -56,6 +56,14 @@ export function GetCustomerHistory(
     });
 }
 
+export function GetEmbedPage(business_id: string) {
+  return apiClient
+    .get(`${MESSAGING_URL}/embed/bot/${business_id}`)
+    .then((response) => {
+      return response.data;
+    });
+}
+
 export const RegisterBotEmbed = async (payload: {
   business_id: string;
   bot_url: string;

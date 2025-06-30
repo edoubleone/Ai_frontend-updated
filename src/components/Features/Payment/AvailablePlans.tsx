@@ -442,8 +442,18 @@ const AvailablePlans = () => {
               </div>
 
               <Button
-                disabled={
+                loading={
                   (isPending &&
+                    variables ===
+                      plan.name.toLowerCase().replace(" ", "-") +
+                        (isAnnual ? "-yearly" : "-monthly")) ||
+                  (stripeLoading &&
+                    stripeVariables?.plan ===
+                      plan.name.toLowerCase().replace(" ", "-") +
+                        (isAnnual ? "-yearly" : "-monthly"))
+                }
+                disabled={
+                  (isLoading &&
                     variables ===
                       plan.name.toLowerCase().replace(" ", "-") +
                         (isAnnual ? "-yearly" : "-monthly")) ||

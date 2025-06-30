@@ -5,13 +5,10 @@ import { useState } from "react";
 import ScrollToTop from "../ScrollToTop";
 import LogOutDialog from "../logout-dialog";
 import { OnboardingModal } from "@/components/Features/onboarding-modal";
-import { useAuth } from "@/context/auth-provider";
 
 export function DashboardLayout() {
-  const { user } = useAuth();
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showModal, setShowModal] = useState(user?.is_active || false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="flex h-screen relative overflow-hidden">
