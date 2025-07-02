@@ -24,3 +24,11 @@ export async function GetUserData(): Promise<UserData> {
   const response = await apiClient.get<UserData>(`/auth/me`);
   return response.data;
 }
+
+function CompleteOnboarding(skip: boolean) {
+  return apiClient.post(`/auth/onboarding`, { skip }).then((response) => {
+    return response.data;
+  });
+}
+
+export { CompleteOnboarding };

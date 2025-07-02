@@ -31,6 +31,7 @@ export interface UserData {
   email: string;
   full_name: string;
   is_active: boolean;
+  is_onboarded: boolean;
 }
 
 export interface IAssistantMessage {

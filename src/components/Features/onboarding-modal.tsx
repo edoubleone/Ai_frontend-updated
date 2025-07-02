@@ -1,16 +1,44 @@
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { User, Bot, Share2, CheckCircle, ArrowLeft, ArrowRight, Sparkles, X } from "lucide-react"
+import type React from "react";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import {
+  User,
+  Bot,
+  Share2,
+  CheckCircle,
+  ArrowLeft,
+  ArrowRight,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { CompleteOnboarding } from "@/services/api/auth";
+import { toast } from "sonner";
+import type { ErrorResponse } from "@/services/config/api";
 
 interface OnboardingModalProps {
-  onClose: () => void
+  onClose: () => void;
 }
 
-export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => {
+export const OnboardingModal: React.FC<OnboardingModalProps> = ({
+  onClose,
+}) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (skip: boolean) => CompleteOnboarding(skip),
+    onSuccess: () => {
+      toast.success("Onboarding completed!");
+      onClose();
+    },
+    onError: (error: ErrorResponse) => {
+      toast.error(
+        error?.response?.data?.detail || "Failed to complete onboarding."
+      );
+    },
+  });
+
   const steps = [
     {
       title: "Welcome to AI Sales Assistant!",
@@ -47,58 +75,58 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
       icon: <CheckCircle className="w-8 h-8 text-white" />,
       color: "from-emerald-500 to-green-600",
     },
-  ]
+  ];
 
-  const [currentStep, setCurrentStep] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const progress = ((currentStep + 1) / steps.length) * 100
+  const progress = ((currentStep + 1) / steps.length) * 100;
 
   const handleNext = () => {
-    if (isAnimating) return
+    if (isAnimating) return;
 
     if (currentStep < steps.length - 1) {
-      setIsAnimating(true)
+      setIsAnimating(true);
       setTimeout(() => {
-        setCurrentStep(currentStep + 1)
-        setIsAnimating(false)
-      }, 150)
+        setCurrentStep(currentStep + 1);
+        setIsAnimating(false);
+      }, 150);
     } else {
-      onClose()
+      mutate(false);
     }
-  }
+  };
 
   const handleBack = () => {
-    if (isAnimating || currentStep === 0) return
+    if (isAnimating || currentStep === 0) return;
 
-    setIsAnimating(true)
+    setIsAnimating(true);
     setTimeout(() => {
-      setCurrentStep(currentStep - 1)
-      setIsAnimating(false)
-    }, 150)
-  }
+      setCurrentStep(currentStep - 1);
+      setIsAnimating(false);
+    }, 150);
+  };
 
   const handleStepClick = (stepIndex: number) => {
-    if (isAnimating) return
+    if (isAnimating) return;
 
-    setIsAnimating(true)
+    setIsAnimating(true);
     setTimeout(() => {
-      setCurrentStep(stepIndex)
-      setIsAnimating(false)
-    }, 150)
-  }
+      setCurrentStep(stepIndex);
+      setIsAnimating(false);
+    }, 150);
+  };
 
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose()
+        onClose();
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleEscape)
-    return () => document.removeEventListener("keydown", handleEscape)
-  }, [onClose])
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
@@ -113,9 +141,16 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
             <X className="w-4 h-4" />
           </Button>
 
-          <div className={`bg-gradient-to-r ${steps[currentStep].color} p-8 text-white text-center`}>
-            <div className="mb-4 flex justify-center">{steps[currentStep].icon}</div>
-            <Badge variant="secondary" className="mb-2 bg-white/20 text-white border-white/30">
+          <div
+            className={`bg-gradient-to-r ${steps[currentStep].color} p-8 text-white text-center`}
+          >
+            <div className="mb-4 flex justify-center">
+              {steps[currentStep].icon}
+            </div>
+            <Badge
+              variant="secondary"
+              className="mb-2 bg-white/20 text-white border-white/30"
+            >
               Step {currentStep + 1} of {steps.length}
             </Badge>
           </div>
@@ -127,10 +162,18 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
 
         <CardContent className="p-8">
           <div
-            className={`transition-all duration-300 ${isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"}`}
+            className={`transition-all duration-300 ${
+              isAnimating
+                ? "opacity-0 transform translate-y-4"
+                : "opacity-100 transform translate-y-0"
+            }`}
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">{steps[currentStep].title}</h2>
-            <p className="text-gray-600 text-center leading-relaxed mb-8">{steps[currentStep].content}</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+              {steps[currentStep].title}
+            </h2>
+            <p className="text-gray-600 text-center leading-relaxed mb-8">
+              {steps[currentStep].content}
+            </p>
           </div>
 
           <div className="flex justify-center space-x-2 mb-8">
@@ -142,8 +185,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
                   index === currentStep
                     ? "bg-blue-600 scale-125"
                     : index < currentStep
-                      ? "bg-green-500"
-                      : "bg-gray-300 hover:bg-gray-400"
+                    ? "bg-green-500"
+                    : "bg-gray-300 hover:bg-gray-400"
                 }`}
                 disabled={isAnimating}
               />
@@ -164,6 +207,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
 
             <Button
               onClick={handleNext}
+              isLoading={isPending}
               disabled={isAnimating}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
             >
@@ -183,7 +227,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
 
           {currentStep < steps.length - 1 && (
             <div className="text-center mt-4">
-              <Button variant="ghost" onClick={onClose} className="text-sm text-gray-500 hover:text-gray-700">
+              <Button
+                variant="ghost"
+                onClick={onClose}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 Skip onboarding
               </Button>
             </div>
@@ -191,5 +239,5 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => 
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};

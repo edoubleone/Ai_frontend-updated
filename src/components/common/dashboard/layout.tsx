@@ -1,14 +1,23 @@
 import { Outlet } from "react-router-dom";
 import { AppSidebar } from "./sidebar";
 import { DashboardHeader } from "./header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScrollToTop from "../ScrollToTop";
 import LogOutDialog from "../logout-dialog";
 import { OnboardingModal } from "@/components/Features/onboarding-modal";
+import { useAuth } from "@/context/auth-provider";
 
 export function DashboardLayout() {
+  const { user } = useAuth();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(()=>{
+    if (user) {
+      setShowModal(!user?.is_onboarded)
+    }
+  }, [user])
 
   return (
     <div className="flex h-screen relative overflow-hidden">
