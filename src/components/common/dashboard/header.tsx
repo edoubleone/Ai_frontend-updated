@@ -33,7 +33,7 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
 
         <Link to="/dashboard/assistants/create-assistant">
           <Button className="!font-bold !text-base" variant="lightLavender">
-            Build a Bot
+            Build an Assistant
             <ArrowRight2 size="18" />
           </Button>
         </Link>
