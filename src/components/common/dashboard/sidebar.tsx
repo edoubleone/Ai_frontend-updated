@@ -145,7 +145,7 @@ export function AppSidebar({
             );
           })}
 
-          <div className="relative py-6 px-2.5 border-[.5px] border-[#F5EFEB80] bg-[url('/images/ad.jpg')] rounded-2xl min-h-44 w-full bg-no-repeat bg-center bg-cover">
+          <div className="relative py-6 px-2.5 border-[.5px] border-[#F5EFEB80] bg-[url('/images/ad.webp')] rounded-2xl min-h-44 w-full bg-no-repeat bg-center bg-cover">
             <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
             <div className="relative z-10 text-center text-white">
               <h1 className="text-base font-bold max-w-44 mx-auto uppercase">
