@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 
 import { Button } from "@/components/ui/button";
+import SecondaryButton from "@/components/shared/button";
 import { XIcon } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 
@@ -64,37 +65,8 @@ export function AppSidebar({
   const { pathname } = useLocation();
   const { setLogOut } = useAuth();
 
-  // const sidebar = useRef<HTMLDivElement | null>(null);
-
-  // useEffect(() => {
-  //   const clickHandler = ({ target }: MouseEvent) => {
-  //     if (!sidebar.current || !trigger.current) return;
-  //     const targetNode = target as Node;
-  //     if (
-  //       sidebar.current.contains(targetNode) ||
-  //       trigger.current.contains(targetNode)
-  //     ) {
-  //       return;
-  //     }
-  //     setSideBar(false);
-  //   };
-  //   document.addEventListener("click", clickHandler);
-  //   return () => {
-  //     document.removeEventListener("click", clickHandler);
-  //   };
-  // }, [setSideBar, open]);
-
-  // useEffect(() => {
-  //   const keyHandler = ({ key }: KeyboardEvent) => {
-  //     if (!open || key !== "Escape") return;
-  //     setSideBar(false);
-  //   };
-  //   document.addEventListener("keydown", keyHandler);
-  // });
-
   return (
     <div
-      // ref={sidebar}
       className={clsx(
         "fixed lg:sticky lg:flex top-0 left-0 h-full lg:translate-x-0 duration-300 ease-linear transition-all lg:h-screen py-6 lg:py-0 w-64 px-6 flex-col border-r border-[#E7E7E7] bg-white z-50 lg:z-40",
         `${open ? "translate-x-0" : "-translate-x-full"}`
@@ -115,7 +87,7 @@ export function AppSidebar({
         </Button>
       </div>
 
-      <div className="flex-1 flex flex-col pt-8 gap-y-20 no-scroll overflow-y-auto">
+      <div className="flex-1 flex flex-col justify-between pt-8 gap-y-20 no-scroll overflow-y-auto">
         <div className="flex flex-col gap-y-4">
           {navigationItems.map((route) => (
             <Link to={route.url} key={route.title}>
@@ -172,6 +144,23 @@ export function AppSidebar({
               </>
             );
           })}
+
+          <div className="relative py-6 px-2.5 border-[.5px] border-[#F5EFEB80] bg-[url('/images/ad.jpg')] rounded-2xl min-h-44 w-full bg-no-repeat bg-center bg-cover">
+            <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
+            <div className="relative z-10 text-center text-white">
+              <h1 className="text-base font-bold max-w-44 mx-auto uppercase">
+                Convert leads into clients
+              </h1>
+              <p className="text-sm text-[#D0D0D0]">
+                Convert leads into clients with Smart outbound calls
+              </p>
+              <Link to={"/"}>
+                <SecondaryButton wrapperclass="pt-5">
+                  Create Assistant
+                </SecondaryButton>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

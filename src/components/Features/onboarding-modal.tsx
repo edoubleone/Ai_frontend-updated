@@ -41,23 +41,23 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   const steps = [
     {
-      title: "Welcome to AI Sales Assistant!",
+      title: "Welcome to KoolAI Assistant",
       content:
         "Transform your sales process with intelligent AI assistants that work around the clock to engage and convert your customers.",
       icon: <Sparkles className="w-8 h-8 text-blue-600" />,
       color: "from-blue-500 to-purple-600",
     },
     {
-      title: "Setup Your Profile",
-      content:
-        "Click on your profile icon in the top right corner to update your business details, contact information, and preferences.",
-      icon: <User className="w-8 h-8 text-white" />,
-      color: "from-green-500 to-teal-600",
-    },
-    {
       title: "Create Your AI Assistant",
       content:
         "Navigate to the dashboard and click 'Create Assistant' to configure your AI's personality, knowledge base, and conversation flow.",
+      icon: <Bot className="w-8 h-8 text-white" />,
+      color: "from-purple-500 to-pink-600",
+    },
+    {
+      title: "Create Campaign and Outbound Calls for Client",
+      content:
+        "Navigate to the Assistant page, where you'll find a table to manage your campaigns. From there, you can create a new campaign and set up outbound calls for your client.",
       icon: <Bot className="w-8 h-8 text-white" />,
       color: "from-purple-500 to-pink-600",
     },
@@ -68,6 +68,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
       icon: <Share2 className="w-8 h-8 text-white" />,
       color: "from-orange-500 to-red-600",
     },
+    {
+      title: "Setup Your Profile",
+      content:
+        "Click on your profile icon in the top right corner to update your business details, contact information, and preferences.",
+      icon: <User className="w-8 h-8 text-white" />,
+      color: "from-green-500 to-teal-600",
+    },
+
     {
       title: "You're All Set!",
       content:
