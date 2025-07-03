@@ -84,7 +84,7 @@ const WebChatSetup = () => {
 
           {generatedCode && (
             <div className="bg-[#EEEEFD] flex rounded-2xl divide-y flex-col w-full">
-              <pre className="mx-5 text-xs w-fit text-dark my-2.5 whitespace-pre-wrap break-all">
+              <pre className="mx-5 text-xs h-64 overflow-y-auto w-fit text-dark my-2.5 whitespace-pre-wrap break-all">
                 <code>
                   {`
 ${generatedCode}
