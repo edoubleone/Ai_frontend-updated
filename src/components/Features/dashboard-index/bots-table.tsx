@@ -13,7 +13,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { BookCheck, Code2, GitPullRequest, MoreHorizontal } from "lucide-react";
+import {
+  BookCheck,
+  BookCopy,
+  Code2,
+  MoreHorizontal,
+  Voicemail,
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
 import {
@@ -30,6 +36,7 @@ import CreateCampaign from "../bot/create-campaign";
 import { useNavigate } from "react-router-dom";
 import BusinessIdModal from "../bot/register-bot";
 import { useAuth } from "@/context/auth-provider";
+import CreateVoiceCampaign from "../bot/create-voice-campaign";
 
 interface RowAssistant {
   id: number;
@@ -50,7 +57,9 @@ interface DataTableProps {
 }
 
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
-  const [action, setAction] = useState<"share" | "campaign" | null>(null);
+  const [action, setAction] = useState<
+    "share" | "campaign" | "voice-campaign" | null
+  >(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
 
@@ -197,8 +206,21 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
                 "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
               )}
             >
-              <GitPullRequest className="size-4" />
-              Create Campaign
+              <BookCopy className="size-4" />
+              Create Text Campaign
+            </button>
+
+            <button
+              onClick={() => {
+                setAction("voice-campaign");
+                setSelectedRow(row.original);
+              }}
+              className={clsx(
+                "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
+              )}
+            >
+              <Voicemail className="size-4" />
+              Create Voice Campaign
             </button>
           </PopoverContent>
         </Popover>
@@ -275,6 +297,20 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
       >
         {selectedRow && (
           <CreateCampaign
+            closed={action !== "campaign"}
+            closeModal={() => setAction(null)}
+            id={selectedRow?.id}
+          />
+        )}
+      </Dialog>
+
+      <Dialog
+        open={action === "voice-campaign"}
+        onOpenChange={(open) => setAction(open ? "voice-campaign" : null)}
+      >
+        {selectedRow && (
+          <CreateVoiceCampaign
+            closed={action !== "voice-campaign"}
             closeModal={() => setAction(null)}
             id={selectedRow?.id}
           />

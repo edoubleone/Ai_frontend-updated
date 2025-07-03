@@ -9,6 +9,15 @@ export interface ICreateCampaign {
   repeat_until?: Date;
 }
 
+export interface ICreateVoiceCampaign {
+  assistant_id: number;
+  message: string;
+  handle: string;
+  channel: string;
+  run_at: Date;
+  repeat: string;
+}
+
 export function AsyncCreateCampaign(
   payload: ICreateCampaign,
   assistant_id: number
@@ -18,6 +27,12 @@ export function AsyncCreateCampaign(
     .then((response) => {
       return response.data;
     });
+}
+
+export function AsyncCreateVoiceCampaign(payload: ICreateVoiceCampaign) {
+  return apiClient.post(`/campaigns/voice`, payload).then((response) => {
+    return response.data;
+  });
 }
 
 export function GetAssistant(id: number): Promise<IAssistant> {

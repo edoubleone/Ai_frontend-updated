@@ -8,7 +8,7 @@ export interface SecondaryTextAreaProps
   errorText?: string;
   wrapperClass?: string;
   hasMax?: boolean;
-  max?: number;
+  max?: number | string;
   textAreaClass?: string;
   info?: boolean;
 }

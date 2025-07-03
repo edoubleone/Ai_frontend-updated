@@ -1,15 +1,16 @@
 import Button from "@/components/shared/button";
 import { DatePicker } from "@/components/shared/datepicker";
-import SecondaryInput from "@/components/shared/secondary-input";
+import { PhoneInput } from "@/components/shared/phone-number-input";
 import { SelectInput } from "@/components/shared/secondary-select";
+import SecondaryTextArea from "@/components/shared/secondary-textarea";
 import {
   DialogClose,
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  AsyncCreateCampaign,
-  type ICreateCampaign,
+  AsyncCreateVoiceCampaign,
+  type ICreateVoiceCampaign,
 } from "@/services/api/assistant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -18,17 +19,18 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const CreateCampaign = ({
+const CreateVoiceCampaign = ({
   id,
   closeModal,
   closed,
 }: {
   id: number;
-  closeModal: () => void;
   closed: boolean;
+  closeModal: () => void;
 }) => {
   const { mutate, isPending } = useMutation({
-    mutationFn: (payload: ICreateCampaign) => AsyncCreateCampaign(payload, id),
+    mutationFn: (payload: ICreateVoiceCampaign) =>
+      AsyncCreateVoiceCampaign(payload),
     onSuccess: () => {
       toast.success("Campaign created successfully");
       reset();
@@ -45,32 +47,43 @@ const CreateCampaign = ({
     reset,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      campaign: "",
+      assistant_id: id,
+      message: "",
+      handle: "",
       run_at: undefined,
       repeat: "",
-      repeat_until: undefined,
+      channel: "voice",
     },
     resolver: zodResolver(
       z.object({
-        campaign: z.string().min(1, "Campaign is required"),
-        run_at: z.date({ required_error: "Run at is required" }),
-        repeat: z.string().min(1, "Repeat is required"),
-        repeat_until: z.date().optional(),
+        assistant_id: z.number().min(1, "Assistant ID is required"),
+        message: z.string().max(50, "Message should be at most 50 characters"),
+        handle: z.string().min(1, "Enter phone number"),
+        run_at: z.date({ required_error: "Select campaign date" }),
+        repeat: z.string().min(1, "Select repeat period"),
+        channel: z.string().min(1, "Select channel"),
       })
     ),
   });
 
   useEffect(() => {
     if (closed) {
-      reset();
+      reset({
+        assistant_id: id,
+        message: "",
+        handle: "",
+        run_at: undefined,
+        repeat: "",
+        channel: "voice",
+      });
     }
   }, [reset, closed, id]);
 
-  const onSubmit = async (data: ICreateCampaign) => {
+  const onSubmit = async (data: ICreateVoiceCampaign) => {
     if (!id) return;
     mutate(data);
   };
@@ -79,17 +92,30 @@ const CreateCampaign = ({
     <DialogContent>
       <div className="flex flex-col gap-y-6 mt-6">
         <div>
-          <h1 className="text-dark font-bold text-lg">Create Campaign</h1>
+          <h1 className="text-dark font-bold text-lg">Create Voice Campaign</h1>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
-          <SecondaryInput
-            label="Title"
-            {...register("campaign")}
-            error={!!errors.campaign}
-            errorText={errors.campaign?.message}
-            placeholder="Enter campaign title"
-            type="text"
+          <PhoneInput
+            label="Phone Number"
+            placeholder="00 000 000"
+            value={watch("handle")}
+            onChange={(value) =>
+              setValue("handle", value, { shouldValidate: true })
+            }
+            error={!!errors.handle}
+            errorText={errors.handle?.message}
+          />
+
+          <SecondaryTextArea
+            info
+            hasMax
+            label="Message"
+            errorText={errors.message?.message}
+            rows={5}
+            {...register("message")}
+            error={!!errors.message}
+            placeholder="Enter message"
           />
 
           <DatePicker
@@ -118,19 +144,6 @@ const CreateCampaign = ({
             }))}
           />
 
-          {watch("repeat") !== RepeatEnum.None && (
-            <DatePicker
-              label="Repeat until"
-              placeholder="Repeat until"
-              date={watch("repeat_until")}
-              onDateChange={(date) =>
-                date && setValue("repeat_until", date, { shouldValidate: true })
-              }
-              error={!!errors.repeat_until}
-              errorText={errors.repeat_until?.message}
-            />
-          )}
-
           <DialogFooter>
             <DialogClose
               type="button"
@@ -139,7 +152,12 @@ const CreateCampaign = ({
               Cancel
             </DialogClose>
 
-            <Button type="submit" loading={isPending} wrapperclass="flex-1">
+            <Button
+              type="submit"
+              disabled={!isValid}
+              loading={isPending}
+              wrapperclass="flex-1"
+            >
               Create
             </Button>
           </DialogFooter>
@@ -149,11 +167,10 @@ const CreateCampaign = ({
   );
 };
 
-export default CreateCampaign;
+export default CreateVoiceCampaign;
 
 const RepeatEnum = {
   None: "none",
   Daily: "daily",
   Weekly: "weekly",
-  Monthly: "monthly",
 } as const;
