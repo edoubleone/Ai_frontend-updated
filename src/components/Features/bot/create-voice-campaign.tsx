@@ -61,7 +61,7 @@ const CreateVoiceCampaign = ({
     resolver: zodResolver(
       z.object({
         assistant_id: z.number().min(1, "Assistant ID is required"),
-        message: z.string().max(50, "Message should be at most 50 characters"),
+        message: z.string().max(200, "Message should be at most 200 characters"),
         handle: z.string().min(1, "Enter phone number"),
         run_at: z.date({ required_error: "Select campaign date" }),
         repeat: z.string().min(1, "Select repeat period"),
@@ -108,8 +108,8 @@ const CreateVoiceCampaign = ({
           />
 
           <SecondaryTextArea
-            info
             hasMax
+            max={200}
             label="Message"
             errorText={errors.message?.message}
             rows={5}
