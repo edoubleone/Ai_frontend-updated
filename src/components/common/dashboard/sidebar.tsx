@@ -149,12 +149,12 @@ export function AppSidebar({
             <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
             <div className="relative z-10 text-center text-white">
               <h1 className="text-base font-bold max-w-44 mx-auto uppercase">
-                Convert leads into clients
+                KoolAI OOUTBOUND CALL
               </h1>
               <p className="text-sm text-[#D0D0D0]">
                 Convert leads into clients with Smart outbound calls
               </p>
-              <Link to={"/"}>
+              <Link to={"/dashboard/assistants/create-assistant"}>
                 <SecondaryButton wrapperclass="pt-5">
                   Create Assistant
                 </SecondaryButton>
