@@ -27,7 +27,7 @@ const ShareBotModal = ({
   };
 
   return (
-    <DialogContent>
+    <DialogContent className="max-h-[95%] overflow-y-auto">
       <div className="flex flex-col gap-y-6 mt-6">
         <div>
           <h1 className="text-dark font-bold text-lg">Test and Share bots</h1>
