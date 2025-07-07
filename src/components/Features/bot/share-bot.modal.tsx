@@ -3,6 +3,7 @@ import { DialogContent } from "@/components/ui/dialog";
 import copy from "@/assets/icons/copy.svg";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import QRCode from "react-qr-code";
 
 const ShareBotModal = ({
   url,
@@ -57,25 +58,31 @@ const ShareBotModal = ({
         />
 
         {whatsapp_url && (
-          <SecondaryInput
-            label="Get your WhatsApp demonstration link"
-            placeholder="Assistant WhatsApp Link"
-            type="text"
-            iconposition="right"
-            icon={
-              <Button
-                variant={"ghost"}
-                size={"icon"}
-                onClick={handleCopyWhatsappUrl}
-                title="Copy link"
-              >
-                <img src={copy} alt="copy icon" />
-              </Button>
-            }
-            readOnly
-            disabled
-            value={whatsapp_url}
-          />
+          <>
+            <SecondaryInput
+              label="Get your WhatsApp demonstration link"
+              placeholder="Assistant WhatsApp Link"
+              type="text"
+              iconposition="right"
+              icon={
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  onClick={handleCopyWhatsappUrl}
+                  title="Copy link"
+                >
+                  <img src={copy} alt="copy icon" />
+                </Button>
+              }
+              readOnly
+              disabled
+              value={whatsapp_url}
+            />
+            <div className="flex flex-col items-center gap-2 mt-2">
+              <span className="text-sm text-gray-600">Scan to open WhatsApp link</span>
+              <QRCode value={whatsapp_url} size={200} />
+            </div>
+          </>
         )}
       </div>
     </DialogContent>
