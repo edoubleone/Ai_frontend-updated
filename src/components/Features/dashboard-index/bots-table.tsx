@@ -18,6 +18,7 @@ import {
   BookCopy,
   Code2,
   MoreHorizontal,
+  TrashIcon,
   Voicemail,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -37,6 +38,7 @@ import { useNavigate } from "react-router-dom";
 import BusinessIdModal from "../bot/register-bot";
 import { useAuth } from "@/context/auth-provider";
 import CreateVoiceCampaign from "../bot/create-voice-campaign";
+import { DeleteBotModal } from "../bot/delete-bot-modal";
 
 interface RowAssistant {
   id: number;
@@ -58,7 +60,7 @@ interface DataTableProps {
 
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<
-    "share" | "campaign" | "voice-campaign" | null
+    "share" | "campaign" | "voice-campaign" | "delete" | null
   >(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
@@ -222,6 +224,20 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
               <Voicemail className="size-4" />
               Create Voice Campaign
             </button>
+
+            <button
+              disabled={!row.original.share_url}
+              onClick={() => {
+                setAction("delete");
+                setSelectedRow(row.original);
+              }}
+              className={clsx(
+                "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
+              )}
+            >
+              <TrashIcon className="size-4" />
+              Delete Assistant
+            </button>
           </PopoverContent>
         </Popover>
       ),
@@ -316,6 +332,12 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           />
         )}
       </Dialog>
+
+      <DeleteBotModal
+        assistant={selectedRow as RowAssistant}
+        isOpen={action === "delete"}
+        onClose={() => setAction(null)}
+      />
     </>
   );
 };
