@@ -41,6 +41,12 @@ export function GetAssistant(id: number): Promise<IAssistant> {
   });
 }
 
+export function DeleteAssistant(id: number) {
+  return apiClient.delete(`/assistants/${id}`).then((response) => {
+    return response.data;
+  });
+}
+
 export function ChatAsCustomer(
   assistant_id: number,
   channel: string = "web",
