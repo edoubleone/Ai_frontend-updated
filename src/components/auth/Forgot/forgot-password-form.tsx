@@ -1,53 +1,52 @@
-"use client"
+import type React from "react";
+import { useState } from "react";
 
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { VerificationModal } from "./verfication-modal"
-import { SuccessModal } from "./success-modal"
-import { Link } from "react-router-dom"
-import logo from "@/assets/images/logo.png"
+import { Label } from "@/components/ui/label";
+import { VerificationModal } from "./verfication-modal";
+import { SuccessModal } from "./success-modal";
+import { Link } from "react-router-dom";
+import logo from "@/assets/images/logo.png";
+import SecondaryInput from "@/components/shared/secondary-input";
+import Button from "@/components/shared/button";
 
 export function ForgotPasswordForm() {
-  const [email, setEmail] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showVerificationModal, setShowVerificationModal] = useState(false)
-  const [isPasswordReset, setIsPasswordReset] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate API call to send verification code
     setTimeout(() => {
-      setIsSubmitting(false)
-      setShowVerificationModal(true)
-    }, 1500)
-  }
+      setIsSubmitting(false);
+      setShowVerificationModal(true);
+    }, 1500);
+  };
 
   const handleVerificationComplete = (code: string) => {
     // Handle verification completion
-    console.log("Verification code:", code)
-    setShowVerificationModal(false)
-    setShowSuccessModal(true)
-  }
+    console.log("Verification code:", code);
+    setShowVerificationModal(false);
+    setShowSuccessModal(true);
+  };
 
   const handleCloseModal = () => {
-    setShowVerificationModal(false)
-  }
+    setShowVerificationModal(false);
+  };
 
   const handleBackToForm = () => {
-    setIsPasswordReset(false)
-    setEmail("")
-  }
+    setIsPasswordReset(false);
+    setEmail("");
+  };
 
   const handleLoginClick = () => {
     // Navigate to login page
-    window.location.href = "/login"
-  }
+    window.location.href = "/login";
+  };
 
   return (
     <>
@@ -55,18 +54,22 @@ export function ForgotPasswordForm() {
         {/* Left Panel - Form (50% width) */}
         <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center px-8 lg:px-16">
           <div className="w-full max-w-md mx-auto">
-          <Link to="/" className="inline-block mb-8">
-            <img
-              src={logo}
-              alt="Kool AI Logo"
-              className="h-10 w-auto hover:opacity-80 transition-opacity"
-            />
-          </Link>
+            <Link to="/" className="inline-block mb-8">
+              <img
+                src={logo}
+                alt="Kool AI Logo"
+                className="h-10 w-auto hover:opacity-80 transition-opacity"
+              />
+            </Link>
 
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-3">Forgot Password</h1>
-              <p className="text-gray-600">No worries, we'll send you the reset instructions</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                Forgot Password
+              </h1>
+              <p className="text-gray-600">
+                No worries, we'll send you the reset instructions
+              </p>
             </div>
 
             {/* Form */}
@@ -74,10 +77,13 @@ export function ForgotPasswordForm() {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 {/* Email */}
                 <div>
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
+                  <Label
+                    htmlFor="email"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
                     Email Address
                   </Label>
-                  <Input
+                  <SecondaryInput
                     id="email"
                     type="email"
                     placeholder="Enter your email address"
@@ -101,9 +107,12 @@ export function ForgotPasswordForm() {
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
                     Remember password?{" "}
-                    <a href="/login" className="text-blue-600 hover:underline font-medium">
+                    <Link
+                      to="/login"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
                       Login
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </form>
@@ -117,10 +126,17 @@ export function ForgotPasswordForm() {
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Password Reset Successful</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Password Reset Successful
+                </h2>
                 <p className="text-gray-600">
                   Your password has been successfully reset.
                   <br />
@@ -151,7 +167,7 @@ export function ForgotPasswordForm() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/images/background.png')",
+              backgroundImage: "url('/images/signup-bg.png')",
             }}
           />
         </div>
@@ -166,10 +182,7 @@ export function ForgotPasswordForm() {
       />
 
       {/* Success Modal */}
-      <SuccessModal
-        isOpen={showSuccessModal}
-        onLoginClick={handleLoginClick}
-      />
+      <SuccessModal isOpen={showSuccessModal} onLoginClick={handleLoginClick} />
     </>
-  )
+  );
 }

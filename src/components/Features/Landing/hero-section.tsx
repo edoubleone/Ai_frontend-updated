@@ -45,8 +45,8 @@ const HeroSection = () => {
         <div className="flex flex-col items-center px-4 pt-20 text-center gap-y-5 md:gap-y-8">
           <div className="space-y-2.5">
             <h1 className="font-semibold text-[24px] max-w-[68rem] mx-auto text-center px-4 md:text-5xl lg:text-6xl text-dark">
-              Grow your business by using{" "}
-              <span className="text-blue-600">AI</span> to make smarter
+              Grow your business by using our{" "}
+              <span className="text-blue-600">AI Agent</span> to make smarter
               engagement and sales
             </h1>
 

@@ -57,6 +57,10 @@ function App() {
         </Route>
       </Route>
 
+      <Route path="forgot-password" element={<Forgot />} />
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<SignUp />} />
+
       {/* Public Routes with Main Layout */}
       <Route
         path="/"
@@ -73,9 +77,7 @@ function App() {
         <Route path="pricing" element={<Pricing />} />
         <Route path="terms" element={<TermOfUse />} />
         <Route path="privacy" element={<Policy />} />
-        <Route path="forgot" element={<Forgot />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<SignUp />} />
+
         <Route path="test-font" element={<TestFont />} />
         <Route path="demo" element={<Demo />} />
         <Route path="*" element={<NotFound />} />
