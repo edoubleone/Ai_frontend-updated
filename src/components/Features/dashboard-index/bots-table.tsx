@@ -17,8 +17,8 @@ import {
   BookCheck,
   BookCopy,
   Code2,
-  Delete,
   MoreHorizontal,
+  TrashIcon,
   Voicemail,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -235,7 +235,7 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
                 "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
               )}
             >
-              <Delete width={16} height={16} />
+              <TrashIcon className="size-4" />
               Delete Assistant
             </button>
           </PopoverContent>
