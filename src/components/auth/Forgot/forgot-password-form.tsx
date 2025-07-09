@@ -8,23 +8,30 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import SecondaryInput from "@/components/shared/secondary-input";
 import Button from "@/components/shared/button";
+import { ForgotPassword } from "@/services/api/auth";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [isPasswordReset, setIsPasswordReset] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  const { mutate: forgotPassword, isPending } = useMutation({
+    mutationFn: ForgotPassword,
+    onSuccess: (data) => {
+      setEmail("");
+      toast.success(data.message);
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate API call to send verification code
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowVerificationModal(true);
-    }, 1500);
+    forgotPassword(email);
   };
 
   const handleVerificationComplete = (code: string) => {
@@ -98,9 +105,9 @@ export function ForgotPasswordForm() {
                 <Button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg"
-                  disabled={isSubmitting}
+                  loading={isPending}
                 >
-                  {isSubmitting ? "Sending..." : "Proceed"}
+                  Proceed
                 </Button>
 
                 {/* Remember Password */}

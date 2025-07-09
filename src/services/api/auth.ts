@@ -31,4 +31,16 @@ function CompleteOnboarding(skip: boolean) {
   });
 }
 
-export { CompleteOnboarding };
+function ForgotPassword(email: string) {
+  return apiClient.post(`/auth/forgot-password`, { email }).then((response) => {
+    return response.data;
+  });
+}
+
+function AsyncResetPassword(payload: { new_password: string; token: string }) {
+  return apiClient.post(`/auth/reset-password`, payload).then((response) => {
+    return response.data;
+  });
+}
+
+export { CompleteOnboarding, ForgotPassword, AsyncResetPassword };
