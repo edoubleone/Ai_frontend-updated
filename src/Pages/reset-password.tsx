@@ -3,7 +3,6 @@ import logo from "@/assets/images/logo.png";
 import {
   Link,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 import { toast } from "sonner";
