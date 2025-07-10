@@ -30,6 +30,7 @@ import TestShareBots from "./Pages/dashboard/ShareBot";
 import HelpAndSupport from "./Pages/dashboard/Support";
 import Payment from "./Pages/dashboard/Payment";
 import TestCustomerAssistant from "./Pages/dashboard/test-customer-assistant";
+import ResetPassword from "./Pages/reset-password";
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
       <Route path="forgot-password" element={<Forgot />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
-
+      <Route path="reset-password" element={<ResetPassword />} />
       {/* Public Routes with Main Layout */}
       <Route
         path="/"
