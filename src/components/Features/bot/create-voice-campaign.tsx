@@ -30,7 +30,7 @@ const CreateVoiceCampaign = ({
 }) => {
   const { mutate, isPending } = useMutation({
     mutationFn: (payload: ICreateVoiceCampaign) =>
-      AsyncCreateVoiceCampaign(payload),
+      AsyncCreateVoiceCampaign(payload, id),
     onSuccess: () => {
       toast.success("Campaign created successfully");
       reset();
@@ -51,7 +51,6 @@ const CreateVoiceCampaign = ({
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      assistant_id: id,
       message: "",
       handle: "",
       run_at: undefined,
@@ -60,7 +59,6 @@ const CreateVoiceCampaign = ({
     },
     resolver: zodResolver(
       z.object({
-        assistant_id: z.number().min(1, "Assistant ID is required"),
         message: z
           .string()
           .max(300, "Message should be at most 300 characters"),
@@ -75,7 +73,6 @@ const CreateVoiceCampaign = ({
   useEffect(() => {
     if (closed) {
       reset({
-        assistant_id: id,
         message: "",
         handle: "",
         run_at: undefined,
@@ -86,7 +83,6 @@ const CreateVoiceCampaign = ({
   }, [reset, closed, id]);
 
   const onSubmit = async (data: ICreateVoiceCampaign) => {
-    if (!id) return;
     mutate(data);
   };
 
