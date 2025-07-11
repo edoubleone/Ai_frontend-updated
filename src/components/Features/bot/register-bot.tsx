@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/dialog";
 
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { RegisterBotEmbed } from "@/services/api/assistant";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { FetchRegisteredBusinessName, RegisterBotEmbed } from "@/services/api/assistant";
 import SecondaryInput from "@/components/shared/secondary-input";
 import Button from "@/components/shared/button";
 import type { ErrorResponse } from "@/services/config/api";
+import SelectionTab from "@/components/Features/bot/create-bot/components/SelectionTab";
 
 interface BusinessIdModalProps {
   open: boolean;
@@ -25,6 +26,14 @@ interface BusinessIdModalProps {
 
 const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
   const [businessName, setBusinessName] = useState("");
+
+  const { data: registeredBusinessName } = useQuery({
+    queryKey: ["registered-business-name", bot?.share_url],
+    queryFn: () => FetchRegisteredBusinessName(bot?.share_url || ""),
+    enabled: !!bot?.share_url,
+  });
+
+  console.log(registeredBusinessName);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: { business_id: string; bot_url: string }) => {
@@ -59,28 +68,42 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
     });
   };
 
+  const tabOptions = ["Register", "Generate Snippet"];
+  const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+
   return (
     <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[668px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Enter Business Name</DialogTitle>
+          <DialogTitle>Assistant Embed</DialogTitle>
         </DialogHeader>
 
-        <SecondaryInput
-          label="Business Name"
-          placeholder="e.g. Shad Clothing Store"
-          value={businessName}
-          onChange={(e) => setBusinessName(e.target.value)}
-        />
+        <SelectionTab option={tabOptions} setSelectedOption={setSelectedTab} />
 
-        <DialogFooter className="mt-4">
-          <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} loading={isPending}>
-            Register Assistant Embed
-          </Button>
-        </DialogFooter>
+        {selectedTab === "Register" ? (
+          <>
+            <SecondaryInput
+              label="Business Name"
+              placeholder="e.g. Shad Clothing Store"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+            />
+
+            <DialogFooter className="mt-4">
+              <Button variant="outline" onClick={onClose} disabled={isPending}>
+                Cancel
+              </Button>
+              <Button onClick={handleSubmit} loading={isPending}>
+                Register Assistant Embed
+              </Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <div className="py-8 text-center text-gray-500">
+            {/* Placeholder for Generate Snippet tab */}
+            Generate snippet functionality coming soon.
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

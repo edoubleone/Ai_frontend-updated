@@ -10,7 +10,6 @@ export interface ICreateCampaign {
 }
 
 export interface ICreateVoiceCampaign {
-  assistant_id: number;
   message: string;
   handle: string;
   channel: string;
@@ -29,10 +28,15 @@ export function AsyncCreateCampaign(
     });
 }
 
-export function AsyncCreateVoiceCampaign(payload: ICreateVoiceCampaign) {
-  return apiClient.post(`/campaigns/voice`, payload).then((response) => {
-    return response.data;
-  });
+export function AsyncCreateVoiceCampaign(
+  payload: ICreateVoiceCampaign,
+  assistant_id: number
+) {
+  return apiClient
+    .post(`/campaigns/voice?assistant_id=${assistant_id}`, payload)
+    .then((response) => {
+      return response.data;
+    });
 }
 
 export function GetAssistant(id: number): Promise<IAssistant> {
@@ -109,6 +113,13 @@ export const GenerateEmbedKey = async (payload: {
 export const GenerateEmbedSnippet = async (publicKey: string) => {
   const res = await apiClient.get(
     `${MESSAGING_URL}/api/embed-snippet/${publicKey}`
+  );
+  return res.data;
+};
+
+export const FetchRegisteredBusinessName = async (bot_url: string) => {
+  const res = await apiClient.get(
+    `${MESSAGING_URL}/api/bot-embed/list-businesses?bot_url=${bot_url}`
   );
   return res.data;
 };
