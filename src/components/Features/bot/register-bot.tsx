@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -83,6 +83,13 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
 
   const tabOptions = ["Register", "Generate Snippet"];
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+
+  useEffect(() => {
+    if (open) {
+      setBusinessName("");
+      setSelectedTab(tabOptions[0]);
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
