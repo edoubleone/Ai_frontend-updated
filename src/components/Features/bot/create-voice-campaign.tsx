@@ -1,6 +1,7 @@
 import Button from "@/components/shared/button";
 import { DatePicker } from "@/components/shared/datepicker";
 import { PhoneInput } from "@/components/shared/phone-number-input";
+import SecondaryInput from "@/components/shared/secondary-input";
 import { SelectInput } from "@/components/shared/secondary-select";
 import SecondaryTextArea from "@/components/shared/secondary-textarea";
 import {
@@ -8,12 +9,14 @@ import {
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog";
+import useCurrency from "@/hooks/use-currency";
 import {
   AsyncCreateVoiceCampaign,
   type ICreateVoiceCampaign,
 } from "@/services/api/assistant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { ClockIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,6 +31,10 @@ const CreateVoiceCampaign = ({
   closed: boolean;
   closeModal: () => void;
 }) => {
+  const { currencyCode } = useCurrency();
+
+  const defaultCountry = currencyCode === "NGN" ? "NG" : "US";
+
   const { mutate, isPending } = useMutation({
     mutationFn: (payload: ICreateVoiceCampaign) =>
       AsyncCreateVoiceCampaign(payload, id),
@@ -56,6 +63,7 @@ const CreateVoiceCampaign = ({
       run_at: undefined,
       repeat: "",
       channel: "voice",
+      time: "",
     },
     resolver: zodResolver(
       z.object({
@@ -66,6 +74,7 @@ const CreateVoiceCampaign = ({
         run_at: z.date({ required_error: "Select campaign date" }),
         repeat: z.string().min(1, "Select repeat period"),
         channel: z.string().min(1, "Select channel"),
+        time: z.string().min(1, "Select time"),
       })
     ),
   });
@@ -78,16 +87,24 @@ const CreateVoiceCampaign = ({
         run_at: undefined,
         repeat: "",
         channel: "voice",
+        time: "",
       });
     }
   }, [reset, closed, id]);
 
-  const onSubmit = async (data: ICreateVoiceCampaign) => {
-    mutate(data);
+  const onSubmit = async (data: ICreateVoiceCampaign & { time: string }) => {
+    const { time, run_at, ...rest } = data;
+
+    let combinedDate = new Date(run_at);
+    if (time) {
+      const [hours, minutes, seconds] = time.split(":").map(Number);
+      combinedDate.setHours(hours || 0, minutes || 0, seconds || 0, 0);
+    }
+    mutate({ ...rest, run_at: combinedDate });
   };
 
   return (
-    <DialogContent>
+    <DialogContent className="max-h-[90vh] overflow-y-auto">
       <div className="flex flex-col gap-y-6 mt-6">
         <div>
           <h1 className="text-dark font-bold text-lg">Create Voice Campaign</h1>
@@ -97,6 +114,7 @@ const CreateVoiceCampaign = ({
           <PhoneInput
             label="Phone Number"
             placeholder="00 000 000"
+            defaultCountry={defaultCountry}
             value={watch("handle")}
             onChange={(value) =>
               setValue("handle", value, { shouldValidate: true })
@@ -125,6 +143,21 @@ const CreateVoiceCampaign = ({
             errorText={errors.run_at?.message}
             label="Run at"
             placeholder="Run at"
+          />
+
+          <SecondaryInput
+            type="time"
+            id="time-picker"
+            label="Time"
+            icon={<ClockIcon className="size-4" />}
+            placeholder="Time"
+            {...register("time")}
+            iconposition="right"
+            step="1"
+            defaultValue="10:30:00"
+            className="appearance-none text-sm flex placeholder:text-[#454545] px-4 focus:ring-[3px] ring-[#343CED] items-center rounded-md border border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white w-full [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+            error={!!errors.time}
+            errorText={errors.time?.message}
           />
 
           <SelectInput

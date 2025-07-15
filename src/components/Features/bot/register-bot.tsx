@@ -6,14 +6,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import copy from "@/assets/icons/copy-outline-white.svg";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FetchRegisteredBusinessName, RegisterBotEmbed } from "@/services/api/assistant";
+import {
+  FetchRegisteredBusinessName,
+  GetEmbedPage,
+  RegisterBotEmbed,
+} from "@/services/api/assistant";
 import SecondaryInput from "@/components/shared/secondary-input";
 import Button from "@/components/shared/button";
 import type { ErrorResponse } from "@/services/config/api";
 import SelectionTab from "@/components/Features/bot/create-bot/components/SelectionTab";
+import { SelectInput } from "@/components/shared/secondary-select";
+import { Loader } from "lucide-react";
 
 interface BusinessIdModalProps {
   open: boolean;
@@ -27,13 +33,20 @@ interface BusinessIdModalProps {
 const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
   const [businessName, setBusinessName] = useState("");
 
-  const { data: registeredBusinessName } = useQuery({
+  const {
+    data: registeredBusinessName,
+    isLoading: isRegisteredBusinessNameLoading,
+  } = useQuery({
     queryKey: ["registered-business-name", bot?.share_url],
     queryFn: () => FetchRegisteredBusinessName(bot?.share_url || ""),
     enabled: !!bot?.share_url,
   });
 
-  console.log(registeredBusinessName);
+  const { data, isLoading } = useQuery({
+    queryKey: ["embed", businessName],
+    queryFn: () => GetEmbedPage(businessName),
+    enabled: !!businessName,
+  });
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: { business_id: string; bot_url: string }) => {
@@ -83,7 +96,7 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
         {selectedTab === "Register" ? (
           <>
             <SecondaryInput
-              label="Business Name"
+              label="Widget Name"
               placeholder="e.g. Shad Clothing Store"
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
@@ -100,8 +113,57 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
           </>
         ) : (
           <div className="py-8 text-center text-gray-500">
-            {/* Placeholder for Generate Snippet tab */}
-            Generate snippet functionality coming soon.
+            {isRegisteredBusinessNameLoading ? (
+              <Loader className="mx-auto text-defaultBlue size-5 animate-spin" />
+            ) : (
+              <>
+                <SelectInput
+                  label="Assistant Widget"
+                  placeholder="Select widget to generate snippet"
+                  value={businessName}
+                  onChange={(value) => {
+                    setBusinessName(value);
+                  }}
+                  options={registeredBusinessName?.businesses.map(
+                    (business) => ({
+                      label: business.business_id,
+                      value: business.embed_url,
+                    })
+                  )}
+                />
+
+                <div className="pt-5">
+                  {isLoading ? (
+                    <Loader className="mx-auto text-defaultBlue size-5 animate-spin" />
+                  ) : (
+                    data && (
+                      <div className="bg-[#EEEEFD] flex rounded-2xl divide-y flex-col w-full">
+                        <pre className="mx-5 text-xs h-64 overflow-y-auto w-fit text-dark my-2.5 whitespace-pre-wrap break-all">
+                          <code>
+                            {`
+${data}
+`}
+                          </code>
+                        </pre>
+
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(data);
+                            toast.success("Embed code copied to clipboard");
+                          }}
+                          wrapperclass="justify-end py-2.5 px-5"
+                          className="!bg-dark !w-fit"
+                        >
+                          Copy
+                          <img src={copy} alt="copy icon" />
+                        </Button>
+                      </div>
+                    )
+                  )}
+                </div>
+              </>
+            )}
           </div>
         )}
       </DialogContent>

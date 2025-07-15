@@ -15,6 +15,7 @@ export interface ICreateVoiceCampaign {
   channel: string;
   run_at: Date;
   repeat: string;
+  time?: string
 }
 
 export function AsyncCreateCampaign(
@@ -117,9 +118,23 @@ export const GenerateEmbedSnippet = async (publicKey: string) => {
   return res.data;
 };
 
-export const FetchRegisteredBusinessName = async (bot_url: string) => {
-  const res = await apiClient.get(
-    `${MESSAGING_URL}/api/bot-embed/list-businesses?bot_url=${bot_url}`
+export const FetchRegisteredBusinessName = async (
+  bot_url: string
+): Promise<{
+  bot_url: string;
+  businesses: {
+    business_id: string;
+    embed_url: string;
+  }[];
+}> => {
+  const res = await apiClient.get<{
+    bot_url: string;
+    businesses: {
+      business_id: string;
+      embed_url: string;
+    }[];
+  }>(
+    `${MESSAGING_URL}/api/bot-embed/list-businesses?bot_url=${encodeURIComponent(bot_url)}`
   );
   return res.data;
 };
