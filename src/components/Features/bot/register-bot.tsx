@@ -134,7 +134,7 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
                   options={registeredBusinessName?.businesses.map(
                     (business) => ({
                       label: business.business_id,
-                      value: business.embed_url,
+                      value: business.business_id,
                     })
                   )}
                 />
