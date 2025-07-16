@@ -91,6 +91,12 @@ const BusinessIdModal = ({ open, onClose, bot }: BusinessIdModalProps) => {
     }
   }, [open]);
 
+  useEffect(() => {
+    if (selectedTab) {
+      setBusinessName("");
+    }
+  }, [selectedTab]);
+
   return (
     <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[668px] max-h-[90vh] overflow-y-auto">
