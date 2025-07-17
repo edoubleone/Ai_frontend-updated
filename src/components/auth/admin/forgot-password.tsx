@@ -1,0 +1,163 @@
+import type React from "react";
+import { useState } from "react";
+
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import logo from "@/assets/images/logo.png";
+import SecondaryInput from "@/components/shared/secondary-input";
+import Button from "@/components/shared/button";
+import { ForgotPassword } from "@/services/api/auth";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+
+export function AdminForgotPasswordForm() {
+  const [email, setEmail] = useState("");
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
+
+  const { mutate: forgotPassword, isPending } = useMutation({
+    mutationFn: ForgotPassword,
+    onSuccess: (data) => {
+      setEmail("");
+      toast.success(data.message);
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    forgotPassword(email);
+  };
+
+  const handleBackToForm = () => {
+    setIsPasswordReset(false);
+    setEmail("");
+  };
+
+  return (
+    <>
+      <div className="flex min-h-screen">
+        {/* Left Panel - Form (50% width) */}
+        <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center px-8 lg:px-16">
+          <div className="w-full max-w-md mx-auto">
+            <Link to="/" className="inline-block mb-8">
+              <img
+                src={logo}
+                alt="Kool AI Logo"
+                className="h-10 w-auto hover:opacity-80 transition-opacity"
+              />
+            </Link>
+
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                Forgot Password
+              </h1>
+              <p className="text-gray-600">
+                No worries, we'll send you the reset instructions
+              </p>
+            </div>
+
+            {/* Form */}
+            {!isPasswordReset ? (
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {/* Email */}
+                <div>
+                  <Label
+                    htmlFor="email"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
+                    Email Address
+                  </Label>
+                  <SecondaryInput
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
+                    required
+                  />
+                </div>
+
+                {/* Proceed Button */}
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg"
+                  loading={isPending}
+                >
+                  Proceed
+                </Button>
+
+                {/* Remember Password */}
+                <div className="text-center mt-6">
+                  <p className="text-gray-600">
+                    <Link
+                      to="/admin/login"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
+                      Login
+                    </Link>
+                  </p>
+                </div>
+              </form>
+            ) : (
+              <div className="text-center py-8 space-y-6">
+                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-8 h-8 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Password Reset Successful
+                </h2>
+                <p className="text-gray-600">
+                  Your password has been successfully reset.
+                  <br />
+                  You can now login with your new password.
+                </p>
+                <div className="space-y-3">
+                  <Button
+                    onClick={() => (window.location.href = "/login")}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium"
+                  >
+                    Go to Login
+                  </Button>
+                  <Button
+                    onClick={handleBackToForm}
+                    variant="outline"
+                    className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-medium"
+                  >
+                    Back to reset form
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right Panel - Background Image (50% width) */}
+        <div className="hidden lg:block w-1/2 relative">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('/images/auth-bg.png')",
+            }}
+          />
+        </div>
+      </div>
+    </>
+  );
+}

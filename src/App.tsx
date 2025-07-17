@@ -31,6 +31,16 @@ import HelpAndSupport from "./Pages/dashboard/Support";
 import Payment from "./Pages/dashboard/Payment";
 import TestCustomerAssistant from "./Pages/dashboard/test-customer-assistant";
 import ResetPassword from "./Pages/reset-password";
+import { AdminDashboardLayout } from "./components/common/admin/layout";
+import AdminDashboard from "./Pages/admin";
+import AdminLogin from "./Pages/admin/login";
+import { AdminForgotPasswordForm } from "./components/auth/admin/forgot-password";
+import AdminResetPassword from "./Pages/admin/reset-password";
+import AdminDashboardUserManagement from "./Pages/admin/user-management";
+import AdminDashboardCustomerSupport from "./Pages/admin/customer-support";
+import AdminDashboardPayments from "./Pages/admin/payments";
+import AdminSettings from "./Pages/admin/settings";
+import AdminDashboardNotifications from "./Pages/admin/notifications";
 
 function App() {
   return (
@@ -56,6 +66,20 @@ function App() {
           <Route path="help" element={<HelpAndSupport />} />
           <Route path="payments" element={<Payment />} />
         </Route>
+      </Route>
+
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/forgot-password" element={<AdminForgotPasswordForm />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/reset-password" element={<AdminResetPassword />} />
+
+      <Route path="/admin/dashboard" element={<AdminDashboardLayout />}>
+        <Route path="" element={<AdminDashboard />} />
+        <Route path="user-management" element={<AdminDashboardUserManagement />} />
+        <Route path="customer-support" element={<AdminDashboardCustomerSupport />} />
+        <Route path="payments" element={<AdminDashboardPayments />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="notifications" element={<AdminDashboardNotifications />} />
       </Route>
 
       <Route path="forgot-password" element={<Forgot />} />
