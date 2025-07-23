@@ -19,7 +19,6 @@ import {
   Code2,
   MoreHorizontal,
   TrashIcon,
-  Voicemail,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
@@ -33,11 +32,9 @@ import ShareIcon from "@/components/shared/share-icon";
 import { useState } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import ShareBotModal from "../bot/share-bot.modal";
-import CreateCampaign from "../bot/create-campaign";
 import { useNavigate } from "react-router-dom";
 import BusinessIdModal from "../bot/register-bot";
 import { useAuth } from "@/context/auth-provider";
-import CreateVoiceCampaign from "../bot/create-voice-campaign";
 import { DeleteBotModal } from "../bot/delete-bot-modal";
 
 interface RowAssistant {
@@ -60,7 +57,7 @@ interface DataTableProps {
 
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
   const [action, setAction] = useState<
-    "share" | "campaign" | "voice-campaign" | "delete" | null
+    "share" | "delete" | null
   >(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
@@ -201,28 +198,14 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
 
             <button
               onClick={() => {
-                setAction("campaign");
-                setSelectedRow(row.original);
+                navigate(`/dashboard/assistants/create-campaign/${row.original.id}`);
               }}
               className={clsx(
                 "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
               )}
             >
               <BookCopy className="size-4" />
-              Create Text Campaign
-            </button>
-
-            <button
-              onClick={() => {
-                setAction("voice-campaign");
-                setSelectedRow(row.original);
-              }}
-              className={clsx(
-                "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"
-              )}
-            >
-              <Voicemail className="size-4" />
-              Create Voice Campaign
+              Create Campaign
             </button>
 
             <button
@@ -303,32 +286,6 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
           <ShareBotModal
             whatsapp_url={selectedRow.share_whatsapp_url}
             url={selectedRow.share_url}
-          />
-        )}
-      </Dialog>
-
-      <Dialog
-        open={action === "campaign"}
-        onOpenChange={(open) => setAction(open ? "campaign" : null)}
-      >
-        {selectedRow && (
-          <CreateCampaign
-            closed={action !== "campaign"}
-            closeModal={() => setAction(null)}
-            id={selectedRow?.id}
-          />
-        )}
-      </Dialog>
-
-      <Dialog
-        open={action === "voice-campaign"}
-        onOpenChange={(open) => setAction(open ? "voice-campaign" : null)}
-      >
-        {selectedRow && (
-          <CreateVoiceCampaign
-            closed={action !== "voice-campaign"}
-            closeModal={() => setAction(null)}
-            id={selectedRow?.id}
           />
         )}
       </Dialog>

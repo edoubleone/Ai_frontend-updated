@@ -15,24 +15,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const CreateCampaign = ({
-  id,
-  closeModal,
-  closed,
-}: {
-  id: number;
-  closeModal: () => void;
-  closed: boolean;
-}) => {
+const CreateTextCampaign = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const { mutate, isPending } = useMutation({
-    mutationFn: (payload: ICreateCampaign) => AsyncCreateCampaign(payload, id),
+    mutationFn: (payload: ICreateCampaign) =>
+      AsyncCreateCampaign(payload, Number(id)),
     onSuccess: () => {
       toast.success("Campaign created successfully");
       reset();
-      closeModal();
+      navigate(-1);
     },
     onError: () => {
       toast.error("Error creating campaign");
@@ -76,80 +73,82 @@ const CreateCampaign = ({
   };
 
   return (
-    <DialogContent>
-      <div className="flex flex-col gap-y-6 mt-6">
-        <div>
-          <h1 className="text-dark font-bold text-lg">Create Campaign</h1>
+    <div className="flex flex-col gap-y-6 mt-6">
+      {/* <div>
+        <h1 className="text-dark font-bold text-lg">Create Campaign</h1>
+      </div> */}
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <SecondaryInput
+          label="Campaign Title"
+          {...register("campaign")}
+          error={!!errors.campaign}
+          errorText={errors.campaign?.message}
+          placeholder="Enter campaign title"
+          type="text"
+        />
+
+        <DatePicker
+          date={watch("run_at")}
+          onDateChange={(date) =>
+            date && setValue("run_at", date, { shouldValidate: true })
+          }
+          error={!!errors.run_at}
+          errorText={errors.run_at?.message}
+          label="When should the campaign run?"
+          placeholder="Select date"
+        />
+
+        <SelectInput
+          label="Repeat"
+          value={watch("repeat")}
+          placeholder="Select"
+          onChange={(value) =>
+            setValue("repeat", value, { shouldValidate: true })
+          }
+          error={!!errors.repeat}
+          errorText={errors.repeat?.message}
+          options={Object.entries(RepeatEnum).map(([key, value]) => ({
+            label: key,
+            value,
+          }))}
+        />
+
+        <DatePicker
+          label="Repeat until when?"
+          disabled={watch("repeat") === RepeatEnum.None}
+          placeholder="Select date"
+          date={watch("repeat_until")}
+          onDateChange={(date) =>
+            date && setValue("repeat_until", date, { shouldValidate: true })
+          }
+          error={!!errors.repeat_until}
+          errorText={errors.repeat_until?.message}
+        />
+
+        <div className="flex col-span-2 gap-x-2 justify-end flex-col md:flex-row">
+          <Button
+            type="button"
+            onClick={() => navigate(-1)}
+            variant="outline-blue"
+            wrapperclass="sm:max-w-40"
+          >
+            Cancel
+          </Button>
+
+          <Button type="submit" loading={isPending} wrapperclass="sm:max-w-40">
+            Create
+          </Button>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
-          <SecondaryInput
-            label="Title"
-            {...register("campaign")}
-            error={!!errors.campaign}
-            errorText={errors.campaign?.message}
-            placeholder="Enter campaign title"
-            type="text"
-          />
-
-          <DatePicker
-            date={watch("run_at")}
-            onDateChange={(date) =>
-              date && setValue("run_at", date, { shouldValidate: true })
-            }
-            error={!!errors.run_at}
-            errorText={errors.run_at?.message}
-            label="Run at"
-            placeholder="Run at"
-          />
-
-          <SelectInput
-            label="Repeat"
-            value={watch("repeat")}
-            placeholder="Select"
-            onChange={(value) =>
-              setValue("repeat", value, { shouldValidate: true })
-            }
-            error={!!errors.repeat}
-            errorText={errors.repeat?.message}
-            options={Object.entries(RepeatEnum).map(([key, value]) => ({
-              label: key,
-              value,
-            }))}
-          />
-
-          {watch("repeat") !== RepeatEnum.None && (
-            <DatePicker
-              label="Repeat until"
-              placeholder="Repeat until"
-              date={watch("repeat_until")}
-              onDateChange={(date) =>
-                date && setValue("repeat_until", date, { shouldValidate: true })
-              }
-              error={!!errors.repeat_until}
-              errorText={errors.repeat_until?.message}
-            />
-          )}
-
-          <DialogFooter>
-            <DialogClose
-              type="button"
-              className="flex-1 border-2 border-defaultBlue text-defaultBlue rounded-md"
-            >
-              Cancel
-            </DialogClose>
-
-            <Button type="submit" loading={isPending} wrapperclass="flex-1">
-              Create
-            </Button>
-          </DialogFooter>
-        </form>
-      </div>
-    </DialogContent>
+      </form>
+    </div>
   );
 };
 
-export default CreateCampaign;
+export default CreateTextCampaign;
 
 const RepeatEnum = {
   None: "none",

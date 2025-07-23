@@ -41,6 +41,7 @@ import AdminDashboardCustomerSupport from "./Pages/admin/customer-support";
 import AdminDashboardPayments from "./Pages/admin/payments";
 import AdminSettings from "./Pages/admin/settings";
 import AdminDashboardNotifications from "./Pages/admin/notifications";
+import CreateCampaign from "./Pages/dashboard/create-campaign";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             <Route path="" element={<BotsPage />} />
             <Route path="create-assistant" element={<CreateBot />} />
             <Route path="test/:id" element={<TestCustomerAssistant />} />
+            <Route path="create-campaign/:id" element={<CreateCampaign />} />
           </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
