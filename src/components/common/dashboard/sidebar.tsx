@@ -26,8 +26,8 @@ const navigationItems = [
     icon: BotsIcon,
   },
   {
-    title: "Conversations",
-    url: "/dashboard/conversations",
+    title: "Logs",
+    url: "/dashboard/logs",
     icon: ConversationsIcon,
   },
   {

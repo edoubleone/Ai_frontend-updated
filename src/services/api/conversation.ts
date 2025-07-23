@@ -10,6 +10,11 @@ export async function GetAssistants(): Promise<IAssistant[]> {
   return response.data;
 }
 
+export async function GetAssistant(): Promise<IAssistant> {
+  const response = await apiClient.get<IAssistant>(`${BASE_URL}/assistants/`);
+  return response.data;
+}
+
 export function ChatWithAssistant({
   message,
   assistant_id,

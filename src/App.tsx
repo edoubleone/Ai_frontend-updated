@@ -42,6 +42,7 @@ import AdminDashboardPayments from "./Pages/admin/payments";
 import AdminSettings from "./Pages/admin/settings";
 import AdminDashboardNotifications from "./Pages/admin/notifications";
 import CreateCampaign from "./Pages/dashboard/create-campaign";
+import LogsPage from "./Pages/logs";
 
 function App() {
   return (
@@ -49,7 +50,10 @@ function App() {
       {/* Dashboard Layout Route */}
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="conversations" element={<Conversations />} />
+          <Route path="logs">
+            <Route path="" element={<LogsPage />} />
+            <Route path="conversations/:id" element={<Conversations />} />
+          </Route>
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="" element={<DashboardIndexPage />} />
           <Route path="test-and-share-assistants" element={<ShareBots />} />
