@@ -8,8 +8,9 @@ import { SelectInput } from "@/components/shared/secondary-select";
 import Button from "@/components/shared/button";
 import { useAuth } from "@/context/auth-provider";
 import PasswordInput from "@/components/shared/password-input";
+import ProfileConversations from "./profile-conversations";
 
-const tabMenu = ["Account", "Password"];
+const tabMenu = ["Account", "Password", "Conversation"];
 
 const Profile = () => {
   const { user } = useAuth();
@@ -79,7 +80,7 @@ const Profile = () => {
             ))}
           </div> */}
 
-          {activeMenu === tabMenu[0] ? (
+          {activeMenu === tabMenu[0] && (
             <section className="min-h-[calc(100vh-400px)]">
               <form className="flex flex-col gap-y-12">
                 <div className="grid gap-8 sm:grid-cols-2">
@@ -118,12 +119,20 @@ const Profile = () => {
                 </div>
               </form>
             </section>
-          ) : (
+          )}
+
+          {activeMenu === tabMenu[1] && (
             <>
               <form>
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <PasswordInput placeholder="Enter old password" label="Old Password" />
-                  <PasswordInput placeholder="Enter new password" label="New Password" />
+                  <PasswordInput
+                    placeholder="Enter old password"
+                    label="Old Password"
+                  />
+                  <PasswordInput
+                    placeholder="Enter new password"
+                    label="New Password"
+                  />
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row items-center justify-end mt-6">
@@ -132,6 +141,8 @@ const Profile = () => {
               </form>
             </>
           )}
+
+          {activeMenu === tabMenu[2] && <ProfileConversations />}
         </div>
       </main>
     </div>

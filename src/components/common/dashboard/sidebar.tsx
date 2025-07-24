@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import SecondaryButton from "@/components/shared/button";
 import { XIcon } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
+import PhoneHistoryIcon from "@/components/shared/phone";
 
 const navigationItems = [
   {
@@ -29,6 +30,11 @@ const navigationItems = [
     title: "Logs",
     url: "/dashboard/logs",
     icon: ConversationsIcon,
+  },
+  {
+    title: "Call History",
+    url: "/dashboard/call-history",
+    icon: PhoneHistoryIcon,
   },
   {
     title: "Integrations",

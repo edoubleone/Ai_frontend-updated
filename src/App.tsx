@@ -43,6 +43,8 @@ import AdminSettings from "./Pages/admin/settings";
 import AdminDashboardNotifications from "./Pages/admin/notifications";
 import CreateCampaign from "./Pages/dashboard/create-campaign";
 import LogsPage from "./Pages/logs";
+import CallHistory from "./Pages/dashboard/call-history";
+import AssistantCallHistoryPage from "./Pages/dashboard/assistant-call-history";
 
 function App() {
   return (
@@ -53,6 +55,10 @@ function App() {
           <Route path="logs">
             <Route path="" element={<LogsPage />} />
             <Route path="conversations/:id" element={<Conversations />} />
+          </Route>
+          <Route path="call-history">
+            <Route path="" element={<CallHistory />} />
+            <Route path=":id" element={<AssistantCallHistoryPage />} />
           </Route>
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="" element={<DashboardIndexPage />} />
@@ -75,14 +81,23 @@ function App() {
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/forgot-password" element={<AdminForgotPasswordForm />} />
+      <Route
+        path="/admin/forgot-password"
+        element={<AdminForgotPasswordForm />}
+      />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/reset-password" element={<AdminResetPassword />} />
 
       <Route path="/admin/dashboard" element={<AdminDashboardLayout />}>
         <Route path="" element={<AdminDashboard />} />
-        <Route path="user-management" element={<AdminDashboardUserManagement />} />
-        <Route path="customer-support" element={<AdminDashboardCustomerSupport />} />
+        <Route
+          path="user-management"
+          element={<AdminDashboardUserManagement />}
+        />
+        <Route
+          path="customer-support"
+          element={<AdminDashboardCustomerSupport />}
+        />
         <Route path="payments" element={<AdminDashboardPayments />} />
         <Route path="settings" element={<AdminSettings />} />
         <Route path="notifications" element={<AdminDashboardNotifications />} />
