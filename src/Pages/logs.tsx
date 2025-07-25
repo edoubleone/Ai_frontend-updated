@@ -4,7 +4,7 @@ import type { IAssistant } from "@/services/models/conversation.model";
 import { useState } from "react";
 import { GetAssistants } from "@/services/api/conversation";
 import ChatItemLoader from "@/components/Features/conversation/chat-item-skeleton";
-import LogComponent from "@/components/Features/logs/log";
+import LogComponent from "@/components/Features/assistant-logs/assistant-log";
 
 const LogsPage = () => {
   const queryClient = useQueryClient();
