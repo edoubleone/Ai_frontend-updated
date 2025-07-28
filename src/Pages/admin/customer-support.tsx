@@ -1,6 +1,3 @@
-import UserMangementTable, {
-  dummyUserManagementData,
-} from "@/components/Features/admin/user-management-table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
