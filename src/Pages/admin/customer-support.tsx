@@ -1,6 +1,3 @@
-import UserMangementTable, {
-  dummyUserManagementData,
-} from "@/components/Features/admin/user-management-table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
@@ -16,7 +13,7 @@ import { useState } from "react";
 import CustomerSupportTable from "@/components/Features/admin/customer-support-table";
 import { dummyCustomerSupportData } from "@/components/Features/admin/customer-support-table";
 
-const AdminDashboardCustomerSupport = () => {
+const AdminCustomerSupport = () => {
   const [sortOption, setSortOption] = useState({
     field: "most-recent",
     direction: "asc",
@@ -109,7 +106,7 @@ const AdminDashboardCustomerSupport = () => {
   );
 };
 
-export default AdminDashboardCustomerSupport;
+export default AdminCustomerSupport;
 
 const sortOptions = [
   { label: "All Users", value: "all-users" },

@@ -4,11 +4,6 @@ import { PhoneInput } from "@/components/shared/phone-number-input";
 import SecondaryInput from "@/components/shared/secondary-input";
 import { SelectInput } from "@/components/shared/secondary-select";
 import SecondaryTextArea from "@/components/shared/secondary-textarea";
-import {
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-} from "@/components/ui/dialog";
 import useCurrency from "@/hooks/use-currency";
 import {
   AsyncCreateVoiceCampaign,

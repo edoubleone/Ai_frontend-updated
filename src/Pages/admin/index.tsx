@@ -5,12 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/shared/date-range-picker";
 import { Pie, PieChart, Cell } from "recharts";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { CheckCircle, CircleCheck, Clock, XCircle } from "lucide-react";
+import { CircleCheck, Clock } from "lucide-react";
 import { CircleX } from "lucide-react";
 import {
   LineChart,
@@ -23,7 +18,6 @@ import {
 } from "recharts";
 
 const AdminDashboard = () => {
-  // Remove chartConfig and ChartContainer, and type chartData
   const chartData: { name: string; value: number; fill: string }[] = [
     { name: "Successful", value: 40, fill: "#34A853" },
     { name: "Failed", value: 15, fill: "#C82332" },
