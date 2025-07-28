@@ -1,6 +1,3 @@
-import UserMangementTable, {
-  dummyUserManagementData,
-} from "@/components/Features/admin/user-management-table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
@@ -13,8 +10,6 @@ import {
 } from "@/components/ui/popover";
 import Button from "@/components/shared/button";
 import { useState } from "react";
-import CustomerSupportTable from "@/components/Features/admin/customer-support-table";
-import { dummyCustomerSupportData } from "@/components/Features/admin/customer-support-table";
 import AdminPaymentTable, { dummyPaymentData } from "@/components/Features/admin/payment-table";
 
 const AdminDashboardPayments = () => {
