@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 
 import { Button } from "@/components/ui/button";
-import SecondaryButton from "@/components/shared/button";
 import { XIcon } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import AdminDashboardIcon from "@/components/shared/admin-dashboard-icon";
