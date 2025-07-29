@@ -5,7 +5,7 @@ import type React from "react";
 import type { IAssistant } from "@/services/models/conversation.model";
 import { useNavigate } from "react-router-dom";
 
-const CallHistoryItemComponent: React.FC<IAssistant> = ({ name, id }) => {
+const CallHistoryItemComponent: React.FC<IAssistant & { type?: "individual" | "mass" }> = ({ name, id, type = "individual" }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +22,7 @@ const CallHistoryItemComponent: React.FC<IAssistant> = ({ name, id }) => {
 
       <div className="items-end">
         <Button
-          onClick={() => navigate(`/dashboard/call-history/${id}`)}
+          onClick={() => navigate(`/dashboard/call-history/${type === "individual" ? id : "mass-assistant-call-history"}/${id}`)}
           variant="outline-blue"
           className="border-none !p-0"
         >
