@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
@@ -11,12 +10,47 @@ import {
 } from "@/components/ui/popover";
 import Button from "@/components/shared/button";
 import { useState } from "react";
-import AdminPaymentTable, { dummyPaymentData } from "@/components/Features/admin/payment-table";
+import AdminPaymentTable, {
+  dummyPaymentData,
+} from "@/components/Features/admin/payment-table";
+import useCurrency from "@/hooks/use-currency";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getPaystackAmountSummary,
+  getPaystackAnalytics,
+  getStripeAmountSummary,
+  getStripeAnalytics,
+} from "@/services/api/admin";
 
 const AdminPayments = () => {
   const [sortOption, setSortOption] = useState({
     field: "most-recent",
     direction: "asc",
+  });
+
+  const { currencyCode } = useCurrency();
+  const { data: paystackAnalytics } = useQuery({
+    queryKey: ["payment-paystack-analytics"],
+    queryFn: () => getPaystackAnalytics(),
+    enabled: currencyCode === "NGN",
+  });
+
+  const { data: stripeAnalytics } = useQuery({
+    queryKey: ["payment-stripe-analytics"],
+    queryFn: () => getStripeAnalytics(),
+    enabled: currencyCode === "USD",
+  });
+
+  const { data: paystackAmountSummary } = useQuery({
+    queryFn: getPaystackAmountSummary,
+    queryKey: ["paystack-amount-summary"],
+    enabled: currencyCode === "NGN",
+  });
+
+  const { data: stripeAmountSummary } = useQuery({
+    queryFn: getStripeAmountSummary,
+    queryKey: ["stripe-amount-summary"],
+    enabled: currencyCode === "USD",
   });
 
   return (
@@ -28,28 +62,68 @@ const AdminPayments = () => {
           <Badge className="w-fit bg-[#EEEEFD] px-3 py-1 shadow-none text-defaultBlue rounded-2xl">
             Total Payments Received
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">2</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {Intl.NumberFormat(currencyCode === "USD" ? "en-US" : "en-NG", {
+              style: "currency",
+              currency: currencyCode,
+            }).format(
+              currencyCode === "USD"
+                ? stripeAnalytics?.data?.total_revenue || 0
+                : paystackAnalytics?.data?.total_revenue || 0
+            )}
+          </p>
         </Card>
 
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-16">
           <Badge className="w-fit bg-[#34A8531A] px-3 py-1 shadow-none text-[#34A853] rounded-2xl">
             Total Successful Transactions
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">2</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {Intl.NumberFormat(currencyCode === "USD" ? "en-US" : "en-NG", {
+              style: "currency",
+              currency: currencyCode,
+            }).format(
+              currencyCode === "USD"
+                ? stripeAmountSummary?.data?.amount_summary?.USD
+                    ?.amount_successful
+                : paystackAmountSummary?.data?.amount_summary?.NGN
+                    ?.amount_successful || 0
+            )}
+          </p>
         </Card>
 
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-16">
           <Badge className="w-fit bg-[#FEF9E9] px-3 py-1 shadow-none text-[#E8A800] rounded-2xl">
             Total Pending Transactions
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">9000</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {Intl.NumberFormat(currencyCode === "USD" ? "en-US" : "en-NG", {
+              style: "currency",
+              currency: currencyCode,
+            }).format(
+              currencyCode === "USD"
+                ? stripeAmountSummary?.data?.amount_summary?.USD?.amount_pending
+                : paystackAmountSummary?.data?.amount_summary?.NGN
+                    ?.amount_pending || 0
+            )}
+          </p>
         </Card>
 
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-16">
           <Badge className="w-fit bg-[#FBEAEA] px-3 py-1 shadow-none text-[#C82332] rounded-2xl">
             Total Failed Transactions
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">2</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {Intl.NumberFormat(currencyCode === "USD" ? "en-US" : "en-NG", {
+              style: "currency",
+              currency: currencyCode,
+            }).format(
+              currencyCode === "USD"
+                ? stripeAmountSummary?.data?.amount_summary?.USD?.amount_failed
+                : paystackAmountSummary?.data?.amount_summary?.NGN
+                    ?.amount_failed || 0
+            )}
+          </p>
         </Card>
       </div>
 

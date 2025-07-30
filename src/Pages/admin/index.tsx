@@ -16,12 +16,67 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useQuery } from "@tanstack/react-query";
+import useCurrency from "@/hooks/use-currency";
+import {
+  getPaystackAnalytics,
+  getPaystackTransactionStatus,
+  getStripeAnalytics,
+  getStripeTransactionStatus,
+} from "@/services/api/admin";
 
 const AdminDashboard = () => {
+  const { currencyCode } = useCurrency();
+
+  const { data: paystackAnalytics } = useQuery({
+    queryKey: ["payment-paystack-analytics"],
+    queryFn: () => getPaystackAnalytics(),
+    enabled: currencyCode === "NGN",
+  });
+
+  const { data: stripeAnalytics } = useQuery({
+    queryKey: ["payment-stripe-analytics"],
+    queryFn: () => getStripeAnalytics(),
+    enabled: currencyCode === "USD",
+  });
+
+  const { data: paystackTransactionStatus } = useQuery({
+    queryKey: ["payment-paystack-transaction-status"],
+    queryFn: () => getPaystackTransactionStatus(),
+    enabled: currencyCode === "NGN",
+  });
+
+  const { data: stripeTransactionStatus } = useQuery({
+    queryKey: ["payment-stripe-transaction-status"],
+    queryFn: () => getStripeTransactionStatus(),
+    enabled: currencyCode === "USD",
+  });
+
   const chartData: { name: string; value: number; fill: string }[] = [
-    { name: "Successful", value: 40, fill: "#34A853" },
-    { name: "Failed", value: 15, fill: "#C82332" },
-    { name: "Pending", value: 10, fill: "#FEB800" },
+    {
+      name: "Successful",
+      value:
+        currencyCode === "USD"
+          ? stripeTransactionStatus?.data?.successful
+          : paystackTransactionStatus?.data?.successful || 0,
+      fill: "#34A853",
+    },
+    {
+      name: "Failed",
+      value:
+        currencyCode === "USD"
+          ? stripeTransactionStatus?.data?.failed
+          : paystackTransactionStatus?.data?.failed || 0,
+      fill: "#C82332",
+    },
+    {
+      name: "Pending",
+      value:
+        currencyCode === "USD"
+          ? stripeTransactionStatus?.data?.pending
+          : paystackTransactionStatus?.data?.pending || 0,
+      fill: "#FEB800",
+    },
   ];
 
   const totalTransactions = chartData.reduce(
@@ -29,7 +84,6 @@ const AdminDashboard = () => {
     0
   );
 
-  // User analytics dummy data for Mon-Sun
   const userAnalyticsData = [
     { day: "Mon", active: 120, inactive: 30 },
     { day: "Tue", active: 150, inactive: 25 },
@@ -56,7 +110,16 @@ const AdminDashboard = () => {
           <Badge className="w-fit bg-[#EEEEFD] px-3 py-1 shadow-none text-defaultBlue rounded-2xl">
             Total Payments Received
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">$2000</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {Intl.NumberFormat(currencyCode === "USD" ? "en-US" : "en-NG", {
+              style: "currency",
+              currency: currencyCode,
+            }).format(
+              currencyCode === "USD"
+                ? stripeAnalytics?.data?.total_revenue || 0
+                : paystackAnalytics?.data?.total_revenue || 0
+            )}
+          </p>
         </Card>
 
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-16">
