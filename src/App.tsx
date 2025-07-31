@@ -53,7 +53,7 @@ function App() {
   return (
     <Routes>
       {/* Dashboard Layout Route */}
-      {/* <Route element={<PrivateRoute />}>
+      <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="logs">
             <Route path="" element={<LogsPage />} />
@@ -76,6 +76,10 @@ function App() {
             <Route path="test/:id" element={<TestCustomerAssistant />} />
             <Route path="create-campaign/:id" element={<CreateCampaign />} />
           </Route>
+          <Route path="live-agent">
+            <Route path="" element={<LiveAgentPage />} />
+            <Route path="create-live-agent" element={<CreateLiveAgent />} />
+          </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
           <Route path="settings" element={<Profile />} />
@@ -85,42 +89,6 @@ function App() {
           <Route path="help" element={<HelpAndSupport />} />
           <Route path="payments" element={<Payment />} />
         </Route>
-      </Route> */}
-
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route path="logs">
-          <Route path="" element={<LogsPage />} />
-          <Route path="conversations/:id" element={<Conversations />} />
-        </Route>
-        <Route path="call-history">
-          <Route path="" element={<CallHistory />} />
-          <Route path=":id" element={<AssistantCallHistoryPage />} />
-          <Route
-            path="mass-assistant-call-history/:id"
-            element={<MassAssistantCallHistoryPage />}
-          />
-        </Route>
-        <Route path="notifications" element={<NotificationsPage />} />
-        <Route path="" element={<DashboardIndexPage />} />
-        <Route path="test-and-share-assistants" element={<ShareBots />} />
-        <Route path="assistants">
-          <Route path="" element={<BotsPage />} />
-          <Route path="create-assistant" element={<CreateBot />} />
-          <Route path="test/:id" element={<TestCustomerAssistant />} />
-          <Route path="create-campaign/:id" element={<CreateCampaign />} />
-        </Route>
-        <Route path="live-agent">
-          <Route path="" element={<LiveAgentPage />} />
-          <Route path="create-live-agent" element={<CreateLiveAgent />} />
-        </Route>
-        <Route path="integrations" element={<Integrations />} />
-        <Route path="createBot" element={<CreateBot />} />
-        <Route path="settings" element={<Profile />} />
-
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="test-and-share-bot" element={<TestShareBots />} />
-        <Route path="help" element={<HelpAndSupport />} />
-        <Route path="payments" element={<Payment />} />
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />
