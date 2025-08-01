@@ -5,6 +5,7 @@ import {
   Settings,
   FAQs,
   RoleAndAudience,
+  Customize,
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
@@ -54,11 +55,11 @@ const steps = [
     desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
     component: <FAQs />,
   },
-  // {
-  //   heading: "Customize",
-  //   desc: "Customize the look and feel of your Bot to reflect your brand and website",
-  //   component: <Customize />,
-  // },
+  {
+    heading: "Customize",
+    desc: "Customize the look and feel of your Bot to reflect your brand and website",
+    component: <Customize />,
+  },
   // {
   //   heading: "Full Preview",
   //   desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.",
