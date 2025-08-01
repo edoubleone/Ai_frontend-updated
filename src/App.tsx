@@ -45,6 +45,9 @@ import CreateCampaign from "./Pages/dashboard/create-campaign";
 import LogsPage from "./Pages/logs";
 import CallHistory from "./Pages/dashboard/call-history";
 import AssistantCallHistoryPage from "./Pages/dashboard/assistant-call-history";
+import MassAssistantCallHistoryPage from "./Pages/dashboard/mass-assistant-call-history";
+import LiveAgentPage from "./Pages/dashboard/live-agent";
+import CreateLiveAgent from "./Pages/dashboard/create-live-agent";
 
 function App() {
   return (
@@ -59,6 +62,10 @@ function App() {
           <Route path="call-history">
             <Route path="" element={<CallHistory />} />
             <Route path=":id" element={<AssistantCallHistoryPage />} />
+            <Route
+              path="mass-assistant-call-history/:id"
+              element={<MassAssistantCallHistoryPage />}
+            />
           </Route>
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="" element={<DashboardIndexPage />} />
@@ -68,6 +75,10 @@ function App() {
             <Route path="create-assistant" element={<CreateBot />} />
             <Route path="test/:id" element={<TestCustomerAssistant />} />
             <Route path="create-campaign/:id" element={<CreateCampaign />} />
+          </Route>
+          <Route path="live-agent">
+            <Route path="" element={<LiveAgentPage />} />
+            <Route path="create-live-agent" element={<CreateLiveAgent />} />
           </Route>
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />

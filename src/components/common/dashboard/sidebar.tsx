@@ -14,6 +14,7 @@ import SecondaryButton from "@/components/shared/button";
 import { XIcon } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import PhoneHistoryIcon from "@/components/shared/phone";
+import AdminUserIcon from "@/components/shared/admin-user-icon";
 
 const navigationItems = [
   {
@@ -35,6 +36,11 @@ const navigationItems = [
     title: "Call History",
     url: "/dashboard/call-history",
     icon: PhoneHistoryIcon,
+  },
+  {
+    title: "Live Agent",
+    url: "/dashboard/live-agent",
+    icon: AdminUserIcon,
   },
   {
     title: "Integrations",

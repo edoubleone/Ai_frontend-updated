@@ -14,61 +14,51 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarComponent from "@/components/shared/custom-avatar";
+import { cn } from "@/lib/utils";
+import { EllipsisIcon } from "lucide-react";
 
-interface RowCallHistory {
+interface RowLiveAgents {
   id: number;
-  botAvatar: string;
-  assistantName: string;
+  agentsName: string;
+  displayName: string;
+  email: string;
   phoneNumber: string;
-  customerName: string;
-  duration: string;
-  repeat: string;
-  message: string;
-  date: string;
+  availability: string;
 }
 
-export const dummyCallHistoryData: RowCallHistory[] = [
+export const dummyLiveAgentsData: RowLiveAgents[] = [
   {
     id: 1,
-    botAvatar: "https://via.placeholder.com/150",
-    assistantName: "Assistant 1",
+    agentsName: "John Doe",
+    displayName: "John Doe",
+    email: "john.doe@example.com",
     phoneNumber: "+2348133333333",
-    customerName: "John Doe",
-    duration: "10:00",
-    repeat: "Daily",
-    message: "Hello, how are you?",
-    date: "2024-05-01",
+    availability: "Available",
   },
   {
     id: 2,
-    botAvatar: "https://via.placeholder.com/150",
-    assistantName: "Assistant 2",
+    agentsName: "Jane Smith",
+    displayName: "Jane Smith",
+    email: "jane.smith@example.com",
     phoneNumber: "+2348133333333",
-    customerName: "Jane Smith",
-    duration: "15:00",
-    repeat: "Daily",
-    message: "Hello, how are you?",
-    date: "2024-05-02",
+    availability: "Available",
   },
   {
     id: 3,
-    botAvatar: "https://via.placeholder.com/150",
-    assistantName: "Assistant 3",
+    agentsName: "Mike Johnson",
+    displayName: "Mike Johnson",
+    email: "mike.johnson@example.com",
     phoneNumber: "+2348133333333",
-    customerName: "Mike Johnson",
-    duration: "20:00",
-    repeat: "Daily",
-    message: "Hello, how are you?",
-    date: "2024-05-03",
+    availability: "Available",
   },
 ];
 
 interface DataTableProps {
-  data: RowCallHistory[];
+  data: RowLiveAgents[];
 }
 
-const AssistantCallHistory = ({ data }: DataTableProps) => {
-  const columns: ColumnDef<RowCallHistory>[] = [
+const LiveAgentsTable = ({ data }: DataTableProps) => {
+  const columns: ColumnDef<RowLiveAgents>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -86,37 +76,52 @@ const AssistantCallHistory = ({ data }: DataTableProps) => {
       ),
     },
     {
-      accessorKey: "botAvatar",
-      header: "Assistant",
+      accessorKey: "agentsName",
+      header: "Agents Name",
       cell: () => <AvatarComponent />,
     },
     {
-      accessorKey: "assistantName",
-      header: "Assistant Name",
+      accessorKey: "displayName",
+      header: "Display Name",
     },
     {
       accessorKey: "phoneNumber",
       header: "Phone Number",
     },
     {
-      accessorKey: "customerName",
-      header: "Customer's Name",
+      accessorKey: "email",
+      header: "Email",
     },
     {
-      accessorKey: "duration",
-      header: "Duration",
+      accessorKey: "availability",
+      header: "Availability",
+      cell: ({ row }) => (
+        <span
+          className={cn("text-sm font-bold flex items-center gap-2", {
+            "text-green-500": row.original.availability === "Available",
+            "text-red-500": row.original.availability === "Offline",
+            "text-yellow-500": row.original.availability === "Busy",
+          })}
+        >
+          <span
+            className={cn("size-2 rounded-full", {
+              "bg-green-500": row.original.availability === "Available",
+              "bg-red-500": row.original.availability === "Offline",
+              "bg-yellow-500": row.original.availability === "Busy",
+            })}
+          ></span>
+          {row.original.availability}
+        </span>
+      ),
     },
     {
-      accessorKey: "repeat",
-      header: "Repeat",
-    },
-    {
-      accessorKey: "message",
-      header: "Message",
-    },
-    {
-      accessorKey: "date",
-      header: "Date",
+      accessorKey: "actions",
+      header: "Actions",
+      cell: () => (
+        <button className="flex items-center justify-center">
+          <EllipsisIcon className="size-5 rotate-90" />
+        </button>
+      ),
     },
   ];
 
@@ -166,4 +171,4 @@ const AssistantCallHistory = ({ data }: DataTableProps) => {
   );
 };
 
-export default AssistantCallHistory;
+export default LiveAgentsTable;

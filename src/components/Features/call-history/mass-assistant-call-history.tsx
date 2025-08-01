@@ -19,7 +19,7 @@ interface RowCallHistory {
   id: number;
   botAvatar: string;
   assistantName: string;
-  phoneNumber: string;
+  phoneNumber: string[];
   customerName: string;
   duration: string;
   repeat: string;
@@ -32,7 +32,7 @@ export const dummyCallHistoryData: RowCallHistory[] = [
     id: 1,
     botAvatar: "https://via.placeholder.com/150",
     assistantName: "Assistant 1",
-    phoneNumber: "+2348133333333",
+    phoneNumber: ["+2348133333333", "+2348133333333"],
     customerName: "John Doe",
     duration: "10:00",
     repeat: "Daily",
@@ -43,7 +43,7 @@ export const dummyCallHistoryData: RowCallHistory[] = [
     id: 2,
     botAvatar: "https://via.placeholder.com/150",
     assistantName: "Assistant 2",
-    phoneNumber: "+2348133333333",
+    phoneNumber: ["+2348133333333", "+2348133333333"],
     customerName: "Jane Smith",
     duration: "15:00",
     repeat: "Daily",
@@ -54,7 +54,7 @@ export const dummyCallHistoryData: RowCallHistory[] = [
     id: 3,
     botAvatar: "https://via.placeholder.com/150",
     assistantName: "Assistant 3",
-    phoneNumber: "+2348133333333",
+    phoneNumber: ["+2348133333333", "+2348133333333"],
     customerName: "Mike Johnson",
     duration: "20:00",
     repeat: "Daily",
@@ -67,7 +67,7 @@ interface DataTableProps {
   data: RowCallHistory[];
 }
 
-const AssistantCallHistory = ({ data }: DataTableProps) => {
+const MassAssistantCallHistory = ({ data }: DataTableProps) => {
   const columns: ColumnDef<RowCallHistory>[] = [
     {
       id: "select",
@@ -96,7 +96,14 @@ const AssistantCallHistory = ({ data }: DataTableProps) => {
     },
     {
       accessorKey: "phoneNumber",
-      header: "Phone Number",
+      header: "Phone Numbers",
+      cell: ({ row }) => (
+        <div className="flex gap-x-2">
+          {row.original.phoneNumber.map((phone, index) => (
+            <p key={index}>{phone}</p>
+          ))}
+        </div>
+      ),
     },
     {
       accessorKey: "customerName",
@@ -166,4 +173,4 @@ const AssistantCallHistory = ({ data }: DataTableProps) => {
   );
 };
 
-export default AssistantCallHistory;
+export default MassAssistantCallHistory;
