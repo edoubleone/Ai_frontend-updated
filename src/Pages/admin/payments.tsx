@@ -10,9 +10,6 @@ import {
 } from "@/components/ui/popover";
 import Button from "@/components/shared/button";
 import { useState } from "react";
-<<<<<<< HEAD
-import AdminPaymentTable, { dummyPaymentData } from "@/components/Features/admin/payment-table";
-=======
 import AdminPaymentTable, {
   dummyPaymentData,
 } from "@/components/Features/admin/payment-table";
@@ -24,7 +21,6 @@ import {
   getStripeAmountSummary,
   getStripeAnalytics,
 } from "@/services/api/admin";
->>>>>>> 7238fe858bdec0217b5e1717b0910d6bb1d26189
 
 const AdminPayments = () => {
   const [sortOption, setSortOption] = useState({
