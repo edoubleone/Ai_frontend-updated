@@ -328,17 +328,17 @@ const AvailablePlans = () => {
       });
     } else {
       const planType =
-        plan.name.toLowerCase().replace(" ", "-") +
+        plan?.name?.toLowerCase().replace(" ", "-") +
         (isAnnual ? "-yearly" : "-monthly");
       mutate(planType as PlanType);
     }
   };
 
   const getButtonText = (plan: SelectedPlan) => {
-    if (!isAuthenticated) return plan.buttonText;
+    if (!isAuthenticated) return plan?.buttonText;
 
-    const currentPlanName = activePlan?.plan_name.toLowerCase();
-    const planName = plan.name.toLowerCase();
+    const currentPlanName = activePlan?.plan_name?.toLowerCase();
+    const planName = plan?.name?.toLowerCase();
 
     if (planName === "free" && currentPlanName !== "free") return "Get Started";
     if (planName === currentPlanName) return "Your Plan";
