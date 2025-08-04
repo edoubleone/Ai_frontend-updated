@@ -346,16 +346,16 @@ const AvailablePlans = () => {
     const currentPlanPrice = activePlan?.amount ?? 0;
     const planPrice = getPrice(plan);
 
-    if (planPrice > currentPlanPrice) return "Upgrade";
-    if (planPrice < currentPlanPrice) return "Downgrade";
-    if (planPrice === currentPlanPrice) return "Your Plan";
+    if (Number(planPrice) > currentPlanPrice) return "Upgrade";
+    if (Number(planPrice) < currentPlanPrice) return "Downgrade";
+    if (Number(planPrice) === currentPlanPrice) return "Your Plan";
     return "Switch Plan";
   };
 
   const getPrice = (plan: SelectedPlan) => {
     const code = currencyCode.toLowerCase() as CurrencyCode;
     const prices = plan?.price[code];
-    return isAnnual ? prices?.yearly : prices?.monthly;
+    return isAnnual ? prices?.yearly.toFixed(0) : prices?.monthly.toFixed(0);
   };
 
   return (
@@ -431,8 +431,13 @@ const AvailablePlans = () => {
                     className={`text-3xl font-black text-dark
                 `}
                   >
-                    {currencySymbol}
-                    {getPrice(plan)}
+                    {Intl.NumberFormat(
+                      currencyCode === "USD" ? "en-US" : "en-NG",
+                      {
+                        style: "currency",
+                        currency: currencyCode,
+                      }
+                    ).format(Number(getPrice(plan)))}
                   </span>
                 )}
 
