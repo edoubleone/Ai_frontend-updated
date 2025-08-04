@@ -1,6 +1,4 @@
-import UserMangementTable, {
-  dummyUserManagementData,
-} from "@/components/Features/admin/user-management-table";
+import UserMangementTable from "@/components/Features/admin/user-management-table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/shared/date-range-picker";
@@ -23,15 +21,40 @@ import {
   getPaystackTransactionStatus,
   getStripeAnalytics,
   getStripeTransactionStatus,
+  getTotalUsers,
+  getUserActivity,
+  getUsersList,
 } from "@/services/api/admin";
+import { useMemo, useState } from "react";
+import { format } from "date-fns";
 
 const AdminDashboard = () => {
   const { currencyCode } = useCurrency();
+
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const { data: paystackAnalytics } = useQuery({
     queryKey: ["payment-paystack-analytics"],
     queryFn: () => getPaystackAnalytics(),
     enabled: currencyCode === "NGN",
+  });
+
+  const { data: totalUsers } = useQuery({
+    queryKey: ["total-users"],
+    queryFn: getTotalUsers,
+  });
+
+  const { data: _userActivity } = useQuery({
+    queryKey: ["user-activity"],
+    queryFn: () =>
+      getUserActivity(
+        startDate ? format(startDate, "yyyy-MM-dd") : "",
+        endDate ? format(endDate, "yyyy-MM-dd") : ""
+      ),
+    enabled: !!startDate && !!endDate,
   });
 
   const { data: stripeAnalytics } = useQuery({
@@ -51,6 +74,26 @@ const AdminDashboard = () => {
     queryFn: () => getStripeTransactionStatus(),
     enabled: currencyCode === "USD",
   });
+
+  const { data: usersList } = useQuery({
+    queryKey: ["users-list"],
+    queryFn: getUsersList,
+  });
+
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = currentPage * rowsPerPage;
+    return usersList?.users?.slice(start, end);
+  }, [usersList?.users, currentPage, rowsPerPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleRowsPerPageChange = (size: number) => {
+    setRowsPerPage(size);
+    setCurrentPage(1);
+  };
 
   const chartData: { name: string; value: number; fill: string }[] = [
     {
@@ -103,7 +146,9 @@ const AdminDashboard = () => {
           <Badge className="w-fit bg-[#F2F4F7] px-3 py-1 shadow-none text-[#344054] rounded-2xl">
             Total Users
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">2</p>
+          <p className="text-[#2E2E2E] font-semibold">
+            {totalUsers?.total_users || 0}
+          </p>
         </Card>
 
         <Card className="flex max-w-[318px] flex-shrink-0 w-full flex-col gap-y-16">
@@ -126,7 +171,7 @@ const AdminDashboard = () => {
           <Badge className="w-fit bg-[#ED5DDE1A] px-3 py-1 shadow-none text-[#ED5DDE] rounded-2xl">
             Total Customer support
           </Badge>
-          <p className="text-[#2E2E2E] font-semibold">$2000</p>
+          <p className="text-[#2E2E2E] font-semibold">2000</p>
         </Card>
       </div>
 
@@ -139,6 +184,12 @@ const AdminDashboard = () => {
               </h2>
               <DateRangePicker
                 dateFormat="dd MMM, yy"
+                onDateChange={(date) => {
+                  if (date) {
+                    setStartDate(date.from);
+                    setEndDate(date.to);
+                  }
+                }}
                 date={{ from: new Date(), to: new Date() }}
               />
             </div>
@@ -255,7 +306,14 @@ const AdminDashboard = () => {
 
       <div className="flex gap-y-4 flex-col">
         <h2 className="text-2xl font-bold text-dark">User Management</h2>
-        <UserMangementTable data={dummyUserManagementData} />
+        <UserMangementTable
+          data={paginatedData || []}
+          currentPage={currentPage}
+          rowsPerPage={rowsPerPage}
+          totalCount={usersList?.users?.length || 0}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </div>
     </div>
   );
