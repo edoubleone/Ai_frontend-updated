@@ -7,16 +7,26 @@ import SecondaryTextArea from "@/components/shared/secondary-textarea";
 import useCurrency from "@/hooks/use-currency";
 import {
   AsyncCreateVoiceCampaign,
+  CreateBulkVoiceCampaign,
+  type ICreateBulkVoiceCampaign,
   type ICreateVoiceCampaign,
 } from "@/services/api/assistant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { ClockIcon, PlusIcon } from "lucide-react";
-import { useEffect } from "react";
+import { ClockIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
+
+type FormData = {
+  message: string;
+  run_at: Date;
+  repeat: string;
+  channel: string;
+  time: string;
+};
 
 const CreateMassVoiceCampaign = () => {
   const { id } = useParams();
@@ -27,8 +37,8 @@ const CreateMassVoiceCampaign = () => {
   const defaultCountry = currencyCode === "NGN" ? "NG" : "US";
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (payload: ICreateVoiceCampaign) =>
-      AsyncCreateVoiceCampaign(payload, Number(id)),
+    mutationFn: (payload: ICreateBulkVoiceCampaign) =>
+      CreateBulkVoiceCampaign(payload, Number(id)),
     onSuccess: () => {
       toast.success("Campaign created successfully");
       reset();
@@ -46,12 +56,11 @@ const CreateMassVoiceCampaign = () => {
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
       message: "",
-      handle: "",
-      run_at: undefined,
+      run_at: new Date(),
       repeat: "",
       channel: "voice",
       time: "",
@@ -61,7 +70,6 @@ const CreateMassVoiceCampaign = () => {
         message: z
           .string()
           .max(300, "Message should be at most 300 characters"),
-        handle: z.string().min(1, "Enter phone number"),
         run_at: z.date({ required_error: "Select campaign date" }),
         repeat: z.string().min(1, "Select repeat period"),
         channel: z.string().min(1, "Select channel"),
@@ -70,20 +78,22 @@ const CreateMassVoiceCampaign = () => {
     ),
   });
 
+  const [phoneNumbers, setPhoneNumbers] = useState([""]);
+
   useEffect(() => {
     if (closed) {
       reset({
         message: "",
-        handle: "",
-        run_at: undefined,
+        run_at: new Date(),
         repeat: "",
         channel: "voice",
         time: "",
       });
+      setPhoneNumbers([""]);
     }
   }, [reset, closed, id]);
 
-  const onSubmit = async (data: ICreateVoiceCampaign & { time: string }) => {
+  const onSubmit = async (data: FormData) => {
     const { time, run_at, ...rest } = data;
 
     let combinedDate = new Date(run_at);
@@ -91,7 +101,25 @@ const CreateMassVoiceCampaign = () => {
       const [hours, minutes, seconds] = time.split(":").map(Number);
       combinedDate.setHours(hours || 0, minutes || 0, seconds || 0, 0);
     }
-    mutate({ ...rest, run_at: combinedDate });
+    mutate({
+      ...rest,
+      handles: phoneNumbers.filter((phoneNumber) => phoneNumber !== ""),
+      run_at: combinedDate,
+    });
+  };
+
+  const handleAddPhoneNumber = () => {
+    setPhoneNumbers([...phoneNumbers, ""]);
+  };
+
+  const handleRemovePhoneNumber = (index: number) => {
+    setPhoneNumbers(phoneNumbers.filter((_, i) => i !== index));
+  };
+
+  const handlePhoneNumberChange = (index: number, value: string) => {
+    setPhoneNumbers(
+      phoneNumbers.map((phoneNumber, i) => (i === index ? value : phoneNumber))
+    );
   };
 
   return (
@@ -141,36 +169,44 @@ const CreateMassVoiceCampaign = () => {
           }))}
         />
 
-        <div className="col-span-2 grid gap-6 sm:grid-cols-2">
-          <PhoneInput
-            label="Phone Number"
-            placeholder="00 000 000"
-            defaultCountry={defaultCountry}
-            value={watch("handle")}
-            onChange={(value) =>
-              setValue("handle", value, { shouldValidate: true })
-            }
-            error={!!errors.handle}
-            errorText={errors.handle?.message}
-          />
-
-          <PhoneInput
-            label="Phone Number"
-            placeholder="00 000 000"
-            defaultCountry={defaultCountry}
-            value={watch("handle")}
-            onChange={(value) =>
-              setValue("handle", value, { shouldValidate: true })
-            }
-            error={!!errors.handle}
-            errorText={errors.handle?.message}
-          />
-
-          <div className="col-span-2">
-            <Button variant="outline-blue" className="!p-0 !text-sm !border-none" wrapperclass="!w-fit">
-              <PlusIcon className="size-5" /> Add Phone Number
-            </Button>
+        <div className="grid col-span-2 gap-6">
+          <div className="col-span-2 grid sm:grid-cols-2 items-start gap-6">
+            {phoneNumbers.map((phoneNumber, index) => (
+              <div key={index} className="flex w-full  gap-2 items-center">
+                <PhoneInput
+                  label={`Phone Number ${index + 1}`}
+                  placeholder="00 000 000"
+                  defaultCountry={defaultCountry}
+                  wrapperClass="w-full"
+                  error={phoneNumber === "" && index > 0}
+                  errorText="Phone number is required"
+                  value={phoneNumber}
+                  onChange={(value) => handlePhoneNumberChange(index, value)}
+                />
+                {index > 0 && (
+                  <Button
+                    type="button"
+                    variant="outline-blue"
+                    className="!p-0 !text-sm !border-none"
+                    wrapperclass="!w-fit"
+                    onClick={() => handleRemovePhoneNumber(index)}
+                  >
+                    <Trash2Icon className="size-5" />
+                  </Button>
+                )}
+              </div>
+            ))}
           </div>
+
+          <Button
+            type="button"
+            variant="outline-blue"
+            className="!p-0 !text-sm !border-none"
+            wrapperclass="!w-fit"
+            onClick={handleAddPhoneNumber}
+          >
+            <PlusIcon className="size-5" /> Add Phone Number
+          </Button>
         </div>
 
         <SecondaryTextArea
@@ -182,7 +218,7 @@ const CreateMassVoiceCampaign = () => {
           {...register("message")}
           error={!!errors.message}
           wrapperClass="col-span-2"
-          placeholder="Hi John, how are you today? We are reaching out to you tell you about our products. Should I go ahead?"
+          placeholder="Hi John, how are you today? We are reaching out to you tell you about our products. Should I go ahead?"
         />
 
         <div className="flex gap-x-2 col-span-2 justify-end flex-col md:flex-row">
@@ -197,7 +233,11 @@ const CreateMassVoiceCampaign = () => {
 
           <Button
             type="submit"
-            disabled={!isValid}
+            disabled={
+              !isValid ||
+              phoneNumbers.filter((phoneNumber) => phoneNumber !== "")
+                .length === 0
+            }
             loading={isPending}
             wrapperclass="sm:max-w-40"
           >

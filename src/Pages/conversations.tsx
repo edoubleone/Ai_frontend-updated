@@ -1,7 +1,7 @@
 import { ChevronLeft, SearchIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { GetAssistant } from "@/services/api/assistant";
+import { GetAssistant, GetAssistantCustomers } from "@/services/api/assistant";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "@/components/shared/button";
 import AvatarComponent from "@/components/shared/custom-avatar";
@@ -16,6 +16,13 @@ const Conversations = () => {
     queryFn: () => GetAssistant(Number(id)),
     queryKey: ["assistant", id],
   });
+
+  const { data: customers } = useQuery({
+    queryFn: () => GetAssistantCustomers(Number(id)),
+    queryKey: ["assistant-customers", id],
+  });
+
+  console.log(customers);
 
   return (
     <div className="flex flex-col h-screen gap-5">
