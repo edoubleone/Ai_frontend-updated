@@ -6,10 +6,8 @@ import { SelectInput } from "@/components/shared/secondary-select";
 import SecondaryTextArea from "@/components/shared/secondary-textarea";
 import useCurrency from "@/hooks/use-currency";
 import {
-  AsyncCreateVoiceCampaign,
   CreateBulkVoiceCampaign,
   type ICreateBulkVoiceCampaign,
-  type ICreateVoiceCampaign,
 } from "@/services/api/assistant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
