@@ -44,7 +44,7 @@ const AvailablePlans = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const { isAuthenticated, user, activePlan } = useAuth();
 
-  const { currencySymbol, currencyCode, isLoading } = useCurrency();
+  const { currencyCode, isLoading } = useCurrency();
 
   const { mutate, isPending, error, variables } = useMutation({
     mutationFn: async (planType: PlanType) => {
