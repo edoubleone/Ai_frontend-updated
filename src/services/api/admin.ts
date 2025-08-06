@@ -1,6 +1,10 @@
 import { MESSAGING_URL } from "@/utils";
 import apiClient from "../config/api";
-import type { UsersList, UserSummary } from "../models/admin";
+import type {
+  AdminPaymentHistoryResponse,
+  UsersList,
+  UserSummary,
+} from "../models/admin";
 
 function getStripeAnalytics() {
   const response = apiClient.get(`${MESSAGING_URL}/analytics/stripe`);
@@ -73,6 +77,20 @@ function getUsersList(): Promise<UsersList> {
     });
 }
 
+async function getPaystackAdminHistory(): Promise<AdminPaymentHistoryResponse> {
+  const res = await apiClient.get<AdminPaymentHistoryResponse>(
+    `${MESSAGING_URL}/analytics/paystack/history`
+  );
+  return res.data;
+}
+
+async function getStripeAdminHistory(): Promise<AdminPaymentHistoryResponse> {
+  const res = await apiClient.get<AdminPaymentHistoryResponse>(
+    `${MESSAGING_URL}/analytics/stripe/history`
+  );
+  return res.data;
+}
+
 export {
   getStripeAnalytics,
   getPaystackAnalytics,
@@ -80,6 +98,8 @@ export {
   getStripeTransactionStatus,
   getStripeAmountSummary,
   getPaystackAmountSummary,
+  getStripeAdminHistory,
+  getPaystackAdminHistory,
   getTotalUsers,
   getUserSummary,
   getUsersList,

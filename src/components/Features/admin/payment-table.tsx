@@ -33,34 +33,6 @@ interface DataTableProps {
   data: RowPayment[];
 }
 
-// Dummy data for payment table
-export const dummyPaymentData: RowPayment[] = [
-  {
-    date: "2024-05-01",
-    orgName: "Acme Corp",
-    seats: 10,
-    subType: "Pro",
-    totalAmount: "$500.00",
-    status: "Paid",
-  },
-  {
-    date: "2024-05-02",
-    orgName: "Beta LLC",
-    seats: 5,
-    subType: "Starter",
-    totalAmount: "$150.00",
-    status: "Pending",
-  },
-  {
-    date: "2024-05-03",
-    orgName: "Gamma Inc",
-    seats: 20,
-    subType: "Enterprise",
-    totalAmount: "$2000.00",
-    status: "Failed",
-  },
-];
-
 const AdminPaymentTable = ({ data }: DataTableProps) => {
   const columns: ColumnDef<RowPayment>[] = [
     {
@@ -89,9 +61,9 @@ const AdminPaymentTable = ({ data }: DataTableProps) => {
       cell: ({ row }) => (
         <span
           className={`text-base font-bold ${
-            row.original.status === "Paid"
+            row.original.status === "successful"
               ? "text-[#34A853]"
-              : row.original.status === "Pending"
+              : row.original.status === "pending"
               ? "text-[#FEB800]"
               : "text-[#C82332]"
           }`}
@@ -142,7 +114,10 @@ const AdminPaymentTable = ({ data }: DataTableProps) => {
           </PopoverTrigger>
 
           <PopoverContent className="p-3">
-            <button key={row.original.orgName + row.original.date} className="flex items-center gap-2">
+            <button
+              key={row.original.orgName + row.original.date}
+              className="flex items-center gap-2"
+            >
               <EyeIcon className="h-4 w-4" />
               View
             </button>

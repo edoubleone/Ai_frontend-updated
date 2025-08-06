@@ -16,3 +16,17 @@ export interface UsersData {
   status: "active" | "inactive";
   last_active: string;
 }
+
+export interface AdminPaymentHistoryResponse {
+  provider: string;
+  history: AdminPaymentTransaction[];
+}
+
+interface AdminPaymentTransaction {
+  date: string;
+  email: string;
+  plan_name: string;
+  amount: number;
+  currency: string;
+  status: string;
+}
