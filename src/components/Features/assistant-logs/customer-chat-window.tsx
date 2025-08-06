@@ -15,7 +15,6 @@ import ChatBubble from "../conversation/chat-bubble";
 import type { Customer } from "@/services/models/assistant";
 import {
   GetAssistantCustomerHistory,
-  GetCustomerHistory,
 } from "@/services/api/assistant";
 
 const CustomerChatWindow = ({
