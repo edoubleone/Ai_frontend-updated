@@ -44,7 +44,7 @@ const AvailablePlans = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const { isAuthenticated, user, activePlan } = useAuth();
 
-  const { currencySymbol, currencyCode, isLoading } = useCurrency();
+  const { currencyCode, isLoading } = useCurrency();
 
   const { mutate, isPending, error, variables } = useMutation({
     mutationFn: async (planType: PlanType) => {
@@ -328,17 +328,17 @@ const AvailablePlans = () => {
       });
     } else {
       const planType =
-        plan.name.toLowerCase().replace(" ", "-") +
+        plan?.name?.toLowerCase().replace(" ", "-") +
         (isAnnual ? "-yearly" : "-monthly");
       mutate(planType as PlanType);
     }
   };
 
   const getButtonText = (plan: SelectedPlan) => {
-    if (!isAuthenticated) return plan.buttonText;
+    if (!isAuthenticated) return plan?.buttonText;
 
-    const currentPlanName = activePlan?.plan_name.toLowerCase();
-    const planName = plan.name.toLowerCase();
+    const currentPlanName = activePlan?.plan_name?.toLowerCase();
+    const planName = plan?.name?.toLowerCase();
 
     if (planName === "free" && currentPlanName !== "free") return "Get Started";
     if (planName === currentPlanName) return "Your Plan";
@@ -346,16 +346,16 @@ const AvailablePlans = () => {
     const currentPlanPrice = activePlan?.amount ?? 0;
     const planPrice = getPrice(plan);
 
-    if (planPrice > currentPlanPrice) return "Upgrade";
-    if (planPrice < currentPlanPrice) return "Downgrade";
-    if (planPrice === currentPlanPrice) return "Your Plan";
+    if (Number(planPrice) > currentPlanPrice) return "Upgrade";
+    if (Number(planPrice) < currentPlanPrice) return "Downgrade";
+    if (Number(planPrice) === currentPlanPrice) return "Your Plan";
     return "Switch Plan";
   };
 
   const getPrice = (plan: SelectedPlan) => {
     const code = currencyCode.toLowerCase() as CurrencyCode;
     const prices = plan?.price[code];
-    return isAnnual ? prices?.yearly : prices?.monthly;
+    return isAnnual ? prices?.yearly.toFixed(0) : prices?.monthly.toFixed(0);
   };
 
   return (
@@ -431,8 +431,13 @@ const AvailablePlans = () => {
                     className={`text-3xl font-black text-dark
                 `}
                   >
-                    {currencySymbol}
-                    {getPrice(plan)}
+                    {Intl.NumberFormat(
+                      currencyCode === "USD" ? "en-US" : "en-NG",
+                      {
+                        style: "currency",
+                        currency: currencyCode,
+                      }
+                    ).format(Number(getPrice(plan)))}
                   </span>
                 )}
 

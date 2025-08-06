@@ -11,7 +11,7 @@ import type { ErrorResponse } from "@/services/config/api";
 import { toast } from "sonner";
 import SecondaryInput from "../shared/secondary-input";
 import PasswordInput from "../shared/password-input";
-// import { KoolAiLogo } from "./kool-ai-logo"
+import { BASE_URL } from "@/utils";
 
 export function LoginFormComponent() {
   const navigate = useNavigate();
@@ -47,6 +47,14 @@ export function LoginFormComponent() {
       })
     ),
   });
+
+  const GoogleLogin = () => {
+    window.location.href = `${BASE_URL}/auth/google/login`;
+  };
+
+  const FacebookLogin = () => {
+    window.location.href = `${BASE_URL}/auth/facebook/login`;
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -111,19 +119,22 @@ export function LoginFormComponent() {
             </Button>
 
             {/* Divider */}
-            {/* <div className="relative my-8">
+            <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-4 text-gray-500 bg-white">Or</span>
               </div>
-            </div> */}
+            </div>
 
             {/* Social Login Buttons */}
-            {/* <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               <Button
                 variant="outline"
+                disabled={isPending}
+                onClick={() => GoogleLogin()}
+                type="button"
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -151,7 +162,10 @@ export function LoginFormComponent() {
 
               <Button
                 variant="outline"
+                disabled={isPending}
+                onClick={() => FacebookLogin()}
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
+                type="button"
               >
                 <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -160,9 +174,7 @@ export function LoginFormComponent() {
                   Login with Facebook
                 </span>
               </Button>
-            </div> */}
-
-
+            </div>
           </form>
         </div>
       </div>

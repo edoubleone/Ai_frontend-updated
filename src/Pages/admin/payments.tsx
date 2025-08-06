@@ -10,17 +10,19 @@ import {
 } from "@/components/ui/popover";
 import Button from "@/components/shared/button";
 import { useState } from "react";
-import AdminPaymentTable, {
-  dummyPaymentData,
-} from "@/components/Features/admin/payment-table";
+import AdminPaymentTable from "@/components/Features/admin/payment-table";
 import useCurrency from "@/hooks/use-currency";
 import { useQuery } from "@tanstack/react-query";
 import {
+  getPaystackAdminHistory,
   getPaystackAmountSummary,
   getPaystackAnalytics,
+  getStripeAdminHistory,
   getStripeAmountSummary,
   getStripeAnalytics,
 } from "@/services/api/admin";
+import { format } from "date-fns";
+import { parseISO } from "date-fns/parseISO";
 
 const AdminPayments = () => {
   const [sortOption, setSortOption] = useState({
@@ -33,6 +35,18 @@ const AdminPayments = () => {
     queryKey: ["payment-paystack-analytics"],
     queryFn: () => getPaystackAnalytics(),
     enabled: currencyCode === "NGN",
+  });
+
+  const { data: stripePayments } = useQuery({
+    queryKey: ["stripe-payments"],
+    queryFn: getStripeAdminHistory,
+    enabled: currencyCode === "USD" ? true : false,
+  });
+
+  const { data: paystackPayments } = useQuery({
+    queryKey: ["paystack-payments"],
+    queryFn: getPaystackAdminHistory,
+    enabled: currencyCode === "NGN" ? true : false,
   });
 
   const { data: stripeAnalytics } = useQuery({
@@ -52,6 +66,19 @@ const AdminPayments = () => {
     queryKey: ["stripe-amount-summary"],
     enabled: currencyCode === "USD",
   });
+
+  function TransformPaymentData(data: any[]) {
+    const response = data?.map((payment) => ({
+      date: format(parseISO(payment.date), "dd-MM-yyyy"),
+      orgName: payment.email,
+      seats: 10,
+      subType: payment.plan_name,
+      totalAmount: payment.amount,
+      status: payment.status,
+    }));
+
+    return response;
+  }
 
   return (
     <div className="flex flex-col gap-5">
@@ -181,7 +208,13 @@ const AdminPayments = () => {
           </div>
         </div>
 
-        <AdminPaymentTable data={dummyPaymentData} />
+        <AdminPaymentTable
+          data={TransformPaymentData(
+            (currencyCode === "USD"
+              ? stripePayments?.history
+              : paystackPayments?.history) || []
+          )}
+        />
       </div>
     </div>
   );

@@ -13,74 +13,57 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { EyeIcon, MoreHorizontal } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  EyeIcon,
+  MoreHorizontal,
+} from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-interface RowUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  Date: string;
-  status: string;
-  lastActive: string;
-}
+import type { UsersData } from "@/services/models/admin";
 
 interface DataTableProps {
-  data: RowUser[];
+  data: UsersData[];
+  currentPage?: number;
+  rowsPerPage?: number;
+  totalCount?: number;
+  onPageChange?: (page: number) => void;
+  onRowsPerPageChange?: (size: number) => void;
 }
 
-// Dummy data for user management table
-export const dummyUserManagementData: Array<{
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  Date: string;
-  status: string;
-  lastActive: string;
-}> = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    Date: "2024-05-01",
-    status: "Active",
-    lastActive: "2024-05-10 12:00",
-  },
-  {
-    id: 2,
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@example.com",
-    Date: "2024-04-15",
-    status: "Inactive",
-    lastActive: "2024-05-09 11:00",
-  },
-  {
-    id: 3,
-    firstName: "Mike",
-    lastName: "Johnson",
-    email: "mike.johnson@example.com",
-    Date: "2024-03-20",
-    status: "Active",
-    lastActive: "2024-05-08 10:00",
-  },
-];
+const UserMangementTable = ({
+  data,
+  currentPage,
+  rowsPerPage,
+  totalCount,
+  onPageChange,
+  onRowsPerPageChange,
+}: DataTableProps) => {
+  const totalPages = Math.ceil(totalCount || 0 / (rowsPerPage || 10));
 
-const UserMangementTable = ({ data }: DataTableProps) => {
-  const columns: ColumnDef<RowUser>[] = [
+  const handlePreviousPage = () => {
+    if (currentPage && currentPage > 1) {
+      onPageChange?.(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage && currentPage < totalPages) {
+      onPageChange?.(currentPage + 1);
+    }
+  };
+
+  const columns: ColumnDef<UsersData>[] = [
     {
-      accessorKey: "firstName",
+      accessorKey: "first_name",
       header: "First Name",
     },
     {
-      accessorKey: "lastName",
+      accessorKey: "last_name",
       header: "Last Name",
     },
     {
@@ -88,7 +71,7 @@ const UserMangementTable = ({ data }: DataTableProps) => {
       header: "Email",
     },
     {
-      accessorKey: "Date",
+      accessorKey: "created_at",
       header: "Date",
     },
     {
@@ -97,7 +80,7 @@ const UserMangementTable = ({ data }: DataTableProps) => {
       cell: ({ row }) => (
         <span
           className={`text-base font-bold ${
-            row.original.status === "Active"
+            row.original.status === "active"
               ? "text-[#34A853]"
               : "text-[#D39900]"
           }`}
@@ -107,7 +90,7 @@ const UserMangementTable = ({ data }: DataTableProps) => {
       ),
     },
     {
-      accessorKey: "lastActive",
+      accessorKey: "last_active",
       header: "Last Active",
     },
     {
@@ -152,7 +135,10 @@ const UserMangementTable = ({ data }: DataTableProps) => {
           </PopoverTrigger>
 
           <PopoverContent className="p-3">
-            <button key={row.original.id} className="flex items-center gap-2">
+            <button
+              key={row.original.first_name + row.original.last_name}
+              className="flex items-center gap-2"
+            >
               <EyeIcon className="h-4 w-4" />
               View
             </button>
@@ -204,6 +190,75 @@ const UserMangementTable = ({ data }: DataTableProps) => {
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex flex-wrap justify-between items-center gap-3">
+        <div className="flex items-center gap-3">
+          <Button
+            variant={"outline"}
+            className="bg-[#EEEEFD]"
+            size={"icon"}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="text-dark" />
+          </Button>
+
+          <div className="flex gap-3 items-center">
+            {Array.from({ length: Math.min(totalPages, 5) }, (_, index) => {
+              let pageNumber;
+              if (totalPages <= 5) {
+                pageNumber = index + 1;
+              } else if (currentPage && currentPage <= 3) {
+                pageNumber = index + 1;
+              } else if (currentPage && currentPage >= totalPages - 2) {
+                pageNumber = totalPages - 4 + index;
+              } else {
+                pageNumber = currentPage && currentPage - 2 + index;
+              }
+
+              return (
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className={`text-sm ${
+                    pageNumber === currentPage && currentPage
+                      ? "text-white rounded-full bg-defaultBlue"
+                      : "text-dark"
+                  }`}
+                  key={pageNumber}
+                  onClick={() => onPageChange?.(pageNumber || 1)}
+                >
+                  {pageNumber}
+                </Button>
+              );
+            })}
+          </div>
+
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={handleNextPage}
+            disabled={currentPage && currentPage === totalPages ? true : false}
+          >
+            <ChevronRight className="text-dark" />
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <p className="text-sm font-semibold text-[#334155]">Show: </p>
+          <select
+            value={rowsPerPage || 10}
+            onChange={(e) =>
+              onRowsPerPageChange?.(Number.parseInt(e.target.value))
+            }
+            className="!rounded-[1.91px] !whitespace-nowrap !w-fit !text-sm !py-2 !border-[.96px] !border-[#E2E8F0]"
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+      </div>
     </>
   );
 };

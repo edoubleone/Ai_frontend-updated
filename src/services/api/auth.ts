@@ -43,4 +43,10 @@ function AsyncResetPassword(payload: { new_password: string; token: string }) {
   });
 }
 
-export { CompleteOnboarding, ForgotPassword, AsyncResetPassword };
+function GoogleLogin() {
+  return apiClient.get(`/auth/google/login`).then((response) => {
+    return response.data;
+  });
+}
+
+export { CompleteOnboarding, ForgotPassword, GoogleLogin, AsyncResetPassword };

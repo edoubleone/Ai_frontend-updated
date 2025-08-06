@@ -1,6 +1,7 @@
 import { MESSAGING_URL } from "@/utils";
 import apiClient from "../config/api";
 import type { CustomerHistory, IAssistant } from "../models/conversation.model";
+import type { Customer, ICustomerHistory } from "../models/assistant";
 
 export interface ICreateCampaign {
   campaign: string;
@@ -15,7 +16,16 @@ export interface ICreateVoiceCampaign {
   channel: string;
   run_at: Date;
   repeat: string;
-  time?: string
+  time?: string;
+}
+
+export interface ICreateBulkVoiceCampaign {
+  message: string;
+  handles: string[];
+  channel: string;
+  run_at: Date;
+  repeat: string;
+  time?: string;
 }
 
 export function AsyncCreateCampaign(
@@ -50,6 +60,30 @@ export function DeleteAssistant(id: number) {
   return apiClient.delete(`/assistants/${id}`).then((response) => {
     return response.data;
   });
+}
+
+export function GetAssistantCustomers(
+  assistant_id: number
+): Promise<Customer[]> {
+  return apiClient
+    .get<Customer[]>(`/assistants/${assistant_id}/customers`)
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export function GetAssistantCustomerHistory(
+  assistant_id: number,
+  handle: string,
+  channel: string
+): Promise<ICustomerHistory> {
+  return apiClient
+    .get<ICustomerHistory>(
+      `/assistants/${assistant_id}/customer/history?handle=${handle}&channel=${channel}`
+    )
+    .then((response) => {
+      return response.data;
+    });
 }
 
 export function ChatAsCustomer(
@@ -134,7 +168,28 @@ export const FetchRegisteredBusinessName = async (
       embed_url: string;
     }[];
   }>(
-    `${MESSAGING_URL}/api/bot-embed/list-businesses?bot_url=${encodeURIComponent(bot_url)}`
+    `${MESSAGING_URL}/api/bot-embed/list-businesses?bot_url=${encodeURIComponent(
+      bot_url
+    )}`
   );
   return res.data;
 };
+
+function CreateBulkVoiceCampaign(
+  payload: {
+    message: string;
+    handles: string[];
+    channel: string;
+    run_at: Date;
+    repeat: string;
+  },
+  assistant_id: number
+) {
+  return apiClient
+    .post(`/campaigns/voice/bulk?assistant_id=${assistant_id}`, payload)
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export { CreateBulkVoiceCampaign };

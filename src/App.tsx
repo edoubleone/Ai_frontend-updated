@@ -48,6 +48,7 @@ import AssistantCallHistoryPage from "./Pages/dashboard/assistant-call-history";
 import MassAssistantCallHistoryPage from "./Pages/dashboard/mass-assistant-call-history";
 import LiveAgentPage from "./Pages/dashboard/live-agent";
 import CreateLiveAgent from "./Pages/dashboard/create-live-agent";
+import OAuthCallback from "./Pages/auth-callback";
 
 function App() {
   return (
@@ -118,6 +119,7 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="reset-password" element={<ResetPassword />} />
+      <Route path="oauth-callback" element={<OAuthCallback />} />
       {/* Public Routes with Main Layout */}
       <Route
         path="/"
