@@ -1,6 +1,7 @@
 import { MESSAGING_URL } from "@/utils";
 import apiClient from "../config/api";
 import type { CustomerHistory, IAssistant } from "../models/conversation.model";
+import type { Customer, ICustomerHistory } from "../models/assistant";
 
 export interface ICreateCampaign {
   campaign: string;
@@ -61,9 +62,25 @@ export function DeleteAssistant(id: number) {
   });
 }
 
-export function GetAssistantCustomers(assistant_id: number) {
+export function GetAssistantCustomers(
+  assistant_id: number
+): Promise<Customer[]> {
   return apiClient
-    .get(`/assistants/${assistant_id}/customers`)
+    .get<Customer[]>(`/assistants/${assistant_id}/customers`)
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export function GetAssistantCustomerHistory(
+  assistant_id: number,
+  handle: string,
+  channel: string
+): Promise<ICustomerHistory> {
+  return apiClient
+    .get<ICustomerHistory>(
+      `/assistants/${assistant_id}/customer/history?handle=${handle}&channel=${channel}`
+    )
     .then((response) => {
       return response.data;
     });

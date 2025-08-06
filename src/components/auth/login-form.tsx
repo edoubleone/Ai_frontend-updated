@@ -3,20 +3,24 @@ import logo from "@/assets/images/logo.png";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import { UserLogin } from "@/services/api/auth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GoogleLogin, UserLogin } from "@/services/api/auth";
 import Button from "../shared/button";
 import { useAuth } from "@/context/auth-provider";
 import type { ErrorResponse } from "@/services/config/api";
 import { toast } from "sonner";
 import SecondaryInput from "../shared/secondary-input";
 import PasswordInput from "../shared/password-input";
+import { useState } from "react";
+import { BASE_URL } from "@/utils";
 // import { KoolAiLogo } from "./kool-ai-logo"
 
 export function LoginFormComponent() {
   const navigate = useNavigate();
 
   const { setAuthenticated } = useAuth();
+
+  const [isGoogleAuth, setGoogleAuth] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: UserLogin,
@@ -29,6 +33,7 @@ export function LoginFormComponent() {
       toast.error(error?.response?.data?.detail);
     },
   });
+
 
   const {
     register,
@@ -47,6 +52,23 @@ export function LoginFormComponent() {
       })
     ),
   });
+
+  const GoogleLogin = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/google/login`, {
+        method: 'GET',
+        redirect: 'manual',
+      });
+
+      console.log(response, "Res")
+      const url = response.headers.get('Location');
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -124,6 +146,8 @@ export function LoginFormComponent() {
             <div className="grid sm:grid-cols-2 gap-4">
               <Button
                 variant="outline"
+                disabled={isPending}
+                onClick={() => GoogleLogin()}
                 type="button"
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
               >
@@ -152,6 +176,7 @@ export function LoginFormComponent() {
 
               <Button
                 variant="outline"
+                disabled={isPending}
                 className="flex items-center justify-center gap-2 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
                 type="button"
               >
@@ -163,8 +188,6 @@ export function LoginFormComponent() {
                 </span>
               </Button>
             </div>
-
-
           </form>
         </div>
       </div>
