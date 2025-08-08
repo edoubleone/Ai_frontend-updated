@@ -28,7 +28,7 @@ const navigationItems = [
     icon: BotsIcon,
   },
   {
-    title: "Logs",
+    title: "Chat Logs",
     url: "/dashboard/logs",
     icon: ConversationsIcon,
   },
@@ -38,7 +38,7 @@ const navigationItems = [
     icon: PhoneHistoryIcon,
   },
   {
-    title: "Live Agent",
+    title: "Agent Logs",
     url: "/dashboard/live-agent",
     icon: AdminUserIcon,
   },
