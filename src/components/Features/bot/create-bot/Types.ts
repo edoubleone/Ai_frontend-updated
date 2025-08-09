@@ -33,6 +33,7 @@ export type CompanyDetailsFormValues = {
     teamMemberName?: string;
     teamMemberPosition?: string;
     companyDocument?: File | null;
+    companyUrl?: string;
     description_team?: string;
 }
 
@@ -110,78 +111,85 @@ export const basicSetupSchema = Yup.object({
 export const companyDetailsSchema = Yup.object({
   filledForm: Yup.boolean(),
   uploadTeamInfo: Yup.boolean(),
-  companyName: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Company name is required").min(5).max(100),
+  companyUrl: Yup.string().when("filledForm", {
+        is: (filledForm: boolean) => filledForm, // if filledForm is false
+    then: (schema) => schema.required("Company url is required").min(5).max(100),
     otherwise: (schema) => schema.notRequired() // if filledForm is true, companyName can be not required
-  }).min(5, "Company name must be at least 5 characters").max(100, "Company name must be at most 100 characters"),
-  TypeOfAssistant: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required().oneOf(["Text", "Image"]),
-    otherwise: (schema) => schema.notRequired(),
-  }), // if filledForm is true, TypeOfAssistant can be not required
-  IndustryAndDescription: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Industry and description are required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  CompanyMission: Yup.string().notRequired().test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-  service: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Service is required").min(5),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  Amount: Yup.number().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Amount is required").typeError("Amount must be a number").positive().integer(),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  description: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Description is required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  country: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Country is required").min(3).max(50),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  city: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("City is required").min(2).max(50),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  ZIPCode: Yup.number().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("ZIP code is required").typeError("ZIP code must be a number").positive().integer(),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  state: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("State is required").min(2).max(50),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  address1: Yup.string().when('filledForm', {
-    is: (filledForm: boolean) => filledForm, // if filledForm is false
-    then: (schema) => schema.required("Address line 1 is required").min(10).max(100),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  address2: Yup.string().notRequired().min(10).max(100),
-  teamMemberName: Yup.string().when('uploadTeamInfo', {
-    is: (uploadTeamInfo: boolean) => uploadTeamInfo, // if filledForm is not true
-    then: (schema) => schema.required("Team member name is required").min(3).max(50),
-    otherwise: (schema) => schema.notRequired(), // if filledForm is true, teamMemberName can be not required
-  }),
-  teamMemberPosition: Yup.string().when('uploadTeamInfo', {
-    is: (uploadTeamInfo: boolean) => uploadTeamInfo, // if filledForm is not true
-    then: (schema) => schema.required("Team member position is required").min(3).max(50),
-    otherwise: (schema) => schema.notRequired(), // if filledForm is true, teamMemberPosition can be not required
-  }),
-  description_team: Yup.string().when('uploadTeamInfo', {
-    is: (uploadTeamInfo: boolean) => uploadTeamInfo,
-    then: (schema) => schema.required("Description is required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
-    otherwise: (schema) => schema.notRequired()
+
   })
+  //companyName: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Company name is required").min(5).max(100),
+    //otherwise: (schema) => schema.notRequired() // if filledForm is true, companyName can be not required
+  //}).min(5, "Company name must be at least 5 characters").max(100, "Company name must be at most 100 characters"),
+  //TypeOfAssistant: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required().oneOf(["Text", "Image"]),
+    //otherwise: (schema) => schema.notRequired(),
+  //}), // if filledForm is true, TypeOfAssistant can be not required
+  //IndustryAndDescription: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Industry and description are required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //CompanyMission: Yup.string().notRequired().test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+  //service: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Service is required").min(5),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //Amount: Yup.number().when('filledForm', {
+   // is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Amount is required").typeError("Amount must be a number").positive().integer(),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //description: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Description is required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //country: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Country is required").min(3).max(50),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //city: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("City is required").min(2).max(50),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //ZIPCode: Yup.number().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("ZIP code is required").typeError("ZIP code must be a number").positive().integer(),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //state: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("State is required").min(2).max(50),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //address1: Yup.string().when('filledForm', {
+    //is: (filledForm: boolean) => filledForm, // if filledForm is false
+    //then: (schema) => schema.required("Address line 1 is required").min(10).max(100),
+    //otherwise: (schema) => schema.notRequired(),
+  //}),
+  //address2: Yup.string().notRequired().min(10).max(100),
+  //teamMemberName: Yup.string().when('uploadTeamInfo', {
+    //is: (uploadTeamInfo: boolean) => uploadTeamInfo, // if filledForm is not true
+    //then: (schema) => schema.required("Team member name is required").min(3).max(50),
+    //otherwise: (schema) => schema.notRequired(), // if filledForm is true, teamMemberName can be not required
+  //}),
+  //
+  // teamMemberPosition: Yup.string().when('uploadTeamInfo', {
+    //is: (uploadTeamInfo: boolean) => uploadTeamInfo, // if filledForm is not true
+    //then: (schema) => schema.required("Team member position is required").min(3).max(50),
+    //otherwise: (schema) => schema.notRequired(), // if filledForm is true, teamMemberPosition can be not required
+  //}),
+  //description_team: Yup.string().when('uploadTeamInfo', {
+    //is: (uploadTeamInfo: boolean) => uploadTeamInfo,
+    //then: (schema) => schema.required("Description is required").test("wordCount", "Max 50 words", val => !val || val.trim().split(/\s+/).length <= 50),
+    //otherwise: (schema) => schema.notRequired()
+  //})
 });
 
 // Step 2: Role & Audience

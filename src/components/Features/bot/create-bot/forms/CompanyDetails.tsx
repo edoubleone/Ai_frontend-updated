@@ -1,4 +1,4 @@
-import { CircleAlert, Download, TriangleAlert } from "lucide-react";
+import { CircleAlert, Download } from "lucide-react";
 import {
   error,
   sectionStyles,
@@ -44,7 +44,6 @@ const CompanyDetails = () => {
           <div className="flex flex-col justify-center items-center gap-y-2">
             <p className="font-medium">OR</p>
             <Switch
-              disabled
               checked={isToFillForm}
               onCheckedChange={setIsToFillForm}
               className="data-[state=checked]:bg-blue-600"
@@ -52,7 +51,7 @@ const CompanyDetails = () => {
           </div>
           <p className="text-gray-500 flex-1 py-3 px-5 bg-[#EEEEFD] rounded-lg flex flex-col justify-center">
             Provide information about your company to help the assistant
-            understand your business better.
+            understand your business better by inputting your company url.
           </p>
         </div>
       </header>
@@ -112,33 +111,33 @@ const CompanyDetails = () => {
         </fieldset>
       </form>
 
-      <form
-        className={`flex-col gap-y-[30px] ${isToFillForm ? "flex" : "hidden"}`}
-      >
-        <div className="bg-[#EEEEFD] px-5 py-4 flex gap-5 rounded-lg w-full">
-          <TriangleAlert className="text-[#C82332] text-2xl w-[10%]" />
-          <span>
-            Please note that the more detailed the information you provide about
-            your company, the better the assistant will be able to respond to
-            questions. However, this will impact AI usage. Therefore, we
-            recommend finding a balance between the completeness of information
-            and its necessity. For example, if your assistant&apos;s goal is to
-            gather information, it does not need to know details about your
-            employees.
-          </span>
-        </div>
+      <div className={`grid items-start gap-10 sm:grid-cols-2 ${isToFillForm ? "grid" : "hidden"}`}>
+<SecondaryInput 
+name="companyUrl"
+onChange={handleChange}
+label="Company URL"
+placeholder="Enter your company URL"
+onBlur={handleBlur}
+errorText={errors.companyUrl}
+value={values.companyUrl}
+error={errors.companyUrl && touched.companyUrl ? true : false}
+/>
+      </div>
 
+      <form
+        className={`flex-col gap-y-[30px] hidden`}
+      >
         <main className="flex flex-col gap-y-[30px]">
           <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryInput
-              name="companyName"
+              name="companyUrl"
               onChange={handleChange}
-              label="Company Name"
-              placeholder="Enter your company name"
+              label="Company URL"
+              placeholder="Enter your company URL"
               onBlur={handleBlur}
-              errorText={errors.companyName}
-              value={values.companyName}
-              error={errors.companyName && touched.companyName ? true : false}
+              errorText={errors.companyUrl}
+              value={values.companyUrl}
+              error={errors.companyUrl && touched.companyUrl ? true : false}
             />
 
             <SecondaryInput
