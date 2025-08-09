@@ -5,7 +5,6 @@ import {
   Settings,
   FAQs,
   RoleAndAudience,
-  Customize,
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
