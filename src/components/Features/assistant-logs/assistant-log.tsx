@@ -15,8 +15,7 @@ const LogComponent: React.FC<IAssistant> = ({ name, id }) => {
         <div className="flex flex-col gap-y-1">
           <h1 className="text-base font-semibold text-[#171717]">{name}</h1>
           <p className="text-sm line-clamp-1 text-[#636363]">
-            You currently have 4 conversations in this Assistant.
-          </p>
+          Click to view conversation on the assistant          </p>
         </div>
       </div>
 

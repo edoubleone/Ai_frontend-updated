@@ -5,7 +5,6 @@ import {
   Settings,
   FAQs,
   RoleAndAudience,
-  Customize,
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
@@ -16,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/button";
+import { uploadKnowledgeUrl } from "@/services/api/assistant";
 
 export function CreateAssistant(payload: any) {
   return apiClient.post(`/assistants/`, payload);
@@ -55,11 +55,11 @@ const steps = [
     desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
     component: <FAQs />,
   },
-  {
-    heading: "Customize",
-    desc: "Customize the look and feel of your Bot to reflect your brand and website",
-    component: <Customize />,
-  },
+  //{
+    //heading: "Customize",
+    //desc: "Customize the look and feel of your Bot to reflect your brand and website",
+    //component: <Customize />,
+  //},
   // {
   //   heading: "Full Preview",
   //   desc: "Here’s a final preview of how your Bot Assistant looks like. If you are not satisfy with it, kindly go back to edit.",
@@ -150,6 +150,12 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
     },
   });
 
+  const { mutateAsync: uploadKnowledgeUrlMutation } = useMutation({
+    mutationFn: (data: { url: string; name: string; assistant_id: number }) =>
+      uploadKnowledgeUrl(data.url, data.name, data.assistant_id),
+
+  });
+
   const { mutateAsync } = useMutation({
     mutationFn: CreateAssistant,
     onError: () => {
@@ -189,6 +195,14 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
           formData.append("files", values.companyDocument);
         }
         await uploadKnowledgeFile({ assistantId, formData });
+      }
+
+      if (values.companyUrl) {
+        await uploadKnowledgeUrlMutation({
+          url: values.companyUrl,
+          name: values.name || "",
+          assistant_id: assistantId,
+        });
       }
 
       toast.success("Assistant created successfully!");

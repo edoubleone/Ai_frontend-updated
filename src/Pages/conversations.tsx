@@ -31,8 +31,6 @@ const Conversations = () => {
     queryKey: ["assistant-customers", id],
   });
 
-  console.log(customers);
-
   const handleCustomerClick = (customer: Customer) => {
     setCustomer(customer);
     queryClient.invalidateQueries({
@@ -69,7 +67,7 @@ const Conversations = () => {
                 {assistant?.name}
               </h1>
               <p className="text-sm line-clamp-1 text-[#636363]">
-                You currently have 4 conversations in this Assistant.
+                You currently have {filteredData?.length || 0} conversation(s) in this Assistant.
               </p>
             </div>
           </div>

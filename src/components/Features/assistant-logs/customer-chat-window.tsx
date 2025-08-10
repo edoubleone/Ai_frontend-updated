@@ -120,7 +120,7 @@ const CustomerChatWindow = ({
         </div>
       </div>
 
-      <div className="py-4 sm:p-4">
+      <div className="py-4 hidden sm:p-4">
         <form
           onSubmit={(e) => e.preventDefault()}
           className="relative flex items-center"

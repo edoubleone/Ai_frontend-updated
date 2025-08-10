@@ -35,37 +35,7 @@ const LiveAgentPage = () => {
               <AdminUserIcon />
             </span>
 
-            <p className="text-2xl font-bold">Total Agents</p>
-
-            <p className="text-xl font-bold">10</p>
-          </Card>
-
-          <Card className="flex bg-[#EEEEFD] max-w-[318px] flex-shrink-0 w-full flex-col gap-y-4">
-            <span className="size-7 flex text-white rounded-md items-center justify-center bg-[#34A853]">
-              <AdminUserIcon />
-            </span>
-
-            <p className="text-2xl font-bold">Active</p>
-
-            <p className="text-xl font-bold">10</p>
-          </Card>
-
-          <Card className="flex bg-[#EEEEFD] max-w-[318px] flex-shrink-0 w-full flex-col gap-y-4">
-            <span className="size-7 flex text-white rounded-md items-center justify-center bg-[#737373]">
-              <AdminUserIcon />
-            </span>
-
-            <p className="text-2xl font-bold">Offline</p>
-
-            <p className="text-xl font-bold">10</p>
-          </Card>
-
-          <Card className="flex bg-[#EEEEFD] max-w-[318px] flex-shrink-0 w-full flex-col gap-y-4">
-            <span className="size-7 flex text-white rounded-md items-center justify-center bg-[#E8A800]">
-              <AdminUserIcon />
-            </span>
-
-            <p className="text-2xl font-bold">Busy</p>
+            <p className="text-2xl font-bold">Agents Logs</p>
 
             <p className="text-xl font-bold">10</p>
           </Card>

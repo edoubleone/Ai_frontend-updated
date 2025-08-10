@@ -39,6 +39,12 @@ export function AsyncCreateCampaign(
     });
 }
 
+function uploadKnowledgeUrl (url: string, name: string, assistant_id: number) {
+return apiClient.post(`/knowledge/${assistant_id}/knowledge/url`, {url, name}).then((response)=> {
+  return response.data
+})
+}
+
 export function AsyncCreateVoiceCampaign(
   payload: ICreateVoiceCampaign,
   assistant_id: number
@@ -192,4 +198,4 @@ function CreateBulkVoiceCampaign(
     });
 }
 
-export { CreateBulkVoiceCampaign };
+export { CreateBulkVoiceCampaign, uploadKnowledgeUrl };
