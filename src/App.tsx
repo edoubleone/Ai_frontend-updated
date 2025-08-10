@@ -49,6 +49,7 @@ import MassAssistantCallHistoryPage from "./Pages/dashboard/mass-assistant-call-
 import LiveAgentPage from "./Pages/dashboard/live-agent";
 import CreateLiveAgent from "./Pages/dashboard/create-live-agent";
 import OAuthCallback from "./Pages/auth-callback";
+import AdminPrivateRoute from "./utils/admin-routes";
 
 function App() {
   return (
@@ -97,22 +98,26 @@ function App() {
         path="/admin/forgot-password"
         element={<AdminForgotPasswordForm />}
       />
-      <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/reset-password" element={<AdminResetPassword />} />
 
-      <Route path="/admin/dashboard" element={<AdminDashboardLayout />}>
-        <Route path="" element={<AdminDashboard />} />
-        <Route
-          path="user-management"
-          element={<AdminDashboardUserManagement />}
-        />
-        <Route
-          path="customer-support"
-          element={<AdminDashboardCustomerSupport />}
-        />
-        <Route path="payments" element={<AdminDashboardPayments />} />
-        <Route path="settings" element={<AdminSettings />} />
-        <Route path="notifications" element={<AdminDashboardNotifications />} />
+      <Route element={<AdminPrivateRoute />}>
+        <Route path="/admin/dashboard" element={<AdminDashboardLayout />}>
+          <Route path="" element={<AdminDashboard />} />
+          <Route
+            path="user-management"
+            element={<AdminDashboardUserManagement />}
+          />
+          <Route
+            path="customer-support"
+            element={<AdminDashboardCustomerSupport />}
+          />
+          <Route path="payments" element={<AdminDashboardPayments />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route
+            path="notifications"
+            element={<AdminDashboardNotifications />}
+          />
+        </Route>
       </Route>
 
       <Route path="forgot-password" element={<Forgot />} />

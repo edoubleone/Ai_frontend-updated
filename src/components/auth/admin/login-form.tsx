@@ -4,31 +4,57 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { UserLogin } from "@/services/api/auth";
 import Button from "@/components/shared/button";
-import { useAuth } from "@/context/auth-provider";
 import type { ErrorResponse } from "@/services/config/api";
 import { toast } from "sonner";
 import SecondaryInput from "@/components/shared/secondary-input";
 import PasswordInput from "@/components/shared/password-input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-// import { KoolAiLogo } from "./kool-ai-logo"
+import type { ILogin } from "@/services/models/auth.model";
+import axios from "axios";
+import { BASE_URL } from "@/utils";
+import { useAdminAuth } from "@/context/admin-auth-provider";
+
+export const AdminLog = async (data: ILogin) => {
+  const res = await axios.post(`${BASE_URL}/auth/token`, data, {
+    withCredentials: true,
+    maxRedirects: 0,
+    validateStatus: (status) => status >= 200 && status < 400,
+  });
+  return res;
+};
 
 export function AdminLoginFormComponent() {
   const navigate = useNavigate();
-
-  const { setAuthenticated } = useAuth();
+  const { setAuthenticated } = useAdminAuth();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: UserLogin,
-    onSuccess: (data) => {
-      setAuthenticated(data.access_token);
-      toast.success("Logged in successfully!");
-      navigate("/dashboard");
+    mutationFn: AdminLog,
+    onSuccess: (response) => {
+      const redirectUrl = response.headers["location"];
+
+      if (redirectUrl) {
+        try {
+          const url = new URL(redirectUrl);
+          const token = url.searchParams.get("token");
+
+          if (token) {
+            setAuthenticated(token);
+            toast.success("Login successful");
+            navigate("/admin/dashboard");
+          } else {
+            toast.error("Token not found in redirect URL");
+          }
+        } catch (err) {
+          toast.error("Invalid redirect URL format");
+        }
+      } else {
+        toast.error("Redirect URL not found in response headers");
+      }
     },
     onError: (error: ErrorResponse) => {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.detail || "Login failed");
     },
   });
 
@@ -52,7 +78,7 @@ export function AdminLoginFormComponent() {
 
   return (
     <div className="flex min-h-screen">
-      {/* Left Panel - Form (50% width) */}
+      {/* Left Panel - Form */}
       <div className="flex flex-col justify-center w-full px-8 bg-white lg:w-1/2 lg:px-16">
         <div className="w-full max-w-md mx-auto py-10">
           {/* Logo */}
@@ -64,7 +90,9 @@ export function AdminLoginFormComponent() {
                 className="w-auto h-10 transition-opacity hover:opacity-80"
               />
             </Link>
-            <p className="text-defaultBlue font-semibold text-sm">Admin Portal</p>
+            <p className="text-defaultBlue font-semibold text-sm">
+              Admin Portal
+            </p>
           </div>
 
           {/* Header */}
@@ -80,7 +108,6 @@ export function AdminLoginFormComponent() {
             onSubmit={handleSubmit((data) => mutate(data))}
             className="space-y-6"
           >
-            {/* Email */}
             <SecondaryInput
               label="Email"
               type="email"
@@ -94,7 +121,6 @@ export function AdminLoginFormComponent() {
               {...register("password")}
             />
 
-            {/* Forgot Password */}
             <div className="flex items-center justify-between">
               <Label className="flex items-center gap-2">
                 <Checkbox />
@@ -109,7 +135,6 @@ export function AdminLoginFormComponent() {
               </Link>
             </div>
 
-            {/* Login Button */}
             <Button loading={isPending} disabled={!isValid} type="submit">
               Login
             </Button>
@@ -117,7 +142,7 @@ export function AdminLoginFormComponent() {
         </div>
       </div>
 
-      {/* Right Panel - Background Image (50% width) */}
+      {/* Right Panel */}
       <div className="relative hidden w-1/2 lg:block bg-gradient-to-br from-purple-100 to-purple-200">
         <div
           className="absolute inset-0 bg-no-repeat bg-cover"
