@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button as IconButton } from "@/components/ui/button";
 import Button from "@/components/shared/button";
 import { ArrowRight2 } from "iconsax-reactjs";
@@ -14,11 +14,18 @@ import clsx from "clsx";
 import LogOutIcon from "@/components/shared/logout-icon";
 import SettingsIcon from "@/components/shared/settings-icon";
 import { useAuth } from "@/context/auth-provider";
+import { GetAssistants } from "@/services/api/conversation";
+import { useQuery } from "@tanstack/react-query";
 
 export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
   const { pathname } = useLocation();
-  const { setLogOut, user } = useAuth();
-
+  const { setLogOut, user, activePlan } = useAuth();
+  const { data: assistants = [] } = useQuery({
+    queryFn: GetAssistants,
+    queryKey: ["assistants"],
+  });
+  const router = useNavigate();
+  console.log("data", assistants, activePlan);
   return (
     <header className="flex sticky top-0 z-40 w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5 bg-white border-b-[1.13px] border-[#E7E7E7]">
       <div className="flex items-center gap-x-3">
@@ -31,12 +38,24 @@ export function DashboardHeader({ toggleMenu }: { toggleMenu: () => void }) {
           <MenuIcon className="size-5 text-dark" />
         </IconButton>
 
-        <Link to="/dashboard/assistants/create-assistant">
-          <Button className="!font-bold !text-base" variant="lightLavender">
-            Build an Assistant
-            <ArrowRight2 size="18" />
-          </Button>
-        </Link>
+        {/* <Link to=""> */}
+        <Button
+          className="!font-bold !text-base"
+          variant="lightLavender"
+          onClick={() => {
+            if (activePlan?.plan_name) {
+              router("/dashboard/assistants/create-assistant");
+            } else if (!activePlan?.plan_name && assistants?.length >= 2) {
+              router("/dashboard/payments");
+            } else if (!activePlan?.plan_name && assistants?.length < 2) {
+              router("/dashboard/assistants/create-assistant");
+            }
+          }}
+        >
+          Build an Assistant
+          <ArrowRight2 size="18" />
+        </Button>
+        {/* </Link> */}
       </div>
 
       <div className="flex items-center gap-6">
