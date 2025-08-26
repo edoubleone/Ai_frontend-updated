@@ -32,7 +32,7 @@ const BasicSetup = () => {
           ]}
           value={values.typeOfAssistant}
           onChange={(value) => setFieldValue("typeOfAssistant", value)}
-          label="Type of Assistant"
+          label="Type of Assistant (Text/Image)"
         />
 
         <div className="flex flex-col gap-y-2.5">

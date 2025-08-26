@@ -64,13 +64,13 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
               )}
             </label>
           )}
-          <div className="flex items-center relative">
+          <div className="flex items-center border rounded-md border-[#D0D0D0] focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-colors overflow-hidden">
             <RPNInput.default
               ref={ref}
               className={cn(
-                "flex-1 text-sm flex placeholder:text-[#454545] items-center rounded-md border w-full border-[#D0D0D0] py-4 text-[#454545] outline-none bg-white",
+                "flex-1 text-sm flex placeholder:text-[#454545] items-center py-4 text-[#454545] outline-none bg-transparent border-none",
                 inputClass,
-                error ? "ring-[3px] ring-[#DC2626]" : ""
+                error ? "ring-2 ring-red-500/20" : ""
               )}
               flagComponent={FlagComponent}
               countrySelectComponent={CountrySelect}
@@ -97,7 +97,7 @@ const InputComponent = React.forwardRef<
     className={cn(
       "flex-1 text-sm flex placeholder:text-[#454545] items-center border-none py-0 text-[#454545] outline-none bg-transparent",
       className,
-      "pl-[80px] pr-4"
+      "pl-4 pr-4"
     )}
     {...props}
   />
@@ -132,9 +132,9 @@ const CountrySelect = ({
           type="button"
           variant="outline"
           className={cn(
-            "flex gap-1 shadow-none rounded-r-none border h-full py-0 pl-4 pr-2 focus:z-10",
+            "flex gap-2 shadow-none rounded-l-md border-r-0 border-t-0 border-b-0 h-full py-0 pl-3 pr-2 focus:z-10 hover:bg-gray-50 transition-colors h-full bg-gray-50",
             className,
-            "absolute left-0 top-0 bottom-0 flex items-center"
+            "flex items-center justify-center"
           )}
           disabled={disabled}
         >
@@ -142,15 +142,19 @@ const CountrySelect = ({
             country={selectedCountry}
             countryName={selectedCountry}
           />
+          <span className="text-xs font-medium text-gray-600">
+            +{RPNInput.getCountryCallingCode(selectedCountry)}
+          </span>
           <ChevronsUpDown
             className={cn(
-              "-mr-2 size-4 opacity-50",
-              disabled ? "hidden" : "opacity-100"
+              "size-3 text-gray-400 transition-transform",
+              isOpen ? "rotate-180" : "",
+              disabled ? "hidden" : ""
             )}
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className="w-[320px] p-0" align="start">
         <Command>
           <CommandInput
             value={searchValue}
@@ -168,10 +172,13 @@ const CountrySelect = ({
               }, 0);
             }}
             placeholder="Search country..."
+            className="border-0 focus:ring-0"
           />
           <CommandList>
-            <ScrollArea ref={scrollAreaRef} className="h-72">
-              <CommandEmpty>No country found.</CommandEmpty>
+            <ScrollArea ref={scrollAreaRef} className="h-80">
+              <CommandEmpty className="py-6 text-center text-gray-500">
+                No country found.
+              </CommandEmpty>
               <CommandGroup>
                 {countryList.map(({ value, label }) =>
                   value ? (
@@ -213,16 +220,24 @@ const CountrySelectOption = ({
   };
 
   return (
-    <CommandItem className="gap-2" onSelect={handleSelect}>
+    <CommandItem
+      className="gap-3 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
+      onSelect={handleSelect}
+    >
       <FlagComponent country={country} countryName={countryName} />
-      <span className="flex-1 text-sm">{countryName}</span>
-      <span className="text-sm text-foreground/50">{`+${RPNInput.getCountryCallingCode(
-        country
-      )}`}</span>
+      <div className="flex-1 min-w-0">
+        <span className="block text-sm font-medium text-gray-900 truncate">
+          {countryName}
+        </span>
+      </div>
+      <span className="text-sm text-gray-500 font-mono">
+        +{RPNInput.getCountryCallingCode(country)}
+      </span>
       <CheckIcon
-        className={`ml-auto size-4 ${
+        className={cn(
+          "ml-auto size-4 text-blue-600 transition-opacity",
           country === selectedCountry ? "opacity-100" : "opacity-0"
-        }`}
+        )}
       />
     </CommandItem>
   );
@@ -232,7 +247,7 @@ const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20 [&_svg:not([class*='size-'])]:size-full">
+    <span className="flex h-5 w-7 overflow-hidden rounded-sm bg-gray-100 [&_svg:not([class*='size-'])]:size-full shadow-sm">
       {Flag && <Flag title={countryName} />}
     </span>
   );

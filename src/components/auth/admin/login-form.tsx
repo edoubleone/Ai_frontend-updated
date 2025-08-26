@@ -25,7 +25,7 @@ export function AdminLoginFormComponent() {
     onSuccess: (data) => {
       setAuthenticated(data.access_token);
       toast.success("Logged in successfully!");
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
     },
     onError: (error: ErrorResponse) => {
       toast.error(error?.response?.data?.detail);
@@ -64,7 +64,9 @@ export function AdminLoginFormComponent() {
                 className="w-auto h-10 transition-opacity hover:opacity-80"
               />
             </Link>
-            <p className="text-defaultBlue font-semibold text-sm">Admin Portal</p>
+            <p className="text-defaultBlue font-semibold text-sm">
+              Admin Portal
+            </p>
           </div>
 
           {/* Header */}
