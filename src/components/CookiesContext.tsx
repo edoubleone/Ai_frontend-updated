@@ -25,7 +25,7 @@ export default function CookieConsent({
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-5 z-10 right-0 left-0 md:right-5 md:left-5 sm:left-auto sm:right-5 max-w-md w-full bg-white border border-gray-300 rounded-xl shadow-lg p-5">
+    <div className="fixed bottom-5 z-40 right-0 left-0 md:right-5 md:left-5 sm:left-auto sm:right-5 max-w-md w-full bg-white border border-gray-300 rounded-xl shadow-lg p-5">
       <button
         onClick={() => setShowBanner(false)}
         className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
