@@ -80,7 +80,7 @@ const CompanyDetails = () => {
             accept=".pdf"
           />
           <div className="flex flex-col items-center gap-y-4 absolute z-0">
-            <Download size={30} className="text-blue-600 mt-5" />
+            <Download size={30} className="text-blue-600 mt-3" />
             <p className="text-blue-600 font-medium h-2">
               {values.companyDocument &&
                 (values.companyDocument instanceof File
@@ -93,10 +93,26 @@ const CompanyDetails = () => {
                 className="font-semibold text-lg"
               >
                 Drag & drop files or{" "}
-                <span className="text-blue-600 cursor-pointer">Browse</span>{" "}
+                <span className="text-blue-600 cursor-pointer">Browse</span>
               </label>
               <p className="text-md text-gray-500">
                 Supported formats: Doc, PDF
+              </p>
+              <p
+                className="text-sm text-gray-400 text-center  mb-4"
+                style={{
+                  marginBottom: 10,
+                }}
+              >
+                By uploading, you agree to our{" "}
+                <a
+                  href="/policy"
+                  target="_blank"
+                  className="text-blue-600 underline"
+                >
+                  Privacy Policy
+                </a>
+                .
               </p>
             </div>
           </div>
@@ -111,22 +127,24 @@ const CompanyDetails = () => {
         </fieldset>
       </form>
 
-      <div className={`grid items-start gap-10 sm:grid-cols-2 ${isToFillForm ? "grid" : "hidden"}`}>
-<SecondaryInput 
-name="companyUrl"
-onChange={handleChange}
-label="Company URL"
-placeholder="Enter your company URL"
-onBlur={handleBlur}
-errorText={errors.companyUrl}
-value={values.companyUrl}
-error={errors.companyUrl && touched.companyUrl ? true : false}
-/>
+      <div
+        className={`grid items-start gap-10 sm:grid-cols-2 ${
+          isToFillForm ? "grid" : "hidden"
+        }`}
+      >
+        <SecondaryInput
+          name="companyUrl"
+          onChange={handleChange}
+          label="Company URL"
+          placeholder="Enter your company URL"
+          onBlur={handleBlur}
+          errorText={errors.companyUrl}
+          value={values.companyUrl}
+          error={errors.companyUrl && touched.companyUrl ? true : false}
+        />
       </div>
 
-      <form
-        className={`flex-col gap-y-[30px] hidden`}
-      >
+      <form className={`flex-col gap-y-[30px] hidden`}>
         <main className="flex flex-col gap-y-[30px]">
           <div className="grid items-start gap-10 sm:grid-cols-2">
             <SecondaryInput

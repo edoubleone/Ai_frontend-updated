@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 
 interface SuccessModalProps {
-  isOpen: boolean
-  onClose: () => void
-  title?: string
-  message?: string
-  buttonText?: string
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  message?: string;
+  buttonText?: string;
 }
 
 export function SuccessModal({
   isOpen,
   onClose,
   title = "Successful!",
-  message = "Congratulations! You've successfully signed up to Agentic AI.",
+  message = "Congratulations! You've successfully signed up to Kool AI.",
   buttonText = "Okay",
 }: SuccessModalProps) {
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -43,5 +43,5 @@ export function SuccessModal({
         </Button>
       </div>
     </div>
-  )
+  );
 }

@@ -74,7 +74,7 @@ export function SignupFormComponent() {
 
           <div className="mb-8">
             <h1 className="mb-3 text-3xl font-bold text-gray-900">
-              Sign up with us
+              Sign up Today
             </h1>
             <p className="text-gray-600">
               Already have an account?{" "}
@@ -91,14 +91,14 @@ export function SignupFormComponent() {
             <div className="grid sm:grid-cols-2 gap-4">
               <SecondaryInput
                 label="First Name"
-                placeholder="First Name"
+                placeholder="Enter your first Name"
                 {...register("firstName")}
                 errorText={errors.firstName?.message}
               />
 
               <SecondaryInput
                 label="Last Name"
-                placeholder="Last Name"
+                placeholder="Enter your last Name"
                 {...register("lastName")}
                 errorText={errors.lastName?.message}
               />
@@ -114,7 +114,7 @@ export function SignupFormComponent() {
 
             <PasswordInput
               label="Password*"
-              placeholder="****"
+              placeholder="******"
               {...register("password")}
             />
 
@@ -133,7 +133,7 @@ export function SignupFormComponent() {
                   valid: hasNumber,
                 },
                 {
-                  label: "6 characters",
+                  label: "6 characters minimum",
                   valid: hasMinLength,
                 },
               ].map(({ label, valid }, i) => (
@@ -152,11 +152,7 @@ export function SignupFormComponent() {
               ))}
             </div>
 
-            <Button
-              loading={isPending}
-              type="submit"
-              className="mt-8"
-            >
+            <Button loading={isPending} type="submit" className="mt-8">
               Sign up
             </Button>
 

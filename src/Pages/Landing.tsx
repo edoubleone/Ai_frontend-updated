@@ -1,14 +1,12 @@
-
-import { EnhancedBenefitsSection } from "@/components/Features/Landing/enchanced-benefit-section"
-import {DeviceShowcaseSection} from "@/components/Features/Landing/device-showcase-section"
-import { EnhancedFAQSection } from "@/components/Features/Landing/enchanced-faq-section"
-import { EnhancedHowItWorksSection } from "@/components/Features/Landing/enchanced-how-it-work-section"
-import HeroSection from "@/components/Features/Landing/hero-section"
-import HowItWorksSection from "@/components/Features/Landing/HowItWorksSection"
-import TestimonialSection from "@/components/Features/Landing/enchanced-testimonial-carousel"
-import { EnhancedTestimonialsSection } from "@/components/Features/Landing/enchanced-testimonial-section"
-import PricingTable from "@/components/Features/Landing/pricing-section-new"
-
+import { EnhancedBenefitsSection } from "@/components/Features/Landing/enchanced-benefit-section";
+import { DeviceShowcaseSection } from "@/components/Features/Landing/device-showcase-section";
+import { EnhancedFAQSection } from "@/components/Features/Landing/enchanced-faq-section";
+import { EnhancedHowItWorksSection } from "@/components/Features/Landing/enchanced-how-it-work-section";
+import HeroSection from "@/components/Features/Landing/hero-section";
+import HowItWorksSection from "@/components/Features/Landing/HowItWorksSection";
+import TestimonialSection from "@/components/Features/Landing/enchanced-testimonial-carousel";
+import { EnhancedTestimonialsSection } from "@/components/Features/Landing/enchanced-testimonial-section";
+import PricingTable from "@/components/Features/Landing/pricing-section-new";
 
 export default function Landing() {
   return (
@@ -19,13 +17,13 @@ export default function Landing() {
         <EnhancedTestimonialsSection />
       </div>
       <HowItWorksSection />
-      <EnhancedHowItWorksSection/>
-      <EnhancedBenefitsSection/>
+      <EnhancedHowItWorksSection />
+      <EnhancedBenefitsSection />
       <DeviceShowcaseSection />
       <TestimonialSection />
       {/* <PricingSection /> */}
       <PricingTable />
       <EnhancedFAQSection />
     </div>
-  )
+  );
 }

@@ -9,6 +9,7 @@ import AuthProvider from "./context/auth-provider.ts";
 import { Toaster } from "./components/ui/sonner.tsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import CookieConsent from "./components/CookiesContext.tsx";
 
 const queryClient = new QueryClient();
 
@@ -17,8 +18,9 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
+          <CookieConsent />
           <App />
-          <Toaster position="top-right"/>
+          <Toaster position="top-right" />
         </AuthProvider>
       </QueryClientProvider>
     </BrowserRouter>

@@ -187,13 +187,14 @@ export default function Footer() {
           <main className="mx-auto max-w-7xl md:h-[371px] bg-[#343CED] flex flex-col md:flex-row items-center justify-evenly gap-y-10 p-10 lg:px-20 bg-[url('/images/footer-banner.png')] bg-contain bg-top md:bg-left bg-no-repeat rounded-3xl">
             <div className="w-full md:w-[40%]">
               <h2 className="text-4xl font-bold leading-normal text-white lg:text-6xl md:leading-loose">
-                Elevate your brand Today!
+                Elevate Your Brand Today
               </h2>
             </div>
             <div className="w-full md:w-[43%] flex flex-col pt-5 md:pt-0 items-start gap-5">
               <p className="text-2xl text-white">
-                Ready to transform your digital dresence? Let's create magic
-                together! book our services now!
+                Ready to transform your customer engagement? Our live demo
+                showcases how your KoolAI agent can answer customer questions,
+                call leads, book appointments, and drive sales
               </p>
 
               <Link to="/signup">
@@ -228,14 +229,13 @@ export default function Footer() {
                       About
                     </a>
                   </li>
-                 
-                 
+
                   <li>
                     <a
                       href="/contact"
                       className="text-base text-gray-600 transition-colors hover:text-gray-900"
                     >
-                     Contact
+                      Contact
                     </a>
                   </li>
 
@@ -244,7 +244,7 @@ export default function Footer() {
                       href="/pricing"
                       className="text-base text-gray-600 transition-colors hover:text-gray-900"
                     >
-                     Pricing
+                      Pricing
                     </a>
                   </li>
                 </ul>
@@ -256,7 +256,6 @@ export default function Footer() {
                   Link
                 </h3>
                 <ul className="space-y-4">
-                  
                   <li>
                     <a
                       href="/privacy"

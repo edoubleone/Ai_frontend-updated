@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import { ArrowLeft, Tv } from "lucide-react"
+import { ArrowLeft, Tv } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -11,7 +11,7 @@ export default function NotFound() {
           <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center">
             <Tv className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-medium text-blue-600">Kool Ai</span>
+          <span className="text-xl font-medium text-blue-600">Kool AI</span>
         </div>
       </header>
 
@@ -27,7 +27,9 @@ export default function NotFound() {
           <div className="space-y-6 pt-12">
             <div className="space-y-4">
               <h1 className="text-6xl font-bold text-gray-900">Ooops...</h1>
-              <h2 className="text-4xl font-medium text-gray-800">Page Not Found</h2>
+              <h2 className="text-4xl font-medium text-gray-800">
+                Page Not Found
+              </h2>
             </div>
 
             <div className="space-y-1 text-gray-600 max-w-md">
@@ -54,7 +56,6 @@ export default function NotFound() {
                   width={300}
                   height={300}
                   className="w-auto h-auto"
-                  
                 />
               </div>
             </div>
@@ -62,5 +63,5 @@ export default function NotFound() {
         </div>
       </main>
     </div>
-  )
+  );
 }

@@ -14,7 +14,7 @@ export default function ContactSection() {
                 Book a Demo
               </h2>
               <p className="font-normal text-sm sm:text-base text-[#737373]">
-                Book A Demo With Us Today
+                See How KoolAI Can Transform Your Customer Engagement
               </p>
             </div>
             <ContactForm />

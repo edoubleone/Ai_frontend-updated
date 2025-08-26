@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Brain, Target, Zap, Workflow, BookOpen, Users } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Brain, Target, Zap, Workflow, BookOpen, Users } from "lucide-react";
 
 const features = [
   {
@@ -18,7 +18,7 @@ const features = [
     icon: Zap,
     title: "Goal-Driven Agents",
     description:
-      "Our design approach creates AI agents that actively pursue specific goals rather than simply reacting to situations. These agentic AIs take initiative in completing tasks and solving problems, driving meaningful progress. By focusing on clear missions and outcomes, they ensure alignment with larger strategic objectives, empowering organizations to achieve more efficient and effective results across their operations.",
+      "Our design approach creates AI agents that actively pursue specific goals rather than simply reacting to situations. These Kool AIs take initiative in completing tasks and solving problems, driving meaningful progress. By focusing on clear missions and outcomes, they ensure alignment with larger strategic objectives, empowering organizations to achieve more efficient and effective results across their operations.",
   },
   {
     icon: Workflow,
@@ -38,7 +38,7 @@ const features = [
     description:
       "We envision a collaborative future where AI enhances human skills rather than replaces them. Our AI systems serve as reliable partners, amplifying human effort and creativity. This synergy fosters greater innovation and productivity, empowering people to achieve more while leveraging the strengths of advanced technology for smarter, more impactful results across all industries.",
   },
-]
+];
 
 export default function WhatDrivesUsSection() {
   return (
@@ -46,7 +46,9 @@ export default function WhatDrivesUsSection() {
       <div className="max-w-screen-2xl px-5 md:px-6 lg:px-16 mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4">What drives us</h2>
+          <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-4">
+            What drives us
+          </h2>
           <p className="font-light text-sm md:text-xl w-[80%] md:w-[60%] mx-auto">
             We're building a future where your customers don't have to wait
           </p>
@@ -55,7 +57,7 @@ export default function WhatDrivesUsSection() {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
-            const IconComponent = feature.icon
+            const IconComponent = feature.icon;
             return (
               <Card
                 key={index}
@@ -66,15 +68,19 @@ export default function WhatDrivesUsSection() {
                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                       <IconComponent className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h3 className="font-bold text-xl md:text-2xl text-gray-900 mb-4">{feature.title}</h3>
+                    <h3 className="font-bold text-xl md:text-2xl text-gray-900 mb-4">
+                      {feature.title}
+                    </h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed font-light text-md md:text-lg">{feature.description}</p>
+                  <p className="text-gray-600 leading-relaxed font-light text-md md:text-lg">
+                    {feature.description}
+                  </p>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }

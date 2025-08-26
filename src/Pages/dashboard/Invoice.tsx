@@ -12,7 +12,7 @@ const Invoice = () => {
             <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
               <span className="text-white text-sm font-bold">K</span>
             </div>
-            <span className="text-2xl font-bold text-blue-600">Kool Ai</span>
+            <span className="text-2xl font-bold text-blue-600">Kool AI</span>
           </div>
         </div>
 
@@ -73,8 +73,10 @@ const Invoice = () => {
 
         {/* Invoice Details */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">Invoice Details</h3>
-          
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">
+            Invoice Details
+          </h3>
+
           {/* Table Header */}
           <div className="grid grid-cols-5 gap-4 py-3 border-b border-gray-200 text-gray-700 font-medium">
             <div>Description</div>
@@ -106,7 +108,9 @@ const Invoice = () => {
 
         {/* Payment Instructions */}
         <div className="mb-12">
-          <h3 className="text-blue-600 font-semibold text-lg mb-4">PAYMENT INSTRUCTIONS</h3>
+          <h3 className="text-blue-600 font-semibold text-lg mb-4">
+            PAYMENT INSTRUCTIONS
+          </h3>
           <div className="space-y-1 text-gray-700">
             <p>Blocks design studio</p>
             <p>Bank name: ABC Bank limited</p>
@@ -117,7 +121,9 @@ const Invoice = () => {
 
         {/* Footer */}
         <div className="border-t border-gray-200 pt-6">
-          <p className="text-gray-600 text-sm">© Copyright 2024 ArgenticAl Limited</p>
+          <p className="text-gray-600 text-sm">
+            © Copyright 2024 ArgenticAl Limited
+          </p>
         </div>
       </div>
     </div>

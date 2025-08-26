@@ -54,25 +54,27 @@ export default function DashboardMyBots({
     sorted.sort((a, b) => {
       switch (sortOption.field) {
         case "assistantName":
+          const nameA = a.assistantName || "";
+          const nameB = b.assistantName || "";
           return sortOption.direction === "asc"
-            ? a.assistantName.localeCompare(b.assistantName)
-            : b.assistantName.localeCompare(a.assistantName);
+            ? nameA.localeCompare(nameB)
+            : nameB.localeCompare(nameA);
         case "industry":
+          const industryA = a.industry || "";
+          const industryB = b.industry || "";
           return sortOption.direction === "asc"
-            ? a.industry.localeCompare(b.industry)
-            : b.industry.localeCompare(a.industry);
+            ? industryA.localeCompare(industryB)
+            : industryB.localeCompare(industryA);
         case "created_at":
-          return sortOption.direction === "asc"
-            ? new Date(a.created_at).getTime() -
-                new Date(b.created_at).getTime()
-            : new Date(b.created_at).getTime() -
-                new Date(a.created_at).getTime();
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return sortOption.direction === "asc" ? dateA - dateB : dateB - dateA;
         case "updated_at":
+          const updatedA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
+          const updatedB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
           return sortOption.direction === "asc"
-            ? new Date(a.updated_at).getTime() -
-                new Date(b.updated_at).getTime()
-            : new Date(b.updated_at).getTime() -
-                new Date(a.updated_at).getTime();
+            ? updatedA - updatedB
+            : updatedB - updatedA;
         default:
           return 0;
       }

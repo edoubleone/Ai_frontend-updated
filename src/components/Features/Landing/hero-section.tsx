@@ -39,49 +39,50 @@ const settings = {
 
 const HeroSection = () => {
   return (
-    <div className="pt-4 bg-white sm:pt-8">
-      <div className="max-w-full bg-[url('/images/hero-section.png')] min-h-[887px] bg-no-repeat bg-center bg-contain mx-auto overflow-hidden lg:px-8">
+    <div className="pt-20 md:pt-16 bg-white sm:pt-8 md:mb-[-9%] lg:mb-0">
+      <div className="max-w-full  md:bg-[url('/images/hero-section.png')] min-h-full md:min-h-[687px] lg:min-h-[887px] bg-no-repeat bg-center bg-contain mx-auto overflow-hidden lg:px-8">
         {/* Hero Content */}
         <div className="flex flex-col items-center px-4 pt-20 text-center gap-y-5 md:gap-y-8">
           <div className="space-y-2.5">
             <h1 className="font-semibold text-[24px] max-w-[68rem] mx-auto text-center px-4 md:text-5xl lg:text-6xl text-dark">
               Grow your business by using our{" "}
-              <span className="text-blue-600">AI Agent</span> to make smarter
-              engagement and sales
+              <span className="text-blue-600">AI Agent</span> that automates
+              customer conversations, captures leads, and drives more
+              sales—24/7.
             </h1>
 
             <p className="w-[90%] mx-auto md:w-[75%] lg:w-[65%] text-sm lg:text-base">
-              Enhance your business with intelligent automated responses across
-              all platforms.
+              Enhance your business with AI-powered responses that engage
+              customers, qualify leads, and close deals across all platforms.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center w-full gap-4 mt-2 sm:gap-6">
             <Link to={"/signup"}>
-              <Button className="!min-w-40">Build a Bot</Button>
+              <Button className="!min-w-40">Start Free Today</Button>
             </Link>
 
             <Link to={"/demo"}>
               <Button className="!min-w-40" variant="outline-blue">
-                Book a Demo
+                Schedule a Demo
               </Button>
             </Link>
           </div>
 
           <div className="overflow-hidden max-w-2xl mx-auto">
-          <Slider {...settings}>
-  {icons.map((icon, iconIndex) => (
-    <div key={iconIndex} style={{ marginRight: 24 }}>
-      <img
-        src={icon}
-        alt="social icon"
-        width={50}
-        height={50}
-        loading="lazy"
-      />
-    </div>
-  ))}
-</Slider>
+            <Slider {...settings}>
+              {icons.map((icon, iconIndex) => (
+                <div key={iconIndex} style={{ marginRight: 24 }}>
+                  <img
+                    src={icon}
+                    alt="social icon"
+                    width={50}
+                    height={50}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </div>

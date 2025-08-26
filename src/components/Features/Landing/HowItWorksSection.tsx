@@ -22,7 +22,7 @@ const HowItWorksSection = () => {
       description:
         "Launch your Ai assistant  on WhatsApp, Instagram, Facebook, AI Voice call or other chat platform and start conversations.",
     },
-     {
+    {
       title: "AI Voice Call",
       description:
         "Link up your system so your AI assistant can send message and act on real time.",
@@ -37,7 +37,7 @@ const HowItWorksSection = () => {
             How it <span className="text-blue-600">Works</span>
           </h2>
           <p className="mx-auto w-[90%] md:w-[75%] text-center lg:w-[65%] font-light text-xl text-gray-600 leading-relaxed">
-            Here&apos;s how Argentic Ai works. Follow each of the steps well and
+            Here&apos;s how Kool AI works. Follow each of the steps well and
             reach out to us if you encounter any difficulty or issues.
           </p>
         </div>

@@ -56,9 +56,9 @@ const steps = [
     component: <FAQs />,
   },
   //{
-    //heading: "Customize",
-    //desc: "Customize the look and feel of your Bot to reflect your brand and website",
-    //component: <Customize />,
+  //heading: "Customize",
+  //desc: "Customize the look and feel of your Bot to reflect your brand and website",
+  //component: <Customize />,
   //},
   // {
   //   heading: "Full Preview",
@@ -153,7 +153,6 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const { mutateAsync: uploadKnowledgeUrlMutation } = useMutation({
     mutationFn: (data: { url: string; name: string; assistant_id: number }) =>
       uploadKnowledgeUrl(data.url, data.name, data.assistant_id),
-
   });
 
   const { mutateAsync } = useMutation({
@@ -166,7 +165,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
   const handleSubmit = async (values: any) => {
     try {
       setIsSubmitting(true);
-
+      console.log("values :", values);
       const payload = {
         name: values.name,
         business_name: values.companyName || "",

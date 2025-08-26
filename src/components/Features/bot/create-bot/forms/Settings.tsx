@@ -75,7 +75,7 @@ const Settings = () => {
 
         <hr />
 
-        <section className={sectionStyles}>
+        <section className={`space-y-7  `}>
           <div>
             <h2 className="mb-2 text-lg font-semibold">
               Additional Instructions
@@ -90,7 +90,17 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2">
+          {/* <div className="grid sm:grid-cols-2"></div> */}
+          {/* <Label className="flex text-base text-[#5C5C5C] items-center gap-x-2">
+            <Checkbox
+              checked={values.addInstructionCheckbox}
+              onCheckedChange={(checked) =>
+                setFieldValue("addInstructionCheckbox", checked)
+              }
+            />
+            Add Instructions
+          </Label> */}
+          <div className="grid grid-cols-2">
             <SecondaryTextArea
               id="additionalInstruction"
               rows={5}
@@ -107,38 +117,6 @@ const Settings = () => {
               info
             />
           </div>
-
-          <div
-            className={
-              values.addInstructionCheckbox ? "grid grid-cols-2" : "hidden"
-            }
-          >
-            <SecondaryTextArea
-              id="additionalInstructionExtra"
-              rows={5}
-              error={!!errors.additionalInstructionExtra}
-              errorText={errors.additionalInstructionExtra}
-              hasMax
-              max={50}
-              value={values.additionalInstructionExtra}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="additionalInstructionExtra"
-              placeholder="Provide Instructions such as answer questions, ending each sections with ‘Best regards’"
-              label="Additional Instruction"
-              info
-            />
-          </div>
-
-          <Label className="flex text-base text-[#5C5C5C] items-center gap-x-3">
-            <Checkbox
-              checked={values.addInstructionCheckbox}
-              onCheckedChange={(checked) =>
-                setFieldValue("addInstructionCheckbox", checked)
-              }
-            />
-            Add Instructions
-          </Label>
         </section>
       </main>
     </div>

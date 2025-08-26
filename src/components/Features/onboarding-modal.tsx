@@ -57,7 +57,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
     {
       title: "Create Campaign and Outbound Calls for Client",
       content:
-        "Navigate to the Assistant page, where you'll find a table to manage your campaigns. From there, you can create a new campaign and set up outbound calls for your client.",
+        "Navigate to the My Assistant page, where you'll find a table to manage your campaigns. From there, you can create a new campaign and set up outbound calls for your client.",
       icon: <Bot className="w-8 h-8 text-white" />,
       color: "from-purple-500 to-pink-600",
     },
