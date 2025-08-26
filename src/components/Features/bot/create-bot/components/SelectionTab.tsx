@@ -18,7 +18,9 @@ const SelectionTab: React.FC<SelectionTabProps> = ({
   };
 
   return (
-    <div className={inputStyles + " flex flex-wrap justify-between gap-2 w-full"}>
+    <div
+      className={inputStyles + " flex flex-wrap justify-between gap-2 w-full"}
+    >
       {option.map((option, index) => (
         <button
           key={index}

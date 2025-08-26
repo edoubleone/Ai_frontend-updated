@@ -46,7 +46,10 @@ const InputSelectCombo: React.FC<InputSelectComboProps> = ({
   return (
     <div className="grid w-full items-center gap-2">
       <div className="flex justify-between">
-        <Label className="text-base text-[#454545] font-semibold" htmlFor={label}>
+        <Label
+          className="text-base text-[#454545] font-semibold"
+          htmlFor={label}
+        >
           {label}
         </Label>
       </div>

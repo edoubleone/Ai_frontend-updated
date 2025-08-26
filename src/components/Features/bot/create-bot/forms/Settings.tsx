@@ -5,11 +5,9 @@ import SelectionTab from "../components/SelectionTab";
 import { useFormikContext } from "formik";
 import { type SettingsFormValues } from "../Types";
 import SecondaryTextArea from "@/components/shared/secondary-textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 
 const Settings = () => {
-  const { values, errors, setFieldValue, handleChange, handleBlur } =
+  const { values, errors, handleChange, handleBlur } =
     useFormikContext<SettingsFormValues>();
 
   // const [addistionalInfo, setAdditionalInfo] = React.useState<boolean>(false);

@@ -3,7 +3,6 @@ import {
   BasicSetup,
   CompanyDetails,
   Settings,
-  FAQs,
   RoleAndAudience,
 } from "../../components/Features/bot/create-bot/forms";
 import { useEffect, useState } from "react";
@@ -50,11 +49,11 @@ const steps = [
     desc: "Here you can set up the bot’s reactions to random client phrases, support for small talk, use of emojis, as well as configure restrictions and limitations for your assistant. For example: 'Offer cross-sells (recommend complementary products)' or 'Use short and clear phrases, avoiding complex technical terms' or 'Emphasize modern technologies, innovative solutions, and speed of service' or 'When questions about returns arise, always provide a link to the return policy page.'",
     component: <Settings />,
   },
-  {
-    heading: "FAQ",
-    desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
-    component: <FAQs />,
-  },
+  // {
+  //   heading: "FAQ",
+  //   desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
+  //   component: <FAQs />,
+  // },
   //{
   //heading: "Customize",
   //desc: "Customize the look and feel of your Bot to reflect your brand and website",

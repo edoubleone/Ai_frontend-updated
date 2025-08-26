@@ -79,12 +79,11 @@ export function DateRangePicker({
               {date?.from ? (
                 date.to ? (
                   <>
-                    {format(date.from, dateFormat)} - {format(date.to, dateFormat)}
+                    {format(date.from, dateFormat)} -{" "}
+                    {format(date.to, dateFormat)}
                   </>
                 ) : (
-                  <>
-                    {format(date.from, dateFormat)} -
-                  </>
+                  <>{format(date.from, dateFormat)} -</>
                 )
               ) : (
                 <span>{placeholder}</span>

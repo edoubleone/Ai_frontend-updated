@@ -56,9 +56,7 @@ interface DataTableProps {
 }
 
 const DashboardBotsDataTable = ({ data }: DataTableProps) => {
-  const [action, setAction] = useState<
-    "share" | "delete" | null
-  >(null);
+  const [action, setAction] = useState<"share" | "delete" | null>(null);
   const [selectedRow, setSelectedRow] = useState<RowAssistant | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
 
@@ -198,7 +196,9 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
 
             <button
               onClick={() => {
-                navigate(`/dashboard/assistants/create-campaign/${row.original.id}`);
+                navigate(
+                  `/dashboard/assistants/create-campaign/${row.original.id}`
+                );
               }}
               className={clsx(
                 "flex transition-all text-sm w-full hover:bg-[#E7E7E7]/30 rounded items-start ease-in-out duration-500 gap-3 !py-3 !px-4"

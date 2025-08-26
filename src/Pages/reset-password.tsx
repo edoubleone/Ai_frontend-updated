@@ -1,10 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import logo from "@/assets/images/logo.png";
-import {
-  Link,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { AsyncResetPassword } from "../services/api/auth";
 import { useForm } from "react-hook-form";

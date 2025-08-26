@@ -112,7 +112,7 @@ const ChatWindow = ({
   useEffect(() => {
     setMessage("");
     setActions(null);
-    setIsBotResponding(false)
+    setIsBotResponding(false);
   }, [assistant]);
 
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
