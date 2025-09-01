@@ -23,9 +23,24 @@ export function AdminLoginFormComponent() {
   const { mutate, isPending } = useMutation({
     mutationFn: UserLogin,
     onSuccess: (data) => {
-      setAuthenticated(data.access_token);
-      toast.success("Logged in successfully!");
-      navigate("/admin/dashboard");
+      if (data.is_role === "Admin") {
+        console.log(data, "LOGIN DATA");
+        setAuthenticated(data.access_token);
+        toast.success("Logged in successfully!");
+
+        navigate("/admin/dashboard");
+      } else {
+        setAuthenticated(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("expires_in");
+        localStorage.removeItem("is_role");
+        localStorage.removeItem("is_active");
+        localStorage.removeItem("is_superuser");
+        localStorage.removeItem("is_staff");
+        toast.error("You are not authorized to access this page");
+      }
     },
     onError: (error: ErrorResponse) => {
       toast.error(error?.response?.data?.detail);

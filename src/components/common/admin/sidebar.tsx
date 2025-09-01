@@ -8,7 +8,7 @@ import { useAuth } from "@/context/auth-provider";
 import AdminDashboardIcon from "@/components/shared/admin-dashboard-icon";
 import AdminUserIcon from "@/components/shared/admin-user-icon";
 import AdminPaymentIcon from "@/components/shared/admin-payments-icon";
-import AdminCustomerSupportIcon from "@/components/shared/admin-customer-support-icon";
+
 import SettingsIcon from "@/components/shared/settings-icon";
 import AdminNotificationsIcon from "@/components/shared/admin-notifications-icon";
 
@@ -28,11 +28,11 @@ const navigationItems = [
     url: "/admin/dashboard/payments",
     icon: AdminPaymentIcon,
   },
-  {
-    title: "Customer Support",
-    url: "/admin/dashboard/customer-support",
-    icon: AdminCustomerSupportIcon,
-  },
+  // {
+  //   title: "Customer Support",
+  //   url: "/admin/dashboard/customer-support",
+  //   icon: AdminCustomerSupportIcon,
+  // },
 ];
 
 const footerItems = [

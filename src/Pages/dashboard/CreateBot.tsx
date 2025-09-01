@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/button";
 import { uploadKnowledgeUrl } from "@/services/api/assistant";
+import Widget from "@/components/Features/bot/create-bot/forms/Widget";
+import axios from "axios";
 
 export function CreateAssistant(payload: any) {
   return apiClient.post(`/assistants/`, payload);
@@ -49,11 +51,11 @@ const steps = [
     desc: "Here you can set up the bot’s reactions to random client phrases, support for small talk, use of emojis, as well as configure restrictions and limitations for your assistant. For example: 'Offer cross-sells (recommend complementary products)' or 'Use short and clear phrases, avoiding complex technical terms' or 'Emphasize modern technologies, innovative solutions, and speed of service' or 'When questions about returns arise, always provide a link to the return policy page.'",
     component: <Settings />,
   },
-  // {
-  //   heading: "FAQ",
-  //   desc: "Add a FAQ section so users can find information about your company easily. You can train the assistant’s knowledge specifically to your product or service.",
-  //   component: <FAQs />,
-  // },
+  {
+    heading: "Widget Customization",
+    desc: "Customize the appearance and behavior of your chat widget. Configure colors, positioning, styling, and branding to match your website's design.",
+    component: <Widget />,
+  },
   //{
   //heading: "Customize",
   //desc: "Customize the look and feel of your Bot to reflect your brand and website",
@@ -75,6 +77,34 @@ const initialValues = {
   companyName: "",
   companyDescription: "",
   companyWebsite: "",
+  widgetSettings: {
+    business_id: "",
+    system_name: "Argentic Bot",
+    description: "",
+    powered_by: "Powered by Argentic AI",
+    header_bg: "#F5F5F5",
+    header_text: "#000000",
+    button_bg: "#4CAF50",
+    button_icon: "#141B34",
+    message_box_style: "rounded" as const,
+    position: "right" as const,
+    right: 20,
+    left: 20,
+    bottom: 20,
+    icon_url: "",
+    general: {
+      enabled: false,
+    },
+    colorsAndStyle: {
+      enabled: false,
+    },
+    chatButton: {
+      enabled: false,
+    },
+    additionalSettings: {
+      enabled: false,
+    },
+  },
 };
 
 const CreateBot: React.FC<BotEditPageProps> = () => {
@@ -183,6 +213,7 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
 
       const response = await mutateAsync(payload);
       const assistantId = response.data.assistant.id;
+      const businessId = response.data.share_url;
 
       if (values.uploadFile || values.companyDocument) {
         const formData = new FormData();
@@ -201,6 +232,38 @@ const CreateBot: React.FC<BotEditPageProps> = () => {
           name: values.name || "",
           assistant_id: assistantId,
         });
+      }
+
+      // Handle widget settings submission
+      if (values.widgetSettings) {
+        try {
+          const widgetPayload = {
+            business_id: businessId.toString(), // Use assistant ID as business_id
+            system_name: values.widgetSettings.system_name,
+            description: values.widgetSettings.description,
+            powered_by: values.widgetSettings.powered_by,
+            header_bg: values.widgetSettings.header_bg,
+            header_text: values.widgetSettings.header_text,
+            button_bg: values.widgetSettings.button_bg,
+            button_icon: values.widgetSettings.button_icon,
+            message_box_style: values.widgetSettings.message_box_style,
+            position: values.widgetSettings.position,
+            right: values.widgetSettings.right,
+            left: values.widgetSettings.left,
+            bottom: values.widgetSettings.bottom,
+            icon_url: values.widgetSettings.icon_url,
+          };
+
+          // Submit widget settings to backend
+          await axios.post(
+            "https://aisalesrep-production.up.railway.app/widget/save",
+            widgetPayload
+          );
+          console.log("Widget settings submitted:", widgetPayload);
+        } catch (widgetError) {
+          console.error("Error submitting widget settings:", widgetError);
+          // Don't fail the entire process if widget settings fail
+        }
       }
 
       toast.success("Assistant created successfully!");

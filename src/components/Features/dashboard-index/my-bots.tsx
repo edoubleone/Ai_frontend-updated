@@ -37,9 +37,10 @@ export default function DashboardMyBots({
   loading: boolean;
 }) {
   const fields = [
+    { label: "Created At", value: "created_at" },
     { label: "Name", value: "assistantName" },
     { label: "Industry", value: "industry" },
-    { label: "Created At", value: "created_at" },
+
     { label: "Updated At", value: "updated_at" },
   ];
 
@@ -52,6 +53,12 @@ export default function DashboardMyBots({
   const sortedData = useMemo(() => {
     const sorted = [...data];
     sorted.sort((a, b) => {
+      if (!sortOption.field || sortOption.field === "created_at") {
+        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return dateB - dateA; // Latest first (descending)
+      }
+
       switch (sortOption.field) {
         case "assistantName":
           const nameA = a.assistantName || "";

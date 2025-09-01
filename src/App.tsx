@@ -48,7 +48,10 @@ import AssistantCallHistoryPage from "./Pages/dashboard/assistant-call-history";
 import MassAssistantCallHistoryPage from "./Pages/dashboard/mass-assistant-call-history";
 import LiveAgentPage from "./Pages/dashboard/live-agent";
 import CreateLiveAgent from "./Pages/dashboard/create-live-agent";
+import AssistantDetailsPage from "./Pages/dashboard/assistant-details";
+import BotTest from "./Pages/boottest";
 import OAuthCallback from "./Pages/auth-callback";
+import LiveConversations from "./Pages/dashboard/live-conversation";
 
 function App() {
   return (
@@ -59,6 +62,10 @@ function App() {
           <Route path="logs">
             <Route path="" element={<LogsPage />} />
             <Route path="conversations/:id" element={<Conversations />} />
+            <Route
+              path="live-conversation/:id"
+              element={<LiveConversations />}
+            />
           </Route>
           <Route path="call-history">
             <Route path="" element={<CallHistory />} />
@@ -81,6 +88,8 @@ function App() {
             <Route path="" element={<LiveAgentPage />} />
             <Route path="create-live-agent" element={<CreateLiveAgent />} />
           </Route>
+          <Route path="assistants/:id" element={<AssistantDetailsPage />} />
+          <Route path="bot-test" element={<BotTest />} />
           <Route path="integrations" element={<Integrations />} />
           <Route path="createBot" element={<CreateBot />} />
           <Route path="settings" element={<Profile />} />

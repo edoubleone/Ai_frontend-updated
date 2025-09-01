@@ -19,9 +19,10 @@ import {
 
 const BotsPage = () => {
   const fields = [
+    { label: "Created At", value: "created_at" },
     { label: "Name", value: "assistantName" },
     { label: "Industry", value: "industry" },
-    { label: "Created At", value: "created_at" },
+
     { label: "Updated At", value: "updated_at" },
   ];
 
