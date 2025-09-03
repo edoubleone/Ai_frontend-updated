@@ -20,7 +20,7 @@ const HowItWorksSection = () => {
     {
       title: "Go Live on Social Media & Chat Platforms",
       description:
-        "Launch your Ai assistant  on WhatsApp, Instagram, Facebook, AI Voice call or other chat platform and start conversations.",
+        "Launch your AI assistant  on WhatsApp, Instagram, Facebook, AI Voice call or other chat platform and start conversations.",
     },
     {
       title: "AI Voice Call",

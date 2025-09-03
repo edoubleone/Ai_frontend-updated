@@ -29,7 +29,7 @@ const RoleAndAudience = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               name="setRole"
-              placeholder="Example: Experienced sales assistant"
+              placeholder="Primary function your AI assistant will perform (e.g., Customer Support, Sales Advisor, Research Assistant)."
             />
 
             <SecondaryInput
@@ -42,13 +42,13 @@ const RoleAndAudience = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               name="purposeOfRole"
-              placeholder="Enter purpose of role"
+              placeholder="Give your assistant a clear role or title to guide its interaction with users"
               label="Purpose of Role"
             />
 
             <SecondaryTextArea
               info
-              label="Industry and Description"
+              label="Industry and Description (Target audience)"
               id="IndustryAndDescription"
               error={!!errors.IndustryAndDescription}
               errorText={errors.IndustryAndDescription}
@@ -57,7 +57,7 @@ const RoleAndAudience = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               name="IndustryAndDescription"
-              placeholder="For example, we create website that convert for start up "
+              placeholder="Specify the industry (e.g., Finance, Healthcare, Travel) and briefly describe the assistant’s focus to tailor its knowledge and tone."
             />
           </div>
         </section>
@@ -97,7 +97,7 @@ const RoleAndAudience = () => {
               value={values.welcomeWords}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="For example, we create website that convert for start up"
+              placeholder="Craft a warm, friendly opening message that your Assistant will use to greet users."
             />
           </div>
         </section>

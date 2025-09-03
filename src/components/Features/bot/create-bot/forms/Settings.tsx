@@ -30,7 +30,7 @@ const Settings = () => {
             <h2 className="mb-2 text-lg font-semibold">Small Talk</h2>
             <p className="text-sm text-gray-500">
               Casual, friendly conversations about non-controversial topics to
-              build rapport and create a comfortable interaction atmosphere
+              build rapport and create a comfortable Interactive atmosphere
             </p>
           </div>
 

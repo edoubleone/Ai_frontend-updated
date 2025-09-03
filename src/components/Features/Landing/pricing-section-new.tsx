@@ -476,7 +476,7 @@ const PricingTable = () => {
             <tr className="border-t border-border">
               <td className="p-4">
                 <p className="text-sm max-w-56 font-semibold text-[#2E2E2E]">
-                  Powered by E-Doubleone Inc
+                  Powered by EDOUBLEONE INC
                 </p>
               </td>
               {plans.map((plan) => (

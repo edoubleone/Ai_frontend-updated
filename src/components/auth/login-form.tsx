@@ -21,9 +21,19 @@ export function LoginFormComponent() {
   const { mutate, isPending } = useMutation({
     mutationFn: UserLogin,
     onSuccess: (data) => {
-      setAuthenticated(data.access_token);
-      toast.success("Logged in successfully!");
-      navigate("/dashboard");
+      if (data.is_role === "Admin") {
+        console.log(data, "LOGIN DATA");
+        setAuthenticated(data.access_token);
+        toast.success("Logged in successfully!");
+
+        navigate("/admin/dashboard");
+      } else {
+        setAuthenticated(data.access_token);
+
+        toast.success("Logged in successfully!");
+
+        navigate("/dashboard");
+      }
     },
     onError: (error: ErrorResponse) => {
       toast.error(error?.response?.data?.detail);

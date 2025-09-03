@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const tabMenu = [
   "Create Text Campaign",
-  "Create Voice Campaign",
-  "Create Mass Voice Campaign",
+  "Create Phone Call Campaign",
+  "Create Mass Phone Call Campaign",
 ];
 
 const CreateCampaign = () => {
@@ -48,8 +48,8 @@ const CreateCampaign = () => {
         </div>
 
         {activeMenu === "Create Text Campaign" && <CreateTextCampaign />}
-        {activeMenu === "Create Voice Campaign" && <CreateVoiceCampaign />}
-        {activeMenu === "Create Mass Voice Campaign" && (
+        {activeMenu === "Create Phone Call Campaign" && <CreateVoiceCampaign />}
+        {activeMenu === "Create Mass Phone Call Campaign" && (
           <CreateMassVoiceCampaign />
         )}
       </Card>

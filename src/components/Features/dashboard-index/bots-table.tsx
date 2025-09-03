@@ -88,15 +88,15 @@ const DashboardBotsDataTable = ({ data }: DataTableProps) => {
     },
     {
       accessorKey: "assistantName",
-      header: "Assistant Name",
+      header: "Name",
     },
     {
       accessorKey: "botType",
-      header: "Assitant Type",
+      header: "Type",
     },
     {
       accessorKey: "assistantLanguage",
-      header: "Assistant Language",
+      header: "Language",
     },
     {
       accessorKey: "status",

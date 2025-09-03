@@ -50,8 +50,8 @@ const CompanyDetails = () => {
             />
           </div>
           <p className="text-gray-500 flex-1 py-3 px-5 bg-[#EEEEFD] rounded-lg flex flex-col justify-center">
-            Provide information about your company to help the assistant
-            understand your business better by inputting your company url.
+            Enter your company website URL so the assistant can better
+            understand your business
           </p>
         </div>
       </header>

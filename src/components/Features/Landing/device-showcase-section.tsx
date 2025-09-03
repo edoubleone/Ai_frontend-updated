@@ -1,37 +1,34 @@
- "use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 export function DeviceShowcaseSection() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
-    const element = document.getElementById("device-showcase")
+    const element = document.getElementById("device-showcase");
     if (element) {
-      observer.observe(element)
+      observer.observe(element);
     }
 
     return () => {
       if (element) {
-        observer.unobserve(element)
+        observer.unobserve(element);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
-    <section
-      id="device-showcase"
-      className="max-w-sceen-2xl bg-white w-full"
-    >
+    <section id="device-showcase" className="max-w-sceen-2xl bg-white w-full">
       <div className="relative w-full">
         {/* Main Device Mockup - Full Width */}
         <div
@@ -79,5 +76,5 @@ export function DeviceShowcaseSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

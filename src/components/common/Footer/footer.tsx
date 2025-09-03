@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <p className="text-base text-gray-600">
-              © 2024 AI Sales Frontend. All rights reserved.
+              © 2025 Kool AI. All rights Reserved
             </p>
           </div>
         </div>

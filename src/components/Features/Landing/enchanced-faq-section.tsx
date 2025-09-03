@@ -1,6 +1,11 @@
-"use client"
+"use client";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqs = [
   {
@@ -31,7 +36,7 @@ const faqs = [
     id: "item-5",
     question: "Do I need technical skills to use Kool AI?",
     answer:
-      "Not at all! Our drag-and-drop builder is designed for non-technical users. You can create and deploy AI chatbots without any coding knowledge. We also provide comprehensive tutorials and support.",
+      "Not at all! Our step by step AI builder is designed for non-technical users. You can create and deploy AI chatbots without any coding knowledge.",
   },
   {
     id: "item-6",
@@ -51,7 +56,7 @@ const faqs = [
     answer:
       "Yes, you have full control over your AI's personality, tone, and responses. You can train it with your specific business information, FAQs, and brand voice to ensure consistent customer experiences.",
   },
-]
+];
 
 export function EnhancedFAQSection() {
   return (
@@ -59,15 +64,23 @@ export function EnhancedFAQSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-bold text-3xl text-gray-900 md:text-4xl lg:text-5xl mb-6">FAQs</h2>
+          <h2 className="font-bold text-3xl text-gray-900 md:text-4xl lg:text-5xl mb-6">
+            FAQs
+          </h2>
           <p className="font-light mx-auto max-w-3xl text-lg text-gray-600">
-            Find answers to common questions about our platform, bot creation, and our pay-for-results pricing model.
+            Find answers to common questions about our platform, bot creation,
+            and our pay-for-results pricing model.
           </p>
         </div>
 
         {/* FAQ Accordion */}
         <div className="mx-auto max-w-4xl">
-          <Accordion type="single" collapsible className="space-y-4" defaultValue="item-1">
+          <Accordion
+            type="single"
+            collapsible
+            className="space-y-4"
+            defaultValue="item-1"
+          >
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.id}
@@ -84,9 +97,7 @@ export function EnhancedFAQSection() {
             ))}
           </Accordion>
         </div>
-
-      
       </div>
     </section>
-  )
+  );
 }

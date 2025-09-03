@@ -92,7 +92,7 @@ const AssistantCallHistory = ({ data }: DataTableProps) => {
     },
     {
       accessorKey: "assistantName",
-      header: "Assistant Name",
+      header: "Name",
     },
     {
       accessorKey: "phoneNumber",

@@ -122,7 +122,7 @@ const Invoice = () => {
         {/* Footer */}
         <div className="border-t border-gray-200 pt-6">
           <p className="text-gray-600 text-sm">
-            © Copyright 2024 ArgenticAl Limited
+            © 2025 Kool AI. All rights Reserved
           </p>
         </div>
       </div>

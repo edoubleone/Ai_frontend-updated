@@ -38,9 +38,10 @@ export default function CookieConsent({
       </h2>
 
       <p className="text-sm text-gray-600 mt-2">
-        By clicking “Accept All Cookies,” you agree we can store cookies on your
-        device to help personalize site content, analyze traffic and assist in
-        our marketing to provide the best possible user experience.{" "}
+        To improve your experience, provide personalized content, analyze
+        website traffic, and display targeted advertisements. By clicking
+        “Accept All,” you agree to our use of cookies. You can change your
+        preferences by selecting
         <a
           href={policyLink}
           className="text-blue-600 underline hover:text-blue-800"

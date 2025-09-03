@@ -1,8 +1,7 @@
-import { ChevronLeft, SearchIcon } from "lucide-react";
+import { ChevronLeft, ClockIcon, SearchIcon } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GetAssistant, GetAssistantCustomers } from "@/services/api/assistant";
-import { GetAssistantAlerts } from "@/services/api/myassistance";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "@/components/shared/button";
 import AvatarComponent from "@/components/shared/custom-avatar";
@@ -10,7 +9,7 @@ import { useState } from "react";
 import ChatItemLoader from "@/components/Features/conversation/chat-item-skeleton";
 import type { Customer } from "@/services/models/assistant";
 import CustomerChatWindow from "@/components/Features/assistant-logs/customer-chat-window";
-
+import { format } from "date-fns";
 const LiveConversations = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,16 +30,6 @@ const LiveConversations = () => {
     queryFn: () => GetAssistantCustomers(Number(id)),
     queryKey: ["assistant-customers", id],
   });
-
-  const { data: alerts, isLoading: alertsLoading } = useQuery({
-    queryFn: () => GetAssistantAlerts(Number(id)),
-    queryKey: ["assistant-alerts", id],
-    enabled: !!id,
-  });
-
-  // Debug alerts data
-  console.log("Alerts data:", alerts);
-  console.log("Alerts loading:", alertsLoading);
 
   const handleCustomerClick = (customer: Customer) => {
     setCustomer(customer);
@@ -72,46 +61,28 @@ const LiveConversations = () => {
       <div className="flex flex-col gap-y-6 h-full bg-white border py-6 rounded-lg px-4 sm:px-9">
         <div className="flex justify-between items-center w-full gap-4">
           <div className="flex gap-4">
-            <AvatarComponent />
             <div className="flex flex-col gap-y-1">
               <h1 className="text-base font-semibold text-[#171717]">
                 {assistant?.name}
               </h1>
-              <p className="text-sm line-clamp-1 text-[#636363]">
-                You currently have {filteredData?.length || 0} conversation(s)
-                in this Assistant.
-              </p>
-              {alerts && alerts.length > 0 && (
-                <p className="text-sm text-orange-600">
-                  ⚠️ {alerts.length} active alert(s) for this assistant
-                </p>
-              )}
             </div>
           </div>
         </div>
-
-        {/* Alerts Section */}
-        {alerts && alerts.length > 0 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-            <h3 className="text-sm font-semibold text-orange-800 mb-2">
-              Active Alerts ({alerts.length})
-            </h3>
-            <div className="space-y-2">
-              {alerts.slice(0, 3).map((alert) => (
-                <div key={alert.id} className="text-sm text-orange-700">
-                  <span className="font-medium">{alert.title}:</span>{" "}
-                  {alert.message}
-                </div>
-              ))}
-              {alerts.length > 3 && (
-                <div className="text-sm text-orange-600">
-                  ... and {alerts.length - 3} more alerts
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
+        <div
+          style={{
+            marginTop: "15px",
+          }}
+        >
+          <h1 className="ml-0 md:ml-7 text-[18px]">Issues</h1>
+          <div
+            style={{
+              height: 2,
+              width: "100%",
+              backgroundColor: "#E7E7E7",
+              marginTop: "10px",
+            }}
+          ></div>
+        </div>
         <div className="flex h-full gap-12 overflow-y-hidden">
           {!isCustomer || !isMobile ? (
             <div className={`w-full flex flex-col h-full`}>
@@ -151,15 +122,25 @@ const LiveConversations = () => {
                           <AvatarComponent />
                           <div className="flex flex-col gap-y-1">
                             <h1 className="text-base font-semibold text-[#171717]">
-                              {customer.handle}
+                              {customer?.handle}
                             </h1>
-
-                            {/* <div className="hidden text-[#8B8B8B] text-sm items-center gap-1">
-                              <ClockIcon className="size-3.5" />
-                              <p>Today</p>
-                              <hr className="bg-[#8B8B8B] rounded-lg border-none w-px h-4" />
-                              <p>05:30 PM</p>
-                            </div> */}
+                            <p className="text-sm text-[#636363]">
+                              Last message from conversation
+                            </p>
+                            <div className="flex items-center gap-1 flex-row">
+                              <ClockIcon
+                                className="size-3.5"
+                                style={{
+                                  color: "#8B8B8B",
+                                }}
+                              />
+                              <p className="text-[#8B8B8B] text-sm">
+                                {format(
+                                  new Date(customer?.created_at),
+                                  "MMM dd, hh:mma"
+                                )}
+                              </p>
+                            </div>
                           </div>
                         </div>
 

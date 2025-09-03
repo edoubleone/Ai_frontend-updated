@@ -80,7 +80,7 @@ export const basicSetupSchema = Yup.object({
   name: Yup.string().min(3).max(25).required("Assistant name is required"),
   typeOfAssistant: Yup.string().required("Type of Assistant is required"),
   customer_support_contact: Yup.string()
-    .required("Customer support contact is required")
+    .required("Customer support contact is required for after-service support ")
     .test(
       "valid-contact-format",
       "Please enter a valid email, phone number, or website URL",

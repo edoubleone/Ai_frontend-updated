@@ -68,7 +68,7 @@ const TestimonialSection = () => {
     <div className="max-w-7xl mx-auto px-4 py-16">
       <div className="flex items-center justify-between mb-12">
         <h2 className="text-4xl font-bold text-gray-900">
-          What Our Client Said about us
+          WHAT OUR CLIENTS SAY ABOUT US
         </h2>
 
         <div className="flex gap-4">
@@ -118,9 +118,11 @@ const TestimonialSection = () => {
                   src={testimonial.avatar}
                   alt={testimonial.author}
                 />
-                <AvatarFallback className={`font-medium text-sm ${index === currentIndex ? "text-dark" : ""}`}>{`${testimonial.author
-                  ?.charAt(0)
-                  ?.toUpperCase()}${
+                <AvatarFallback
+                  className={`font-medium text-sm ${
+                    index === currentIndex ? "text-dark" : ""
+                  }`}
+                >{`${testimonial.author?.charAt(0)?.toUpperCase()}${
                   testimonial.author.split(" ")[1]?.charAt(0)?.toUpperCase() ||
                   ""
                 }`}</AvatarFallback>
